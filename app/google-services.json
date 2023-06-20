@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "935756194550",
+    "firebase_url": "https://repair-brain-20-default-rtdb.firebaseio.com",
+    "project_id": "repair-brain-20",
+    "storage_bucket": "repair-brain-20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935756194550:android:34359e1f7ee0f6d1d242d7",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935756194550-u33te7hk6tpapb4j1at27r6327pdtkr1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACXXCPQ502RZRdc8x7PD3fbwAmi-7jdbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935756194550-u33te7hk6tpapb4j1at27r6327pdtkr1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
