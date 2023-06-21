@@ -2,4 +2,18 @@
     <string name="app_name">Repair Brain 2.0</string>
     <string name="are_you_free_or_addicted">Are You Free Or Addicted?</string>
     <string name="none">none</string>
+    <string name="time_gone">Time Gone</string>
+    <string name="lastly_relapsed">Lastly Relapsed</string>
+    <string name="next_step">Next Step</string>
+    <string name="ve_effect">+ve Effect</string>
+    <string name="neg_ve_effect">-ve Effect</string>
+    <string name="effects">Effects</string>
+    <string name="next">Next</string>
+    <string name="enter_the_positive_effect">Enter the +ve effect</string>
+    <string name="enter_the_ve_effect">Enter the -ve effect</string>
+    <string name="enter_the_next_step">Enter the next step</string>
+    <string name="replacing_accuracy">Replacing Accuracy :</string>
+    <string name="_100">100%</string>
+    <string name="add">Add</string>
+    <string name="done">Done</string>
 </resources>

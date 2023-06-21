@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_habits.xml" value="0.20521590423257802" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_time.xml" value="0.2" />
       </map>
     </option>
   </component>
