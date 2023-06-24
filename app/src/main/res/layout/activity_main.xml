@@ -32,18 +32,22 @@
         android:layout_marginBottom="25dp">
 
         <ImageButton
+            android:id="@+id/free_image"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:contentDescription="@string/none"
+            android:clickable="true"
             android:padding="10dp"
             android:background="@drawable/free"
             android:layout_marginBottom="20dp" />
 
         <ImageButton
+            android:id="@+id/hand_cuffed_image"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:padding="10dp"
             android:contentDescription="@string/none"
+            android:clickable="true"
             android:background="@drawable/hand_cuffed"
             android:layout_marginTop="20dp"/>
 

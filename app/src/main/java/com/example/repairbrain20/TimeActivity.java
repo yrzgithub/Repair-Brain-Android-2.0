@@ -2,13 +2,226 @@ package com.example.repairbrain20;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Layout;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.IOException;
+import java.security.Key;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TimeActivity extends AppCompatActivity {
+
+    TextView time_gone=null,lastly_relapse=null,next_step=null,pos_effect=null,neg_effect=null;
+    EditText neg_edit=null,pos_edit=null,next_edit=null;
+    DatabaseReference reference = null;
+    FirebaseDatabase database;
+    Button effects = null, next = null;
+    //MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time);
+
+        time_gone = findViewById(R.id.time_gone);
+        lastly_relapse = findViewById(R.id.lastly_relapsed);
+        next_step = findViewById(R.id.next_step);
+        pos_effect = findViewById(R.id.pos_effect);
+        neg_effect = findViewById(R.id.neg_effects);
+
+        lastly_relapse.setSelected(true);
+        next_step.setSelected(true);
+        pos_effect.setSelected(true);
+        neg_effect.setSelected(true);
+
+        effects = findViewById(R.id.effects);
+        next = findViewById(R.id.next);
+
+        LinearLayout root = findViewById(R.id.root);
+
+
+
+       // player = MediaPlayer.create(this,R.raw.ticksound);
+        // player.setLooping(true);
+
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("data");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot!=null && snapshot.exists())
+                {
+                    Map<String,Object> data = snapshot.getValue(new GenericTypeIndicator<Map<String, Object>>() {
+                        @Override
+                        public int hashCode() {
+                            return super.hashCode();
+                        }
+                    });
+
+                    LocalDateTime lastly_relapsed_object = getLocalDateTime(data,"lastly_relapsed");
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+                    String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
+
+                    Handler handler = new Handler();
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            LocalDateTime now = LocalDateTime.now();
+
+                            Duration duration = Duration.between(lastly_relapsed_object,now);
+
+                            long days = duration.toDays();
+                            long hours = duration.toHours() % 24;
+                            long minutes = duration.toMinutes() % 60;
+                            long seconds;
+
+                            String format,time;
+
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                                seconds = duration.toSeconds() % 60;
+                                format = "%d days %d hrs %d mins %d secs";
+                                time = String.format(format,days,hours,minutes,seconds);
+                                Log.e("sanjay_uruttu",time);
+                                time_gone.setText(time);
+                            }
+                            else
+                            {
+                                format = "%l days %l hrs %l mins";
+                                time = String.format(format,days,hours,minutes);
+                                time_gone.setText(time);
+                            }
+
+                            handler.postDelayed(this,1000);
+                        }
+                    };
+
+                    runnable.run();
+
+                    lastly_relapse.setText(lastly_relapsed_str);
+                    next_step.setText(data.get("next_step").toString());
+                    pos_effect.setText(data.get("lastly_noted_change").toString());
+                    neg_effect.setText(data.get("lastly_noted_side_effect").toString());
+
+                    time_gone.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(TimeActivity.this,Habits.class);
+                startActivity(intent);
+            }
+        });
+
+        effects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(TimeActivity.this,StepsAct.class);
+                intent.putExtra("effect",0);
+                startActivity(intent);
+            }
+        });
+
+        root.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+               // player.pause();
+            }
+        });
+
+    }
+
+    public void save_new(EditText view,String key)
+    {
+        String text = view.getText().toString();
+
+        if(!text.isEmpty())
+        {
+            reference.child(key).setValue(text);
+        }
+    }
+
+    public LocalDateTime getLocalDateTime(Map<String,Object> data,String key)
+    {
+        Map<String,Object> map = (Map<String, Object>) data.get(key);
+
+        int year = Integer.valueOf(map.get("year").toString());
+        int month = Integer.parseInt(map.get("month").toString());
+        int day = Integer.parseInt(map.get("day").toString());
+        int hour = Integer.parseInt(map.get("hour").toString());
+        int minute = Integer.parseInt(map.get("minute").toString());
+        int second = Integer.parseInt(map.get("second").toString());
+
+        return LocalDateTime.of(year,month,day,hour,minute,second);
+    }
+
+    public void delete_player()
+    {
+        /*
+        if(player!=null)
+        {
+            player.pause();
+            player.release();
+            player = null;
+        }
+         */
+    }
+
+    @Override
+    protected void onStart() {
+       // player.start();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        //player.pause();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Toast.makeText(this,"toast",Toast.LENGTH_LONG).show();
+        //delete_player();
+        super.onDestroy();
     }
 }

@@ -8,47 +8,59 @@
     tools:context=".StepsAct">
 
     <TextView
+        android:id="@+id/topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/next_step"
+        android:text="@string/positive_effects"
         android:textSize="25sp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"/>
 
-    <EditText
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="20sp"
-        android:textColor="@color/black"
         android:layout_marginStart="10dp"
-        android:allowUndo="true"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:allowUndo="true"
         android:background="@null"
-        android:layout_marginTop="10dp"
         android:importantForAutofill="no"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/no_results"
+        android:visibility="gone"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/none" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="70dp"
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/prev"
+            android:text="@string/prev"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/save"
             android:textStyle="bold"
             android:textSize="20sp"
             android:padding="5dp"
             android:layout_marginEnd="20dp"/>
 
         <Button
+            android:id="@+id/next"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/next"

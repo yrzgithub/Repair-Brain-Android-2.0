@@ -23,4 +23,10 @@
     <string name="star">*</string>
     <string name="step">Step</string>
     <string name="save">Save</string>
+    <string name="prev">prev</string>
+    <string name="date">date</string>
+    <string name="date_added">Date Added :</string>
+    <string name="show_on">Show On :</string>
+    <string name="habit">Habit</string>
+    <string name="not_found">Not Found</string>
 </resources>

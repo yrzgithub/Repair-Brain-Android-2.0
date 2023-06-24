@@ -7,225 +7,249 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
+    android:id="@+id/root"
     tools:context=".TimeActivity">
+
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:progress="100" />
+
+    <TextView
+        android:id="@+id/time_gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="@string/not_found"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="bold" />
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
         android:columnCount="2"
         android:rowCount="5">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_row="0"
+            android:layout_width="wrap_content"
             android:layout_column="0"
-            android:padding="10dp"
-            android:text="@string/time_gone"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:padding="10dp"
-            android:text="@string/none"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_row="1"
-            android:layout_column="0"
-            android:padding="10dp"
-            android:text="@string/lastly_relapsed"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:background="@drawable/brain"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/lastly_relapsed"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="start"/>
+
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/lastly_relapsed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
             android:layout_row="1"
             android:layout_column="1"
             android:marqueeRepeatLimit="marquee_forever"
-            android:padding="10dp"
-            android:text="@string/none"
+            android:padding="15dp"
+            android:text="@string/not_found"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center_vertical"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:padding="10dp"
-            android:text="@string/next_step"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:padding="10dp"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:text="@string/none"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="0"
-            android:padding="10dp"
-            android:text="@string/ve_effect"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="3"
-            android:layout_column="1"
-            android:padding="10dp"
-            android:text="@string/none"
-            android:textColor="@color/black"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_row="4"
             android:layout_column="0"
-            android:padding="10dp"
-            android:text="@string/ve_effect"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/next_step"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/next_step"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="start"/>
+
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/next_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="4"
             android:layout_column="1"
-            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="marquee"
+            android:gravity="start"
             android:marqueeRepeatLimit="marquee_forever"
-            android:text="@string/none"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/not_found"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/positive_effect"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:padding="15dp"
+                android:text="@string/ve_effect"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/pos_effect"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="15dp"
+            android:text="@string/not_found"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             android:textStyle="bold"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/img"
+                android:contentDescription="@string/none" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/neg_ve_effect"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="start"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/neg_effects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:layout_gravity="center_vertical"
+            android:padding="15dp"
+            android:text="@string/not_found"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
         android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/enter_the_positive_effect"
-                android:inputType="text"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
-                android:autofillHints="no" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:hint="@string/enter_the_ve_effect"
-                android:inputType="text"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:autofillHints="no" />
-
-        </LinearLayout>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/enter_the_next_step"
-            android:inputType="text"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:autofillHints="no"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_weight="3"
-        android:layout_marginTop="30dp">
+        android:layout_marginBottom="30dp">
 
         <Button
+            android:id="@+id/effects"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="@string/effects"
-            android:padding="10dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="20dp"
-            android:textStyle="bold"
+            android:padding="5dp"
+            android:text="@string/effects"
             android:textColor="@color/white"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/next"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="30dp"
-            android:padding="10dp"
-            android:textStyle="bold"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
+            android:padding="5dp"
             android:text="@string/next"
-            android:textSize="20sp"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
