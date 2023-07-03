@@ -66,8 +66,6 @@ public class TimeActivity extends AppCompatActivity {
 
         LinearLayout root = findViewById(R.id.root);
 
-
-
        // player = MediaPlayer.create(this,R.raw.ticksound);
         // player.setLooping(true);
 
@@ -87,6 +85,16 @@ public class TimeActivity extends AppCompatActivity {
                     });
 
                     LocalDateTime lastly_relapsed_object = getLocalDateTime(data,"lastly_relapsed");
+
+                    if(lastly_relapsed_object==null)
+                    {
+                        time_gone.setText(R.string.not_found);
+                        lastly_relapse.setText(R.string.not_found);
+                        next_step.setText(R.string.not_found);
+                        pos_effect.setText(R.string.not_found);
+                        neg_effect.setText(R.string.not_found);
+                        return;
+                    }
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
                     String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
@@ -154,7 +162,7 @@ public class TimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(TimeActivity.this,StepsAct.class);
+                Intent intent = new Intent(TimeActivity.this,EffectsTabsAct.class);
                 intent.putExtra("effect",0);
                 startActivity(intent);
             }
@@ -182,7 +190,16 @@ public class TimeActivity extends AppCompatActivity {
 
     public LocalDateTime getLocalDateTime(Map<String,Object> data,String key)
     {
-        Map<String,Object> map = (Map<String, Object>) data.get(key);
+
+        Map<String,Object> map;
+
+        try {
+            map = (Map<String, Object>) data.get(key);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
 
         int year = Integer.valueOf(map.get("year").toString());
         int month = Integer.parseInt(map.get("month").toString());

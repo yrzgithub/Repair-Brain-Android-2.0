@@ -29,4 +29,9 @@
     <string name="show_on">Show On :</string>
     <string name="habit">Habit</string>
     <string name="not_found">Not Found</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
+    <string name="steps">Steps</string>
 </resources>

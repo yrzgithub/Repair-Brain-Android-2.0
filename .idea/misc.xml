@@ -4,12 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_effects.xml" value="0.20521590423257802" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_effects_tabs.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_habits.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_steps.xml" value="0.20521590423257802" />
         <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_time.xml" value="0.2" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/custom_habits_list.xml" value="0.20521590423257802" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/custom_list_effects.xml" value="0.20521590423257802" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/custom_habits_list.xml" value="0.264" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/custom_list_effects.xml" value="0.4" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_effects.xml" value="0.20521590423257802" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_neg.xml" value="0.1936725096194955" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_next.xml" value="0.1936725096194955" />
+        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_pos.xml" value="0.1936725096194955" />
         <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/no_results.xml" value="0.20521590423257802" />
       </map>
     </option>

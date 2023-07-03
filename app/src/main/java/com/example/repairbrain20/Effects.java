@@ -17,9 +17,6 @@ import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,69 +39,6 @@ public class Effects extends AppCompatActivity {
         pos = findViewById(R.id.pos_effects);
         neg = findViewById(R.id.neg_effects);
         next = findViewById(R.id.next_step);
-
-        pos_file = createFile("positive");
-        neg_file = createFile("negative");
-        next_file = createFile("next");
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-
-        StorageReference positive_reference = storage.getReferenceFromUrl("gs://repair-brain-20.appspot.com/negative effects.txt");
-        StorageReference negative_reference = storage.getReferenceFromUrl("gs://repair-brain-20.appspot.com/positive effects.txt");
-        StorageReference steps_reference = storage.getReferenceFromUrl("gs://repair-brain-20.appspot.com/steps.txt");
-
-        FileDownloadTask pos_task =  positive_reference.getFile(pos_file);
-        pos_task.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                String text_data = readTxt(pos_file);
-                Log.e("sanjay_t",text_data);
-
-                pos.setAdapter(new ListAdapter(Effects.this,text_data));
-            }
-        });
-        pos_task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("sanjay_t","Error");
-            }
-        });
-
-
-        FileDownloadTask neg_task = negative_reference.getFile(neg_file);
-        neg_task.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                String text_data = readTxt(neg_file);
-                Log.e("sanjay_t",text_data);
-
-                pos.setAdapter(new ListAdapter(Effects.this,text_data));
-            }
-        });
-        neg_task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("sanjay_t","Error");
-            }
-        });
-
-
-        FileDownloadTask next_task = steps_reference.getFile(next_file);
-        next_task.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                String text_data = readTxt(pos_file);
-                Log.e("sanjay_t",text_data);
-
-                pos.setAdapter(new ListAdapter(Effects.this,text_data));
-            }
-        });
-        next_task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("sanjay_t","Error");
-            }
-        });
 
 
     }

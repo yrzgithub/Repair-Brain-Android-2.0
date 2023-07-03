@@ -9,25 +9,36 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class ListAdapter extends BaseAdapter {
 
     Activity activity;
-    String[] list;
+    Map<String,Object> map;
+    List<Object> keys;
 
-    ListAdapter(Activity act,String text)
+    ListAdapter(Activity act,Map<String,Object> map,List<Object> keys)
     {
         this.activity = act;
-        list = text.split("\n");
+        this.map = map;
+        this.keys = keys;
+
+        Log.e("sanjay_cute",keys.toString());
+        Log.e("sanjay_cute",map.toString());
     }
 
     @Override
     public int getCount() {
-        return list.length;
+        Log.e("sanjay_map",String.valueOf(map.size()));
+        return map.size();
     }
 
     @Override
     public String getItem(int i) {
-        return list[i];
+       // Log.e("sanjay_map",String.valueOf(i));
+        return map.get(keys.get(i)).toString();
     }
 
     @Override
@@ -38,20 +49,18 @@ public class ListAdapter extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(activity.getApplicationContext()).inflate(R.layout.custom_list_effects,null,true);
+        view = LayoutInflater.from(activity.getApplicationContext()).inflate(R.layout.custom_list_effects,null,false);
 
         TextView text_widget = view.findViewById(R.id.text);
         TextView date_widget = view.findViewById(R.id.date);
 
-        String text = list[i];
-        String date = text.replaceAll("[()]","").trim();
-        String habit = text.replace("("+date+")","").trim();
+        text_widget.setSelected(true);
 
-        Log.e("sanjay_date",date);
-        Log.e("sanjay_habit",habit);
+        String key = keys.get(i).toString();
+        String value = map.get(key).toString();
 
-        text_widget.setText(habit);
-        date_widget.setText(date);
+        text_widget.setText(key);
+        date_widget.setText(value);
 
         return view;
     }

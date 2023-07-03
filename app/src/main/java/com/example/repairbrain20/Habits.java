@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,7 +15,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class Habits extends AppCompatActivity {
 
     TextView percent;
     ListView list_view;
+    ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,10 @@ public class Habits extends AppCompatActivity {
 
         percent = findViewById(R.id.percent);
         list_view = findViewById(R.id.list);
+        img = findViewById(R.id.img);
+
+        img.setImageResource(R.drawable.noresultfound);
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference().child("data");
@@ -41,6 +47,16 @@ public class Habits extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 List<Object> list = (List<Object>) snapshot.getValue(new GenericTypeIndicator<Object>() {
                 });
+                if(list==null)
+                {
+                    img.setVisibility(View.VISIBLE);
+                    list_view.setVisibility(View.GONE);
+                    return;
+                }
+
+                img.setVisibility(View.GONE);
+                list_view.setVisibility(View.VISIBLE);
+
                 Log.e("sanjay_task",list.toString());
                 replace_habits.addValueEventListener(new ValueEventListener() {
                     @Override

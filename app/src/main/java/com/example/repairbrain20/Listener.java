@@ -8,131 +8,62 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public class Listener implements OnSuccessListener<FileDownloadTask.TaskSnapshot> ,OnFailureListener, OnProgressListener<FileDownloadTask.TaskSnapshot> {
+public class Listener implements OnSuccessListener<Object>,OnFailureListener,ValueEventListener {
 
-    FileDownloadTask task;
-    File file;
-    String type;
-    String text;
     ListView list;
-    TextView topic;
     ImageView img;
     Activity act;
+    DatabaseReference reference;
+    DatabaseReference list_effects_reference;
+    Map<String,Object> map;
+    List<Object> list_effects;
 
-    Listener(Activity act, StorageReference reference, String type)
+    Listener(Activity act, FirebaseDatabase database, ImageView img, ListView list,String type)
     {
-        this.type = type;
         this.act = act;
 
-        topic = act.findViewById(R.id.topic);
-        list = act.findViewById(R.id.list);
-        img = act.findViewById(R.id.no_results);
+        this.list = list;
+        this.img = img;
 
-        topic.setText(type);
+        this.reference = database.getReference().child("data").child(type+" list");
+        list_effects_reference = database.getReference().child("data").child(type);
 
-        file = createFile(type);
-        task = reference.getFile(file);
-
-        task.addOnSuccessListener(this);
-        task.addOnFailureListener(this);
-        task.addOnProgressListener(this);
+        list_effects_reference.addValueEventListener(this);
     }
 
-    @Override
-    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-        text = readTxt(file);
-        Log.e("sanjay_t",text);
-
-        if(text==null)
+    public void effect()
+    {
+        if(map!=null)
         {
-            show_image_view(R.drawable.noresultfound);
+            Log.e("sanjay_map",map.toString());
+            list.setAdapter(new ListAdapter(act,map,list_effects));
         }
         else
         {
-            delete_image_view();
-            effect(text);
-        }
-    }
-
-    @Override
-    public void onFailure(Exception e) {
-        show_image_view(R.drawable.noresultfound);
-    }
-
-    @Override
-    public void onProgress(FileDownloadTask.TaskSnapshot snapshot) {
-        show_image_view(R.drawable.loading_pink_list);
-    }
-
-    public String readTxt(File file) {
-        Scanner scanner;
-
-        try
-        {
-            scanner = new Scanner(file);
-        }
-        catch (FileNotFoundException e)
-        {
-            return null;
-        }
-
-        StringBuilder builder = new StringBuilder();
-
-        while(scanner.hasNextLine())
-        {
-            builder.append(scanner.nextLine()).append("\n");
-        }
-        return builder.toString();
-    }
-
-    public FileReader getReader(File file)
-    {
-        try
-        {
-            return new FileReader(file);
-        }
-        catch (Exception e)
-        {
-            Log.e("sanjay_t",e.toString());
-            return null;
-        }
-    }
-
-    public File createFile(String name)
-    {
-        File file = null;
-
-        try
-        {
-            file = File.createTempFile(name,"txt");
-        }
-        catch (IOException e)
-        {
-            Log.e("sanjay_t",e.toString());
-        }
-
-        return file;
-    }
-
-    public void effect(String text)
-    {
-        if(text!=null)
-        {
-            list.setAdapter(new ListAdapter(act,text));
+           show_image_view(R.id.no_results);
         }
     }
 
@@ -148,5 +79,40 @@ public class Listener implements OnSuccessListener<FileDownloadTask.TaskSnapshot
     {
         img.setVisibility(View.GONE);
         list.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot snapshot) {
+        map = snapshot.getValue(new GenericTypeIndicator<Map<String, Object>>() {
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+        });
+       // Toast.makeText(act, "Data Changed", Toast.LENGTH_SHORT).show();
+
+        Task<DataSnapshot> task = reference.get();
+        task.addOnSuccessListener(this);
+        task.addOnFailureListener(this);
+    }
+
+    @Override
+    public void onCancelled(DatabaseError error) {
+        show_image_view(R.id.no_results);
+    }
+
+    @Override
+    public void onFailure(Exception e) {
+        show_image_view(R.id.no_results);
+    }
+
+    @Override
+    public void onSuccess(Object o) {
+        //Toast.makeText(act, "Success", Toast.LENGTH_SHORT).show();
+        DataSnapshot snapshot = (DataSnapshot) o;
+        list_effects =  snapshot.getValue(new GenericTypeIndicator<List<Object>>() {
+        });
+
+        effect();
     }
 }
