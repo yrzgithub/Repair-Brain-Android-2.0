@@ -34,4 +34,16 @@
     <string name="positive">Positive</string>
     <string name="negative">Negative</string>
     <string name="steps">Steps</string>
+    <string name="username_or_e_mail">Username or E-mail</string>
+    <string name="get_email_or_username">get email or username</string>
+    <string name="password">Password</string>
+    <string name="login">login</string>
+    <string name="cancel">cancel</string>
+    <string name="craete_account">Create Account</string>
+    <string name="login_to_repair_brain">Login To Repair Brain</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="login_with_google">Login With Google</string>
+    <string name="or">OR</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_up_to_repair_brain">Sign up To Repair Brain</string>
 </resources>

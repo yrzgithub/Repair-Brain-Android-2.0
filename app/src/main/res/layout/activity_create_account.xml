@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:contextClickable="true"
+    android:focusable="auto"
+    android:focusableInTouchMode="true"
+    android:focusedByDefault="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".CreateAccountAct">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_to_repair_brain"
+        android:layout_weight="1"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        android:shadowColor="#DD2C00"
+        android:shadowDx="-20"
+        android:shadowDy="13"
+        android:shadowRadius="10" />
+
+</LinearLayout>
