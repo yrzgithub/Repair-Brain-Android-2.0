@@ -17,18 +17,23 @@
     tools:visibility="visible">
 
     <TextView
+        android:id="@+id/topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_weight="1"
         android:fontFamily="cursive"
         android:gravity="center"
         android:text="@string/login_to_repair_brain"
         android:textColor="@color/white"
-        android:textSize="42sp"
+        android:textSize="45sp"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
         android:textStyle="bold"
-        android:shadowColor="@color/black"
-        android:shadowDx="-20"
-        android:shadowDy="13"
+        android:shadowColor="#0044FF"
+        android:shadowDx="-10"
+        android:shadowDy="5"
         android:shadowRadius="10"
         />
 
@@ -38,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -124,7 +130,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_baseline_text_snippet_24"
+                android:src="@drawable/ic_baseline_fingerprint_24"
                 android:layout_gravity="center"
                 android:padding="10dp"/>
 
@@ -198,16 +204,41 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:text="@string/or"
-            android:layout_marginBottom="5dp"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"/>
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="@string/or"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -251,7 +282,7 @@
             android:clickable="true"
             android:contextClickable="true"
             android:soundEffectsEnabled="true"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textColor="@color/white"
             android:textStyle="bold"/>
 
@@ -262,11 +293,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="horizontal">
 
 
         <Button

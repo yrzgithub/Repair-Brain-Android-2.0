@@ -46,4 +46,9 @@
     <string name="or">OR</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_up_to_repair_brain">Sign up To Repair Brain</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="verify_password">Verify Password</string>
 </resources>

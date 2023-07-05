@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button signup_btn;
+    TextView topic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(signup_intent);
             }
         });
+
+        topic = findViewById(R.id.topic);
+        topic.setSelected(true);
 
     }
 }
