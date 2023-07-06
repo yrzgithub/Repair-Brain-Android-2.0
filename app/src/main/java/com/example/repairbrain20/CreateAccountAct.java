@@ -3,9 +3,11 @@ package com.example.repairbrain20;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,8 +18,9 @@ import com.bumptech.glide.request.transition.Transition;
 
 public class CreateAccountAct extends AppCompatActivity {
 
+    EditText firstname_view,lastname_view,email_view,password_view,verify_password_view;
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,12 @@ public class CreateAccountAct extends AppCompatActivity {
 
         TextView title = findViewById(R.id.sign_in_to_repair_brain);
         title.setSelected(true);
+
+        firstname_view = findViewById(R.id.first_name);
+        lastname_view = findViewById(R.id.last_name);
+        email_view = findViewById(R.id.email);
+        password_view = findViewById(R.id.password);
+        verify_password_view = findViewById(R.id.verify_password);
 
     }
 }

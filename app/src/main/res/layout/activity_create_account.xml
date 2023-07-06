@@ -59,6 +59,7 @@
                 android:src="@drawable/ic_baseline_person_24" />
 
             <EditText
+                android:id="@+id/first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -88,6 +89,7 @@
                 android:src="@drawable/ic_baseline_text_snippet_24" />
 
             <EditText
+                android:id="@+id/last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -116,6 +118,7 @@
                 android:src="@drawable/ic_baseline_email_24" />
 
             <EditText
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -145,6 +148,7 @@
                 android:src="@drawable/ic_baseline_fingerprint_24" />
 
             <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -174,6 +178,7 @@
                 android:src="@drawable/ic_baseline_verified_24" />
 
             <EditText
+                android:id="@+id/verify_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
