@@ -249,7 +249,6 @@
             android:background="@drawable/round_button"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:clickable="true"
             android:contextClickable="true"
             android:longClickable="true">
 
@@ -259,6 +258,7 @@
                 android:clickable="true"
                 android:longClickable="true"
                 android:contextClickable="true"
+                android:contentDescription="@string/none"
                 android:src="@drawable/common_google_signin_btn_icon_dark_normal"/>
 
             <Button

@@ -2,13 +2,17 @@ package com.example.repairbrain20;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,5 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         topic = findViewById(R.id.topic);
         topic.setSelected(true);
 
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.show();
     }
 }
