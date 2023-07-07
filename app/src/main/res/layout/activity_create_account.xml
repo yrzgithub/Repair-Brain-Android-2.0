@@ -115,14 +115,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:src="@drawable/ic_baseline_text_snippet_24" />
+                android:src="@drawable/baseline_person_add_24" />
 
             <EditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="@string/last_name"
+                android:hint="@string/username"
                 android:padding="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -226,6 +226,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_weight="2"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
 
         <Button

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -22,9 +23,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class CreateAccountAct extends AppCompatActivity {
 
-    EditText firstname_view,lastname_view,email_view,password_view,verify_password_view;
+    EditText firstname_view,lastname_view,email_view,password_view,verify_password_view,username_view;
     Button sign_up_button,login_with_google_button;
-    String first_name,last_name,email,password,verify_password;
+    String first_name,last_name,email,password,verify_password,username;
+    ProgressDialog progress;
     static final String title = "Repair Brain";
 
     @SuppressLint("MissingInflatedId")
@@ -57,6 +59,7 @@ public class CreateAccountAct extends AppCompatActivity {
 
         firstname_view = findViewById(R.id.first_name);
         lastname_view = findViewById(R.id.last_name);
+        username_view = findViewById(R.id.username);
         email_view = findViewById(R.id.email);
         password_view = findViewById(R.id.password);
         verify_password_view = findViewById(R.id.verify_password);
@@ -69,6 +72,7 @@ public class CreateAccountAct extends AppCompatActivity {
             public void onClick(View view) {
                 first_name = firstname_view.getText().toString().trim();
                 last_name = lastname_view.getText().toString().trim();
+                username = username_view.getText().toString().trim();
                 email = email_view.getText().toString().trim();
                 password = password_view.getText().toString().trim();
                 verify_password = verify_password_view.getText().toString().trim();
@@ -82,6 +86,12 @@ public class CreateAccountAct extends AppCompatActivity {
                 {
                     Toast.makeText(CreateAccountAct.this,"Invalid Last Name",Toast.LENGTH_LONG).show();
                 }
+
+                else if(!isValidString(username))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Invalid Username",Toast.LENGTH_LONG).show();
+                }
+
                 else if(!isValidString(email))
                 {
                     Toast.makeText(CreateAccountAct.this,"Invalid E-Mail",Toast.LENGTH_LONG).show();
