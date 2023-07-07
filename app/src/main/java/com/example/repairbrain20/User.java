@@ -1,5 +1,7 @@
 package com.example.repairbrain20;
 
+import static com.example.repairbrain20.CreateAccountAct.title;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -23,21 +25,16 @@ import com.google.firebase.auth.FirebaseUser;
 public class User {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    String firstname,lastname,username,password,email;
+    String firstname,lastname,username,password,email,full_name;
     Activity act;
     ProgressDialog progress;
     AlertDialog.Builder alert;
-    final String title = "Repair Brain";
 
-    User(Activity act,String firstname, String lastname, String username, String password, String email)
+    User(Activity act,String email,String password)
     {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-
         this.act = act;
+        this.email = email;
+        this.password = password;
 
         this.progress = new ProgressDialog(act);
         progress.setTitle("Repair Brain");
@@ -55,13 +52,15 @@ public class User {
                 .setPositiveButton("OK",null);
     }
 
-    User(String email,String password)
+    User(Activity act,String firstname, String lastname, String username, String password, String email)
     {
-        this.email = email;
-        this.password = password;
 
-        this.progress = new ProgressDialog(act);
-        progress.setTitle(title);
+        this(act,email,password);
+
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.full_name = firstname + " " + lastname;
+        this.username = username;
     }
 
     public void create_user()

@@ -1,5 +1,6 @@
 package com.example.repairbrain20;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
@@ -7,18 +8,24 @@ import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.snackbar.Snackbar;
 
 public class CreateAccountAct extends AppCompatActivity {
 
     EditText firstname_view,lastname_view,email_view,password_view,verify_password_view;
+    Button sign_up_button,login_with_google_button;
+    String first_name,last_name,email,password,verify_password;
+    static final String title = "Repair Brain";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,8 +52,8 @@ public class CreateAccountAct extends AppCompatActivity {
                     }
                 });
 
-        TextView title = findViewById(R.id.sign_in_to_repair_brain);
-        title.setSelected(true);
+        TextView title_view = findViewById(R.id.sign_in_to_repair_brain);
+        title_view.setSelected(true);
 
         firstname_view = findViewById(R.id.first_name);
         lastname_view = findViewById(R.id.last_name);
@@ -54,5 +61,59 @@ public class CreateAccountAct extends AppCompatActivity {
         password_view = findViewById(R.id.password);
         verify_password_view = findViewById(R.id.verify_password);
 
+        sign_up_button = findViewById(R.id.sign_up);
+        login_with_google_button = findViewById(R.id.login_to_repair_brain);
+
+        sign_up_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                first_name = firstname_view.getText().toString().trim();
+                last_name = lastname_view.getText().toString().trim();
+                email = email_view.getText().toString().trim();
+                password = password_view.getText().toString().trim();
+                verify_password = verify_password_view.getText().toString().trim();
+
+                if(!isValidString(first_name))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Invalid First Name",Toast.LENGTH_LONG).show();
+                }
+
+                else if(!isValidString(last_name))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Invalid Last Name",Toast.LENGTH_LONG).show();
+                }
+                else if(!isValidString(email))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Invalid E-Mail",Toast.LENGTH_LONG).show();
+                }
+                else if(!isValidString(password))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Invalid Password",Toast.LENGTH_LONG).show();
+                }
+                else if(!isValidString(verify_password))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Invalid verification password",Toast.LENGTH_LONG).show();
+                }
+                else  if(!password.equals(verify_password))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Passwords doesn't match",Toast.LENGTH_LONG).show();
+                }
+                else {
+                   // User user = new User(CreateAccountAct.this,first_name,last_name,email,password);
+                }
+            }
+        });
+
+        login_with_google_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+
+    public boolean isValidString(String string)
+    {
+        return !string.equals("");
     }
 }

@@ -115,6 +115,35 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:padding="10dp"
+                android:src="@drawable/ic_baseline_text_snippet_24" />
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/last_name"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/create_account_background"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="10dp"
                 android:src="@drawable/ic_baseline_email_24" />
 
             <EditText
@@ -166,7 +195,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/create_account_background"
             android:orientation="horizontal">
 
@@ -181,6 +209,7 @@
                 android:id="@+id/verify_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:background="@null"
                 android:hint="@string/verify_password"
                 android:padding="10dp"
@@ -196,15 +225,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="10dp"
             android:backgroundTint="#3269FF"
             android:padding="10dp"
             android:text="@string/sign_up"
@@ -214,7 +243,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -249,8 +278,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/round_button"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -260,6 +288,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:clickable="true"
                 android:longClickable="true"
                 android:contextClickable="true"
@@ -267,6 +296,7 @@
                 android:src="@drawable/common_google_signin_btn_icon_dark_normal"/>
 
             <Button
+                android:id="@+id/login_to_repair_brain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
