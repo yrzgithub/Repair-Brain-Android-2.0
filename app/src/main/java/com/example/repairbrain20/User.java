@@ -7,7 +7,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,14 +23,20 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class User {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
+
     String firstname,lastname,username,password,email,full_name;
     Activity act;
     ProgressDialog progress;
     AlertDialog.Builder alert;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ids_reference = database.getReference().child("ids");
 
     User(Activity act,String email,String password)
     {
@@ -37,7 +45,6 @@ public class User {
         this.password = password;
 
         this.progress = new ProgressDialog(act);
-        progress.setTitle("Repair Brain");
 
         progress.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -49,7 +56,13 @@ public class User {
         alert = new AlertDialog.Builder(act)
                 .setTitle(title)
                 .setIcon(R.drawable.ic_launcher_foreground)
-                .setPositiveButton("OK",null);
+                .setPositiveButton("OK",null)
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        act.finishAffinity();
+                    }
+                });
     }
 
     User(Activity act,String firstname, String lastname, String username, String password, String email)
@@ -63,26 +76,45 @@ public class User {
         this.username = username;
     }
 
+    public void getEmail()
+    {
+        if(email==null)
+        {
+
+        }
+    }
+
     public void create_user()
     {
-        progress.setMessage("Creating Account");
+        show_progress("Creating Account");
 
         Task<AuthResult> results =  auth.createUserWithEmailAndPassword(this.email,this.password);
+
+        FirebaseUser user = auth.getCurrentUser();
+        
+        if(user!=null)
+        {
+            UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(this.full_name)
+                    .build();
+        }
 
         results.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 send_verification_email();
-                progress.dismiss();
-                alert.setMessage("Email verification link sent");
-                alert.show();
             }
         });
 
         results.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("sanjay",e.toString());
+                progress.dismiss();
+
+                String error = e.getMessage();
+                Log.e("sanjay",error);
+
+                send_alert(error);
             }
         });
     }
@@ -143,7 +175,8 @@ public class User {
 
     public void send_verification_email()
     {
-        show_progress("Sending Email verification link");
+        progress.setMessage("Sending Email verification link");
+        progress.setCanceledOnTouchOutside(false);
 
         FirebaseUser user = auth.getCurrentUser();
 
@@ -154,14 +187,30 @@ public class User {
             task.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-
+                    progress.dismiss();
+                    if(task.isSuccessful())
+                    {
+                        send_alert("Email verification link sent");
+                    }
+                    else {
+                        Exception e = task.getException();
+                        if(e!=null)
+                        {
+                            send_alert(e.getMessage());
+                        }
+                        else
+                        {
+                            send_alert("Something went wrong");
+                        }
+                    }
                 }
             });
 
             task.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-
+                    progress.dismiss();
+                    send_alert(e.getMessage());
                 }
             });
         }

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "repair-brain-20",
+  "private_key_id": "e417faa9e8bf08e872bebc48b66f15d1b5e1ee0b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDKJ5/7U5fAYKzU\n0jv+0dpPG1lry8by9z1Pu3AX0ikc39mtls8Iy8rZp4jehKnpCspABVReBmjoOs3t\nPMhAxvGAENtPuBSMAaIMqnvMSBbE84wSYAvk4qkRoh+2Krv9fuqbezKPm+yV5R+P\ncAVSDeHSq7AHzyCmHnkagffNEfuOxA9OyjrM37/S0XAVJWvljI+TUTHNFwiFdPe8\nPS0ccXl+KBZZE1A0JinRUbYaVqq7pI2w5gn8L9N8WmCSS6gJnkHVd2OIRPpQRyfn\nG5G7vbz7fUY7hWCzc/seczhkdQKGPyfPE5ugkhd3a4c8/f0subAv2ldSQ5c93bXl\n3Ho0QIYXAgMBAAECggEAHYivJXdk/ZoiJfBBC6LPvixEuCxL+Jszvej9y2fM0dxy\nX5tfdpgvc/UMrgBmbRbtIsVPOh1oSOVZHdvPddya08Gis4GKnu8Yzw4+iph4Rcs/\nH5V1/Lk7R3Q5eyfAfJyE3LT3AhF0Uxc9Bnuwi02z5voQ/FMVIK/ltCsLb6O87h0R\nkUydOyfcEh8yOhw6KBOtW/AgEaC1NlCWg3N4dBXj50b/9G6j8f/WiBgmh2XY+JDl\nmGRcbso9eof6ARHuaJx793oRWFFyey917v4aFAjLZi4lTihb9Vdw+rdzGLb2n1zE\nYjkFZC8nLSQn8tGK0T31u+21+RQbMliAkROON1G7AQKBgQDpUW6ghV3VB4Q4EB3w\nXcqQ7QhcdDCt36YnqoEgQyCznv1rNGRDpJgiLBqCrFR6iFjx7i88ZoMh4icwFXKj\nkMixkBU6/5yWGXtN45dF/+eUrlwMoRx90x8uMicTenDu8RYn3lhBTTT2N/5BzrR5\nsers3WyLZ/1HBbewiOpFGE9R4QKBgQDdzqJVzXMbi6aniEv+dpjREF+vQyH9xVhl\n8HTA5DKBts4SQdjbIh3BRln/AE34M5oWN+C0eXCd8FOCYe8ZOTGPTz1Yj7aKcv4E\nMWWbyAXxbaL3wAv/fj1RDd4wGo0ho0IReKl3j8+eMR0Q6SGvU1u/vf+o3kbE+kTQ\nzxfNE/VG9wKBgA1M7xmHgMncG9V2Vb6WGi4Y1RkwJnZDAZ3RQnssWHjk3111JyIU\nB/gqu3gnislRbICeK2MuFNuhoMpE7rwUTNySciNi3vJPkY/nIYCEDheTuPufU5h4\nqJZhlYiuujFk3PZ43l8an6JJntzxg6hMVDAcj0uDKhUaZlZR98jokd0BAoGBAMNH\noE6Qcg5HVjNbYSSof4RYuRVRsoR9EYW2PORyRDFFo4oZZPYQxEecS7GhMAQcUkXL\nbk8WN9slcjBxTpNTclmstuLYrCqacR956e5MHUdgckFTWHzZRNyuq/aH+ccquAkv\nxWvZNj4dGW0BA8IbTsSyX3rqLz5O5PU9zsOkFacjAoGASoa0l9ZGQ/zxyh0S1bj4\n2nm4NDxf20GEE3VPe1EqF2XjZrYHMIdNAXtqCSMmfthqFtbympeXH7KFxuLPF+zR\nV3CKnaMeZhjFnyS6shQGUdlf1iGCljmaEiaQ6d4cWLPJxcqUNcpzK7PIanHJe4K5\nooOuQ/cl4dAeRSWZD/IwG4E=\n-----END PRIVATE KEY-----\n",
+  "client_email": "repair-brain-20@appspot.gserviceaccount.com",
+  "client_id": "108164645061319801049",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/repair-brain-20%40appspot.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -35,6 +35,7 @@ public class CreateAccountAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+        
         if(getSupportActionBar()!=null)
         {
             getSupportActionBar().hide();
@@ -100,6 +101,10 @@ public class CreateAccountAct extends AppCompatActivity {
                 {
                     Toast.makeText(CreateAccountAct.this,"Invalid Password",Toast.LENGTH_LONG).show();
                 }
+                else if(password.length()<6)
+                {
+                    Toast.makeText(CreateAccountAct.this,"Password is too short",Toast.LENGTH_LONG).show();
+                }
                 else if(!isValidString(verify_password))
                 {
                     Toast.makeText(CreateAccountAct.this,"Invalid verification password",Toast.LENGTH_LONG).show();
@@ -110,6 +115,9 @@ public class CreateAccountAct extends AppCompatActivity {
                 }
                 else {
                    // User user = new User(CreateAccountAct.this,first_name,last_name,email,password);
+
+                    User user = new User(CreateAccountAct.this,first_name,last_name,username,password,email);
+                    user.create_user();
                 }
             }
         });
@@ -125,5 +133,10 @@ public class CreateAccountAct extends AppCompatActivity {
     public boolean isValidString(String string)
     {
         return !string.equals("");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
