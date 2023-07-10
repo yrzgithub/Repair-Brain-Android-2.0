@@ -24,10 +24,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 
-public class User {
+public class User implements OnCompleteListener<AuthResult> {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -44,14 +46,9 @@ public class User {
         this.email = email;
         this.password = password;
 
+        getEmail();
+
         this.progress = new ProgressDialog(act);
-
-        progress.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-
-            }
-        });
 
         alert = new AlertDialog.Builder(act)
                 .setTitle(title)
@@ -80,7 +77,31 @@ public class User {
     {
         if(email==null)
         {
+            Task<DataSnapshot> snapshot =  ids_reference.child(this.username).get();
 
+            show_progress("Connecting");
+
+            snapshot.addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    User.this.email = dataSnapshot.getValue(String.class);
+                }
+            });
+
+            snapshot.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    String message = e.getMessage();
+                    send_alert(message);
+                }
+            });
+
+            snapshot.addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    progress.dismiss();
+                }
+            });
         }
     }
 
@@ -90,38 +111,43 @@ public class User {
 
         Task<AuthResult> results =  auth.createUserWithEmailAndPassword(this.email,this.password);
 
-        FirebaseUser user = auth.getCurrentUser();
-        
-        if(user!=null)
-        {
-            UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                    .setDisplayName(this.full_name)
-                    .build();
-        }
-
         results.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+
                 send_verification_email();
+
+                FirebaseUser user = auth.getCurrentUser();
+
+                if(user!=null)
+                {
+                    UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(User.this.full_name)
+                            .build();
+
+                    user.updateProfile(request);
+                }
             }
         });
 
         results.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                progress.dismiss();
-
                 String error = e.getMessage();
                 Log.e("sanjay",error);
 
                 send_alert(error);
             }
         });
+
+        results.addOnCompleteListener(this);
     }
 
     public void login_with_email_and_password()
     {
         Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email,this.password);
+
+        show_progress("Logging In");
 
         result.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -153,8 +179,13 @@ public class User {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.e("Sanjay",e.toString());
+                String message = e.getMessage();
+                send_alert(message);
             }
         });
+
+        result.addOnCompleteListener(this);
+
     }
 
     public  void show_progress(String message)
@@ -187,7 +218,7 @@ public class User {
             task.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    progress.dismiss();
+
                     if(task.isSuccessful())
                     {
                         send_alert("Email verification link sent");
@@ -209,10 +240,14 @@ public class User {
             task.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    progress.dismiss();
                     send_alert(e.getMessage());
                 }
             });
         }
+    }
+
+    @Override
+    public void onComplete(@NonNull Task<AuthResult> task) {
+        progress.dismiss();
     }
 }
