@@ -16,8 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button signup_btn,login_btn;
-    TextView topic;
+    Button signup_btn,login_btn,google_btn;
+    TextView topic,forget_password_text,create_account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
