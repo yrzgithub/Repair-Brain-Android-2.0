@@ -190,6 +190,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/forget_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -241,27 +242,28 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/login_with_google"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/round_button"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
+            android:background="@drawable/round_button"
             android:clickable="true"
             android:contextClickable="true"
-            android:longClickable="true">
+            android:longClickable="true"
+            tools:ignore="DuplicateClickableBoundsCheck">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/none"
                 android:clickable="true"
-                android:longClickable="true"
+                android:contentDescription="@string/none"
                 android:contextClickable="true"
-                android:src="@drawable/common_google_signin_btn_icon_dark_normal"/>
+                android:longClickable="true"
+                android:src="@drawable/common_google_signin_btn_icon_dark_normal" />
 
             <Button
-                android:id="@+id/login_with_google"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"

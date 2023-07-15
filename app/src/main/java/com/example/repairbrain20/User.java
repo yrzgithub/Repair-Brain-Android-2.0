@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,9 +26,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 public class User implements OnCompleteListener<AuthResult> {
 
@@ -39,16 +42,16 @@ public class User implements OnCompleteListener<AuthResult> {
     AlertDialog.Builder alert;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ids_reference = database.getReference().child("ids");
+    static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
 
-    User(Activity act,String email,String password)
+    User(Activity act,String email_or_username,String password)
     {
         this.act = act;
-        this.email = email;
         this.password = password;
 
-        getEmail();
-
         this.progress = new ProgressDialog(act);
+        progress.setCanceledOnTouchOutside(false);
+        progress.setOnCancelListener(null);
 
         alert = new AlertDialog.Builder(act)
                 .setTitle(title)
@@ -60,6 +63,16 @@ public class User implements OnCompleteListener<AuthResult> {
                         act.finishAffinity();
                     }
                 });
+
+        if (email_or_username.matches(email_regex))
+        {
+            this.email = email_or_username;
+        }
+        else
+        {
+            this.username = email_or_username;
+            getEmail(this.username);
+        }
     }
 
     User(Activity act,String firstname, String lastname, String username, String password, String email)
@@ -73,35 +86,21 @@ public class User implements OnCompleteListener<AuthResult> {
         this.username = username;
     }
 
-    public void getEmail()
-    {
+    public void getEmail(String username) {
         if(email==null)
         {
-            Task<DataSnapshot> snapshot =  ids_reference.child(this.username).get();
-
             show_progress("Connecting");
+            Log.e("sanjay_username",username);
 
-            snapshot.addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            ids_reference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                 @Override
                 public void onSuccess(DataSnapshot dataSnapshot) {
-                    User.this.email = dataSnapshot.getValue(String.class);
+                    Toast.makeText(act,"Successful",Toast.).show();
                 }
             });
-
-            snapshot.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    String message = e.getMessage();
-                    send_alert(message);
-                }
-            });
-
-            snapshot.addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    progress.dismiss();
-                }
-            });
+        }
+        else {
+            send_alert("Invalid Username or Email");
         }
     }
 
@@ -143,9 +142,11 @@ public class User implements OnCompleteListener<AuthResult> {
         results.addOnCompleteListener(this);
     }
 
-    public void login_with_email_and_password()
+    public void login_with_email_and_password(String password)
     {
-        Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email,this.password);
+        Log.e("uruttu",this.email + " " + password);
+        
+        Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email,password);
 
         show_progress("Logging In");
 
@@ -164,10 +165,11 @@ public class User implements OnCompleteListener<AuthResult> {
                     else
                     {
                         alert.setMessage("Email not verified");
-                        alert.setPositiveButton("Verify", new DialogInterface.OnClickListener() {
+                        alert.setPositiveButton("Ok",null);
+                        alert.setNegativeButton("Verify", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                send_verification_email();
+                                User.this.send_verification_email();
                             }
                         });
                     }
@@ -200,6 +202,8 @@ public class User implements OnCompleteListener<AuthResult> {
 
     public  void send_alert(String msg)
     {
+        if(progress.isShowing()) progress.dismiss();
+
         alert.setMessage(msg);
         alert.show();
     }
@@ -207,7 +211,6 @@ public class User implements OnCompleteListener<AuthResult> {
     public void send_verification_email()
     {
         progress.setMessage("Sending Email verification link");
-        progress.setCanceledOnTouchOutside(false);
 
         FirebaseUser user = auth.getCurrentUser();
 

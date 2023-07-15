@@ -1,31 +1,5 @@
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/drawable/button_round.xml" value="0.195" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/drawable/create_account_background.xml" value="0.195" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/drawable/round.xml" value="0.195" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/drawable/round_button.xml" value="0.195" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/drawable/shape.xml" value="0.2555" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_create_account.xml" value="0.264" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_effects.xml" value="0.20521590423257802" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_effects_tabs.xml" value="0.20521590423257802" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_habits.xml" value="0.20521590423257802" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_main.xml" value="0.176" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_steps.xml" value="0.20521590423257802" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/activity_time.xml" value="0.2" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/custom_habits_list.xml" value="0.264" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/custom_list_effects.xml" value="0.4" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_effects.xml" value="0.20521590423257802" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_neg.xml" value="0.1936725096194955" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_next.xml" value="0.1936725096194955" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/fragment_pos.xml" value="0.1936725096194955" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/no_results.xml" value="0.20521590423257802" />
-        <entry key="..\:/Users/seenu/AndroidStudioProjects/RepairBrain20/app/src/main/res/layout/round_button.xml" value="0.20521590423257802" />
-      </map>
-    </option>
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

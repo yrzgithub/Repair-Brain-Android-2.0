@@ -6,6 +6,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -113,6 +114,10 @@ public class CreateAccountAct extends AppCompatActivity {
                 {
                     Toast.makeText(CreateAccountAct.this,"Passwords doesn't match",Toast.LENGTH_LONG).show();
                 }
+                else if(!email.matches(User.email_regex))
+                {
+                    Toast.makeText(CreateAccountAct.this,"Invalid Email",Toast.LENGTH_LONG).show();
+                }
                 else {
                    // User user = new User(CreateAccountAct.this,first_name,last_name,email,password);
 
@@ -125,12 +130,14 @@ public class CreateAccountAct extends AppCompatActivity {
         login_with_google_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(CreateAccountAct.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
 
-    public boolean isValidString(String string)
+    public static boolean isValidString(String string)
     {
         return !string.equals("");
     }
