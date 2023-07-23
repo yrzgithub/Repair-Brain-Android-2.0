@@ -92,12 +92,26 @@ public class User implements OnCompleteListener<AuthResult> {
             show_progress("Connecting");
             Log.e("sanjay_username",username);
 
-            ids_reference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            ids_reference.child(username).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onSuccess(DataSnapshot dataSnapshot) {
-                    Toast.makeText(act,"Successful",Toast.).show();
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists())
+                    {
+                        User.this.email = snapshot.getValue(String.class);
+                        Log.e("sanjay_email",User.this.email);
+                    }
+                    else
+                    {
+                        User.this.email = null;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                        send_alert("Connection failed");
                 }
             });
+
         }
         else {
             send_alert("Invalid Username or Email");
@@ -144,6 +158,7 @@ public class User implements OnCompleteListener<AuthResult> {
 
     public void login_with_email_and_password(String password)
     {
+        /*
         Log.e("uruttu",this.email + " " + password);
         
         Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email,password);
@@ -187,6 +202,8 @@ public class User implements OnCompleteListener<AuthResult> {
         });
 
         result.addOnCompleteListener(this);
+
+         */
 
     }
 
