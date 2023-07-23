@@ -98,7 +98,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 User user = new User(this,username_or_email,password);
-                user.login_with_email_and_password(password);
+                if(user.use_username())
+                {
+                    user.login_with_username(username_or_email,password);
+                }
+                else
+                {
+                    user.login_with_email_and_password(password);
+                }
+
                 break;
 
             case R.id.login_with_google:

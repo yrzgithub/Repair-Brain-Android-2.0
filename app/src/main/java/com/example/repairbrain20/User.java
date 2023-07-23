@@ -43,6 +43,7 @@ public class User implements OnCompleteListener<AuthResult> {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ids_reference = database.getReference().child("ids");
     static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
+    boolean use_username;
 
     User(Activity act,String email_or_username,String password)
     {
@@ -67,11 +68,12 @@ public class User implements OnCompleteListener<AuthResult> {
         if (email_or_username.matches(email_regex))
         {
             this.email = email_or_username;
+            this.use_username = false;
         }
         else
         {
             this.username = email_or_username;
-            getEmail(this.username);
+            this.use_username = true;
         }
     }
 
@@ -86,7 +88,13 @@ public class User implements OnCompleteListener<AuthResult> {
         this.username = username;
     }
 
-    public void getEmail(String username) {
+
+    public boolean use_username()
+    {
+        return use_username;
+    }
+
+    public void login_with_username(String username,String password) {
         if(email==null)
         {
             show_progress("Connecting");
@@ -99,19 +107,24 @@ public class User implements OnCompleteListener<AuthResult> {
                     {
                         User.this.email = snapshot.getValue(String.class);
                         Log.e("sanjay_email",User.this.email);
+                        progress.dismiss();
+
+                        login_with_email_and_password(password);
                     }
                     else
                     {
                         User.this.email = null;
+                        progress.dismiss();
+                        send_alert("Username not found");
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                         send_alert("Connection failed");
+                        progress.dismiss();
                 }
             });
-
         }
         else {
             send_alert("Invalid Username or Email");
@@ -158,7 +171,13 @@ public class User implements OnCompleteListener<AuthResult> {
 
     public void login_with_email_and_password(String password)
     {
-        /*
+
+        if(this.email==null)
+        {
+            Log.e("sanjay","Cannot login");
+            return;
+        }
+
         Log.e("uruttu",this.email + " " + password);
         
         Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email,password);
@@ -173,8 +192,7 @@ public class User implements OnCompleteListener<AuthResult> {
                 {
                     if(user.isEmailVerified())
                     {
-                        Intent intent = new Intent(act, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Intent intent = new Intent(act, MainActivity.class);
                         act.startActivity(intent);
                     }
                     else
@@ -202,9 +220,6 @@ public class User implements OnCompleteListener<AuthResult> {
         });
 
         result.addOnCompleteListener(this);
-
-         */
-
     }
 
     public  void show_progress(String message)
