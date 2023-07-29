@@ -36,6 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
+        User user = new User(this,"sanjay","#Jaihind20");
+        user.login_with_username();
+
         topic = findViewById(R.id.topic);
         forget_password_text = findViewById(R.id.forget_password);
         create_account = findViewById(R.id.create_account);
@@ -100,11 +103,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 User user = new User(this,username_or_email,password);
                 if(user.use_username())
                 {
-                    user.login_with_username(username_or_email,password);
+                    user.login_with_username();
                 }
                 else
                 {
-                    user.login_with_email_and_password(password);
+                    user.login_with_email_and_password();
                 }
 
                 break;

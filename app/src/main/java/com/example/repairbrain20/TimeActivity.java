@@ -2,6 +2,7 @@ package com.example.repairbrain20;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class TimeActivity extends AppCompatActivity {
     DatabaseReference reference = null;
     FirebaseDatabase database;
     Button effects = null, next = null;
+    ProgressBar progress;
     //MediaPlayer player;
 
     @Override
@@ -64,13 +67,19 @@ public class TimeActivity extends AppCompatActivity {
         effects = findViewById(R.id.effects);
         next = findViewById(R.id.next);
 
+        progress = findViewById(R.id.progress);
+
         LinearLayout root = findViewById(R.id.root);
 
        // player = MediaPlayer.create(this,R.raw.ticksound);
         // player.setLooping(true);
 
+        progress.setMax(24);
+
+        String uid = User.getUid();
+
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference("data");
+        reference = database.getReference(uid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -101,6 +110,7 @@ public class TimeActivity extends AppCompatActivity {
 
                     Handler handler = new Handler();
                     Runnable runnable = new Runnable() {
+                        @SuppressLint("DefaultLocale")
                         @Override
                         public void run() {
                             LocalDateTime now = LocalDateTime.now();
@@ -110,23 +120,16 @@ public class TimeActivity extends AppCompatActivity {
                             long days = duration.toDays();
                             long hours = duration.toHours() % 24;
                             long minutes = duration.toMinutes() % 60;
-                            long seconds;
+                            long seconds = duration.getSeconds() % 60;
+
+                            progress.setProgress((int)hours);
 
                             String format,time;
 
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                                seconds = duration.toSeconds() % 60;
-                                format = "%d days %d hrs %d mins %d secs";
-                                time = String.format(format,days,hours,minutes,seconds);
-                                Log.e("sanjay_uruttu",time);
-                                time_gone.setText(time);
-                            }
-                            else
-                            {
-                                format = "%l days %l hrs %l mins";
-                                time = String.format(format,days,hours,minutes);
-                                time_gone.setText(time);
-                            }
+                            format = "%d days %d hrs %d mins %d secs";
+                            time = String.format(format,days,hours,minutes,seconds);
+                            Log.e("sanjay_uruttu",time);
+                            time_gone.setText(time);
 
                             handler.postDelayed(this,1000);
                         }

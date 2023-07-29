@@ -44,6 +44,7 @@ public class User implements OnCompleteListener<AuthResult> {
     DatabaseReference ids_reference = database.getReference().child("ids");
     static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
     boolean use_username;
+    static String uid;
 
     User(Activity act,String email_or_username,String password)
     {
@@ -94,7 +95,10 @@ public class User implements OnCompleteListener<AuthResult> {
         return use_username;
     }
 
-    public void login_with_username(String username,String password) {
+    public void login_with_username() {
+
+        String username = this.username;
+
         if(email==null)
         {
             show_progress("Connecting");
@@ -109,7 +113,7 @@ public class User implements OnCompleteListener<AuthResult> {
                         Log.e("sanjay_email",User.this.email);
                         progress.dismiss();
 
-                        login_with_email_and_password(password);
+                        login_with_email_and_password();
                     }
                     else
                     {
@@ -169,8 +173,10 @@ public class User implements OnCompleteListener<AuthResult> {
         results.addOnCompleteListener(this);
     }
 
-    public void login_with_email_and_password(String password)
+    public void login_with_email_and_password()
     {
+
+        String password = this.password;
 
         if(this.email==null)
         {
@@ -192,6 +198,7 @@ public class User implements OnCompleteListener<AuthResult> {
                 {
                     if(user.isEmailVerified())
                     {
+                        User.uid = user.getUid();
                         Intent intent = new Intent(act, MainActivity.class);
                         act.startActivity(intent);
                     }
@@ -284,5 +291,10 @@ public class User implements OnCompleteListener<AuthResult> {
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         progress.dismiss();
+    }
+
+    public static String getUid()
+    {
+        return User.uid;
     }
 }
