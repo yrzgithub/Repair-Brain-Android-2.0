@@ -122,7 +122,9 @@ public class TimeActivity extends AppCompatActivity {
                             long minutes = duration.toMinutes() % 60;
                             long seconds = duration.getSeconds() % 60;
 
-                            progress.setProgress((int)hours);
+                            Log.e("sanjay",String.valueOf(hours));
+
+                            progress.setProgress(now.getHour());
 
                             String format,time;
 

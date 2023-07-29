@@ -10,16 +10,36 @@
     android:id="@+id/root"
     tools:context=".TimeActivity">
 
-
-    <ProgressBar
-        android:id="@+id/progress"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:padding="30dp"
-        android:indeterminateOnly="false"
-        android:progressDrawable="@drawable/progress"
-        android:progress="100" />
+        android:layout_weight="2">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminateOnly="false"
+            android:padding="50dp"
+            android:progressDrawable="@drawable/progress"
+            android:progress="100" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/_60"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/progress"
+            app:layout_constraintTop_toTopOf="@+id/progress"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"
+            tools:layout_editor_absoluteX="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/time_gone"
