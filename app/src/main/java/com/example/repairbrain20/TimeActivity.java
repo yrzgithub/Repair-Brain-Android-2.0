@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class TimeActivity extends AppCompatActivity {
 
-    TextView time_gone=null,lastly_relapse=null,next_step=null,pos_effect=null,neg_effect=null;
+    TextView time_gone=null,lastly_relapse=null,next_step=null,pos_effect=null,neg_effect=null,hrs_left=null;
     EditText neg_edit=null,pos_edit=null,next_edit=null;
     DatabaseReference reference = null;
     FirebaseDatabase database;
@@ -53,11 +53,13 @@ public class TimeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time);
 
+        //TextView
         time_gone = findViewById(R.id.time_gone);
         lastly_relapse = findViewById(R.id.lastly_relapsed);
         next_step = findViewById(R.id.next_step);
         pos_effect = findViewById(R.id.pos_effect);
         neg_effect = findViewById(R.id.neg_effects);
+        hrs_left = findViewById(R.id.hrs);
 
         lastly_relapse.setSelected(true);
         next_step.setSelected(true);
@@ -108,6 +110,8 @@ public class TimeActivity extends AppCompatActivity {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
                     String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
 
+                    String h;
+
                     Handler handler = new Handler();
                     Runnable runnable = new Runnable() {
                         @SuppressLint("DefaultLocale")
@@ -124,12 +128,12 @@ public class TimeActivity extends AppCompatActivity {
 
                             Log.e("sanjay",String.valueOf(hours));
 
-                            progress.setProgress(now.getHour());
+                            int hrs = (int)hours;
+                            progress.setProgress(hrs);
+                            hrs_left.setText(String.format("%02d",24-hrs));
 
-                            String format,time;
-
-                            format = "%d days %d hrs %d mins %d secs";
-                            time = String.format(format,days,hours,minutes,seconds);
+                            String format = "%d days %d hrs %d mins %d secs";
+                            String time = String.format(format,days,hours,minutes,seconds);
                             Log.e("sanjay_uruttu",time);
                             time_gone.setText(time);
 

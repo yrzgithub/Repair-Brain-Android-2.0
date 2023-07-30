@@ -51,5 +51,5 @@
     <string name="last_name">Last Name</string>
     <string name="email">Email</string>
     <string name="verify_password">Verify Password</string>
-    <string name="_60">100%</string>
+    <string name="hrs_left">hrs left</string>
 </resources>

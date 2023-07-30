@@ -25,19 +25,37 @@
             android:progress="100" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/hrs_left"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="15dp"
-            android:text="@string/_60"
+            android:text="@string/hrs_left"
+            android:layout_marginStart="10dp"
             android:textColor="@color/black"
-            android:textSize="28sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/progress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/progress"
             app:layout_constraintTop_toTopOf="@+id/progress"
             app:layout_constraintVertical_bias="0.5"
-            app:layout_constraintHorizontal_bias="0.5"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintHorizontal_bias=".53"/>
+
+        <TextView
+            android:id="@+id/hrs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="24"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/progress"
+            app:layout_constraintHorizontal_bias=".40"
+            app:layout_constraintStart_toStartOf="@+id/progress"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".5"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
