@@ -21,6 +21,8 @@
             android:layout_height="match_parent"
             android:indeterminateOnly="false"
             android:progress="100"
+            android:padding="6dp"
+            android:layout_marginBottom="20dp"
             android:progressDrawable="@drawable/progress" />
 
         <TextView
@@ -71,13 +73,13 @@
         android:singleLine="true"
         android:text="@string/not_found"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="20dp"
         android:padding="5dp">
 
         <LinearLayout
@@ -100,7 +102,7 @@
                 android:padding="15dp"
                 android:text="@string/lastly_relapsed"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -120,7 +122,7 @@
             android:singleLine="true"
             android:text="@string/not_found"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -144,7 +146,7 @@
                 android:padding="15dp"
                 android:text="@string/ve_effect"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -164,7 +166,7 @@
             android:singleLine="true"
             android:text="@string/not_found"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -188,7 +190,7 @@
                 android:padding="15dp"
                 android:text="@string/next_step"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -208,7 +210,7 @@
             android:singleLine="true"
             android:text="@string/not_found"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -232,7 +234,7 @@
                 android:padding="15dp"
                 android:text="@string/neg_ve_effect"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -251,7 +253,7 @@
             android:singleLine="true"
             android:text="@string/not_found"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
     </GridLayout>
