@@ -7,7 +7,6 @@
     <string name="next_step">Next Step</string>
     <string name="ve_effect">+ve Effect</string>
     <string name="neg_ve_effect">-ve Effect</string>
-    <string name="effects">Effects</string>
     <string name="enter_the_positive_effect">Enter the +ve effect</string>
     <string name="enter_the_ve_effect">Enter the -ve effect</string>
     <string name="enter_the_next_step">Enter the next step</string>
@@ -19,7 +18,6 @@
     <string name="positive_effects">Positive Effects :</string>
     <string name="negative_effects">Negative Effects :</string>
     <string name="edit">Edit</string>
-    <string name="next">Next</string>
     <string name="star">*</string>
     <string name="step">Step</string>
     <string name="save">Save</string>
@@ -52,4 +50,9 @@
     <string name="email">Email</string>
     <string name="verify_password">Verify Password</string>
     <string name="hrs_left">hrs left</string>
+    <string name="habits">Habits</string>
+    <string name="change">change</string>
+    <string name="next">next</string>
+    <string name="effects">effects</string>
+    <string name="_0">00</string>
 </resources>

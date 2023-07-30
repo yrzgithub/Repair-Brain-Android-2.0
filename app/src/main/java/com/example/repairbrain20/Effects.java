@@ -36,11 +36,9 @@ public class Effects extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_effects);
 
-        pos = findViewById(R.id.pos_effects);
-        neg = findViewById(R.id.neg_effects);
-        next = findViewById(R.id.next_step);
-
-
+         //pos = findViewById(R.id.pos_effect);
+        //neg = findViewById(R.id.neg_effects);
+        //next = findViewById(R.id.next_step);
     }
 
     public String readTxt(File file) {

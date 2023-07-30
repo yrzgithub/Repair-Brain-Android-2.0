@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
-        <shape android:thicknessRatio="10"
+        <shape
             android:shape="ring"
             android:thickness="20dp"
             android:useLevel="false">
@@ -12,10 +12,9 @@
 
     <item>
         <rotate android:toDegrees="0"
-            android:fromDegrees="0"
-            >
+            android:fromDegrees="0">
 
-                <shape android:thicknessRatio="16"
+                <shape
                     android:shape="ring"
                     android:useLevel="true"
                     android:thickness="20dp">
@@ -24,8 +23,7 @@
                         android:useLevel="true"
                         android:startColor="#BCFF92"
                         android:endColor="#00FF00"
-                        android:type="sweep"
-                         />
+                        android:type="sweep" />
 
                   <!--  <solid android:color="#00FF6A"/> -->
 
