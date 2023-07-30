@@ -2,8 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:layout_marginTop="5dp"
     android:layout_marginEnd="5dp">
 
@@ -18,7 +16,7 @@
 
     <TextView
         android:id="@+id/habit"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -43,12 +41,21 @@
 
     <TextView
         android:id="@+id/show_on"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/show_on_text"
         android:gravity=""
         android:textColor="@color/black" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_toStartOf="@+id/habit"
+        android:allowUndo="true"
+        android:gravity="center"/>
+
 
 </RelativeLayout>

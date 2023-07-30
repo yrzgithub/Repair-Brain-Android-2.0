@@ -52,7 +52,7 @@ public class Habits extends AppCompatActivity {
                 if(snapshot.getValue()!=null)
                 {
                     int lastly_noted_accuracy = snapshot.getValue(Integer.class);
-                    percent.setText(String.valueOf(lastly_noted_accuracy));
+                    percent.setText(lastly_noted_accuracy+"%");
                 }
             }
 
