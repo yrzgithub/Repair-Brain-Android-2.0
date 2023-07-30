@@ -1,5 +1,6 @@
 package com.example.repairbrain20;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,11 +38,29 @@ public class Habits extends AppCompatActivity {
 
         img.setImageResource(R.drawable.noresultfound);
 
+        String id = User.getUid();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference().child("data");
+        DatabaseReference reference = database.getReference().child(id);
         DatabaseReference replace_habits_list =  reference.child("replace_habits_list");
         DatabaseReference replace_habits = reference.child(("replace_habits"));
+        DatabaseReference replace_accuracy = reference.child("last_accuracy_percent");
+
+        replace_accuracy.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue()!=null)
+                {
+                    int lastly_noted_accuracy = snapshot.getValue(Integer.class);
+                    percent.setText(String.valueOf(lastly_noted_accuracy));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         replace_habits_list.addValueEventListener(new ValueEventListener() {
             @Override
