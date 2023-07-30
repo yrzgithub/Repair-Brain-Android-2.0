@@ -48,8 +48,10 @@ public class Listener implements OnSuccessListener<Object>,OnFailureListener,Val
         this.list = list;
         this.img = img;
 
-        this.reference = database.getReference().child("data").child(type+" list");
-        list_effects_reference = database.getReference().child("data").child(type);
+        String uid = User.getUid();
+
+        this.reference = database.getReference().child(uid).child(type+" list");
+        list_effects_reference = database.getReference().child(uid).child(type);
 
         list_effects_reference.addValueEventListener(this);
     }
@@ -58,12 +60,11 @@ public class Listener implements OnSuccessListener<Object>,OnFailureListener,Val
     {
         if(map!=null)
         {
-            Log.e("sanjay_map",map.toString());
             list.setAdapter(new ListAdapter(act,map,list_effects));
         }
         else
         {
-           show_image_view(R.id.no_results);
+            show_image_view(R.drawable.noresultfound);
         }
     }
 
@@ -71,8 +72,8 @@ public class Listener implements OnSuccessListener<Object>,OnFailureListener,Val
     {
         img.setVisibility(View.VISIBLE);
         img.setForegroundGravity(Gravity.CENTER);
-        Glide.with(act).load(id).into(img);
         list.setVisibility(View.GONE);
+        Glide.with(act).load(id).into(img);
     }
 
     public void delete_image_view()
