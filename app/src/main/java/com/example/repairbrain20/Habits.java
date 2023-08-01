@@ -26,6 +26,7 @@ public class Habits extends AppCompatActivity {
     TextView percent;
     ListView list_view;
     ImageView img;
+    static int last_accuracy_percent = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class Habits extends AppCompatActivity {
                 if(snapshot.getValue()!=null)
                 {
                     int lastly_noted_accuracy = snapshot.getValue(Integer.class);
+                    last_accuracy_percent = lastly_noted_accuracy;
                     percent.setText(lastly_noted_accuracy+"%");
                 }
             }
@@ -103,5 +105,15 @@ public class Habits extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    public static int lastly_accuracy()
+    {
+        return last_accuracy_percent;
     }
 }
