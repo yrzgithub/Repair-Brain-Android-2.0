@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("data");
 
-        Intent intent = new Intent(MainActivity.this,TimeActivity.class);
+        Intent intent = new Intent(MainActivity.this,HabitsAndAccuracy.class);
 
         free_button.setOnClickListener(new View.OnClickListener() {
             @Override
