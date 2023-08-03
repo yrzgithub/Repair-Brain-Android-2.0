@@ -194,6 +194,7 @@ public class User implements OnCompleteListener<AuthResult> {
             @Override
             public void onSuccess(AuthResult authResult) {
                 FirebaseUser user = authResult.getUser();
+                new UserData(user).write();
                 if(user!=null)
                 {
                     if(user.isEmailVerified())
