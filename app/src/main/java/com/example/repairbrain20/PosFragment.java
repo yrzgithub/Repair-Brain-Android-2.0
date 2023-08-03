@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,23 +25,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PosFragment extends Fragment {
 
-    FirebaseDatabase database;
     ListView listView = null;
 
     PosFragment()
     {
-        database = FirebaseDatabase.getInstance();
+
     }
 
     @Override
@@ -55,7 +62,7 @@ public class PosFragment extends Fragment {
         ImageView img = view.findViewById(R.id.no_results);
         listView = view.findViewById(R.id.list);
 
-        new Listener(getActivity(),database,img,listView,"Positive Effects");
+        new Listener(getActivity(),img,listView,"positive_effects");
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -77,19 +84,19 @@ public class PosFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.add:
-                addEffect();
+                addEffect(getActivity(),getLayoutInflater());
                 break;
         }
         return true;
     }
 
-    public void addEffect()
+    public static void addEffect(Activity act,LayoutInflater inflater)
     {
-        String[] days = {"All","Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
+        String[] days = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
 
         List<String> show_on = new ArrayList<String>();
 
-        View view = getLayoutInflater().inflate(R.layout.habits_add,null);
+        View view = inflater.inflate(R.layout.habits_add,null);
 
         EditText habit = view.findViewById(R.id.habit);
 
@@ -110,23 +117,15 @@ public class PosFragment extends Fragment {
                     case R.id.all:
                         if(b)
                         {
-                            for(String day : days)
-                            {
-                                if(!show_on.contains(day))
-                                {
-                                    show_on.add(day);
-                                }
-                            }
+                            show_on.clear();
+                            sun.setChecked(true);
+                            mon.setChecked(true);
+                            tue.setChecked(true);
+                            wed.setChecked(true);
+                            thur.setChecked(true);
+                            fri.setChecked(true);
+                            sat.setChecked(true);
                         }
-
-                        sun.setChecked(true);
-                        mon.setChecked(true);
-                        tue.setChecked(true);
-                        wed.setChecked(true);
-                        thur.setChecked(true);
-                        fri.setChecked(true);
-                        sat.setChecked(true);
-
                         break;
 
 
@@ -225,13 +224,38 @@ public class PosFragment extends Fragment {
         fri.setOnCheckedChangeListener(checked_listener);
         sat.setOnCheckedChangeListener(checked_listener);
 
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(act)
                 .setView(view)
                 .setIcon(R.drawable.ic_launcher_foreground)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                        String habit_ = habit.getText().toString();
+
+                        if(habit_.trim().equals(""))
+                        {
+                            Toast.makeText(act,"Habit cannot be empty",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        if(show_on.size()==0)
+                        {
+                            Toast.makeText(act,"Days not selected",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        Map<String, Integer> days_data = new HashMap<>();
+
+                        ReplaceHabits replace = new ReplaceHabits(days_data,show_on);
+
+                        User.getReference().child("replace_habits").child(habit_).setValue(replace)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Log.e("sanjay",show_on.toString());
+                                    }
+                                });
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

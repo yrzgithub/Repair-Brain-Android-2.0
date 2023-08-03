@@ -16,14 +16,14 @@ import java.util.Map;
 public class ListAdapter extends BaseAdapter {
 
     Activity activity;
-    Map<String,Object> map;
-    List<Object> keys;
+    Map<String,Integer> map;
+    List<String> keys;
 
-    ListAdapter(Activity act,Map<String,Object> map,List<Object> keys)
+    ListAdapter(Activity act,ReplaceHabits habits)
     {
         this.activity = act;
-        this.map = map;
-        this.keys = keys;
+        this.map = habits.getDays_data();
+        this.keys = habits.getShow_on();
 
         Log.e("sanjay_cute",keys.toString());
         Log.e("sanjay_cute",map.toString());

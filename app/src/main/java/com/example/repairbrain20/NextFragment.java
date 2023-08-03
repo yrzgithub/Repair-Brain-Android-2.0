@@ -17,11 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class NextFragment extends Fragment {
 
-    FirebaseDatabase database;
-
     NextFragment()
     {
-        database = FirebaseDatabase.getInstance();
+
     }
 
     @Override
@@ -30,7 +28,7 @@ public class NextFragment extends Fragment {
         ImageView img = view.findViewById(R.id.no_results);
         ListView listView = view.findViewById(R.id.list);
 
-        new Listener(getActivity(),database,img,listView,"Next Steps");
+        new Listener(getActivity(),img,listView,"next_steps");
 
         super.onViewCreated(view, savedInstanceState);
     }

@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
@@ -35,8 +36,6 @@ public class TimeFragment extends Fragment {
 
     TextView time_gone=null,lastly_relapse=null,next_step=null,pos_effect=null,neg_effect=null,hrs_left=null;
     EditText neg_edit=null,pos_edit=null,next_edit=null;
-    DatabaseReference reference = null;
-    FirebaseDatabase database;
     Button effects = null, next = null;
     ProgressBar progress;
     //MediaPlayer player;
@@ -77,13 +76,7 @@ public class TimeFragment extends Fragment {
 
         progress.setMax(24);
 
-        String uid = User.getUid();
-
-        database = FirebaseDatabase.getInstance();
-
-        reference = database.getReference(uid);
-
-        reference.addValueEventListener(new ValueEventListener() {
+        User.getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserData user_data = snapshot.getValue(UserData.class);
@@ -101,7 +94,7 @@ public class TimeFragment extends Fragment {
             }
         });
 
-        DatabaseReference lastly_relapsed_reference = reference.child("lastly_relapsed");
+        DatabaseReference lastly_relapsed_reference = User.getReference().child("lastly_relapsed");
 
         lastly_relapsed_reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -110,10 +103,12 @@ public class TimeFragment extends Fragment {
                 {
                     LocalDateTime lastly_relapsed_object;
 
-                    try {
-                        lastly_relapsed_object = snapshot.getValue(Time.class).localtime();
+                    try
+                    {
+                        Time time = snapshot.getValue(Time.class);
+                        lastly_relapsed_object = LocalDateTime.of(time.getYear(),time.getMonth(),time.getDay(),time.getHour(),time.getMinute(),time.getSecond());
                     }
-                    catch (Exception e)
+                    catch (Exception | Error e)
                     {
                         Log.e("sanjay_timef",e.getMessage());
                         lastly_relapsed_object = null;
@@ -179,7 +174,7 @@ public class TimeFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),Habits.class);
+                Intent intent = new Intent(getActivity(),EffectsTabsAct.class);
                 startActivity(intent);
             }
         });

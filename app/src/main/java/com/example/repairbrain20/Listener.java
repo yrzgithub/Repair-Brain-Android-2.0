@@ -41,17 +41,15 @@ public class Listener implements OnSuccessListener<Object>,OnFailureListener,Val
     Map<String,Object> map;
     List<Object> list_effects;
 
-    Listener(Activity act, FirebaseDatabase database, ImageView img, ListView list,String type)
+    Listener(Activity act, ImageView img, ListView list,String type)
     {
         this.act = act;
 
         this.list = list;
         this.img = img;
 
-        String uid = User.getUid();
-
-        this.reference = database.getReference().child(uid).child(type+" list");
-        list_effects_reference = database.getReference().child(uid).child(type);
+        this.reference = User.getReference().child(type+"_list");
+        list_effects_reference = User.getReference().child(type);
 
         list_effects_reference.addValueEventListener(this);
     }
@@ -60,7 +58,7 @@ public class Listener implements OnSuccessListener<Object>,OnFailureListener,Val
     {
         if(map!=null)
         {
-            list.setAdapter(new ListAdapter(act,map,list_effects));
+           // list.setAdapter(new ListAdapter(act);
         }
         else
         {

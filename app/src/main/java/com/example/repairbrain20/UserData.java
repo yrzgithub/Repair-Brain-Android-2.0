@@ -26,12 +26,7 @@ public class UserData {
     DatabaseReference reference = database.getReference();
     int last_accuracy_percent = 0;
     String uid,lastly_noted_change,lastly_noted_side_effect,next_step;
-    Time lastly_opened,start_time;
-    Time lastly_relapsed;
-    Map<String,String> negative_effects,positive_effects,next_steps;
-    List<String> negative_effects_list,positive_effects_list,next_steps_list,replace_habits_list;
-    Plot accuracy_plot;
-    List<ReplaceHabits> replace_habits;
+
     Activity act;
 
     public UserData() {
@@ -45,10 +40,6 @@ public class UserData {
         reference = reference.child(this.uid);
 
         lastly_noted_change = lastly_noted_side_effect  = next_step = "Not Found";
-        negative_effects = positive_effects = next_steps = new HashMap<>();
-        negative_effects_list = positive_effects_list = next_steps_list = replace_habits_list = new ArrayList<>();
-        lastly_opened = start_time = new Time(LocalDateTime.now());
-        lastly_relapsed = null;
     }
 
     public void write()
@@ -59,27 +50,6 @@ public class UserData {
                 Toast.makeText(act,"Data Saved",Toast.LENGTH_SHORT);
             }
         });
-    }
-
-    public DatabaseReference returnReference()
-    {
-        return reference;
-    }
-
-    public Plot getAccuracy_plot() {
-        return accuracy_plot;
-    }
-
-    public void setAccuracy_plot(Plot accuracy_plot) {
-        this.accuracy_plot = accuracy_plot;
-    }
-
-    public List<ReplaceHabits> getReplace_habits() {
-        return replace_habits;
-    }
-
-    public void setReplace_habits(List<ReplaceHabits> replace_habits) {
-        this.replace_habits = replace_habits;
     }
 
     public int getLast_accuracy_percent() {
@@ -106,92 +76,12 @@ public class UserData {
         this.lastly_noted_side_effect = lastly_noted_side_effect;
     }
 
-    public Object getLastly_relapsed() {
-        return lastly_relapsed;
-    }
-
-    public void setLastly_relapsed(Time lastly_relapsed) {
-        this.lastly_relapsed = lastly_relapsed;
-    }
-
     public String getNext_step() {
         return next_step;
     }
 
     public void setNext_step(String next_step) {
         this.next_step = next_step;
-    }
-
-    public Time getLastly_opened() {
-        return lastly_opened;
-    }
-
-    public void setLastly_opened(Time lastly_opened) {
-        this.lastly_opened = lastly_opened;
-    }
-
-    public Time getStart_time() {
-        return start_time;
-    }
-
-    public void setStart_time(Time start_time) {
-        this.start_time = start_time;
-    }
-
-    public Map<String, String> getNegative_effects() {
-        return negative_effects;
-    }
-
-    public void setNegative_effects(Map<String, String> negative_effects) {
-        this.negative_effects = negative_effects;
-    }
-
-    public Map<String, String> getPositive_effects() {
-        return positive_effects;
-    }
-
-    public void setPositive_effects(Map<String, String> positive_effects) {
-        this.positive_effects = positive_effects;
-    }
-
-    public Map<String, String> getNext_steps() {
-        return next_steps;
-    }
-
-    public void setNext_steps(Map<String, String> next_steps) {
-        this.next_steps = next_steps;
-    }
-
-    public List<String> getNegative_effects_list() {
-        return negative_effects_list;
-    }
-
-    public void setNegative_effects_list(List<String> negative_effects_list) {
-        this.negative_effects_list = negative_effects_list;
-    }
-
-    public List<String> getPositive_effects_list() {
-        return positive_effects_list;
-    }
-
-    public void setPositive_effects_list(List<String> positive_effects_list) {
-        this.positive_effects_list = positive_effects_list;
-    }
-
-    public List<String> getNext_steps_list() {
-        return next_steps_list;
-    }
-
-    public void setNext_steps_list(List<String> next_steps_list) {
-        this.next_steps_list = next_steps_list;
-    }
-
-    public List<String> getReplace_habits_list() {
-        return replace_habits_list;
-    }
-
-    public void setReplace_habits_list(List<String> replace_habits_list) {
-        this.replace_habits_list = replace_habits_list;
     }
 }
 
@@ -215,13 +105,12 @@ class Time
 
     public Time(LocalDateTime date_time)
     {
+        this.year = date_time.getYear();
+        this.month = date_time.getMonthValue();
         this.day = date_time.getDayOfMonth();
-        this.day = date_time.getHour();
         this.hour = date_time.getHour();
         this.minute = date_time.getMinute();
         this.second = date_time.getSecond();
-        this.month = date_time.getMonthValue();
-        this.year = date_time.getYear();
     }
 
     public LocalDateTime localtime()
@@ -311,7 +200,6 @@ class Plot
 
 class ReplaceHabits
 {
-    String habit;
     Map<String,Integer> days_data;
     List<String> show_on;
 
@@ -320,18 +208,9 @@ class ReplaceHabits
 
     }
 
-    public ReplaceHabits(String habit, Map<String, Integer> days_data, List<String> show_on) {
-        this.habit = habit;
+    public ReplaceHabits(Map<String, Integer> days_data, List<String> show_on) {
         this.days_data = days_data;
         this.show_on = show_on;
-    }
-
-    public String getHabit() {
-        return habit;
-    }
-
-    public void setHabit(String habit) {
-        this.habit = habit;
     }
 
     public Map<String, Integer> getDays_data() {

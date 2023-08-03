@@ -40,7 +40,7 @@ public class User implements OnCompleteListener<AuthResult> {
     Activity act;
     ProgressDialog progress;
     AlertDialog.Builder alert;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ids_reference = database.getReference().child("ids");
     static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
     boolean use_username;
@@ -296,5 +296,10 @@ public class User implements OnCompleteListener<AuthResult> {
     public static String getUid()
     {
         return User.uid;
+    }
+
+    public static DatabaseReference getReference()
+    {
+        return database.getReference().child(uid);
     }
 }

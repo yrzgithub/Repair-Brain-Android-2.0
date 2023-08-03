@@ -28,7 +28,7 @@ public class NegFragment extends Fragment {
         ImageView img = view.findViewById(R.id.no_results);
         ListView listView = view.findViewById(R.id.list);
 
-        new Listener(getActivity(),database,img,listView,"Negative Effects");
+        new Listener(getActivity(),img,listView,"negative_effects");
 
         super.onViewCreated(view, savedInstanceState);
     }

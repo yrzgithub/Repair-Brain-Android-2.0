@@ -39,23 +39,11 @@ public class Habits extends AppCompatActivity {
 
         img.setImageResource(R.drawable.noresultfound);
 
-        String id = User.getUid();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference().child(id);
-        DatabaseReference replace_habits_list =  reference.child("replace_habits_list");
-        DatabaseReference replace_habits = reference.child(("replace_habits"));
-        DatabaseReference replace_accuracy = reference.child("last_accuracy_percent");
-
-        replace_accuracy.addValueEventListener(new ValueEventListener() {
+        User.getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue()!=null)
-                {
-                    int lastly_noted_accuracy = snapshot.getValue(Integer.class);
-                    last_accuracy_percent = lastly_noted_accuracy;
-                    percent.setText(lastly_noted_accuracy+"%");
-                }
+                UserData data = snapshot.getValue(UserData.class);
+                percent.setText(data.getLast_accuracy_percent());
             }
 
             @Override
@@ -64,47 +52,21 @@ public class Habits extends AppCompatActivity {
             }
         });
 
-        replace_habits_list.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                List<Object> list = (List<Object>) snapshot.getValue(new GenericTypeIndicator<Object>() {
-                });
-                if(list==null)
-                {
-                    img.setVisibility(View.VISIBLE);
-                    list_view.setVisibility(View.GONE);
-                    return;
-                }
-
-                img.setVisibility(View.GONE);
-                list_view.setVisibility(View.VISIBLE);
-
-                Log.e("sanjay_task",list.toString());
-                replace_habits.addValueEventListener(new ValueEventListener() {
+        User.getReference().child("replace_habits")
+                .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        Map<String,Object> map = snapshot.getValue(new GenericTypeIndicator<Map<String, Object>>() {
-                            @Override
-                            public int hashCode() {
-                                return super.hashCode();
-                            }
-                        });
-                        Log.e("sanjay_task",map.toString());
-                        list_view.setAdapter(new HabitsAdapter(Habits.this,map,list));
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ReplaceHabits replace_habits =  snapshot.getValue(ReplaceHabits.class);
+                        ListAdapter adapter = new ListAdapter(Habits.this,replace_habits);
+                        list_view.setAdapter(adapter);
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError error) {
+                    public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
-            }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        });
     }
 
     @Override
