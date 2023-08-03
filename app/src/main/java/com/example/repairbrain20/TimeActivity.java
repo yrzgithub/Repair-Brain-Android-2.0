@@ -66,7 +66,7 @@ public class TimeActivity extends AppCompatActivity {
         pos_effect.setSelected(true);
         neg_effect.setSelected(true);
 
-        effects = findViewById(R.id.effects);
+       // effects = findViewById(R.id.effects);
         next = findViewById(R.id.next);
 
         progress = findViewById(R.id.progress);

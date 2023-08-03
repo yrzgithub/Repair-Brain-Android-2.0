@@ -65,7 +65,7 @@ public class TimeFragment extends Fragment {
         pos_effect.setSelected(true);
         neg_effect.setSelected(true);
 
-        effects = view.findViewById(R.id.effects);
+        // effects = view.findViewById(R.id.effects);
         next = view.findViewById(R.id.next);
 
         progress = view.findViewById(R.id.progress);
@@ -161,12 +161,12 @@ public class TimeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getActivity(),Habits.class);
+                Intent intent = new Intent(getActivity(),EffectsTabsAct.class);
                 startActivity(intent);
             }
         });
 
-        effects.setOnClickListener(new View.OnClickListener() {
+      /*  effects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -175,6 +175,7 @@ public class TimeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+       */
 
         root.setOnClickListener(new View.OnClickListener() {
 

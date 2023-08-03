@@ -56,4 +56,14 @@
     <string name="effects">effects</string>
     <string name="_0">00</string>
     <string name="accuracy">Accuracy</string>
+    <string name="show_all">Show All</string>
+    <string name="enter_the_habit">Enter the habit</string>
+    <string name="all">All</string>
+    <string name="Sun">Sun</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thur">Thur</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
 </resources>
