@@ -80,21 +80,44 @@ public class TimeFragment extends Fragment {
         String uid = User.getUid();
 
         database = FirebaseDatabase.getInstance();
+
         reference = database.getReference(uid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserData user_data = snapshot.getValue(UserData.class);
+
+                Log.e("sanjay_snap",user_data.toString());
+
+                next_step.setText(user_data.getNext_step());
+                pos_effect.setText(user_data.getLastly_noted_change());
+                neg_effect.setText(user_data.getLastly_noted_side_effect());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("sanjay_snap",error.getMessage());
+            }
+        });
+
+        DatabaseReference lastly_relapsed_reference = reference.child("lastly_relapsed");
+
+        lastly_relapsed_reference.addValueEventListener(new ValueEventListener() {
+            @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if(snapshot!=null && snapshot.exists())
                 {
-                    Map<String,Object> data = snapshot.getValue(new GenericTypeIndicator<Map<String, Object>>() {
-                        @Override
-                        public int hashCode() {
-                            return super.hashCode();
-                        }
-                    });
+                    LocalDateTime lastly_relapsed_object;
 
-                    LocalDateTime lastly_relapsed_object = getLocalDateTime(data,"lastly_relapsed");
+                    try {
+                        lastly_relapsed_object = snapshot.getValue(Time.class).localtime();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.e("sanjay_timef",e.getMessage());
+                        lastly_relapsed_object = null;
+                    }
 
                     if(lastly_relapsed_object==null)
                     {
@@ -109,16 +132,15 @@ public class TimeFragment extends Fragment {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
                     String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
 
-                    String h;
-
                     Handler handler = new Handler();
+                    LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
                     Runnable runnable = new Runnable() {
                         @SuppressLint("DefaultLocale")
                         @Override
                         public void run() {
                             LocalDateTime now = LocalDateTime.now();
 
-                            Duration duration = Duration.between(lastly_relapsed_object,now);
+                            Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
                             long days = duration.toDays();
                             long hours = duration.toHours() % 24;
@@ -143,9 +165,6 @@ public class TimeFragment extends Fragment {
                     runnable.run();
 
                     lastly_relapse.setText(lastly_relapsed_str);
-                    next_step.setText(data.get("next_step").toString());
-                    pos_effect.setText(data.get("lastly_noted_change").toString());
-                    neg_effect.setText(data.get("lastly_noted_side_effect").toString());
 
                     time_gone.setEnabled(true);
                 }
@@ -160,8 +179,7 @@ public class TimeFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(getActivity(),EffectsTabsAct.class);
+                Intent intent = new Intent(getActivity(),Habits.class);
                 startActivity(intent);
             }
         });
@@ -193,8 +211,9 @@ public class TimeFragment extends Fragment {
 
         try {
             map = (Map<String, Object>) data.get(key);
+            assert map!=null;
         }
-        catch (Exception e)
+        catch (Exception | Error e)
         {
             return null;
         }

@@ -1,14 +1,18 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,13 +27,43 @@ public class UserData {
     int last_accuracy_percent = 0;
     String uid,lastly_noted_change,lastly_noted_side_effect,next_step;
     Time lastly_opened,start_time;
-    Object lastly_relapsed;
+    Time lastly_relapsed;
     Map<String,String> negative_effects,positive_effects,next_steps;
     List<String> negative_effects_list,positive_effects_list,next_steps_list,replace_habits_list;
     Plot accuracy_plot;
+    List<ReplaceHabits> replace_habits;
+    Activity act;
 
-    public void setLastly_relapsed(Time lastly_relapsed) {
-        this.lastly_relapsed = lastly_relapsed;
+    public UserData() {
+
+    }
+
+    UserData(Activity act)
+    {
+        this.act = act;
+        this.uid = User.uid;
+        reference = reference.child(this.uid);
+
+        lastly_noted_change = lastly_noted_side_effect  = next_step = "Not Found";
+        negative_effects = positive_effects = next_steps = new HashMap<>();
+        negative_effects_list = positive_effects_list = next_steps_list = replace_habits_list = new ArrayList<>();
+        lastly_opened = start_time = new Time(LocalDateTime.now());
+        lastly_relapsed = null;
+    }
+
+    public void write()
+    {
+        reference.setValue(this, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(act,"Data Saved",Toast.LENGTH_SHORT);
+            }
+        });
+    }
+
+    public DatabaseReference returnReference()
+    {
+        return reference;
     }
 
     public Plot getAccuracy_plot() {
@@ -40,40 +74,12 @@ public class UserData {
         this.accuracy_plot = accuracy_plot;
     }
 
-    public ReplaceHabits getReplace_habits() {
+    public List<ReplaceHabits> getReplace_habits() {
         return replace_habits;
     }
 
-    public void setReplace_habits(ReplaceHabits replace_habits) {
+    public void setReplace_habits(List<ReplaceHabits> replace_habits) {
         this.replace_habits = replace_habits;
-    }
-
-    ReplaceHabits replace_habits;
-
-    public UserData() {
-
-    }
-
-    UserData(FirebaseUser user)
-    {
-        this.uid = user.getUid();
-        reference = reference.child(this.uid);
-
-        lastly_noted_change = lastly_noted_side_effect  = next_step = "Not Found";
-        negative_effects = positive_effects = next_steps = new HashMap<>();
-        negative_effects_list = positive_effects_list = next_steps_list = replace_habits_list = new ArrayList<>();
-        lastly_opened = start_time = new Time(LocalDateTime.now());
-        lastly_relapsed = "Not found";
-    }
-
-    public void write()
-    {
-        reference.setValue(this, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
-            }
-        });
     }
 
     public int getLast_accuracy_percent() {
@@ -104,7 +110,7 @@ public class UserData {
         return lastly_relapsed;
     }
 
-    public void setLastly_relapsed(String lastly_relapsed) {
+    public void setLastly_relapsed(Time lastly_relapsed) {
         this.lastly_relapsed = lastly_relapsed;
     }
 
@@ -216,6 +222,11 @@ class Time
         this.second = date_time.getSecond();
         this.month = date_time.getMonthValue();
         this.year = date_time.getYear();
+    }
+
+    public LocalDateTime localtime()
+    {
+        return LocalDateTime.of(year,month,day,hour,minute,second);
     }
 
     public int getDay() {

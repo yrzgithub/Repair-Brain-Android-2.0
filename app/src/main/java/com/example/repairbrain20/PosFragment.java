@@ -60,12 +60,6 @@ public class PosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public static void show_image_view()
-    {
-
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -232,9 +226,6 @@ public class PosFragment extends Fragment {
         sat.setOnCheckedChangeListener(checked_listener);
 
         new AlertDialog.Builder(getActivity())
-
-                .setTitle("Repair Brain")
-                .setMessage("Add Habits")
                 .setView(view)
                 .setIcon(R.drawable.ic_launcher_foreground)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
