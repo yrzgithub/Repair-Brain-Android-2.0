@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,20 +30,22 @@ public class HabitsAdapter extends BaseAdapter {
     int count = 0;
     TextView percent = null;
     ImageView up_or_down = null;
+    List<String> keys;
+    Map<String,ReplaceHabits> habits;
 
-    HabitsAdapter(Activity act, ReplaceHabits replace_habits)
+    HabitsAdapter(Activity act, Map<String,ReplaceHabits> habits)
     {
-        this.act = act;
-        this.map = replace_habits.getDays_data();
-        map_keys = replace_habits.getShow_on();
-        today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("E"));
         this.percent = act.findViewById(R.id.percent);
         this.up_or_down = act.findViewById(R.id.up_or_down);
+        this.habits = habits;
+
+        today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("E"));
+        keys = new ArrayList<>(habits.keySet());
     }
 
     @Override
     public int getCount() {
-        return map_keys.size();
+        return 0;
     }
 
     @Override

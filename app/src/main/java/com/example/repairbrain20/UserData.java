@@ -22,10 +22,8 @@ import java.util.Map;
 
 public class UserData {
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference reference = database.getReference();
     int last_accuracy_percent = 0;
-    String uid,lastly_noted_change,lastly_noted_side_effect,next_step;
+    String uid,lastly_noted_positive_effects,lastly_noted_negative_effects,lastly_noted_next_steps;
 
     Activity act;
 
@@ -37,9 +35,8 @@ public class UserData {
     {
         this.act = act;
         this.uid = User.uid;
-        reference = reference.child(this.uid);
 
-        lastly_noted_change = lastly_noted_side_effect  = next_step = "Not Found";
+        lastly_noted_positive_effects = lastly_noted_negative_effects  = lastly_noted_next_steps = "Not Found";
     }
 
     public int getLast_accuracy_percent() {
@@ -50,28 +47,28 @@ public class UserData {
         this.last_accuracy_percent = last_accuracy_percent;
     }
 
-    public String getLastly_noted_change() {
-        return lastly_noted_change;
+    public String getLastly_noted_positive_effects() {
+        return lastly_noted_positive_effects;
     }
 
-    public void setLastly_noted_change(String lastly_noted_change) {
-        this.lastly_noted_change = lastly_noted_change;
+    public void setLastly_noted_positive_effects(String lastly_noted_positive_effects) {
+        this.lastly_noted_positive_effects = lastly_noted_positive_effects;
     }
 
-    public String getLastly_noted_side_effect() {
-        return lastly_noted_side_effect;
+    public String getLastly_noted_negative_effects() {
+        return lastly_noted_negative_effects;
     }
 
-    public void setLastly_noted_side_effect(String lastly_noted_side_effect) {
-        this.lastly_noted_side_effect = lastly_noted_side_effect;
+    public void setLastly_noted_negative_effects(String lastly_noted_negative_effects) {
+        this.lastly_noted_negative_effects = lastly_noted_negative_effects;
     }
 
-    public String getNext_step() {
-        return next_step;
+    public String getLastly_noted_next_steps() {
+        return lastly_noted_next_steps;
     }
 
-    public void setNext_step(String next_step) {
-        this.next_step = next_step;
+    public void setLastly_noted_next_steps(String lastly_noted_next_steps) {
+        this.lastly_noted_next_steps = lastly_noted_next_steps;
     }
 }
 
@@ -192,15 +189,17 @@ class ReplaceHabits
 {
     Map<String,Integer> days_data;
     List<String> show_on;
+    String habit;
 
     public ReplaceHabits()
     {
 
     }
 
-    public ReplaceHabits(Map<String, Integer> days_data, List<String> show_on) {
+    public ReplaceHabits(String habit,Map<String, Integer> days_data, List<String> show_on) {
         this.days_data = days_data;
         this.show_on = show_on;
+        this.habit = habit;
     }
 
     public Map<String, Integer> getDays_data() {

@@ -46,6 +46,11 @@ public class User implements OnCompleteListener<AuthResult> {
     boolean use_username;
     static String uid;
 
+    User()
+    {
+
+    }
+
     User(Activity act,String email_or_username,String password)
     {
         this.act = act;

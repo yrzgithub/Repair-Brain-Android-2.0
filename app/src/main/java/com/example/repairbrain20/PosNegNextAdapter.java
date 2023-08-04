@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class PosNegNextAdapter extends BaseAdapter {
 
@@ -22,6 +24,8 @@ public class PosNegNextAdapter extends BaseAdapter {
     {
         this.activity = act;
         this.map = map;
+
+        new ArrayList<>(map.keySet());
 
         Log.e("sanjay_cute",map.toString());
     }
@@ -51,15 +55,6 @@ public class PosNegNextAdapter extends BaseAdapter {
         TextView date_widget = view.findViewById(R.id.date);
 
         text_widget.setSelected(true);
-
-        for(Map.Entry<String,String> entry : map.entrySet())
-        {
-
-            Log.e("positive",entry.getKey() + " " + entry.getValue());
-
-            text_widget.setText(entry.getKey());
-            date_widget.setText(entry.getValue());
-        }
 
         return view;
     }

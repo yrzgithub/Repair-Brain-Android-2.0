@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +28,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,17 +50,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import kotlin.coroutines.Continuation;
 import kotlin.coroutines.CoroutineContext;
 
 public class PosFragment extends Fragment {
 
     ListView listView = null;
-    DatabaseReference reference;
 
     PosFragment()
     {
-        reference = User.getReference();
+
     }
 
     @Override
@@ -95,67 +95,13 @@ public class PosFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.add:
-                addEffect("positive_effects");
+                Listener.addEffect(getActivity(),"positive_effects");
                 break;
         }
         return true;
     }
 
-    public void addEffect(String effect)
-    {
-        EditText effect_view = new EditText(getActivity());
-
-        new AlertDialog.Builder(getActivity())
-                .setIcon(R.drawable.ic_launcher_foreground)
-                .setTitle("Repair Brain")
-                .setMessage("Best Of Luck")
-                .setView(effect_view)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String effect_new = effect_view.getText().toString();
-
-                        LocalDateTime date_time = LocalDateTime.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
-
-                        String date_added =  date_time.format(formatter);
-
-                        reference.child(effect)
-                                .child(effect_new)
-                                .setValue(date_added)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Log.e("sanjay_effect",effect_new+" added");
-                                        save_effect(effect,effect_new);
-                                    }
-                                });
-                    }
-                })
-                .setNegativeButton("Cancel",null)
-                .create()
-                .show();
-    }
-
-    public void save_effect(String effect,String effect_new)
-    {
-        reference
-                .child(effect+"_list")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        EffectsList list = snapshot.getValue(EffectsList.class);
-                        list.addEffect(effect_new);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-    }
-
-    public static void addHabit(Activity act,LayoutInflater inflater)
+    public static void addHabit(DatabaseReference reference,Activity act,LayoutInflater inflater)
     {
         String[] days = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
 
@@ -312,15 +258,17 @@ public class PosFragment extends Fragment {
 
                         Map<String, Integer> days_data = new HashMap<>();
 
-                        ReplaceHabits replace = new ReplaceHabits(days_data,show_on);
+                   //     ReplaceHabits replace = new ReplaceHabits(days_data,show_on);
 
-                        User.getReference().child("replace_habits").child(habit_).setValue(replace)
+                    /*    reference.child("replace_habits").child(habit_).setValue(replace)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         Log.e("sanjay",show_on.toString());
                                     }
                                 });
+
+                     */
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

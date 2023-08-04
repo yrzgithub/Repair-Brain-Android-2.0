@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
@@ -23,7 +24,6 @@ public class Listener {
     ListView list;
     ImageView img;
     Activity act;
-    DatabaseReference reference;
     DatabaseReference list_effects_reference;
     Map<String,String> map;
 
@@ -34,7 +34,6 @@ public class Listener {
         this.list = list;
         this.img = img;
 
-        this.reference = User.getReference().child(type+"_list");
         list_effects_reference = User.getReference().child(type);
 
         list_effects_reference.addValueEventListener(new ValueEventListener() {
@@ -54,6 +53,7 @@ public class Listener {
                 }
                 else
                 {
+                    delete_image_view();
                     list.setAdapter(new PosNegNextAdapter(act,map));
                 }
             }

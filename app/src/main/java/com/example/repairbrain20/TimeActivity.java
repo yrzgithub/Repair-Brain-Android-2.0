@@ -43,7 +43,6 @@ public class TimeActivity extends AppCompatActivity {
 
     TextView time_gone=null,lastly_relapse=null,next_step=null,pos_effect=null,neg_effect=null,hrs_left=null;
     EditText neg_edit=null,pos_edit=null,next_edit=null;
-    FirebaseDatabase database;
     Button effects = null, next = null;
     DatabaseReference reference;
     ProgressBar progress;
@@ -79,18 +78,27 @@ public class TimeActivity extends AppCompatActivity {
 
         progress.setMax(24);
 
-        String uid = User.getUid();
-
-        database = FirebaseDatabase.getInstance();
-
-        reference = database.getReference(uid);
-
-        reference.addValueEventListener(new ValueEventListener() {
+        User.getReference().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Toast.makeText(TimeActivity.this,"running",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(TimeActivity.this,"error",Toast.LENGTH_LONG).show();
+            }
+        });
+
+     /*   reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                Toast.makeText(TimeActivity.this,"running",Toast.LENGTH_LONG).show();
+
                 UserData user_data = snapshot.getValue(UserData.class);
 
-                Log.e("sanjay_snap",user_data.getNext_step());
+                Log.e("sanjay_snap1",user_data.getLastly_noted_change());
 
                 next_step.setText(user_data.getNext_step());
                 pos_effect.setText(user_data.getLastly_noted_change());
@@ -102,6 +110,8 @@ public class TimeActivity extends AppCompatActivity {
                 Log.e("sanjay_snap",error.getMessage());
             }
         });
+
+      */
 
         DatabaseReference lastly_relapsed_reference = reference.child("lastly_relapsed");
 

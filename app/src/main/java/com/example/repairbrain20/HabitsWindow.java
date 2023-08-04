@@ -52,12 +52,14 @@ public class HabitsWindow extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ReplaceHabits replace_habits =  snapshot.getValue(ReplaceHabits.class);
-                        Map<String,Integer> days_data =  replace_habits.getDays_data();
-                        List<String> show_on = replace_habits.getShow_on();
-
-                        //ListAdapter adapter = new ListAdapter();
-                        //list_view.setAdapter();
+                        Map<String,ReplaceHabits> habits =  snapshot.getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
+                            @NonNull
+                            @Override
+                            public String toString() {
+                                return super.toString();
+                            }
+                        });
+                        list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
                     }
 
                     @Override

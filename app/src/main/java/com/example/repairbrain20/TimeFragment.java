@@ -83,9 +83,9 @@ public class TimeFragment extends Fragment {
 
                 Log.e("sanjay_snap",user_data.toString());
 
-                next_step.setText(user_data.getNext_step());
-                pos_effect.setText(user_data.getLastly_noted_change());
-                neg_effect.setText(user_data.getLastly_noted_side_effect());
+                next_step.setText(user_data.getLastly_noted_next_steps());
+                pos_effect.setText(user_data.getLastly_noted_positive_effects());
+                neg_effect.setText(user_data.getLastly_noted_negative_effects());
             }
 
             @Override
