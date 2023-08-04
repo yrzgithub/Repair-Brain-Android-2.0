@@ -300,6 +300,6 @@ public class User implements OnCompleteListener<AuthResult> {
 
     public static DatabaseReference getReference()
     {
-        return database.getReference().child(uid);
+        return database.getReference().child(User.uid);
     }
 }

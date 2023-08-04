@@ -42,16 +42,6 @@ public class UserData {
         lastly_noted_change = lastly_noted_side_effect  = next_step = "Not Found";
     }
 
-    public void write()
-    {
-        reference.setValue(this, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(act,"Data Saved",Toast.LENGTH_SHORT);
-            }
-        });
-    }
-
     public int getLast_accuracy_percent() {
         return last_accuracy_percent;
     }

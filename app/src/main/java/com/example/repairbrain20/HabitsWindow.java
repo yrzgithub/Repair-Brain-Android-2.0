@@ -56,8 +56,8 @@ public class HabitsWindow extends Fragment {
                         Map<String,Integer> days_data =  replace_habits.getDays_data();
                         List<String> show_on = replace_habits.getShow_on();
 
-                        ListAdapter adapter = new ListAdapter();
-                        list_view.setAdapter();
+                        //ListAdapter adapter = new ListAdapter();
+                        //list_view.setAdapter();
                     }
 
                     @Override

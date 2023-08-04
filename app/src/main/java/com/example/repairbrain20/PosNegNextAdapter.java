@@ -9,23 +9,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
-public class ListAdapter extends BaseAdapter {
+public class PosNegNextAdapter extends BaseAdapter {
 
     Activity activity;
-    Map<String,Integer> map;
-    List<String> keys;
+    Map<String,String> map;
 
-    ListAdapter(Activity act,ReplaceHabits habits)
+    PosNegNextAdapter(Activity act,Map<String,String> map)
     {
         this.activity = act;
-        this.map = habits.getDays_data();
-        this.keys = habits.getShow_on();
+        this.map = map;
 
-        Log.e("sanjay_cute",keys.toString());
         Log.e("sanjay_cute",map.toString());
     }
 
@@ -36,14 +33,13 @@ public class ListAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int i) {
-       // Log.e("sanjay_map",String.valueOf(i));
-        return map.get(keys.get(i)).toString();
+    public Object getItem(int i) {
+        return null;
     }
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return 0;
     }
 
     @SuppressLint("ViewHolder")
@@ -56,12 +52,16 @@ public class ListAdapter extends BaseAdapter {
 
         text_widget.setSelected(true);
 
-        String key = keys.get(i).toString();
-        String value = map.get(key).toString();
+        for(Map.Entry<String,String> entry : map.entrySet())
+        {
 
-        text_widget.setText(key);
-        date_widget.setText(value);
+            Log.e("positive",entry.getKey() + " " + entry.getValue());
+
+            text_widget.setText(entry.getKey());
+            date_widget.setText(entry.getValue());
+        }
 
         return view;
     }
 }
+

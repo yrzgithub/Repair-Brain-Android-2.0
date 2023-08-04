@@ -43,7 +43,8 @@ public class Habits extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserData data = snapshot.getValue(UserData.class);
-                percent.setText(data.getLast_accuracy_percent());
+                Habits.last_accuracy_percent = data.getLast_accuracy_percent();
+                percent.setText(Habits.last_accuracy_percent);
             }
 
             @Override
@@ -57,8 +58,6 @@ public class Habits extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         ReplaceHabits replace_habits =  snapshot.getValue(ReplaceHabits.class);
-                        ListAdapter adapter = new ListAdapter(Habits.this,replace_habits);
-                        list_view.setAdapter(adapter);
                     }
 
                     @Override

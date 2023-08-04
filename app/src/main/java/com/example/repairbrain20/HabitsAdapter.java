@@ -22,19 +22,19 @@ import java.util.Map;
 public class HabitsAdapter extends BaseAdapter {
 
     Activity act;
-    Map<String,Object> map;
-    List<Object> map_keys;
+    Map<String,Integer> map;
+    List<String> map_keys;
     String[] days_list = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
     String today;
     int count = 0;
     TextView percent = null;
     ImageView up_or_down = null;
 
-    HabitsAdapter(Activity act, Map<String,Object> map,List<Object> keys)
+    HabitsAdapter(Activity act, ReplaceHabits replace_habits)
     {
         this.act = act;
-        this.map = map;
-        map_keys = keys;
+        this.map = replace_habits.getDays_data();
+        map_keys = replace_habits.getShow_on();
         today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("E"));
         this.percent = act.findViewById(R.id.percent);
         this.up_or_down = act.findViewById(R.id.up_or_down);
@@ -60,38 +60,9 @@ public class HabitsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = act.getLayoutInflater().inflate(R.layout.custom_habits_list,null,false);
 
-        String key = map_keys.get(i).toString();
-
         TextView text = view.findViewById(R.id.habit);
         TextView show = view.findViewById(R.id.show_on);
         CheckBox check = view.findViewById(R.id.check);
-
-        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                update_percentage(b);
-            }
-        });
-
-        Log.e("sanjay_key",map.get(key).toString());
-
-        Map<String,Object> habit_data = (Map<String, Object>) map.get(key);
-        List<Object> show_on = (List<Object>) habit_data.get("show_on");
-
-        String days = "";
-
-        for(String day:days_list)
-        {
-           if(show_on.contains(day)) days+=day+" ";
-           if(!show_on.contains(today))
-           {
-               view.setBackgroundColor(Color.LTGRAY);
-               Log.e("sanjay_color",day);
-           }
-        }
-
-        text.setText(key);
-        show.setText(days);
 
         return view;
     }
@@ -101,7 +72,6 @@ public class HabitsAdapter extends BaseAdapter {
         if(b) ++count; else --count;
 
         int size = map_keys.size();
-        Log.e("uruttu_map",map.toString());
         int percent = (count * 100) / size;
         this.percent.setText(percent+"%");
 
