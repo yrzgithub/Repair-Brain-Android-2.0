@@ -19,13 +19,14 @@ public class PosNegNextAdapter extends BaseAdapter {
 
     Activity activity;
     Map<String,String> map;
+    List<String> keys;
 
     PosNegNextAdapter(Activity act,Map<String,String> map)
     {
         this.activity = act;
         this.map = map;
 
-        new ArrayList<>(map.keySet());
+        keys =  new ArrayList<>(map.keySet());
 
         Log.e("sanjay_cute",map.toString());
     }
@@ -55,6 +56,11 @@ public class PosNegNextAdapter extends BaseAdapter {
         TextView date_widget = view.findViewById(R.id.date);
 
         text_widget.setSelected(true);
+
+        String key = keys.get(i);
+
+        text_widget.setText(key);
+        date_widget.setText(map.get(key));
 
         return view;
     }

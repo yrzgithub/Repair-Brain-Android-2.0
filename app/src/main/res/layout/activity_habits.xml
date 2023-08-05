@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="30dp"
         android:padding="10dp"
         android:orientation="horizontal">
 
@@ -30,7 +29,7 @@
             android:id="@+id/percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/_100"
+            android:text="@string/zero"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp"
@@ -51,8 +50,8 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="25dp"
-        android:layout_weight="4" />
+        android:layout_marginTop="10dp"
+        android:layout_weight="3" />
 
     <ImageView
         android:id="@+id/img"
@@ -66,29 +65,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:layout_marginBottom="30dp"
-        android:orientation="horizontal">
+        android:layout_weight="1">
 
         <Button
-            android:layout_width="120dp"
+            android:id="@+id/add"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="20dp"
-            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:gravity="center"
+            android:padding="8dp"
             android:text="@string/add"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="20dp"
-            android:padding="10dp"
-            android:text="@string/done"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />

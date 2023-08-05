@@ -11,7 +11,7 @@
     <string name="enter_the_ve_effect">Enter the -ve effect</string>
     <string name="enter_the_next_step">Enter the next step</string>
     <string name="replacing_accuracy">Replacing Accuracy :</string>
-    <string name="_100">100%</string>
+    <string name="zero">0%</string>
     <string name="add">Add</string>
     <string name="done">Done</string>
     <string name="next_steps">Next Steps :</string>

@@ -187,19 +187,22 @@ class Plot
 
 class ReplaceHabits
 {
-    Map<String,Integer> days_data;
-    List<String> show_on;
-    String habit;
+    Map<String,Integer> days_data = new HashMap<>();
+    List<String> show_on = new ArrayList<>();
 
     public ReplaceHabits()
     {
 
     }
 
-    public ReplaceHabits(String habit,Map<String, Integer> days_data, List<String> show_on) {
+    public ReplaceHabits(Map<String, Integer> days_data, List<String> show_on) {
         this.days_data = days_data;
         this.show_on = show_on;
-        this.habit = habit;
+    }
+
+    ReplaceHabits(List<String> show_on)
+    {
+        this.show_on = show_on;
     }
 
     public Map<String, Integer> getDays_data() {
