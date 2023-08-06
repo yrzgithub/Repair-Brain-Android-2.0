@@ -10,17 +10,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:padding="15dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/accuracy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
             android:text="@string/replacing_accuracy"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp"
@@ -30,20 +33,21 @@
             android:id="@+id/percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="5dp"
             android:text="@string/zero"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold" />
-        
+
         <ImageView
             android:id="@+id/up_or_down"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:padding="3dp"
             android:layout_gravity="center"
-            android:layout_marginStart="0dp"
-            />
+            android:src="@drawable/up"
+            android:padding="3dp" />
 
     </LinearLayout>
 
@@ -56,14 +60,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:drawSelectorOnTop="true"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:visibility="visible"/>
 
     <ImageView
-        android:id="@+id/img"
+        android:id="@+id/no_results"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_margin="20dp"
-        android:layout_marginTop="30dp" />
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/noresultfound"
+        android:visibility="gone" />
 
 </LinearLayout>

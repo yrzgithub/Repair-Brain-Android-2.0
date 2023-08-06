@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,6 +54,7 @@ import java.util.stream.Collectors;
 public class HabitsWindow extends Fragment {
 
     ListView list_view;
+    ImageView no_results = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +72,8 @@ public class HabitsWindow extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         list_view = view.findViewById(R.id.list);
+        no_results = view.findViewById(R.id.no_results);
+
         //add = view.findViewById(R.id.add);
 
        // percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
@@ -87,8 +91,16 @@ public class HabitsWindow extends Fragment {
                                 return super.toString();
                             }
                         });
-                        Log.e("uruttu_complete",habits.toString());
-                        list_view.setAdapter(new HabitsAdapter(getActivity(),habits,true));
+                       // Log.e("uruttu_complete",habits.toString());
+                        if(habits!=null)
+                        {
+                            list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
+                        }
+                        else
+                        {
+                            list_view.setVisibility(View.GONE);
+                            no_results.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
     }
@@ -248,8 +260,18 @@ public class HabitsWindow extends Fragment {
 
                         ReplaceHabits habits = new ReplaceHabits(show_on);
 
-                        Map<String,ReplaceHabits> habits_map = HabitsAdapter.habits_copy;
-                        habits_map.put(habit_,habits);
+                        Map<String,ReplaceHabits> habits_map;
+                        habits_map = HabitsAdapter.habits_copy;
+
+                        if(habits_map!=null)
+                        {
+                            habits_map.put(habit_,habits);
+                        }
+                        else
+                        {
+                            habits_map = new HashMap<>();
+                            habits_map.put(habit_,habits);
+                        }
 
                         HabitsAdapter adapter = new HabitsAdapter(getActivity(),habits_map);
 
@@ -260,10 +282,10 @@ public class HabitsWindow extends Fragment {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful())
-                                        {
-                                            list_view.setAdapter(adapter);
-                                        }
+                                        Toast.makeText(getActivity(),"Habit Added",Toast.LENGTH_SHORT).show();
+                                        no_results.setVisibility(View.GONE);
+                                        list_view.setVisibility(View.VISIBLE);
+                                        list_view.setAdapter(adapter);
                                     }
                                 });
                     }
@@ -271,7 +293,7 @@ public class HabitsWindow extends Fragment {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        //item.setTitle("ADD");
                     }
                 })
                 .create().show();
@@ -285,6 +307,27 @@ public class HabitsWindow extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.add:
+                addHabit();
+                break;
+
+            case R.id.remove:
+                Map<String,ReplaceHabits> habits_copy =  HabitsAdapter.habits_copy;
+                if(habits_copy.size()==0)
+                {
+                    Toast.makeText(getActivity(),"Habit List is Empty",Toast.LENGTH_LONG).show();
+                }
+                HabitsAdapter remove_adapter = new HabitsAdapter(getActivity(),habits_copy,true);
+                list_view.setAdapter(remove_adapter);
+                break;
+
+            case R.id.reset:
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

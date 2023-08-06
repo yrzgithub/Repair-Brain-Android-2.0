@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 
 public class HabitsAndAccuracy extends AppCompatActivity {
 
@@ -22,13 +23,18 @@ public class HabitsAndAccuracy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.habits_and_accuracy_pager);
 
-        User.getReference().get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                UserData data =  task.getResult().getValue(UserData.class);
-                last_accuracy_percent = data.getLast_accuracy_percent();
-            }
-        });
+        DatabaseReference reference =  User.getReference();
+
+        if (reference!=null)
+        {
+            reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    UserData data =  task.getResult().getValue(UserData.class);
+                    last_accuracy_percent = data.getLast_accuracy_percent();
+                }
+            });
+        }
 
         ViewPager pager = findViewById(R.id.habits_pager);
         TabLayout tabs = findViewById(R.id.tabs);

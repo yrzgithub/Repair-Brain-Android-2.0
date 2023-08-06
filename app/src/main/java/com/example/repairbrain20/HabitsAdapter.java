@@ -16,13 +16,16 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,7 +67,16 @@ public class HabitsAdapter extends BaseAdapter {
         this.up_or_down = act.findViewById(R.id.up_or_down);
         this.accuracy = act.findViewById(R.id.accuracy);
 
-        Log.e("uruttu_habits",habits.toString());
+        if(habits.size()==0)
+        {
+            ImageView no_results = act.findViewById(R.id.no_results);
+            ListView habit_list = act.findViewById(R.id.list);
+
+            no_results.setVisibility(View.VISIBLE);
+            habit_list.setVisibility(View.GONE);
+        }
+
+//        Log.e("uruttu_habits",habits.toString());
 
         this.habits = habits;
         habits_copy = habits;
@@ -73,6 +85,8 @@ public class HabitsAdapter extends BaseAdapter {
         Arrays.fill(this.states,false);
 
         keys = new ArrayList<>(habits.keySet());
+
+        //Toast.makeText(act,String.valueOf(habits.keySet().size()),Toast.LENGTH_SHORT).show();
 
         today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("E"));
 
@@ -85,12 +99,21 @@ public class HabitsAdapter extends BaseAdapter {
     {
         this(act,habits);
         this.delete = delete;
-        percent.setVisibility(View.GONE);
-        up_or_down.setVisibility(View.GONE);
 
         if(delete)
         {
-            accuracy.setText("Select Items To Remove");
+            if(habits.size()>0)
+            {
+                percent.setVisibility(View.GONE);
+                up_or_down.setVisibility(View.GONE);
+                accuracy.setText("Select Items To Remove");
+            }
+            else
+            {
+                percent.setVisibility(View.VISIBLE);
+                up_or_down.setVisibility(View.VISIBLE);
+                accuracy.setText("Replacing Accuracy :");
+            }
         }
     }
 
@@ -114,40 +137,94 @@ public class HabitsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = act.getLayoutInflater().inflate(R.layout.custom_habits_list,null,false);
 
-        view.setBackgroundResource(R.drawable.round_layout);
-
-        TextView text = view.findViewById(R.id.habit);
-        TextView show = view.findViewById(R.id.show_on);
+        RelativeLayout main = view.findViewById(R.id.main);
         CheckBox check = view.findViewById(R.id.check);
+        ImageView delete = view.findViewById(R.id.delete);
 
-        boolean checked = states[i];
-        check.setChecked(checked);
-
-        if(delete)
-        {
-            text.setPaintFlags(checked?Paint.STRIKE_THRU_TEXT_FLAG:Paint.LINEAR_TEXT_FLAG);
-        }
-
-        String key = keys.get(i);
-
-        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        main.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                states[i] = b;
+            public void onClick(View view) {
 
-                if(HabitsAdapter.this.delete)
-                {
-                    text.setPaintFlags(b?Paint.STRIKE_THRU_TEXT_FLAG:Paint.LINEAR_TEXT_FLAG);
-                }
-                else
-                {
-                    update_percentage(b);
-                    update_value(key,b);
-                }
             }
         });
 
+        view.setBackgroundResource(R.drawable.round_layout);
+
+        String key = keys.get(i);
+
+        TextView text = view.findViewById(R.id.habit);
+        TextView show = view.findViewById(R.id.show_on);
+
+        if(this.delete)
+        {
+            check.setVisibility(View.GONE);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(HabitsAdapter.this.delete)
+                    {
+                        User.getReference()
+                                .child("replace_habits")
+                                .child(keys.get(i))
+                                .removeValue()
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(act,"Connection Failed",Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful())
+                                        {
+                                            Toast.makeText(act,"Habit Removed",Toast.LENGTH_SHORT).show();
+                                            ListView view = act.findViewById(R.id.list);
+                                            habits.remove(key);
+                                            habits_copy = habits;
+
+                                            view.setAdapter(new HabitsAdapter(act,habits,true));
+                                        }
+                                        else
+                                        {
+                                            String message = task.getException().getMessage();
+                                            Toast.makeText(act,message,Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                }
+            });
+        }
+        else
+        {
+            delete.setVisibility(View.GONE);
+            check.setVisibility(View.VISIBLE);
+            boolean checked = states[i];
+            check.setChecked(checked);
+
+            check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    states[i] = b;
+
+                    if(HabitsAdapter.this.delete)
+                    {
+                        text.setPaintFlags(b?Paint.STRIKE_THRU_TEXT_FLAG:Paint.LINEAR_TEXT_FLAG);
+                    }
+                    else
+                    {
+                        update_percentage(b);
+                        update_value(key,b);
+                    }
+                }
+            });
+        }
+
+
         ReplaceHabits habits = this.habits.get(key);
+
+        if(habits==null) return view;
 
         List<String> show_on = habits.getShow_on();
 
@@ -194,11 +271,7 @@ public class HabitsAdapter extends BaseAdapter {
 
         int diff = percent - HabitsAndAccuracy.last_accuracy_percent;
 
-        if(diff==0)
-        {
-            up_or_down.setImageBitmap(null);
-        }
-        else if(diff>0)
+       if(diff>=0)
         {
             up_or_down.setImageResource(R.drawable.up);
         }

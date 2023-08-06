@@ -35,9 +35,8 @@ public class Habits extends AppCompatActivity {
 
         percent = findViewById(R.id.percent);
         list_view = findViewById(R.id.list);
-        img = findViewById(R.id.img);
 
-        img.setImageResource(R.drawable.noresultfound);
+     //   img.setImageResource(R.drawable.noresultfound);
 
         User.getReference().addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,19 +51,6 @@ public class Habits extends AppCompatActivity {
 
             }
         });
-
-        User.getReference().child("replace_habits")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ReplaceHabits replace_habits =  snapshot.getValue(ReplaceHabits.class);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
 
     }
 

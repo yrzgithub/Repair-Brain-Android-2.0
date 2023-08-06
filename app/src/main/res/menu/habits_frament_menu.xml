@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:enabled="true"
+    <item
         android:id="@+id/add"
         android:title="@string/add"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
 
     <item android:title="@string/remove"
         android:id="@+id/remove"
