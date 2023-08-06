@@ -2,6 +2,7 @@ package com.example.repairbrain20;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,21 +10,32 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,18 +44,22 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HabitsWindow extends Fragment {
 
-    TextView percent;
     ListView list_view;
-    ImageView img;
-    Button add;
 
-    @Nullable
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activity_habits,container,false);
@@ -53,16 +69,13 @@ public class HabitsWindow extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        percent = view.findViewById(R.id.percent);
         list_view = view.findViewById(R.id.list);
-        img = view.findViewById(R.id.img);
-        add = view.findViewById(R.id.add);
+        //add = view.findViewById(R.id.add);
 
        // percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
 
-        img.setImageResource(R.drawable.noresultfound);
-
-        User.getReference().child("replace_habits")
+        User.getReference()
+                .child("replace_habits")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
@@ -74,15 +87,10 @@ public class HabitsWindow extends Fragment {
                                 return super.toString();
                             }
                         });
-                        list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
+                        Log.e("uruttu_complete",habits.toString());
+                        list_view.setAdapter(new HabitsAdapter(getActivity(),habits,true));
                     }
                 });
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addHabit();
-            }
-        });
     }
 
     public void addHabit()
@@ -245,12 +253,19 @@ public class HabitsWindow extends Fragment {
 
                         HabitsAdapter adapter = new HabitsAdapter(getActivity(),habits_map);
 
-                        list_view.setAdapter(adapter);
-
                         User.getReference()
                                 .child("replace_habits")
                                 .child(habit_)
-                                .setValue(habits);
+                                .setValue(habits)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful())
+                                        {
+                                            list_view.setAdapter(adapter);
+                                        }
+                                    }
+                                });
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -260,6 +275,17 @@ public class HabitsWindow extends Fragment {
                     }
                 })
                 .create().show();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.habits_frament_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -275,5 +301,15 @@ public class HabitsWindow extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
     }
 }

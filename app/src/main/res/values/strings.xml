@@ -66,4 +66,6 @@
     <string name="thur">Thur</string>
     <string name="fri">Fri</string>
     <string name="sat">Sat</string>
+    <string name="remove">Remove</string>
+    <string name="reset">Reset</string>
 </resources>

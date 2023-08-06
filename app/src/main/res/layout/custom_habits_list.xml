@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginEnd="5dp">
+    android:layout_height="75dp"
+    android:id="@+id/delete"
+    android:clickable="true"
+    android:background="@drawable/round_layout">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="30dp"
-        android:layout_height="80dp"
+        android:layout_height="75dp"
         android:layout_gravity="start"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -21,12 +22,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="-1dp"
         android:layout_toEndOf="@+id/image"
         android:gravity="center_vertical"
         android:text="@string/habit"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/show_on_text"
@@ -42,8 +42,12 @@
         android:id="@+id/show_on"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:maxLines="1"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/show_on_text"
         android:textColor="@color/black" />
 
@@ -52,11 +56,12 @@
         android:checked="false"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@id/habit"
+        android:layout_marginEnd="20dp"
         android:layout_alignParentEnd="true"
-        android:layout_toStartOf="@+id/habit"
-        android:layout_marginEnd="10dp"
         android:allowUndo="true"
-        android:gravity="center"/>
+        android:gravity="center_vertical"/>
 
 
 </RelativeLayout>
