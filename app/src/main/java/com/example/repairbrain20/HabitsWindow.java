@@ -1,13 +1,18 @@
 package com.example.repairbrain20;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Parcel;
@@ -35,6 +40,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -78,31 +84,36 @@ public class HabitsWindow extends Fragment {
 
        // percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
 
-        User.getReference()
-                .child("replace_habits")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        Map<String,ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
-                            @NonNull
-                            @Override
-                            public String toString() {
-                                return super.toString();
+        DatabaseReference reference = User.getReference();
+
+        if(reference!=null)
+        {
+            reference
+                    .child("replace_habits")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            Map<String,ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
+                                }
+                            });
+                            // Log.e("uruttu_complete",habits.toString());
+                            if(habits!=null)
+                            {
+                                list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
                             }
-                        });
-                       // Log.e("uruttu_complete",habits.toString());
-                        if(habits!=null)
-                        {
-                            list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
+                            else
+                            {
+                                list_view.setVisibility(View.GONE);
+                                no_results.setVisibility(View.VISIBLE);
+                            }
                         }
-                        else
-                        {
-                            list_view.setVisibility(View.GONE);
-                            no_results.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
+                    });
+        }
     }
 
     public void addHabit()
@@ -258,6 +269,9 @@ public class HabitsWindow extends Fragment {
                             return;
                         }
 
+                        Snackbar connect =  Snackbar.make(getView(),"Connecting",Snackbar.LENGTH_INDEFINITE);
+                        connect.show();
+
                         ReplaceHabits habits = new ReplaceHabits(show_on);
 
                         Map<String,ReplaceHabits> habits_map;
@@ -282,7 +296,8 @@ public class HabitsWindow extends Fragment {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(getActivity(),"Habit Added",Toast.LENGTH_SHORT).show();
+                                        connect.dismiss();
+                                        Snackbar.make(getView(),"Habit Added",BaseTransientBottomBar.LENGTH_SHORT).show();
                                         no_results.setVisibility(View.GONE);
                                         list_view.setVisibility(View.VISIBLE);
                                         list_view.setAdapter(adapter);
@@ -325,6 +340,15 @@ public class HabitsWindow extends Fragment {
                 break;
 
             case R.id.reset:
+                User.getReference()
+                        .child("replace_habits")
+                        .removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                list_view.setAdapter(new HabitsAdapter(getActivity(),new HashMap<>()));
+                                Toast.makeText(getContext(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 break;
         }
 

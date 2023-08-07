@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Layout;
@@ -61,6 +62,10 @@ public class TimeActivity extends AppCompatActivity {
         neg_effect = findViewById(R.id.neg_effects);
         hrs_left = findViewById(R.id.hrs);
 
+        LinearLayout main = findViewById(R.id.root);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        cm.registerDefaultNetworkCallback(new CheckNetwork(this,main));
+
         lastly_relapse.setSelected(true);
         next_step.setSelected(true);
         pos_effect.setSelected(true);
@@ -70,8 +75,6 @@ public class TimeActivity extends AppCompatActivity {
         next = findViewById(R.id.next);
 
         progress = findViewById(R.id.progress);
-
-        LinearLayout root = findViewById(R.id.root);
 
        // player = MediaPlayer.create(this,R.raw.ticksound);
         // player.setLooping(true);
@@ -197,7 +200,7 @@ public class TimeActivity extends AppCompatActivity {
             }
         });
 
-        root.setOnClickListener(new View.OnClickListener() {
+        main.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -207,7 +210,12 @@ public class TimeActivity extends AppCompatActivity {
 
     }
 
-    public LocalDateTime getLocalDateTime(Map<String,Object> data,String key)
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    public LocalDateTime getLocalDateTime(Map<String,Object> data, String key)
     {
 
         Map<String,Object> map;

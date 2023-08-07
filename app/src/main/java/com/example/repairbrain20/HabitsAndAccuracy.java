@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 public class HabitsAndAccuracy extends AppCompatActivity {
 
     static int last_accuracy_percent = 0;
+    ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,11 @@ public class HabitsAndAccuracy extends AppCompatActivity {
             });
         }
 
-        ViewPager pager = findViewById(R.id.habits_pager);
+        pager = findViewById(R.id.habits_pager);
         TabLayout tabs = findViewById(R.id.tabs);
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
 
         TimeFragment accuracy = new TimeFragment();
         HabitsWindow habits = new HabitsWindow();
@@ -48,6 +54,11 @@ public class HabitsAndAccuracy extends AppCompatActivity {
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

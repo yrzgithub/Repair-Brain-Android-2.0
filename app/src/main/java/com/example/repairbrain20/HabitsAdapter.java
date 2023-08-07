@@ -238,7 +238,7 @@ public class HabitsAdapter extends BaseAdapter {
             }
         }
 
-        String show_on_string = builder.deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(",")).toString();
+        String show_on_string = builder.toString(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
 
         text.setText(key);
         show.setText(show_on_string);

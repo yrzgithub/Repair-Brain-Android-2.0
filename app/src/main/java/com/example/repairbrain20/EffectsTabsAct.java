@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
@@ -18,6 +19,9 @@ public class EffectsTabsAct extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tab);
         ViewPager pager = findViewById(R.id.view_pager);
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
 
         Fragment pos = new PosFragment();
         Fragment neg = new NegFragment();

@@ -1,5 +1,6 @@
 package com.example.repairbrain20;
 
+import static android.content.Context.CONNECTIVITY_SERVICE;
 import static com.example.repairbrain20.CreateAccountAct.title;
 
 import android.app.Activity;
@@ -8,7 +9,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -311,4 +314,5 @@ public class User implements OnCompleteListener<AuthResult> {
         }
         return null;
     }
+
 }

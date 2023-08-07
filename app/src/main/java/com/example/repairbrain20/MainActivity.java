@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -32,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        LinearLayout main = findViewById(R.id.main);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        cm.registerDefaultNetworkCallback(new CheckNetwork(this,main));
 
         free_button = findViewById(R.id.free_image);
         hand_cuffed_button = findViewById(R.id.hand_cuffed_image);

@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -68,6 +69,9 @@ public class CreateAccountAct extends AppCompatActivity {
 
         sign_up_button = findViewById(R.id.sign_up);
         login_with_google_button = findViewById(R.id.login_to_repair_brain);
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        cm.registerDefaultNetworkCallback(new CheckNetwork(this,layout));
 
         sign_up_button.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,10 +1,18 @@
 package com.example.repairbrain20;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Notification;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -22,7 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button signup_btn,login_btn;
     TextView topic,forget_password_text,create_account;
     EditText id_or_email_edit_txt,password_edit_txt;
-    LinearLayout google_btn;
+    LinearLayout google_btn,main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signup_btn = findViewById(R.id.sign_up);
         login_btn = findViewById(R.id.login);
         google_btn = findViewById(R.id.login_with_google);
+
+        LinearLayout main = findViewById(R.id.main);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        cm.registerDefaultNetworkCallback(new CheckNetwork(this,main));
 
         topic.setSelected(true);
 
