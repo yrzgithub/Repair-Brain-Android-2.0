@@ -3,10 +3,12 @@ package com.example.repairbrain20;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,14 +29,21 @@ public class Habits extends AppCompatActivity {
     ListView list_view;
     ImageView img;
     static int last_accuracy_percent = 0;
+    CheckNetwork network_check;
+    ConnectivityManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
 
+        LinearLayout main = findViewById(R.id.main);
+
         percent = findViewById(R.id.percent);
         list_view = findViewById(R.id.list);
+
+        network_check =  new CheckNetwork(this,main);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
      //   img.setImageResource(R.drawable.noresultfound);
 
@@ -52,6 +61,18 @@ public class Habits extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        cm.registerDefaultNetworkCallback(network_check);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        cm.unregisterNetworkCallback(network_check);
+        super.onPause();
     }
 
     @Override

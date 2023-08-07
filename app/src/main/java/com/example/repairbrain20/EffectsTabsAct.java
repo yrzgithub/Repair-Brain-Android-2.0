@@ -12,6 +12,9 @@ import com.google.android.material.tabs.TabLayout;
 
 public class EffectsTabsAct extends AppCompatActivity {
 
+    CheckNetwork network_check;
+    ConnectivityManager cm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +23,8 @@ public class EffectsTabsAct extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tab);
         ViewPager pager = findViewById(R.id.view_pager);
 
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
+        network_check =  new CheckNetwork(this,pager);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
         Fragment pos = new PosFragment();
         Fragment neg = new NegFragment();
@@ -34,5 +37,17 @@ public class EffectsTabsAct extends AppCompatActivity {
 
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
+    }
+
+    @Override
+    protected void onResume() {
+        cm.registerDefaultNetworkCallback(network_check);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        cm.unregisterNetworkCallback(network_check);
+        super.onPause();
     }
 }

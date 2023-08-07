@@ -29,6 +29,8 @@ import java.time.LocalDateTime;
 public class MainActivity extends AppCompatActivity {
 
     ImageButton free_button = null,hand_cuffed_button = null;
+    CheckNetwork network_check;
+    ConnectivityManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout main = findViewById(R.id.main);
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        cm.registerDefaultNetworkCallback(new CheckNetwork(this,main));
+        network_check =  new CheckNetwork(this,main);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
         free_button = findViewById(R.id.free_image);
         hand_cuffed_button = findViewById(R.id.hand_cuffed_image);
@@ -84,6 +86,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        cm.registerDefaultNetworkCallback(network_check);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        cm.unregisterNetworkCallback(network_check);
+        super.onPause();
     }
 
     @Override

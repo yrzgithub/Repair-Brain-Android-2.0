@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView topic,forget_password_text,create_account;
     EditText id_or_email_edit_txt,password_edit_txt;
     LinearLayout google_btn,main;
+    CheckNetwork network_check;
+    ConnectivityManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         google_btn = findViewById(R.id.login_with_google);
 
         LinearLayout main = findViewById(R.id.main);
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        cm.registerDefaultNetworkCallback(new CheckNetwork(this,main));
+        network_check =  new CheckNetwork(this,main);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
         topic.setSelected(true);
 
@@ -128,5 +130,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.login_with_google:
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        cm.registerDefaultNetworkCallback(network_check);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        cm.unregisterNetworkCallback(network_check);
+        super.onPause();
     }
 }

@@ -21,6 +21,9 @@ public class HabitsAndAccuracy extends AppCompatActivity {
     static int last_accuracy_percent = 0;
     ViewPager pager;
 
+    CheckNetwork network_check;
+    ConnectivityManager cm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,9 @@ public class HabitsAndAccuracy extends AppCompatActivity {
         pager = findViewById(R.id.habits_pager);
         TabLayout tabs = findViewById(R.id.tabs);
 
+        network_check =  new CheckNetwork(this,pager);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+
         ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
         cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
 
@@ -56,9 +62,17 @@ public class HabitsAndAccuracy extends AppCompatActivity {
         tabs.setupWithViewPager(pager);
     }
 
+
     @Override
     protected void onResume() {
+        cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        cm.unregisterNetworkCallback(network_check);
+        super.onPause();
     }
 
     @Override

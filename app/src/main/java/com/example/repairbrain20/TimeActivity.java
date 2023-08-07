@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -47,7 +49,10 @@ public class TimeActivity extends AppCompatActivity {
     Button effects = null, next = null;
     DatabaseReference reference;
     ProgressBar progress;
+    LinearLayout main;
     //MediaPlayer player;
+    CheckNetwork network_check;
+    ConnectivityManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +67,9 @@ public class TimeActivity extends AppCompatActivity {
         neg_effect = findViewById(R.id.neg_effects);
         hrs_left = findViewById(R.id.hrs);
 
-        LinearLayout main = findViewById(R.id.root);
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        cm.registerDefaultNetworkCallback(new CheckNetwork(this,main));
+        main = findViewById(R.id.root);
+        network_check =  new CheckNetwork(this,main);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
         lastly_relapse.setSelected(true);
         next_step.setSelected(true);
@@ -210,11 +215,6 @@ public class TimeActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     public LocalDateTime getLocalDateTime(Map<String,Object> data, String key)
     {
 
@@ -248,6 +248,18 @@ public class TimeActivity extends AppCompatActivity {
             player = null;
         }
          */
+    }
+
+    @Override
+    protected void onResume() {
+        cm.registerDefaultNetworkCallback(network_check);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        cm.unregisterNetworkCallback(network_check);
+        super.onPause();
     }
 
     @Override

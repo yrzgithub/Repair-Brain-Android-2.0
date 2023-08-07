@@ -30,6 +30,9 @@ public class CreateAccountAct extends AppCompatActivity {
     String first_name,last_name,email,password,verify_password,username;
     ProgressDialog progress;
     static final String title = "Repair Brain";
+    LinearLayout main;
+    CheckNetwork network_check;
+    ConnectivityManager cm;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,14 +48,17 @@ public class CreateAccountAct extends AppCompatActivity {
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        LinearLayout layout = findViewById(R.id.main);
+        network_check =  new CheckNetwork(this,main);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+
+        main = findViewById(R.id.main);
         Glide.with(this)
                 .asGif()
                 .load(R.drawable.signup)
                 .into(new SimpleTarget<GifDrawable>() {
                     @Override
                     public void onResourceReady(GifDrawable resource, Transition<? super GifDrawable> transition) {
-                        layout.setBackground(resource);
+                        main.setBackground(resource);
                         resource.start();
                     }
                 });
@@ -69,9 +75,6 @@ public class CreateAccountAct extends AppCompatActivity {
 
         sign_up_button = findViewById(R.id.sign_up);
         login_with_google_button = findViewById(R.id.login_to_repair_brain);
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        cm.registerDefaultNetworkCallback(new CheckNetwork(this,layout));
 
         sign_up_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +142,18 @@ public class CreateAccountAct extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        cm.registerDefaultNetworkCallback(network_check);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        cm.unregisterNetworkCallback(network_check);
+        super.onPause();
     }
 
     public static boolean isValidString(String string)
