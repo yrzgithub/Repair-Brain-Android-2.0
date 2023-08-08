@@ -1,7 +1,9 @@
 package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -23,11 +25,21 @@ public class HabitsAndAccuracy extends AppCompatActivity {
 
     CheckNetwork network_check;
     ConnectivityManager cm;
+    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.habits_and_accuracy_pager);
+
+        DrawerLayout drawer = findViewById(R.id.drawer);
+
+        toggle = new ActionBarDrawerToggle(this,drawer,R.string.open,R.string.close);
+        toggle.syncState();
+
+        drawer.addDrawerListener(toggle);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         DatabaseReference reference =  User.getReference();
 

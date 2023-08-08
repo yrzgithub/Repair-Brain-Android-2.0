@@ -49,6 +49,7 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
 
     @Override
     public void onLosing(@NonNull Network network, int maxMsToLive) {
+        this.snack.show();
         super.onLosing(network, maxMsToLive);
     }
 
