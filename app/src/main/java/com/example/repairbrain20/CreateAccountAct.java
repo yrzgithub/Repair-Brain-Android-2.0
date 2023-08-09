@@ -6,11 +6,15 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.app.StatusBarManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.service.notification.StatusBarNotification;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -40,16 +44,9 @@ public class CreateAccountAct extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        
-        if(getSupportActionBar()!=null)
-        {
-            getSupportActionBar().hide();
-        }
+        if(getSupportActionBar()!=null) getSupportActionBar().hide();
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
-        network_check =  new CheckNetwork(this,main);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
         main = findViewById(R.id.main);
         Glide.with(this)
@@ -146,13 +143,11 @@ public class CreateAccountAct extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        cm.unregisterNetworkCallback(network_check);
         super.onPause();
     }
 

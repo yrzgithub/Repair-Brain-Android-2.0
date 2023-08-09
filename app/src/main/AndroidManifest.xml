@@ -16,14 +16,6 @@
         android:theme="@style/Theme.RepairBrain20" >
 
         <activity
-            android:name=".HabitsAndAccuracy"
-            android:exported="false" />
-
-        <activity
-            android:name=".CreateAccountAct"
-            android:exported="false" />
-
-        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -33,21 +25,19 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".HabitsAndAccuracy"
+            android:exported="false" />
+
+        <activity
+            android:name=".CreateAccountAct"
+            android:exported="false" />
+
         <activity
             android:name=".EffectsTabsAct"
             android:exported="false" />
-        <activity
-            android:name=".StepsAct"
-            android:exported="false" />
-        <activity
-            android:name=".Effects"
-            android:exported="false" />
-        <activity
-            android:name=".Habits"
-            android:exported="false" />
-        <activity
-            android:name=".TimeActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true" />

@@ -5,15 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/signup"
+    android:fitsSystemWindows="true"
     android:clickable="true"
-    android:contextClickable="true"
-    android:focusable="auto"
-    android:focusableInTouchMode="true"
-    android:focusedByDefault="true"
-    android:gravity="center"
+    android:background="@drawable/signup"
     android:orientation="vertical"
-    android:visibility="visible"
     tools:context=".CreateAccountAct">
 
     <TextView
