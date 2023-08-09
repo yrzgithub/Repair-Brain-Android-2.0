@@ -9,10 +9,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +24,6 @@ public class HabitsAndAccuracy extends AppCompatActivity {
 
     static int last_accuracy_percent = 0;
     ViewPager pager;
-
     CheckNetwork network_check;
     ConnectivityManager cm;
     ActionBarDrawerToggle toggle;
@@ -74,6 +75,14 @@ public class HabitsAndAccuracy extends AppCompatActivity {
         tabs.setupWithViewPager(pager);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(toggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onResume() {

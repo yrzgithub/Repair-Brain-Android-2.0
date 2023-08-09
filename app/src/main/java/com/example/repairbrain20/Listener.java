@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -87,6 +89,9 @@ public class Listener {
     public static void addEffect(Activity activity,String effect)
     {
         EditText effect_view = new EditText(activity);
+        effect_view.setHint("Enter the " + effect);
+
+        View view = View.inflate(activity,R.layout.alert_dialog,null);
 
         new AlertDialog.Builder(activity)
                 .setIcon(R.drawable.ic_launcher_foreground)

@@ -53,7 +53,7 @@
     <string name="habits">Habits</string>
     <string name="change">change</string>
     <string name="next">next</string>
-    <string name="effects">effects</string>
+    <string name="effects">Effects</string>
     <string name="_0">00</string>
     <string name="accuracy">Accuracy</string>
     <string name="show_all">Show All</string>
@@ -70,4 +70,8 @@
     <string name="reset">Reset</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="home">Home</string>
+    <string name="about">About</string>
+    <string name="contact_developer">Contact Developer</string>
+    <string name="next_steps_">Next Steps</string>
 </resources>
