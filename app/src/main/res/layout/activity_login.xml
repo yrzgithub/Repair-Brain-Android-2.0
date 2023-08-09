@@ -21,7 +21,7 @@
         android:id="@+id/topic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:layout_weight="1"
         android:fontFamily="cursive"
         android:gravity="center"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -304,41 +304,18 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-
-        <Button
-            android:id="@+id/sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="#2962FF"
-            android:gravity="center"
-            android:padding="10dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:soundEffectsEnabled="true"
-            android:text="@string/sign_up"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
         <Button
             android:id="@+id/login"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="30dp"
-            android:backgroundTint="#2962FF"
-            android:gravity="center"
+            android:layout_gravity="top"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:backgroundTint="#3269FF"
             android:padding="10dp"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp"
-            android:soundEffectsEnabled="true"
             android:text="@string/login"
-            android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold" />
-
 
     </LinearLayout>
 

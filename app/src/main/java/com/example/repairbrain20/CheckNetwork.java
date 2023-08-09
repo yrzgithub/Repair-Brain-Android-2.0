@@ -31,25 +31,25 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
     }
     @Override
     public void onAvailable(@NonNull Network network) {
-        this.snack.dismiss();
+       // this.snack.dismiss();
         super.onAvailable(network);
     }
 
     @Override
     public void onLost(@NonNull Network network) {
-        this.snack.show();
+     //   this.snack.show();
         super.onLost(network);
     }
 
     @Override
     public void onUnavailable() {
-        this.snack.show();
+       // this.snack.show();
         super.onUnavailable();
     }
 
     @Override
     public void onLosing(@NonNull Network network, int maxMsToLive) {
-        this.snack.show();
+       // this.snack.show();
         super.onLosing(network, maxMsToLive);
     }
 

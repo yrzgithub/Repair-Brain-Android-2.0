@@ -64,6 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
+                    android:id="@+id/home"
                     android:padding="5dp"
                     android:orientation="horizontal">
 
@@ -89,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:padding="5dp"
+                    android:id="@+id/time_gone"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -112,6 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/habits"
                     android:padding="5dp"
                     android:orientation="horizontal">
 
@@ -137,6 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:padding="5dp"
+                    android:id="@+id/effects"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -160,6 +164,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/next_steps"
                     android:padding="5dp"
                     android:orientation="horizontal">
 
@@ -184,6 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/about"
                     android:padding="5dp"
                     android:orientation="horizontal">
 
@@ -208,6 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/contact_developer"
                     android:padding="5dp"
                     android:orientation="horizontal">
 

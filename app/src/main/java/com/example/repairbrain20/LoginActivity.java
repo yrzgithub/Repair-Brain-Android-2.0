@@ -1,6 +1,7 @@
 package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Notification;
@@ -23,6 +24,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -47,6 +52,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
+        LinearLayout main = findViewById(R.id.main);
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.signup)
+                .into(new SimpleTarget<GifDrawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull GifDrawable resource, @Nullable Transition<? super GifDrawable> transition) {
+                        main.setBackground(resource);
+                        resource.start();
+                    }
+                });
+
         User user = new User(this,"uruttu","123456");
         user.login_with_username();
 
@@ -57,11 +74,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         id_or_email_edit_txt = findViewById(R.id.id_or_email);
         password_edit_txt = findViewById(R.id.password);
 
-        signup_btn = findViewById(R.id.sign_up);
+        //signup_btn = findViewById(R.id.sign_up);
         login_btn = findViewById(R.id.login);
         google_btn = findViewById(R.id.login_with_google);
 
-        LinearLayout main = findViewById(R.id.main);
         network_check =  new CheckNetwork(this,main);
         cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
@@ -74,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         id_or_email_edit_txt.setOnClickListener(this);
         password_edit_txt.setOnClickListener(this);
 
-        signup_btn.setOnClickListener(this);
+        //signup_btn.setOnClickListener(this);
         login_btn.setOnClickListener(this);
         google_btn.setOnClickListener(this);
     }

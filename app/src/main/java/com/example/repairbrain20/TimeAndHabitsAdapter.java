@@ -43,5 +43,4 @@ public class TimeAndHabitsAdapter extends FragmentPagerAdapter {
         fragments.add(f);
         title.add(name);
     }
-
 }

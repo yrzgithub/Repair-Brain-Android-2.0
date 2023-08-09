@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
@@ -37,6 +38,12 @@ public class EffectsTabsAct extends AppCompatActivity {
 
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
+
+        Intent intent = getIntent();
+        if(intent!=null)
+        {
+            tabLayout.selectTab(tabLayout.getTabAt(intent.getIntExtra("tab",0)));
+        }
     }
 
     @Override
