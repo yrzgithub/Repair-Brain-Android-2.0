@@ -1,42 +1,32 @@
 package com.example.repairbrain20;
 
-import android.app.Activity;
-import android.util.Log;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserData {
+
+public class Data{
+
+}
+
+
+class ProgressData {
 
     int last_accuracy_percent = 0;
-    String uid,lastly_noted_positive_effects,lastly_noted_negative_effects,lastly_noted_next_steps;
+    String lastly_noted_positive_effects,lastly_noted_negative_effects,lastly_noted_next_steps,default_text;
+    Time lastly_relapsed;
 
-    Activity act;
 
-    public UserData() {
+    public ProgressData() {
 
     }
 
-    UserData(Activity act)
+    ProgressData(String default_text)
     {
-        this.act = act;
-        this.uid = User.uid;
-
-        lastly_noted_positive_effects = lastly_noted_negative_effects  = lastly_noted_next_steps = "Not Found";
+        this.default_text = default_text;
+        lastly_noted_positive_effects = lastly_noted_negative_effects  = lastly_noted_next_steps = default_text;
     }
 
     public int getLast_accuracy_percent() {
@@ -70,7 +60,16 @@ public class UserData {
     public void setLastly_noted_next_steps(String lastly_noted_next_steps) {
         this.lastly_noted_next_steps = lastly_noted_next_steps;
     }
+
+    public Time getLastly_relapsed() {
+        return lastly_relapsed;
+    }
+
+    public void setLastly_relapsed(Time lastly_relapsed) {
+        this.lastly_relapsed = lastly_relapsed;
+    }
 }
+
 
 class Time
 {
@@ -154,6 +153,7 @@ class Time
     }
 }
 
+
 class Plot
 {
     List<Integer> date,value;
@@ -184,6 +184,7 @@ class Plot
         this.value = value;
     }
 }
+
 
 class ReplaceHabits
 {

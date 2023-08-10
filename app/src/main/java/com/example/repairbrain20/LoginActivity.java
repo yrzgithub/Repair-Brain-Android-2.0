@@ -78,8 +78,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_btn = findViewById(R.id.login);
         google_btn = findViewById(R.id.login_with_google);
 
-        network_check =  new CheckNetwork(this,main);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+      /*  network_check =  new CheckNetwork(this,main);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class); */
 
         topic.setSelected(true);
 
@@ -150,13 +150,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onResume() {
-        cm.registerDefaultNetworkCallback(network_check);
+        // cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        cm.unregisterNetworkCallback(network_check);
+        // cm.unregisterNetworkCallback(network_check);
         super.onPause();
     }
 }

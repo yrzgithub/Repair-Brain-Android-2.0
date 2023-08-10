@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class CheckNetwork extends ConnectivityManager.NetworkCallback {
@@ -67,4 +68,26 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
     public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {
         super.onBlockedStatusChanged(network, blocked);
     }
+
+    public static boolean isAvailable(Activity act,View view)
+    {
+        ConnectivityManager cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
+        Network active = cm.getActiveNetwork();
+
+        if(active==null)
+        {
+            Snackbar bar = Snackbar.make(view,"Network Not Available",BaseTransientBottomBar.LENGTH_INDEFINITE);
+            bar.setAction("Reload", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    act.recreate();
+                }
+            });
+
+            bar.show();
+        }
+
+        return active!=null;
+    }
+
 }

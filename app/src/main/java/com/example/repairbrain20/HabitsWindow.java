@@ -33,6 +33,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -77,42 +78,50 @@ public class HabitsWindow extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        LinearLayout main = view.findViewById(R.id.main);
+
         list_view = view.findViewById(R.id.list);
         no_results = view.findViewById(R.id.no_results);
 
-        //add = view.findViewById(R.id.add);
-
-       // percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
+        /*
+            add = view.findViewById(R.id.add);
+            percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
+         */
 
         DatabaseReference reference = User.getReference();
 
         if(reference!=null)
         {
-            reference
-                    .child("replace_habits")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            Map<String,ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
-                                @NonNull
-                                @Override
-                                public String toString() {
-                                    return super.toString();
+            if(CheckNetwork.isAvailable(getActivity(),main))
+            {
+                reference
+                        .child("replace_habits")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Map<String,ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return super.toString();
+                                    }
+                                });
+
+                                // Log.e("uruttu_complete",habits.toString());
+
+                                if(habits!=null)
+                                {
+                                    list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
                                 }
-                            });
-                            // Log.e("uruttu_complete",habits.toString());
-                            if(habits!=null)
-                            {
-                                list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
+                                else
+                                {
+                                    list_view.setVisibility(View.GONE);
+                                    no_results.setVisibility(View.VISIBLE);
+                                }
                             }
-                            else
-                            {
-                                list_view.setVisibility(View.GONE);
-                                no_results.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    });
+                        });
+            }
         }
     }
 

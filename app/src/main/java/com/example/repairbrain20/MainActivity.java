@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout main = findViewById(R.id.main);
-        network_check =  new CheckNetwork(this,main);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+       /* network_check =  new CheckNetwork(this,main);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class); */
 
         free_button = findViewById(R.id.free_image);
         hand_cuffed_button = findViewById(R.id.hand_cuffed_image);
@@ -90,13 +90,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        cm.registerDefaultNetworkCallback(network_check);
+        // cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        cm.unregisterNetworkCallback(network_check);
+        // cm.unregisterNetworkCallback(network_check);
         super.onPause();
     }
 

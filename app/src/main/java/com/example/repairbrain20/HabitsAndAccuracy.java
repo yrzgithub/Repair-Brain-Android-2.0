@@ -46,27 +46,14 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DatabaseReference reference =  User.getReference();
-
-        if (reference!=null)
-        {
-            reference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    UserData data =  task.getResult().getValue(UserData.class);
-                    last_accuracy_percent = data.getLast_accuracy_percent();
-                }
-            });
-        }
-
         pager = findViewById(R.id.habits_pager);
         TabLayout tabs = findViewById(R.id.tabs);
 
-        network_check =  new CheckNetwork(this,pager);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+      /*  network_check =  new CheckNetwork(this,pager);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class); */
 
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
+     /*   ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
+        cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager)); */
 
         TimeFragment accuracy = new TimeFragment();
         HabitsWindow habits = new HabitsWindow();
@@ -81,12 +68,12 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
         // DrawerLayout views
 
         /*
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(HabitsAndAccuracy.this,"clicked",Toast.LENGTH_SHORT).show();
-            }
-        });
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(HabitsAndAccuracy.this,"clicked",Toast.LENGTH_SHORT).show();
+                }
+            });
          */
 
         LinearLayout home = findViewById(R.id.home);
@@ -126,19 +113,19 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onResume() {
-        cm.registerDefaultNetworkCallback(network_check);
+        // cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        cm.unregisterNetworkCallback(network_check);
+        // cm.unregisterNetworkCallback(network_check);
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        User.getReference().child("last_accuracy_percent").setValue(HabitsAdapter.current_percent);
+        // User.getReference().child("last_accuracy_percent").setValue(HabitsAdapter.current_percent);
         super.onStop();
     }
 
