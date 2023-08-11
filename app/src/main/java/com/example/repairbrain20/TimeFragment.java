@@ -49,8 +49,8 @@ public class TimeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
+        super.onViewCreated(view, savedInstanceState);
 
         time_gone = view.findViewById(R.id.time_gone);
         lastly_relapse = view.findViewById(R.id.lastly_relapsed);
@@ -87,11 +87,11 @@ public class TimeFragment extends Fragment {
 
                     //Log.e("sanjay_snap",user_data.toString());
 
-                    String positive_effect = progress_data.getLastly_noted_positive_effects();
-                    String negative_effect = progress_data.getLastly_noted_negative_effects();
+                    String positive_effect = progress_data.getLastly_noted_positive_effect();
+                    String negative_effect = progress_data.getLastly_noted_negative_effect();
                     String next_step_ = progress_data.getLastly_noted_next_steps();
 
-                    Log.e("Time_Fragment",positive_effect + " " + negative_effect + " " + next_step_);
+                    Log.e("time_fragment",positive_effect + " " + negative_effect + " " + next_step_);
 
                     next_step.setText(positive_effect);
                     pos_effect.setText(negative_effect);

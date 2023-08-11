@@ -11,7 +11,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/are_you_free_or_addicted"
@@ -20,27 +20,23 @@
         android:textSize="28sp"
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginRight="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_marginBottom="25dp">
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/free_image"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/none"
             android:clickable="true"
-            android:padding="10dp"
             android:background="@drawable/free"
             android:layout_marginBottom="20dp" />
 
@@ -48,8 +44,8 @@
             android:id="@+id/hand_cuffed_image"
             android:layout_width="250dp"
             android:layout_height="250dp"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"
-            android:padding="10dp"
             android:contentDescription="@string/none"
             android:clickable="true"
             android:background="@drawable/hand_cuffed"

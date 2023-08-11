@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -88,16 +89,14 @@ public class Listener {
 
     public static void addEffect(Activity activity,String effect)
     {
-        EditText effect_view = new EditText(activity);
-        effect_view.setHint("Enter the " + effect);
+        /* EditText effect_view = new EditText(activity);
+        effect_view.setHint("Enter the " + effect); */
 
         View view = View.inflate(activity,R.layout.alert_dialog,null);
+        EditText effect_view = view.findViewById(R.id.habit);
 
         new AlertDialog.Builder(activity)
-                .setIcon(R.drawable.ic_launcher_foreground)
-                .setTitle("Repair Brain")
-                .setMessage("Best Of Luck")
-                .setView(effect_view)
+                .setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

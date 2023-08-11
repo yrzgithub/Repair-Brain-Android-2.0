@@ -27,6 +27,8 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
@@ -163,6 +165,9 @@ public class HabitsAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     if(HabitsAdapter.this.delete)
                     {
+                        Snackbar bar = Snackbar.make(main,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                        bar.show();
+
                         User.getReference()
                                 .child("replace_habits")
                                 .child(keys.get(i))
@@ -176,6 +181,9 @@ public class HabitsAdapter extends BaseAdapter {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+
+                                        bar.dismiss();
+
                                         if(task.isSuccessful())
                                         {
                                             Toast.makeText(act,"Habit Removed",Toast.LENGTH_SHORT).show();
@@ -208,11 +216,7 @@ public class HabitsAdapter extends BaseAdapter {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     states[i] = b;
 
-                    if(HabitsAdapter.this.delete)
-                    {
-                        text.setPaintFlags(b?Paint.STRIKE_THRU_TEXT_FLAG:Paint.LINEAR_TEXT_FLAG);
-                    }
-                    else
+                    if(!HabitsAdapter.this.delete)
                     {
                         update_percentage(b);
                         update_value(key,b);
@@ -238,7 +242,7 @@ public class HabitsAdapter extends BaseAdapter {
             }
         }
 
-        String show_on_string = builder.toString(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
+        String show_on_string = builder.delete(builder.length()-2,builder.length()-1).toString().trim(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
 
         text.setText(key);
         show.setText(show_on_string);

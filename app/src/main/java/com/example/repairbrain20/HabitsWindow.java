@@ -62,6 +62,7 @@ public class HabitsWindow extends Fragment {
 
     ListView list_view;
     ImageView no_results = null;
+    TextView percent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class HabitsWindow extends Fragment {
 
         list_view = view.findViewById(R.id.list);
         no_results = view.findViewById(R.id.no_results);
+        percent = view.findViewById(R.id.percent);
 
         /*
             add = view.findViewById(R.id.add);
@@ -264,7 +266,7 @@ public class HabitsWindow extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        String habit_ = habit.getText().toString();
+                        String habit_ = habit.getText().toString().trim();
 
                         if(habit_.trim().equals(""))
                         {
@@ -307,6 +309,7 @@ public class HabitsWindow extends Fragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         connect.dismiss();
                                         Snackbar.make(getView(),"Habit Added",BaseTransientBottomBar.LENGTH_SHORT).show();
+                                        percent.setText("0%");
                                         no_results.setVisibility(View.GONE);
                                         list_view.setVisibility(View.VISIBLE);
                                         list_view.setAdapter(adapter);

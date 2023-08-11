@@ -14,7 +14,7 @@
         android:padding="15dp"
         android:layout_gravity="top"
         android:gravity="center"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="12dp"
         android:orientation="horizontal">
 
         <TextView
