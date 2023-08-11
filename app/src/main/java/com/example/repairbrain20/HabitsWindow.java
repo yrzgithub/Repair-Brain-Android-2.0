@@ -308,7 +308,7 @@ public class HabitsWindow extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         connect.dismiss();
-                                        Snackbar.make(getView(),"Habit Added",BaseTransientBottomBar.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(),"Habit Added",Toast.LENGTH_SHORT).show();
                                         percent.setText("0%");
                                         no_results.setVisibility(View.GONE);
                                         list_view.setVisibility(View.VISIBLE);

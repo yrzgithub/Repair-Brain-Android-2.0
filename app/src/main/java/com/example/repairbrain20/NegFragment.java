@@ -19,7 +19,13 @@ import android.widget.ListView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Map;
+
 public class NegFragment extends Fragment {
+
+    ListView listView;
+    Listener listener;
+    View view;
 
     NegFragment()
     {
@@ -35,10 +41,10 @@ public class NegFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        ImageView img = view.findViewById(R.id.no_results);
-        ListView listView = view.findViewById(R.id.list);
+        listView = view.findViewById(R.id.list);
+        this.view = view;
 
-        new Listener(getActivity(),img,listView,"negative_effects");
+        listener = new Listener(getActivity(),view,"negative_effects");
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -60,14 +66,16 @@ public class NegFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.add:
-                Listener.addEffect(getActivity(),"negative_effects");
+                listener.addEffect();
                 break;
 
             case R.id.remove:
+                Map<String,String> result = listener.getEffectsMap();
+                listView.setAdapter(new PosNegNextAdapter(getActivity(),view,result,"negative_effects",true));
                 break;
 
             case R.id.reset:
-                Listener.reset(getActivity(),"next_steps");
+                listener.reset();
                 break;
         }
         return true;

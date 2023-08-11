@@ -57,6 +57,8 @@ public class PosFragment extends Fragment {
 
     ListView listView = null;
     ImageView img;
+    Listener listener;
+    View view;
 
     PosFragment()
     {
@@ -75,7 +77,9 @@ public class PosFragment extends Fragment {
         this.img = view.findViewById(R.id.no_results);
         listView = view.findViewById(R.id.list);
 
-        new Listener(getActivity(),img,listView,"positive_effects");
+        this.view = view;
+
+        listener = new Listener(getActivity(),view,"positive_effects");
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -97,14 +101,16 @@ public class PosFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.add:
-                Listener.addEffect(getActivity(),"positive_effects");
+                listener.addEffect();
                 break;
 
             case R.id.remove:
+                Map<String,String> result = listener.getEffectsMap();
+                listView.setAdapter(new PosNegNextAdapter(getActivity(),view,result,"positive_effects",true));
                 break;
 
             case R.id.reset:
-                Listener.reset(getActivity(),"positive_effects");
+                listener.reset();
                 break;
         }
         return true;

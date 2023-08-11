@@ -20,7 +20,14 @@ import android.widget.ListView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+import java.util.Map;
+
 public class NextFragment extends Fragment {
+
+    ListView listView;
+    Listener listener;
+    View view;
 
     NextFragment()
     {
@@ -36,10 +43,9 @@ public class NextFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        ImageView img = view.findViewById(R.id.no_results);
-        ListView listView = view.findViewById(R.id.list);
-
-        new Listener(getActivity(),img,listView,"next_steps");
+        listView = view.findViewById(R.id.list);
+        this.view = view;
+        listener =  new Listener(getActivity(),view,"next_steps");
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -70,15 +76,16 @@ public class NextFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.add:
-                Listener.addEffect(getActivity(),"next_steps");
+                listener.addEffect();
                 break;
 
             case R.id.remove:
-
+                Map<String,String> result = listener.getEffectsMap();
+                listView.setAdapter(new PosNegNextAdapter(getActivity(),view,result,"next_steps",true));
                 break;
 
             case R.id.reset:
-                Listener.reset(getActivity(),"negative_effects");
+                listener.reset();
                 break;
         }
         return true;
