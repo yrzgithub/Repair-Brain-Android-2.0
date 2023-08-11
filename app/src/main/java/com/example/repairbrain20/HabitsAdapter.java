@@ -59,6 +59,7 @@ public class HabitsAdapter extends BaseAdapter {
     static int current_percent = 0;
     boolean[] states;
     static Map<String,ReplaceHabits> habits_copy;
+    DatabaseReference reference;
 
 
     HabitsAdapter(Activity act, Map<String,ReplaceHabits> habits)
@@ -94,6 +95,8 @@ public class HabitsAdapter extends BaseAdapter {
 
         LocalDateTime date_time = LocalDateTime.now();
         today_date = DateTimeFormatter.ofPattern("dd-MM-yy").format(date_time);
+
+        reference = User.getReference();
     }
 
     @SuppressLint("SetTextI18n")
@@ -252,12 +255,15 @@ public class HabitsAdapter extends BaseAdapter {
 
     public void update_value(String key,Boolean b)
     {
-        User.getReference()
-                .child("replace_habits")
-                .child(key)
-                .child("days_data")
-                .child(today_date)
-                .setValue(b?1:0);
+        if(reference!=null)
+        {
+            reference
+                    .child("replace_habits")
+                    .child(key)
+                    .child("days_data")
+                    .child(today_date)
+                    .setValue(b?1:0);
+        }
     }
 
     public void update_percentage(boolean b)
@@ -271,9 +277,17 @@ public class HabitsAdapter extends BaseAdapter {
         int percent = (count * 100) / size;
         this.percent.setText(percent+"%");
 
+        if(reference!=null)
+        {
+            reference
+                    .child("last_accuracy_percent")
+                    .setValue(percent);
+        }
+
         current_percent = percent;
 
         int diff = percent - HabitsAndAccuracy.last_accuracy_percent;
+        Log.e("last_accuracy_uruttu",String.valueOf(diff + " " +HabitsAndAccuracy.last_accuracy_percent));
 
        if(diff>=0)
         {

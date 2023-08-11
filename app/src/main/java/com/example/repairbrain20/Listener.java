@@ -73,6 +73,7 @@ public class Listener {
                        });
 
                        list.setAdapter(new PosNegNextAdapter(act,view,map,type));
+
                    }
                 }
             });

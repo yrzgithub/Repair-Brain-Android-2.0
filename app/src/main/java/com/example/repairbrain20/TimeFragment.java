@@ -23,6 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -93,93 +95,92 @@ public class TimeFragment extends Fragment {
 
         if(reference!=null)
         {
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    if(snapshot!=null && snapshot.exists())
-                    {
-                        ProgressData progress_data = snapshot.getValue(ProgressData.class);
+            reference.get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                        //Log.e("sanjay_snap",user_data.toString());
+                            DataSnapshot snapshot = task.getResult();
 
-                        String positive_effect = progress_data.getLastly_noted_positive_effects();
-                        String negative_effect = progress_data.getLastly_noted_negative_effects();
-                        String next_step_ = progress_data.getLastly_noted_next_steps();
+                            if(snapshot!=null && snapshot.exists())
+                            {
+                                ProgressData progress_data = snapshot.getValue(ProgressData.class);
 
-                        HabitsAndAccuracy.last_accuracy_percent = progress_data.getLast_accuracy_percent();
+                                // Log.e("sanjay_snap",user_data.toString());
 
-                        Log.e("time_fragment",positive_effect + " " + negative_effect + " " + next_step_);
+                                String positive_effect = progress_data.getLastly_noted_positive_effects();
+                                String negative_effect = progress_data.getLastly_noted_negative_effects();
+                                String next_step_ = progress_data.getLastly_noted_next_steps();
 
-                        pos_effect.setText(positive_effect);
-                        neg_effect.setText(negative_effect);
-                        next_step.setText(next_step_);
+                                HabitsAndAccuracy.last_accuracy_percent = progress_data.getLast_accuracy_percent();
 
-                        LocalDateTime lastly_relapsed_object;
+                                Log.e("time_fragment",positive_effect + " " + negative_effect + " " + next_step_);
 
-                        try
-                        {
-                            Time time = progress_data.getLastly_relapsed();
-                            lastly_relapsed_object = LocalDateTime.of(time.getYear(),time.getMonth(),time.getDay(),time.getHour(),time.getMinute(),time.getSecond());
-                        }
-                        catch (Exception | Error e)
-                        {
-                            Log.e("sanjay_timef",e.getMessage());
-                            time_gone.setText(R.string.not_found);
-                            lastly_relapse.setText(R.string.not_found);
-                            return;
-                        }
+                                pos_effect.setText(positive_effect);
+                                neg_effect.setText(negative_effect);
+                                next_step.setText(next_step_);
 
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
-                        String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
+                                LocalDateTime lastly_relapsed_object;
 
-                        loading.setVisibility(View.INVISIBLE);
-                        progress.setVisibility(View.VISIBLE);
-                        hrs_left.setVisibility(View.VISIBLE);
-                        left_txt.setVisibility(View.VISIBLE);
+                                try
+                                {
+                                    Time time = progress_data.getLastly_relapsed();
+                                    lastly_relapsed_object = LocalDateTime.of(time.getYear(),time.getMonth(),time.getDay(),time.getHour(),time.getMinute(),time.getSecond());
+                                }
+                                catch (Exception | Error e)
+                                {
+                                    Log.e("sanjay_timef",e.getMessage());
+                                    time_gone.setText(R.string.not_found);
+                                    lastly_relapse.setText(R.string.not_found);
+                                    return;
+                                }
 
-                        Handler handler = new Handler();
-                        LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
-                        Runnable runnable = new Runnable() {
-                            @SuppressLint("DefaultLocale")
-                            @Override
-                            public void run() {
-                                LocalDateTime now = LocalDateTime.now();
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+                                String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
 
-                                Duration duration = Duration.between(finalLastly_relapsed_object,now);
+                                loading.setVisibility(View.INVISIBLE);
+                                progress.setVisibility(View.VISIBLE);
+                                hrs_left.setVisibility(View.VISIBLE);
+                                left_txt.setVisibility(View.VISIBLE);
 
-                                long days = duration.toDays();
-                                long hours = duration.toHours() % 24;
-                                long minutes = duration.toMinutes() % 60;
-                                long seconds = duration.getSeconds() % 60;
+                                Handler handler = new Handler();
+                                LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
+                                Runnable runnable = new Runnable() {
+                                    @SuppressLint("DefaultLocale")
+                                    @Override
+                                    public void run() {
+                                        LocalDateTime now = LocalDateTime.now();
 
-                                Log.e("sanjay",String.valueOf(hours));
+                                        Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
-                                int hrs = (int)hours;
-                                progress.setProgress(hrs); // change
-                                hrs_left.setText(String.format("%02d",24-hrs));
+                                        long days = duration.toDays();
+                                        long hours = duration.toHours() % 24;
+                                        long minutes = duration.toMinutes() % 60;
+                                        long seconds = duration.getSeconds() % 60;
 
-                                String format = "%d days %d hrs %d mins %d secs";
-                                String time = String.format(format,days,hours,minutes,seconds);
-                                Log.e("sanjay_uruttu",time);
-                                time_gone.setText(time);
+                                        Log.e("sanjay",String.valueOf(hours));
 
-                                handler.postDelayed(this,1000);
+                                        int hrs = (int)hours;
+                                        progress.setProgress(hrs); // change
+                                        hrs_left.setText(String.format("%02d",24-hrs));
+
+                                        String format = "%d days %d hrs %d mins %d secs";
+                                        String time = String.format(format,days,hours,minutes,seconds);
+                                        Log.e("sanjay_uruttu",time);
+                                        time_gone.setText(time);
+
+                                        handler.postDelayed(this,1000);
+                                    }
+                                };
+
+                                runnable.run();
+
+                                lastly_relapse.setText(lastly_relapsed_str);
+
+                                time_gone.setEnabled(true);
                             }
-                        };
-
-                        runnable.run();
-
-                        lastly_relapse.setText(lastly_relapsed_str);
-
-                        time_gone.setEnabled(true);
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-
-                }
-            });
+                        }
+                    });
         }
 
        /* next.setOnClickListener(new View.OnClickListener() {
