@@ -4,8 +4,15 @@
 
     <item android:enabled="true"
         android:title="@string/add"
-        android:icon="@drawable/baseline_add_24"
         android:id="@+id/add"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
+
+    <item android:enabled="true"
+        android:title="@string/remove"
+        android:id="@+id/remove"/>
+
+    <item android:enabled="true"
+        android:title="@string/reset"
+        android:id="@+id/reset"/>
 
 </menu>

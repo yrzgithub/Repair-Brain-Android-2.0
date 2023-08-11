@@ -2,6 +2,7 @@ package com.example.repairbrain20;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +40,7 @@ public class Listener {
     DatabaseReference reference;
     DatabaseReference list_effects_reference;
     Map<String,String> map;
+    boolean delete;
 
     Listener(Activity act, ImageView img, ListView list,String type)
     {
@@ -107,14 +113,41 @@ public class Listener {
 
                         String date_added =  date_time.format(formatter);
 
-                        User.getReference().child(effect)
-                                .child(effect_new)
-                                .setValue(date_added);
+                        DatabaseReference reference = User.getReference();
+
+                        if(reference!=null)
+                        {
+                            reference.child(effect)
+                                    .child(effect_new)
+                                    .setValue(date_added)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            reference.child("lastly_noted_"+effect)
+                                                    .setValue(effect_new);
+                                        }
+                                    });
+                        }
                     }
                 })
                 .setNegativeButton("Cancel",null)
                 .create()
                 .show();
+    }
+
+    public static void reset(Activity act,String effect_name)
+    {
+        DatabaseReference reference = User.getReference();
+
+        if(reference!=null)
+        {
+            reference.child(effect_name).removeValue(new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                    Toast.makeText(act,"Successfully Resetted",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
 

@@ -72,6 +72,14 @@ public class NextFragment extends Fragment {
             case R.id.add:
                 Listener.addEffect(getActivity(),"next_steps");
                 break;
+
+            case R.id.remove:
+
+                break;
+
+            case R.id.reset:
+                Listener.reset(getActivity(),"negative_effects");
+                break;
         }
         return true;
     }

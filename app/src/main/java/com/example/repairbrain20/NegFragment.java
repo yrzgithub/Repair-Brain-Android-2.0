@@ -62,6 +62,13 @@ public class NegFragment extends Fragment {
             case R.id.add:
                 Listener.addEffect(getActivity(),"negative_effects");
                 break;
+
+            case R.id.remove:
+                break;
+
+            case R.id.reset:
+                Listener.reset(getActivity(),"next_steps");
+                break;
         }
         return true;
     }

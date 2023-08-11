@@ -6,17 +6,18 @@
             android:shape="ring"
             android:thickness="20dp"
             android:useLevel="false">
-            <solid android:color="#FFFFFF"/>
+            <solid android:color="#DFDFDF"/>
         </shape>
     </item>
 
     <item>
-        <rotate android:toDegrees="0"
-            android:fromDegrees="0">
+
+        <rotate
+            android:fromDegrees="0"
+            android:toDegrees="0">
 
                 <shape
                     android:shape="ring"
-                    android:useLevel="true"
                     android:thickness="20dp">
 
                     <gradient
@@ -28,7 +29,9 @@
                   <!--  <solid android:color="#00FF6A"/> -->
 
                 </shape>
+
         </rotate>
+
     </item>
 
 </layer-list>

@@ -15,7 +15,7 @@ public class Data{
 class ProgressData {
 
     int last_accuracy_percent = 0;
-    String lastly_noted_positive_effect,lastly_noted_negative_effect,lastly_noted_next_step,default_text;
+    String lastly_noted_positive_effects,lastly_noted_negative_effects,lastly_noted_next_steps,default_text;
     Time lastly_relapsed;
 
 
@@ -37,28 +37,28 @@ class ProgressData {
         this.last_accuracy_percent = last_accuracy_percent;
     }
 
-    public String getLastly_noted_positive_effect() {
-        return lastly_noted_positive_effect;
+    public String getLastly_noted_positive_effects() {
+        return lastly_noted_positive_effects;
     }
 
-    public void setLastly_noted_positive_effect(String lastly_noted_positive_effect) {
-        this.lastly_noted_positive_effect = lastly_noted_positive_effect;
+    public void setLastly_noted_positive_effects(String lastly_noted_positive_effect) {
+        this.lastly_noted_positive_effects = lastly_noted_positive_effect;
     }
 
-    public String getLastly_noted_negative_effect() {
-        return lastly_noted_negative_effect;
+    public String getLastly_noted_negative_effects() {
+        return lastly_noted_negative_effects;
     }
 
     public void setLastly_noted_negative_effects(String lastly_noted_negative_effect) {
-        this.lastly_noted_negative_effect = lastly_noted_negative_effect;
+        this.lastly_noted_negative_effects = lastly_noted_negative_effect;
     }
 
     public String getLastly_noted_next_steps() {
-        return lastly_noted_next_step;
+        return lastly_noted_next_steps;
     }
 
     public void setLastly_noted_next_steps(String lastly_noted_next_steps) {
-        this.lastly_noted_next_step = lastly_noted_next_steps;
+        this.lastly_noted_next_steps = lastly_noted_next_steps;
     }
 
     public Time getLastly_relapsed() {

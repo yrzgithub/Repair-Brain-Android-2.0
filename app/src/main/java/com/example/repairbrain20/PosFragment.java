@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -55,6 +56,7 @@ import kotlin.coroutines.CoroutineContext;
 public class PosFragment extends Fragment {
 
     ListView listView = null;
+    ImageView img;
 
     PosFragment()
     {
@@ -70,7 +72,7 @@ public class PosFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        ImageView img = view.findViewById(R.id.no_results);
+        this.img = view.findViewById(R.id.no_results);
         listView = view.findViewById(R.id.list);
 
         new Listener(getActivity(),img,listView,"positive_effects");
@@ -96,6 +98,13 @@ public class PosFragment extends Fragment {
         {
             case R.id.add:
                 Listener.addEffect(getActivity(),"positive_effects");
+                break;
+
+            case R.id.remove:
+                break;
+
+            case R.id.reset:
+                Listener.reset(getActivity(),"positive_effects");
                 break;
         }
         return true;

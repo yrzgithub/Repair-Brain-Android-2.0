@@ -13,12 +13,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
@@ -52,12 +56,23 @@ public class TimeFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+        progress = view.findViewById(R.id.progress);
+
+        // Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_progress);
+        // progress.startAnimation(animation);
+
         time_gone = view.findViewById(R.id.time_gone);
         lastly_relapse = view.findViewById(R.id.lastly_relapsed);
         next_step = view.findViewById(R.id.next_step);
         pos_effect = view.findViewById(R.id.pos_effect);
         neg_effect = view.findViewById(R.id.neg_effects);
         hrs_left = view.findViewById(R.id.hrs);
+        TextView left_txt = view.findViewById(R.id.hrs_left);
+
+        ImageView loading = view.findViewById(R.id.loading);
+        Glide.with(getActivity())
+                .load(R.drawable.loading_pink_list)
+                .into(loading);
 
         lastly_relapse.setSelected(true);
         next_step.setSelected(true);
@@ -66,8 +81,6 @@ public class TimeFragment extends Fragment {
 
         // effects = view.findViewById(R.id.effects);
         next = view.findViewById(R.id.next);
-
-        progress = view.findViewById(R.id.progress);
 
         LinearLayout root = view.findViewById(R.id.root);
 
@@ -87,15 +100,17 @@ public class TimeFragment extends Fragment {
 
                     //Log.e("sanjay_snap",user_data.toString());
 
-                    String positive_effect = progress_data.getLastly_noted_positive_effect();
-                    String negative_effect = progress_data.getLastly_noted_negative_effect();
+                    String positive_effect = progress_data.getLastly_noted_positive_effects();
+                    String negative_effect = progress_data.getLastly_noted_negative_effects();
                     String next_step_ = progress_data.getLastly_noted_next_steps();
+
+                    HabitsAndAccuracy.last_accuracy_percent = progress_data.getLast_accuracy_percent();
 
                     Log.e("time_fragment",positive_effect + " " + negative_effect + " " + next_step_);
 
-                    next_step.setText(positive_effect);
-                    pos_effect.setText(negative_effect);
-                    neg_effect.setText(next_step_);
+                    pos_effect.setText(positive_effect);
+                    neg_effect.setText(negative_effect);
+                    next_step.setText(next_step_);
 
                     LocalDateTime lastly_relapsed_object;
 
@@ -107,21 +122,18 @@ public class TimeFragment extends Fragment {
                     catch (Exception | Error e)
                     {
                         Log.e("sanjay_timef",e.getMessage());
-                        lastly_relapsed_object = null;
-                    }
-
-                    if(lastly_relapsed_object==null)
-                    {
                         time_gone.setText(R.string.not_found);
                         lastly_relapse.setText(R.string.not_found);
-                        next_step.setText(R.string.not_found);
-                        pos_effect.setText(R.string.not_found);
-                        neg_effect.setText(R.string.not_found);
                         return;
                     }
 
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
                     String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
+
+                    loading.setVisibility(View.INVISIBLE);
+                    progress.setVisibility(View.VISIBLE);
+                    hrs_left.setVisibility(View.VISIBLE);
+                    left_txt.setVisibility(View.VISIBLE);
 
                     Handler handler = new Handler();
                     LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
@@ -141,7 +153,7 @@ public class TimeFragment extends Fragment {
                             Log.e("sanjay",String.valueOf(hours));
 
                             int hrs = (int)hours;
-                            progress.setProgress(hrs);
+                            progress.setProgress(hrs); // change
                             hrs_left.setText(String.format("%02d",24-hrs));
 
                             String format = "%d days %d hrs %d mins %d secs";
@@ -167,13 +179,13 @@ public class TimeFragment extends Fragment {
             }
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
+       /* next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),EffectsTabsAct.class);
                 startActivity(intent);
             }
-        });
+        }); */
 
       /*  effects.setOnClickListener(new View.OnClickListener() {
             @Override
