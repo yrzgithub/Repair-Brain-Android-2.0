@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -133,18 +134,20 @@ public class Listener {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                                List<String> suggestions =  task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
-                                @NonNull
-                                @Override
-                                public String toString() {
-                                    return super.toString();
-                                }
-                            });
+                                Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return super.toString();
+                                    }
+                                });
+
+                                List<String> suggestions = new ArrayList<>(map.keySet());
 
                             // Toast.makeText(act, "Common " + effect_name +" fetched",Toast.LENGTH_LONG).show();
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
-                            search.setAdapter(adapter);
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
+                                search.setAdapter(adapter);
                         }
                     });
         }

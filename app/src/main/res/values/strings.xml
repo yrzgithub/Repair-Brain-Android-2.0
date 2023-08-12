@@ -75,4 +75,5 @@
     <string name="contact_developer">Contact Developer</string>
     <string name="next_steps_">Next Steps</string>
     <string name="show_common">Show Common</string>
+    <string name="source">Source : </string>
 </resources>

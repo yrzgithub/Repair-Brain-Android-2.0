@@ -223,4 +223,30 @@ class ReplaceHabits
     }
 }
 
+class Common
+{
+    String link,source;
+
+    Common()
+    {
+
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+}
+
 
