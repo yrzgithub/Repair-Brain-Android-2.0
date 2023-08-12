@@ -32,25 +32,25 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
     }
     @Override
     public void onAvailable(@NonNull Network network) {
-       // this.snack.dismiss();
+        this.snack.dismiss();
         super.onAvailable(network);
     }
 
     @Override
     public void onLost(@NonNull Network network) {
-     //   this.snack.show();
+        this.snack.show();
         super.onLost(network);
     }
 
     @Override
     public void onUnavailable() {
-       // this.snack.show();
+        this.snack.show();
         super.onUnavailable();
     }
 
     @Override
     public void onLosing(@NonNull Network network, int maxMsToLive) {
-       // this.snack.show();
+        this.snack.show();
         super.onLosing(network, maxMsToLive);
     }
 
@@ -77,13 +77,6 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
         if(active==null)
         {
             Snackbar bar = Snackbar.make(view,"Network Not Available",BaseTransientBottomBar.LENGTH_INDEFINITE);
-            bar.setAction("Reload", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    act.recreate();
-                }
-            });
-
             bar.show();
         }
 

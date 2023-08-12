@@ -56,6 +56,7 @@ public class PosNegNextAdapter extends BaseAdapter {
         this.effect = effect;
 
         if(map==null || map.size()==0) show_image_view(R.drawable.noresultfound);
+
         else
         {
             keys =  new ArrayList<>(map.keySet());

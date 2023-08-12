@@ -49,8 +49,8 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
         pager = findViewById(R.id.habits_pager);
         TabLayout tabs = findViewById(R.id.tabs);
 
-      /*  network_check =  new CheckNetwork(this,pager);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class); */
+        network_check =  new CheckNetwork(this,pager);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
      /*   ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
         cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager)); */
@@ -113,13 +113,13 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onResume() {
-        // cm.registerDefaultNetworkCallback(network_check);
+        cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        // cm.unregisterNetworkCallback(network_check);
+        cm.unregisterNetworkCallback(network_check);
         super.onPause();
     }
 

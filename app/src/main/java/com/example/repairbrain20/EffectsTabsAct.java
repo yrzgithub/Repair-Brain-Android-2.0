@@ -15,6 +15,7 @@ public class EffectsTabsAct extends AppCompatActivity {
 
     CheckNetwork network_check;
     ConnectivityManager cm;
+    ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +23,10 @@ public class EffectsTabsAct extends AppCompatActivity {
         setContentView(R.layout.activity_effects_tabs);
 
         TabLayout tabLayout = findViewById(R.id.tab);
-        ViewPager pager = findViewById(R.id.view_pager);
+        pager = findViewById(R.id.view_pager);
 
-       /* network_check =  new CheckNetwork(this,pager);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class); */
+        network_check =  new CheckNetwork(this,pager);
+        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
         Fragment pos = new PosFragment();
         Fragment neg = new NegFragment();
@@ -44,17 +45,19 @@ public class EffectsTabsAct extends AppCompatActivity {
         {
             tabLayout.selectTab(tabLayout.getTabAt(intent.getIntExtra("tab",0)));
         }
+
+        // CheckNetwork.isAvailable(this,pager);
     }
 
     @Override
     protected void onResume() {
-        // cm.registerDefaultNetworkCallback(network_check);
+        cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        // cm.unregisterNetworkCallback(network_check);
+        cm.unregisterNetworkCallback(network_check);
         super.onPause();
     }
 }

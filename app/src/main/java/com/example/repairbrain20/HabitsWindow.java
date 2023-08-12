@@ -39,6 +39,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -85,6 +86,13 @@ public class HabitsWindow extends Fragment {
         no_results = view.findViewById(R.id.no_results);
         percent = view.findViewById(R.id.percent);
 
+        list_view.setVisibility(View.GONE);
+        no_results.setVisibility(View.VISIBLE);
+
+        Glide.with(no_results)
+                .load(R.drawable.loading_pink_list)
+                .into(no_results);
+
         /*
             add = view.findViewById(R.id.add);
             percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
@@ -94,36 +102,37 @@ public class HabitsWindow extends Fragment {
 
         if(reference!=null)
         {
-            if(CheckNetwork.isAvailable(getActivity(),main))
-            {
-                reference
-                        .child("replace_habits")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                Map<String,ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
-                                    @NonNull
-                                    @Override
-                                    public String toString() {
-                                        return super.toString();
-                                    }
-                                });
+            reference
+                    .child("replace_habits")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                                // Log.e("uruttu_complete",habits.toString());
+                            Map<String,ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
+                                }
+                            });
 
-                                if(habits!=null)
-                                {
-                                    list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
-                                }
-                                else
-                                {
-                                    list_view.setVisibility(View.GONE);
-                                    no_results.setVisibility(View.VISIBLE);
-                                }
+                            // Log.e("uruttu_complete",habits.toString());
+
+                            if(habits!=null)
+                            {
+                                list_view.setVisibility(View.VISIBLE);
+                                no_results.setVisibility(View.GONE);
+                                list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
                             }
-                        });
-            }
+                            else
+                            {
+                                list_view.setVisibility(View.GONE);
+                                no_results.setVisibility(View.VISIBLE);
+                                no_results.setImageResource(R.drawable.noresultfound);
+                            }
+                        }
+                    });
         }
     }
 

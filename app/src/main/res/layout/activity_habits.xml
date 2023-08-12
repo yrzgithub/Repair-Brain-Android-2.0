@@ -11,10 +11,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="16dp"
         android:layout_gravity="top"
         android:gravity="center"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -24,7 +26,7 @@
             android:layout_gravity="center"
             android:text="@string/replacing_accuracy"
             android:gravity="center"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp"
@@ -52,6 +54,7 @@
 
     </LinearLayout>
 
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -60,7 +63,6 @@
         android:dividerHeight="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:drawSelectorOnTop="true"
         android:layout_marginBottom="10dp"
         android:visibility="visible"/>
 

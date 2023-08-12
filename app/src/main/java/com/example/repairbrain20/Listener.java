@@ -46,23 +46,30 @@ import java.util.Map;
 public class Listener {
 
     ListView list;
-    ImageView img;
     DatabaseReference list_effects_reference;
     Map<String,String> map;
     String type;
     Activity act;
     View view;
+    ImageView loading;
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
 
     Listener(Activity act,View view,String type)
     {
         this.act = act;
         this.view = view;
+        this.loading = view.findViewById(R.id.no_results);
 
         this.list = view.findViewById(R.id.list);
-        this.img = view.findViewById(R.id.no_results);
 
         this.type = type;
+
+        list.setVisibility(View.GONE);
+        loading.setVisibility(View.VISIBLE);
+
+        Glide.with(loading)
+                .load(R.drawable.loading_pink_list)
+                .into(loading);
 
         list_effects_reference = User.getReference();
 
@@ -81,6 +88,9 @@ public class Listener {
                            }
                        });
 
+                       list.setVisibility(View.VISIBLE);
+                       loading.setVisibility(View.GONE);
+
                        list.setAdapter(new PosNegNextAdapter(act,view,map,type));
 
                    }
@@ -92,12 +102,6 @@ public class Listener {
     public Map<String,String> getEffectsMap()
     {
         return map;
-    }
-
-    public void delete_image_view()
-    {
-        img.setVisibility(View.GONE);
-        list.setVisibility(View.VISIBLE);
     }
 
     public void addEffect()
