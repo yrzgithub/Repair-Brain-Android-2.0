@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="20dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
@@ -29,15 +30,12 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/habit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <AutoCompleteTextView
+        android:id="@+id/effects_list"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
-        android:hint="@string/enter_the_habit"
-        android:gravity="start"
-        />
+        android:completionThreshold="0"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

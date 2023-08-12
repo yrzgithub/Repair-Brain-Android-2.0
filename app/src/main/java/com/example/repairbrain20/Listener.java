@@ -1,16 +1,23 @@
 package com.example.repairbrain20;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +52,7 @@ public class Listener {
     String type;
     Activity act;
     View view;
+    DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
 
     Listener(Activity act,View view,String type)
     {
@@ -97,14 +106,51 @@ public class Listener {
         effect_view.setHint("Enter the " + effect); */
 
         View view = View.inflate(act,R.layout.alert_dialog,null);
-        EditText effect_view = view.findViewById(R.id.habit);
+        AutoCompleteTextView search = view.findViewById(R.id.effects_list);
+        search.setThreshold(0);
+
+        search.setHint("Search or Enter");
+
+        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                search.showDropDown();
+            }
+        });
+
+        DatabaseReference reference = User.getReference();
+
+        if(reference!=null)
+        {
+            common_reference
+                    .child("common_" + type)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                                List<String> suggestions =  task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
+                                }
+                            });
+
+                            // Toast.makeText(act, "Common " + effect_name +" fetched",Toast.LENGTH_LONG).show();
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
+                            search.setAdapter(adapter);
+                        }
+                    });
+        }
 
         new AlertDialog.Builder(act)
                 .setView(view)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String effect_new = effect_view.getText().toString().trim();
+                        String effect_new = search.getText().toString();
 
                         LocalDateTime date_time = LocalDateTime.now();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
