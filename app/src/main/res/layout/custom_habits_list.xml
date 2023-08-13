@@ -74,6 +74,4 @@
         android:layout_alignParentEnd="true"
         android:gravity="center"/>
 
-
-
 </RelativeLayout>

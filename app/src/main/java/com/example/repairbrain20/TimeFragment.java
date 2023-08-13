@@ -166,7 +166,7 @@ public class TimeFragment extends Fragment {
 
                                         String format = "%d days %d hrs %d mins %d secs";
                                         String time = String.format(format,days,hours,minutes,seconds);
-                                        Log.e("sanjay_uruttu",time);
+                                      //  Log.e("sanjay_uruttu",time);
                                         time_gone.setText(time);
 
                                         handler.postDelayed(this,1000);

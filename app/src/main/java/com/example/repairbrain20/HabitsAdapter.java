@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,70 +54,111 @@ public class HabitsAdapter extends BaseAdapter {
     ImageView up_or_down = null;
     TextView accuracy = null;
 
-    List<String> keys;
+    List<String> keys = new ArrayList<>();
     Map<String,ReplaceHabits> habits;
     String today_date;
     static int current_percent = 0;
     boolean[] states;
+    String[] days = {"Sun","Mon","Tue","Wed","Thru","Fri","Sat"};
     static Map<String,ReplaceHabits> habits_copy;
     DatabaseReference reference;
+    LinearLayout main;
+    View view;
+    ImageView no_results;
+    ListView habits_list;
+    Snackbar snack;
+    String today_day;
 
 
-    HabitsAdapter(Activity act, Map<String,ReplaceHabits> habits)
+    HabitsAdapter(Activity act, View view, Map<String,ReplaceHabits> habits)
     {
         this.act = act;
+        this.view = view;
 
-        this.percent = act.findViewById(R.id.percent);
-        this.up_or_down = act.findViewById(R.id.up_or_down);
-        this.accuracy = act.findViewById(R.id.accuracy);
+        main = view.findViewById(R.id.main);
 
-        if(habits.size()==0)
-        {
-            ImageView no_results = act.findViewById(R.id.no_results);
-            ListView habit_list = act.findViewById(R.id.list);
+        this.percent = view.findViewById(R.id.percent);
+        this.up_or_down = view.findViewById(R.id.up_or_down);
+        this.accuracy = view.findViewById(R.id.accuracy);
 
-            no_results.setVisibility(View.VISIBLE);
-            habit_list.setVisibility(View.GONE);
-        }
+        this.no_results = view.findViewById(R.id.no_results);
+        this.habits_list = view.findViewById(R.id.list);
 
-//        Log.e("uruttu_habits",habits.toString());
-
-        this.habits = habits;
-        habits_copy = habits;
-
-        this.states = new boolean[habits.size()];
-        Arrays.fill(this.states,false);
-
-        keys = new ArrayList<>(habits.keySet());
-
-        //Toast.makeText(act,String.valueOf(habits.keySet().size()),Toast.LENGTH_SHORT).show();
+        accuracy.setText("Replacing Accuracy :");
 
         today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("E"));
 
         LocalDateTime date_time = LocalDateTime.now();
         today_date = DateTimeFormatter.ofPattern("dd-MM-yy").format(date_time);
+        today_day = DateTimeFormatter.ofPattern("E").format(date_time);
+
+        //Toast.makeText(act,today_day,Toast.LENGTH_SHORT).show();
+
+        if(habits!=null)
+        {
+            if(habits.size()>0)
+            {
+                habits_list.setVisibility(View.VISIBLE);
+                no_results.setVisibility(View.GONE);
+                up_or_down.setVisibility(View.VISIBLE);
+                percent.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                habits_list.setVisibility(View.GONE);
+                no_results.setVisibility(View.VISIBLE);
+                percent.setText("0%");
+                no_results.setImageResource(R.drawable.noresultfound);
+            }
+
+            snack = Snackbar.make(main,"Reload the frame",BaseTransientBottomBar.LENGTH_INDEFINITE);
+            snack.setAction("Reload", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    act.recreate();
+                }
+            });
+
+            accuracy.setText("Replacing Accuracy :");
+
+            this.states = new boolean[habits.size()];
+            Arrays.fill(this.states,false);
+
+            keys.addAll(habits.keySet());
+        }
+        else
+        {
+            habits_list.setVisibility(View.GONE);
+            no_results.setVisibility(View.VISIBLE);
+            percent.setText("0%");
+            no_results.setImageResource(R.drawable.noresultfound);
+        }
+
+        this.habits = habits;
+        habits_copy = habits;
 
         reference = User.getReference();
     }
 
     @SuppressLint("SetTextI18n")
-    HabitsAdapter(Activity act, Map<String,ReplaceHabits> habits, boolean delete)
+    HabitsAdapter(Activity act, View view,Map<String,ReplaceHabits> habits,boolean delete)
     {
-        this(act,habits);
+        this(act,view,habits);
         this.delete = delete;
 
         if(delete)
         {
-            if(habits.size()>0)
+            if(keys.size()>0)
             {
-                percent.setVisibility(View.GONE);
                 up_or_down.setVisibility(View.GONE);
+                percent.setVisibility(View.GONE);
                 accuracy.setText("Select Items To Remove");
+                if(snack!=null) snack.show();
             }
             else
             {
-                percent.setVisibility(View.VISIBLE);
                 up_or_down.setVisibility(View.VISIBLE);
+                percent.setVisibility(View.VISIBLE);
                 accuracy.setText("Replacing Accuracy :");
             }
         }
@@ -190,11 +232,11 @@ public class HabitsAdapter extends BaseAdapter {
                                         if(task.isSuccessful())
                                         {
                                             Toast.makeText(act,"Habit Removed",Toast.LENGTH_SHORT).show();
-                                            ListView view = act.findViewById(R.id.list);
+                                            ListView view = HabitsAdapter.this.view.findViewById(R.id.list);
                                             habits.remove(key);
                                             habits_copy = habits;
 
-                                            view.setAdapter(new HabitsAdapter(act,habits,true));
+                                            view.setAdapter(new HabitsAdapter(act,HabitsAdapter.this.view,habits,true));
                                         }
                                         else
                                         {
@@ -235,6 +277,13 @@ public class HabitsAdapter extends BaseAdapter {
 
         List<String> show_on = habits.getShow_on();
 
+        if(!show_on.contains(today_day) && !this.delete)
+        {
+            main.setEnabled(false);
+            check.setEnabled(false);
+            delete.setEnabled(false);
+        }
+
         StringBuilder builder = new StringBuilder();
 
         for(String day : days_list)
@@ -247,7 +296,8 @@ public class HabitsAdapter extends BaseAdapter {
 
         String show_on_string = builder.delete(builder.length()-2,builder.length()-1).toString().trim(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
 
-        text.setText(key);
+        String show_ = key.substring(0,1).toUpperCase() + key.substring(1);
+        text.setText(show_);
         show.setText(show_on_string);
 
         return view;

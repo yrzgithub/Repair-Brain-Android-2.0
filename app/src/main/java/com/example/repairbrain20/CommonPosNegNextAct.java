@@ -1,15 +1,21 @@
 package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,6 +24,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,6 +40,8 @@ public class CommonPosNegNextAct extends AppCompatActivity {
     ImageView loading;
     ConnectivityManager cm;
     CheckNetwork check;
+    String type;
+    DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +60,7 @@ public class CommonPosNegNextAct extends AppCompatActivity {
                 .into(loading);
 
         Intent intent = getIntent();
-        String type = intent.getStringExtra("effect");
+        type = intent.getStringExtra("effect");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
@@ -79,6 +89,84 @@ public class CommonPosNegNextAct extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.common_effects_steps_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        View view = LayoutInflater.from(this).inflate(R.layout.suggest_alert_dialog,null);
+
+        EditText name = view.findViewById(R.id.name);
+        EditText source = view.findViewById(R.id.source);
+        EditText link = view.findViewById(R.id.link);
+
+        switch (item.getItemId())
+        {
+            case R.id.suggest:
+                new AlertDialog.Builder(this)
+                        .setView(view)
+                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String name_ = name.getText().toString();
+                                String source_ = source.getText().toString();
+                                String link_ = link.getText().toString();
+
+                                if(!isValid(name_))
+                                {
+                                    Toast.makeText(CommonPosNegNextAct.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                if(!isValid(source_))
+                                {
+                                    Toast.makeText(CommonPosNegNextAct.this,"Source cannot be empty",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                if(!isValid(link_))
+                                {
+                                    Toast.makeText(CommonPosNegNextAct.this,"Link cannot be empty",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                Common common = new Common(source_,link_);
+
+                                if(common_reference!=null)
+                                {
+                                    Snackbar bar = Snackbar.make(list,"Saving", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                    bar.show();
+
+                                    common_reference.child(type+"_suggestions")
+                                            .child(name_)
+                                            .setValue(common)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    bar.dismiss();
+                                                    Toast.makeText(CommonPosNegNextAct.this,"Suggestion saved",Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }
+
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .create()
+                        .show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onResume() {
         cm.registerDefaultNetworkCallback(check);
         super.onResume();
@@ -88,5 +176,10 @@ public class CommonPosNegNextAct extends AppCompatActivity {
     protected void onPause() {
         cm.unregisterNetworkCallback(check);
         super.onPause();
+    }
+
+    public boolean isValid(String str)
+    {
+        return !str.trim().equals("");
     }
 }

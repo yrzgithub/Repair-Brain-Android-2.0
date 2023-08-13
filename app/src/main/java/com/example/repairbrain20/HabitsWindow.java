@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -64,6 +65,8 @@ public class HabitsWindow extends Fragment {
     ListView list_view;
     ImageView no_results = null;
     TextView percent;
+    View view;
+    LinearLayout main;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,14 +83,13 @@ public class HabitsWindow extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LinearLayout main = view.findViewById(R.id.main);
+        this.view = view;
+
+        main = view.findViewById(R.id.main);
 
         list_view = view.findViewById(R.id.list);
         no_results = view.findViewById(R.id.no_results);
         percent = view.findViewById(R.id.percent);
-
-        list_view.setVisibility(View.GONE);
-        no_results.setVisibility(View.VISIBLE);
 
         Glide.with(no_results)
                 .load(R.drawable.loading_pink_list)
@@ -117,20 +119,7 @@ public class HabitsWindow extends Fragment {
                                 }
                             });
 
-                            // Log.e("uruttu_complete",habits.toString());
-
-                            if(habits!=null)
-                            {
-                                list_view.setVisibility(View.VISIBLE);
-                                no_results.setVisibility(View.GONE);
-                                list_view.setAdapter(new HabitsAdapter(getActivity(),habits));
-                            }
-                            else
-                            {
-                                list_view.setVisibility(View.GONE);
-                                no_results.setVisibility(View.VISIBLE);
-                                no_results.setImageResource(R.drawable.noresultfound);
-                            }
+                            list_view.setAdapter(new HabitsAdapter(getActivity(),HabitsWindow.this.view,habits));
                         }
                     });
         }
@@ -307,7 +296,7 @@ public class HabitsWindow extends Fragment {
                             habits_map.put(habit_,habits);
                         }
 
-                        HabitsAdapter adapter = new HabitsAdapter(getActivity(),habits_map);
+                        HabitsAdapter adapter = new HabitsAdapter(getActivity(),HabitsWindow.this.view,habits_map);
 
                         User.getReference()
                                 .child("replace_habits")
@@ -319,8 +308,6 @@ public class HabitsWindow extends Fragment {
                                         connect.dismiss();
                                         Toast.makeText(getActivity(),"Habit Added",Toast.LENGTH_SHORT).show();
                                         percent.setText("0%");
-                                        no_results.setVisibility(View.GONE);
-                                        list_view.setVisibility(View.VISIBLE);
                                         list_view.setAdapter(adapter);
                                     }
                                 });
@@ -350,23 +337,33 @@ public class HabitsWindow extends Fragment {
                 addHabit();
                 break;
 
+            case R.id.show_all:
+                HabitsAdapter adapter = new HabitsAdapter(getActivity(),HabitsWindow.this.view,HabitsAdapter.habits_copy);
+                list_view.setAdapter(adapter);
+                break;
+
             case R.id.remove:
                 Map<String,ReplaceHabits> habits_copy =  HabitsAdapter.habits_copy;
-                if(habits_copy.size()==0)
+                if(habits_copy==null || habits_copy.size()==0)
                 {
                     Toast.makeText(getActivity(),"Habit List is Empty",Toast.LENGTH_LONG).show();
                 }
-                HabitsAdapter remove_adapter = new HabitsAdapter(getActivity(),habits_copy,true);
+                HabitsAdapter remove_adapter = new HabitsAdapter(getActivity(),HabitsWindow.this.view,habits_copy,true);
                 list_view.setAdapter(remove_adapter);
                 break;
 
             case R.id.reset:
+                Snackbar reset = Snackbar.make(main,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                reset.show();
+
                 User.getReference()
                         .child("replace_habits")
                         .removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                list_view.setAdapter(new HabitsAdapter(getActivity(),new HashMap<>()));
+                                reset.dismiss();
+
+                                list_view.setAdapter(new HabitsAdapter(getActivity(),HabitsWindow.this.view,new HashMap<>()));
                                 Toast.makeText(getContext(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
                             }
                         });

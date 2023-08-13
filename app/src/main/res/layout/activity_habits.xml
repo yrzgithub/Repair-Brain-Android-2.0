@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="15dp"
         android:paddingBottom="16dp"
-        android:layout_gravity="top"
+        android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="10dp"
@@ -23,10 +23,7 @@
             android:id="@+id/accuracy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/replacing_accuracy"
-            android:gravity="center"
-            android:layout_marginStart="15dp"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="25sp"
@@ -37,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
             android:text="@string/zero"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -64,7 +61,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/no_results"
@@ -73,7 +70,7 @@
         android:layout_marginBottom="175dp"
         android:layout_gravity="center"
         android:src="@drawable/noresultfound"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 
 </LinearLayout>

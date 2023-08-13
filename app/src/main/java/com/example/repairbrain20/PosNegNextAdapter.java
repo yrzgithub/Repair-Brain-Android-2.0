@@ -143,7 +143,8 @@ public class PosNegNextAdapter extends BaseAdapter {
 
         text_widget.setSelected(true);
 
-        text_widget.setText(key);
+        String show = key.substring(0,1).toUpperCase() + key.substring(1);
+        text_widget.setText(show);
         date_widget.setText(map.get(key));
 
         return view;

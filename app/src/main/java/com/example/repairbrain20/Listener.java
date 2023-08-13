@@ -159,6 +159,11 @@ public class Listener {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String effect_new = search.getText().toString();
 
+                        if(effect_new.trim().equals("")) {
+                            Toast.makeText(act.getApplicationContext(),"Invalid " + type.replace("_"," ").substring(0,type.length()-1),Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         LocalDateTime date_time = LocalDateTime.now();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
 

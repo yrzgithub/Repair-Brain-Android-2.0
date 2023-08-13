@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Repair Brain 2.0</string>
     <string name="are_you_free_or_addicted">Are You Free Or Addicted?</string>
     <string name="none">none</string>
@@ -76,4 +77,8 @@
     <string name="next_steps_">Next Steps</string>
     <string name="show_common">Show Common</string>
     <string name="source">Source : </string>
+    <string name="suggest">Suggest</string>
+    <string name="name">Name</string>
+    <string name="link">Link</string>
+
 </resources>

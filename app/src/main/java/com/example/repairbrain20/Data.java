@@ -232,6 +232,12 @@ class Common
 
     }
 
+    Common(String source,String link)
+    {
+        this.source = source;
+        this.link = link;
+    }
+
     public String getLink() {
         return link;
     }

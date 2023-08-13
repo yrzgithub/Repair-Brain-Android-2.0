@@ -7,6 +7,10 @@
         android:title="@string/add"
         app:showAsAction="ifRoom"/>
 
+    <item android:title="@string/show_all"
+        app:showAsAction="never"
+        android:id="@+id/show_all"/>
+
     <item android:title="@string/remove"
         android:id="@+id/remove"
         app:showAsAction="never"/>
