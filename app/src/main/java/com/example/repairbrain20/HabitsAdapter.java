@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class HabitsAdapter extends BaseAdapter {
 
@@ -68,6 +69,8 @@ public class HabitsAdapter extends BaseAdapter {
     ListView habits_list;
     Snackbar snack;
     String today_day;
+    List<String> enabled_keys = new ArrayList<>();
+    int enabled_key_size = 1;
 
 
     HabitsAdapter(Activity act, View view, Map<String,ReplaceHabits> habits)
@@ -134,6 +137,19 @@ public class HabitsAdapter extends BaseAdapter {
             no_results.setImageResource(R.drawable.noresultfound);
         }
 
+        for(Map.Entry<String,ReplaceHabits> e : habits.entrySet())
+        {
+            List<String> show_on = e.getValue().getShow_on();
+            String habit_name = e.getKey();
+
+            if(show_on.contains(today_day))
+            {
+                enabled_keys.add(habit_name);
+            }
+        }
+
+        enabled_key_size = enabled_keys.size();
+
         this.habits = habits;
         habits_copy = habits;
 
@@ -185,8 +201,20 @@ public class HabitsAdapter extends BaseAdapter {
         view = act.getLayoutInflater().inflate(R.layout.custom_habits_list,null,false);
 
         RelativeLayout main = view.findViewById(R.id.main);
+
         CheckBox check = view.findViewById(R.id.check);
         ImageView delete = view.findViewById(R.id.delete);
+
+        TextView show_on_ = view.findViewById(R.id.show_on_text);
+        TextView text = view.findViewById(R.id.habit);
+        TextView show = view.findViewById(R.id.show_on);
+
+        String key = keys.get(i);
+
+        ReplaceHabits habits = this.habits.get(key);
+
+        List<String> show_on = habits.getShow_on();
+        boolean habit_enabled = show_on.contains(today_day);
 
         main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,11 +224,6 @@ public class HabitsAdapter extends BaseAdapter {
         });
 
         view.setBackgroundResource(R.drawable.round_layout);
-
-        String key = keys.get(i);
-
-        TextView text = view.findViewById(R.id.habit);
-        TextView show = view.findViewById(R.id.show_on);
 
         if(this.delete)
         {
@@ -233,10 +256,10 @@ public class HabitsAdapter extends BaseAdapter {
                                         {
                                             Toast.makeText(act,"Habit Removed",Toast.LENGTH_SHORT).show();
                                             ListView view = HabitsAdapter.this.view.findViewById(R.id.list);
-                                            habits.remove(key);
-                                            habits_copy = habits;
+                                            HabitsAdapter.this.habits.remove(key);
+                                            HabitsAdapter.habits_copy = HabitsAdapter.this.habits;
 
-                                            view.setAdapter(new HabitsAdapter(act,HabitsAdapter.this.view,habits,true));
+                                            view.setAdapter(new HabitsAdapter(act,HabitsAdapter.this.view,HabitsAdapter.this.habits,true));
                                         }
                                         else
                                         {
@@ -263,25 +286,23 @@ public class HabitsAdapter extends BaseAdapter {
 
                     if(!HabitsAdapter.this.delete)
                     {
-                        update_percentage(b);
-                        update_value(key,b);
+                        if(habit_enabled)
+                        {
+                            update_percentage(b);
+                            update_value(key,b);
+                        }
                     }
                 }
             });
         }
 
-
-        ReplaceHabits habits = this.habits.get(key);
-
-        if(habits==null) return view;
-
-        List<String> show_on = habits.getShow_on();
-
-        if(!show_on.contains(today_day) && !this.delete)
+        if(!habit_enabled && !this.delete)
         {
             main.setEnabled(false);
             check.setEnabled(false);
             delete.setEnabled(false);
+
+            text.setTextColor(Color.LTGRAY);
         }
 
         StringBuilder builder = new StringBuilder();
@@ -320,7 +341,7 @@ public class HabitsAdapter extends BaseAdapter {
     {
         if(b) ++count; else --count;
 
-        int size = keys.size();
+        int size = enabled_key_size;
 
         if(size==0) return;
 

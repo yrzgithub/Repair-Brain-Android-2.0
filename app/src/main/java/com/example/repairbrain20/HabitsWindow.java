@@ -337,11 +337,6 @@ public class HabitsWindow extends Fragment {
                 addHabit();
                 break;
 
-            case R.id.show_all:
-                HabitsAdapter adapter = new HabitsAdapter(getActivity(),HabitsWindow.this.view,HabitsAdapter.habits_copy);
-                list_view.setAdapter(adapter);
-                break;
-
             case R.id.remove:
                 Map<String,ReplaceHabits> habits_copy =  HabitsAdapter.habits_copy;
                 if(habits_copy==null || habits_copy.size()==0)
