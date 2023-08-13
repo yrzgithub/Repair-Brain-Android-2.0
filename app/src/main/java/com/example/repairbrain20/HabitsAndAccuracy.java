@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,8 +60,8 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
         HabitsWindow habits = new HabitsWindow();
 
         TimeAndHabitsAdapter adapter = new TimeAndHabitsAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        adapter.add_tab(accuracy,"Accuracy");
-        adapter.add_tab(habits,"Habits");
+        adapter.add_tab(accuracy,"TIME GONE");
+        adapter.add_tab(habits,"ACCURACY");
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
@@ -83,6 +84,7 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
         LinearLayout next_steps = findViewById(R.id.next_steps);
         LinearLayout about = findViewById(R.id.about);
         LinearLayout contact_developer = findViewById(R.id.contact_developer);
+        LinearLayout logout = findViewById(R.id.logout);
 
         home.setOnClickListener(this);
         time_gone.setOnClickListener(this);
@@ -91,6 +93,7 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
         next_steps.setOnClickListener(this);
         about.setOnClickListener(this);
         contact_developer.setOnClickListener(this);
+        logout.setOnClickListener(this);
 
         Intent intent = getIntent();
         if(intent!=null)
@@ -168,6 +171,16 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.contact_developer:
+                break;
+
+            case R.id.logout:
+                SharedPreferences preferences = getSharedPreferences("login_data",MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear().apply();
+
+                intent = new Intent(this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
         }
     }

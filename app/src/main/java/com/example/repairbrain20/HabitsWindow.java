@@ -358,7 +358,7 @@ public class HabitsWindow extends Fragment {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 reset.dismiss();
 
-                                list_view.setAdapter(new HabitsAdapter(getActivity(),HabitsWindow.this.view,new HashMap<>()));
+                                list_view.setAdapter(new HabitsAdapter(getActivity(),HabitsWindow.this.view,null));
                                 Toast.makeText(getContext(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
                             }
                         });

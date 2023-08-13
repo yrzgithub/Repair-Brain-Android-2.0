@@ -22,13 +22,13 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/accuracy"
+                    android:text="@string/time_gone"
                     android:id="@+id/habit"/>
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/habits"
+                    android:text="@string/accuracy"
                     android:id="@+id/accuracy"/>
 
             </com.google.android.material.tabs.TabLayout>
@@ -229,6 +229,31 @@
                         android:layout_marginStart="10dp"
                         android:layout_gravity="center_vertical"
                         android:text="@string/contact_developer"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/logout"
+                    android:padding="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/contact_developer"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/logout"
                         android:textSize="20sp"/>
 
                 </LinearLayout>

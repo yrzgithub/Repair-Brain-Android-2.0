@@ -2,14 +2,17 @@ package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Notification;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.os.Bundle;
@@ -39,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     LinearLayout google_btn,main;
     CheckNetwork network_check;
     ConnectivityManager cm;
+    SharedPreferences preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +68,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
 
-        User user = new User(this,"uruttu","123456");
-        user.login_with_username();
+       /* User user = new User(this,"uruttu","123456");
+       /* user.login_with_username(); */
 
         topic = findViewById(R.id.topic);
         forget_password_text = findViewById(R.id.forget_password);
@@ -93,6 +97,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //signup_btn.setOnClickListener(this);
         login_btn.setOnClickListener(this);
         google_btn.setOnClickListener(this);
+
+        preference = getSharedPreferences("login_data",MODE_PRIVATE);
+
+        String username = preference.getString("username",null);
+        String email = preference.getString("email",null);
+        String password = preference.getString("password",null);
+
+        User user;
+
+        if(username!=null)
+        {
+            id_or_email_edit_txt.setText(username);
+
+            user = new User(this,username,password);
+            user.login_with_username();
+        }
+
+        else if(email!=null)
+        {
+            id_or_email_edit_txt.setText(email);
+
+            user = new User(this,email,password);
+            user.login_with_email_and_password();
+        }
+
+        if(password!=null) password_edit_txt.setText(password);
     }
 
     @Override

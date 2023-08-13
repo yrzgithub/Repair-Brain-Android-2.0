@@ -106,13 +106,6 @@ public class HabitsAdapter extends BaseAdapter {
                 up_or_down.setVisibility(View.VISIBLE);
                 percent.setVisibility(View.VISIBLE);
             }
-            else
-            {
-                habits_list.setVisibility(View.GONE);
-                no_results.setVisibility(View.VISIBLE);
-                percent.setText("0%");
-                no_results.setImageResource(R.drawable.noresultfound);
-            }
 
             snack = Snackbar.make(main,"Reload the frame",BaseTransientBottomBar.LENGTH_INDEFINITE);
             snack.setAction("Reload", new View.OnClickListener() {

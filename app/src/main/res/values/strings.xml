@@ -56,7 +56,6 @@
     <string name="next">next</string>
     <string name="effects">Effects</string>
     <string name="_0">00</string>
-    <string name="accuracy">Accuracy</string>
     <string name="show_all">Show All</string>
     <string name="enter_the_habit">Enter the habit</string>
     <string name="all">All</string>
@@ -80,5 +79,7 @@
     <string name="suggest">Suggest</string>
     <string name="name">Name</string>
     <string name="link">Link</string>
+    <string name="accuracy">Accuracy</string>
+    <string name="logout">Logout</string>
 
 </resources>

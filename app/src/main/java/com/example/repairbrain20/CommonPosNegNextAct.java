@@ -64,7 +64,7 @@ public class CommonPosNegNextAct extends AppCompatActivity {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        reference.child("common_"+type)
+        reference.child("common_" + type)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
@@ -74,7 +74,7 @@ public class CommonPosNegNextAct extends AppCompatActivity {
                         loading.setVisibility(View.GONE);
                         list.setVisibility(View.VISIBLE);
 
-                        Map<String,Common> common = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                        Map<String, Common> common = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                             @NonNull
                             @Override
                             public String toString() {
@@ -82,7 +82,7 @@ public class CommonPosNegNextAct extends AppCompatActivity {
                             }
                         });
 
-                        CommonPosNegNextAdapter adapter = new CommonPosNegNextAdapter(CommonPosNegNextAct.this,common);
+                        CommonPosNegNextAdapter adapter = new CommonPosNegNextAdapter(CommonPosNegNextAct.this, common);
                         CommonPosNegNextAct.this.list.setAdapter(adapter);
                     }
                 });

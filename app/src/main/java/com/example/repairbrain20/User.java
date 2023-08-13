@@ -6,8 +6,10 @@ import static com.example.repairbrain20.CreateAccountAct.title;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.util.Log;
@@ -48,6 +50,8 @@ public class User implements OnCompleteListener<AuthResult> {
     static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
     boolean use_username;
     static String uid;
+    SharedPreferences.Editor editor;
+    SharedPreferences preference;
 
     User()
     {
@@ -62,6 +66,9 @@ public class User implements OnCompleteListener<AuthResult> {
         this.progress = new ProgressDialog(act);
         progress.setCanceledOnTouchOutside(false);
         progress.setOnCancelListener(null);
+
+        preference = act.getSharedPreferences("login_data",Context.MODE_PRIVATE);
+        this.editor = preference.edit();
 
         alert = new AlertDialog.Builder(act)
                 .setTitle(title)
@@ -206,6 +213,10 @@ public class User implements OnCompleteListener<AuthResult> {
                 {
                     if(user.isEmailVerified())
                     {
+                        if(use_username) editor.putString("username",username);
+
+                        editor.putString("email",email).putString("password",password).commit();
+
                         User.uid = user.getUid();
                         Intent intent = new Intent(act, MainActivity.class);
                         act.startActivity(intent);

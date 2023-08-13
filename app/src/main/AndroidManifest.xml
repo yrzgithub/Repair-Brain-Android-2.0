@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RepairBrain20">
         <activity
+            android:name=".Settings"
+            android:exported="false" />
+        <activity
             android:name=".CommonPosNegNextAct"
             android:exported="false" />
         <activity
