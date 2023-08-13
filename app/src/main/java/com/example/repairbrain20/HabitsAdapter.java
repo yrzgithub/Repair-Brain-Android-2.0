@@ -107,13 +107,18 @@ public class HabitsAdapter extends BaseAdapter {
                 percent.setVisibility(View.VISIBLE);
             }
 
-            snack = Snackbar.make(main,"Reload the frame",BaseTransientBottomBar.LENGTH_INDEFINITE);
-            snack.setAction("Reload", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    act.recreate();
-                }
-            });
+            try {
+                snack = Snackbar.make(main,"Reload the frame",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                snack.setAction("Reload", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        act.recreate();
+                    }
+                });
+            }
+            catch (Exception e){
+
+            }
 
             accuracy.setText("Replacing Accuracy :");
 

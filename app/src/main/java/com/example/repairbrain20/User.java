@@ -215,6 +215,11 @@ public class User implements OnCompleteListener<AuthResult> {
                     {
                         if(use_username) editor.putString("username",username);
 
+                        if(!preference.contains("email") || !preference.contains("username"))
+                        {
+                            Toast.makeText(act,"Login details saved",Toast.LENGTH_SHORT).show();
+                        }
+
                         editor.putString("email",email).putString("password",password).commit();
 
                         User.uid = user.getUid();

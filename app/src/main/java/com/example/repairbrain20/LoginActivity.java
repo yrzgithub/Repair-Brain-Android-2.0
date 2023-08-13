@@ -2,10 +2,15 @@ package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,9 +18,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -34,6 +42,9 @@ import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.security.Permission;
+import java.util.Calendar;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button signup_btn,login_btn;
@@ -44,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ConnectivityManager cm;
     SharedPreferences preference;
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +109,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //signup_btn.setOnClickListener(this);
         login_btn.setOnClickListener(this);
         google_btn.setOnClickListener(this);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR,8);
+        calendar.set(Calendar.MINUTE,55);
+        calendar.set(Calendar.SECOND,0);
+
+       /* AlarmManager manager = getSystemService(AlarmManager.class);
+
+        Intent alarm_intent = new Intent(this,AlarmReceiver.class);
+        PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_IMMUTABLE);
+
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending); */
+
 
         preference = getSharedPreferences("login_data",MODE_PRIVATE);
 
