@@ -1,20 +1,13 @@
 package com.example.repairbrain20;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.app.StatusBarManager;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.service.notification.StatusBarNotification;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,9 +18,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.material.snackbar.Snackbar;
 
-public class CreateAccountAct extends AppCompatActivity {
+public class ActCreateAccount extends AppCompatActivity {
 
     EditText firstname_view,lastname_view,email_view,password_view,verify_password_view,username_view;
     Button sign_up_button,login_with_google_button;
@@ -85,47 +77,47 @@ public class CreateAccountAct extends AppCompatActivity {
 
                 if(!isValidString(first_name))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Invalid First Name",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Invalid First Name",Toast.LENGTH_LONG).show();
                 }
 
                 else if(!isValidString(last_name))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Invalid Last Name",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Invalid Last Name",Toast.LENGTH_LONG).show();
                 }
 
                 else if(!isValidString(username))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Invalid Username",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Invalid Username",Toast.LENGTH_LONG).show();
                 }
 
                 else if(!isValidString(email))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Invalid E-Mail",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Invalid E-Mail",Toast.LENGTH_LONG).show();
                 }
                 else if(!isValidString(password))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Invalid Password",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Invalid Password",Toast.LENGTH_LONG).show();
                 }
                 else if(password.length()<6)
                 {
-                    Toast.makeText(CreateAccountAct.this,"Password is too short",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Password is too short",Toast.LENGTH_LONG).show();
                 }
                 else if(!isValidString(verify_password))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Invalid verification password",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Invalid verification password",Toast.LENGTH_LONG).show();
                 }
                 else  if(!password.equals(verify_password))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Passwords doesn't match",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Passwords doesn't match",Toast.LENGTH_LONG).show();
                 }
                 else if(!email.matches(User.email_regex))
                 {
-                    Toast.makeText(CreateAccountAct.this,"Invalid Email",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActCreateAccount.this,"Invalid Email",Toast.LENGTH_LONG).show();
                 }
                 else {
                    // User user = new User(CreateAccountAct.this,first_name,last_name,email,password);
 
-                    User user = new User(CreateAccountAct.this,first_name,last_name,username,password,email);
+                    User user = new User(ActCreateAccount.this,first_name,last_name,username,password,email);
                     user.create_user();
                 }
             }
@@ -134,7 +126,7 @@ public class CreateAccountAct extends AppCompatActivity {
         login_with_google_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CreateAccountAct.this, LoginActivity.class);
+                Intent intent = new Intent(ActCreateAccount.this, ActLogin.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }

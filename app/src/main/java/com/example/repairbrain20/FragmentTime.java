@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class TimeFragment extends Fragment {
+public class FragmentTime extends Fragment {
 
     TextView time_gone=null,lastly_relapse=null,next_step=null,pos_effect=null,neg_effect=null,hrs_left=null;
     EditText neg_edit=null,pos_edit=null,next_edit=null;
@@ -97,7 +97,7 @@ public class TimeFragment extends Fragment {
                                 String negative_effect = progress_data.getLastly_noted_negative_effects();
                                 String next_step_ = progress_data.getLastly_noted_next_steps();
 
-                                TimeAndAccuracyAct.last_accuracy_percent = progress_data.getLast_accuracy_percent();
+                                ActTimeAndAccuracy.last_accuracy_percent = progress_data.getLast_accuracy_percent();
 
                                 pos_effect.setText(positive_effect);
                                 neg_effect.setText(negative_effect);
@@ -188,7 +188,7 @@ public class TimeFragment extends Fragment {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getActivity(),AddictionsStepsAct.class);
+                        Intent intent = new Intent(getActivity(), ActAddictionsSteps.class);
                         startActivity(intent);
                     }
                 })

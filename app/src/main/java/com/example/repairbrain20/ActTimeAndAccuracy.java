@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class TimeAndAccuracyAct extends AppCompatActivity implements View.OnClickListener {
+public class ActTimeAndAccuracy extends AppCompatActivity implements View.OnClickListener {
 
     static int last_accuracy_percent = 0;
     ViewPager pager;
@@ -28,7 +28,7 @@ public class TimeAndAccuracyAct extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.habits_and_accuracy_pager);
+        setContentView(R.layout.activity_time_accuracy);
 
         DrawerLayout drawer = findViewById(R.id.drawer);
 
@@ -48,10 +48,10 @@ public class TimeAndAccuracyAct extends AppCompatActivity implements View.OnClic
      /*   ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
         cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager)); */
 
-        TimeFragment accuracy = new TimeFragment();
-        HabitsWindow habits = new HabitsWindow();
+        FragmentTime accuracy = new FragmentTime();
+        FragmentHabits habits = new FragmentHabits();
 
-        TimeAndHabitsAdapter adapter = new TimeAndHabitsAdapter(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        AdapterTimeAndHabits adapter = new AdapterTimeAndHabits(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.add_tab(accuracy,"TIME GONE");
         adapter.add_tab(habits,"ACCURACY");
 
@@ -129,23 +129,23 @@ public class TimeAndAccuracyAct extends AppCompatActivity implements View.OnClic
         switch (view.getId())
         {
             case R.id.home:
-                intent = new Intent(this,MainActivity.class);
+                intent = new Intent(this, ActMain.class);
                 startActivity(intent);
                 break;
 
             case R.id.time_gone:
-                intent = new Intent(this, TimeAndAccuracyAct.class);
+                intent = new Intent(this, ActTimeAndAccuracy.class);
                 intent.putExtra("tab",0);
                 startActivity(intent);
                 break;
 
             case R.id.addictions:
-                intent = new Intent(this,AddictionsStepsAct.class);
+                intent = new Intent(this, ActAddictionsSteps.class);
                 startActivity(intent);
                 break;
 
             case R.id.effects:
-                intent = new Intent(this,EffectsTabsAct.class);
+                intent = new Intent(this, ActEffectsTabs.class);
                 intent.putExtra("tab",0);
                 startActivity(intent);
                 break;
@@ -161,7 +161,7 @@ public class TimeAndAccuracyAct extends AppCompatActivity implements View.OnClic
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear().apply();
 
-                intent = new Intent(this,LoginActivity.class);
+                intent = new Intent(this, ActLogin.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;

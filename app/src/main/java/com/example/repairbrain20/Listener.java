@@ -80,7 +80,7 @@ public class Listener {
                        list.setVisibility(View.VISIBLE);
                        loading.setVisibility(View.GONE);
 
-                       list.setAdapter(new PosNegNextAdapter(act,view,map,type));
+                       list.setAdapter(new AdapterPosNegNext(act,view,map,type));
 
                    }
                 }
@@ -180,7 +180,7 @@ public class Listener {
                                             Log.e("kathorathil",map.toString());
 
                                             Toast.makeText(act,"Successfully Added",Toast.LENGTH_LONG).show();
-                                            list.setAdapter(new PosNegNextAdapter(act,Listener.this.view,map,type));
+                                            list.setAdapter(new AdapterPosNegNext(act,Listener.this.view,map,type));
                                         }
                                     });
                         }
@@ -204,7 +204,7 @@ public class Listener {
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                     bar.dismiss();
                     Toast.makeText(act,"Successfully Resetted",Toast.LENGTH_SHORT).show();
-                    list.setAdapter(new PosNegNextAdapter(act,view,null,type));
+                    list.setAdapter(new AdapterPosNegNext(act,view,null,type));
                 }
             });
         }

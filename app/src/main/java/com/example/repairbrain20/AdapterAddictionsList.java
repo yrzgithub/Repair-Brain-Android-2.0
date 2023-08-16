@@ -2,9 +2,7 @@ package com.example.repairbrain20;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AddictionsListAdapter extends BaseAdapter {
+public class AdapterAddictionsList extends BaseAdapter {
 
     Map<String,Addiction> addictions = new HashMap<>();
     List<String> keys = new ArrayList<>();
@@ -36,7 +34,7 @@ public class AddictionsListAdapter extends BaseAdapter {
     boolean delete = false;
     ListView list;
 
-    AddictionsListAdapter(Activity act, Map<String,Addiction> addictions)
+    AdapterAddictionsList(Activity act, Map<String,Addiction> addictions)
     {
         this.addictions.putAll(addictions);
         this.keys.addAll(addictions.keySet());
@@ -44,11 +42,11 @@ public class AddictionsListAdapter extends BaseAdapter {
 
         this.list = act.findViewById(R.id.list);
 
-        AddictionsListAdapter.addiction_copy = this.addictions;
+        AdapterAddictionsList.addiction_copy = this.addictions;
 
     }
 
-    AddictionsListAdapter(Activity act,boolean delete)
+    AdapterAddictionsList(Activity act, boolean delete)
     {
         this(act,addiction_copy);
 
@@ -133,7 +131,7 @@ public class AddictionsListAdapter extends BaseAdapter {
                     User.setAddiction(act,addiction_name);
                     Toast.makeText(act,addiction_name+" Selected",Toast.LENGTH_SHORT).show();
                     User.setAddiction(act,addiction_name);
-                    act.startActivity(new Intent(act, TimeAndAccuracyAct.class));
+                    act.startActivity(new Intent(act, ActTimeAndAccuracy.class));
                 }
             });
         }

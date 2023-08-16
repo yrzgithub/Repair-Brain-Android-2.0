@@ -20,7 +20,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.time.LocalDateTime;
 
-public class MainActivity extends AppCompatActivity {
+public class ActMain extends AppCompatActivity {
 
     ImageButton free_button = null,hand_cuffed_button = null;
     CheckNetwork network_check;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         free_button.startAnimation(animation);
         hand_cuffed_button.startAnimation(animation);
 
-        Intent intent = new Intent(MainActivity.this, TimeAndAccuracyAct.class);
+        Intent intent = new Intent(ActMain.this, ActTimeAndAccuracy.class);
 
         free_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(MainActivity.this,"Starting time rested",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActMain.this,"Starting time rested",Toast.LENGTH_LONG).show();
                             }
                         });
 

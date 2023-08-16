@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HabitsWindow extends Fragment {
+public class FragmentHabits extends Fragment {
 
     ListView list_view;
     ImageView no_results = null;
@@ -97,7 +97,7 @@ public class HabitsWindow extends Fragment {
                                 }
                             });
 
-                            list_view.setAdapter(new HabitsAdapter(getActivity(),HabitsWindow.this.view,habits));
+                            list_view.setAdapter(new AdapterHabits(getActivity(), FragmentHabits.this.view,habits));
                         }
                     });
         }
@@ -262,7 +262,7 @@ public class HabitsWindow extends Fragment {
                         ReplaceHabits habits = new ReplaceHabits(show_on);
 
                         Map<String,ReplaceHabits> habits_map;
-                        habits_map = HabitsAdapter.habits_copy;
+                        habits_map = AdapterHabits.habits_copy;
 
                         if(habits_map!=null)
                         {
@@ -274,7 +274,7 @@ public class HabitsWindow extends Fragment {
                             habits_map.put(habit_,habits);
                         }
 
-                        HabitsAdapter adapter = new HabitsAdapter(getActivity(),HabitsWindow.this.view,habits_map);
+                        AdapterHabits adapter = new AdapterHabits(getActivity(), FragmentHabits.this.view,habits_map);
 
                         DatabaseReference reference = User.getAddictionReference();
 
@@ -320,12 +320,12 @@ public class HabitsWindow extends Fragment {
                 break;
 
             case R.id.remove:
-                Map<String,ReplaceHabits> habits_copy =  HabitsAdapter.habits_copy;
+                Map<String,ReplaceHabits> habits_copy =  AdapterHabits.habits_copy;
                 if(habits_copy==null || habits_copy.size()==0)
                 {
                     Toast.makeText(getActivity(),"Habit List is Empty",Toast.LENGTH_LONG).show();
                 }
-                HabitsAdapter remove_adapter = new HabitsAdapter(getActivity(),HabitsWindow.this.view,habits_copy,true);
+                AdapterHabits remove_adapter = new AdapterHabits(getActivity(), FragmentHabits.this.view,true);
                 list_view.setAdapter(remove_adapter);
                 break;
 
@@ -340,7 +340,7 @@ public class HabitsWindow extends Fragment {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 reset.dismiss();
 
-                                list_view.setAdapter(new HabitsAdapter(getActivity(),HabitsWindow.this.view,null));
+                                list_view.setAdapter(new AdapterHabits(getActivity(), FragmentHabits.this.view,null));
                                 Toast.makeText(getContext(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
                             }
                         });

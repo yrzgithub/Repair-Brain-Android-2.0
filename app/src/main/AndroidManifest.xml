@@ -18,16 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RepairBrain20">
         <activity
-            android:name=".AddictionsStepsAct"
+            android:name=".ActAddictionsSteps"
             android:exported="false" />
         <activity
-            android:name=".Settings"
+            android:name=".ActSettings"
             android:exported="false" />
         <activity
-            android:name=".CommonPosNegNextAct"
+            android:name=".ActCommonPosNegNext"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ActLogin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,16 +36,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TimeAndAccuracyAct"
+            android:name=".ActTimeAndAccuracy"
             android:exported="false" />
         <activity
-            android:name=".CreateAccountAct"
+            android:name=".ActCreateAccount"
             android:exported="false" />
         <activity
-            android:name=".EffectsTabsAct"
+            android:name=".ActEffectsTabs"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ActMain"
             android:exported="true" />
     </application>
 

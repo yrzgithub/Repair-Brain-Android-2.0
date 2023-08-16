@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class AddictionsStepsAct extends AppCompatActivity {
+public class ActAddictionsSteps extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,9 +17,9 @@ public class AddictionsStepsAct extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         ViewPager pager = findViewById(R.id.pager);
 
-        AddictionsStepsAdapter adapter = new AddictionsStepsAdapter(getSupportFragmentManager());
-        adapter.add_tab(new AddictionFragment(),"Addictions");
-        adapter.add_tab(new NextFragment(),"Steps");
+        AdapterAddictionsSteps adapter = new AdapterAddictionsSteps(getSupportFragmentManager());
+        adapter.add_tab(new FragmentAddiction(),"Addictions");
+        adapter.add_tab(new FragmentNext(),"Steps");
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);

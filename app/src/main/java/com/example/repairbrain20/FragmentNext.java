@@ -1,6 +1,5 @@
 package com.example.repairbrain20;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,27 +7,24 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Map;
 
-public class NegFragment extends Fragment {
+public class FragmentNext extends Fragment {
 
     ListView listView;
     Listener listener;
     View view;
 
-    NegFragment()
+    FragmentNext()
     {
 
     }
@@ -44,10 +40,19 @@ public class NegFragment extends Fragment {
 
         listView = view.findViewById(R.id.list);
         this.view = view;
-
-        listener = new Listener(getActivity(),view,"negative_effects");
+        listener =  new Listener(getActivity(),view,"next_steps");
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
@@ -59,7 +64,6 @@ public class NegFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_add_menu,menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -71,14 +75,14 @@ public class NegFragment extends Fragment {
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(getActivity(),CommonPosNegNextAct.class);
-                intent.putExtra("effect","negative_effects");
+                Intent intent = new Intent(getActivity(), ActCommonPosNegNext.class);
+                intent.putExtra("effect","next_steps");
                 startActivity(intent);
                 break;
 
             case R.id.remove:
                 Map<String,String> result = listener.getEffectsMap();
-                listView.setAdapter(new PosNegNextAdapter(getActivity(),view,result,"negative_effects",true));
+                listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"next_steps",true));
                 break;
 
             case R.id.reset:

@@ -2,7 +2,6 @@ package com.example.repairbrain20;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,14 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AddictionFragment extends Fragment {
+public class FragmentAddiction extends Fragment {
 
     SharedPreferences preference;
     SharedPreferences.Editor editor;
     ListView list;
     ImageView no_results;
 
-    public AddictionFragment() {
+    public FragmentAddiction() {
         // Required empty public constructor
     }
 
@@ -81,15 +79,15 @@ public class AddictionFragment extends Fragment {
                             }
                         });
 
-                        if(addictions==null)
+                        if(addictions==null || addictions.size()==0)
                         {
                             no_results.setImageResource(R.drawable.noresultfound);
                         }
                         else
                         {
+                            list.setAdapter(new AdapterAddictionsList(getActivity(),addictions));
                             no_results.setVisibility(View.GONE);
                             list.setVisibility(View.VISIBLE);
-                            list.setAdapter(new AddictionsListAdapter(getActivity(),addictions));
                         }
                     }
                 });
@@ -159,9 +157,9 @@ public class AddictionFragment extends Fragment {
                                                         snack.dismiss();
                                                         Toast.makeText(getActivity(),"Addiction Added",Toast.LENGTH_SHORT).show();
 
-                                                        AddictionsListAdapter.addiction_copy.remove(addiction_);
+                                                        AdapterAddictionsList.addiction_copy.remove(addiction_);
 
-                                                        list.setAdapter(new AddictionsListAdapter(getActivity(),false));
+                                                        list.setAdapter(new AdapterAddictionsList(getActivity(),false));
                                                     }
                                                 }
                                             });
@@ -172,7 +170,7 @@ public class AddictionFragment extends Fragment {
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AddictionsListAdapter(getActivity(),true));
+                list.setAdapter(new AdapterAddictionsList(getActivity(),true));
                 break;
 
             case R.id.reset:

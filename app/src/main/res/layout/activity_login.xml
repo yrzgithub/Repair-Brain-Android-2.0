@@ -14,7 +14,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".LoginActivity"
+    tools:context=".ActLogin"
     tools:visibility="visible">
 
     <TextView

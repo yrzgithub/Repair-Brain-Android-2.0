@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class EffectsTabsAct extends AppCompatActivity {
+public class ActEffectsTabs extends AppCompatActivity {
 
     CheckNetwork network_check;
     ConnectivityManager cm;
@@ -28,11 +28,11 @@ public class EffectsTabsAct extends AppCompatActivity {
         network_check =  new CheckNetwork(this,pager);
         cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
-        Fragment pos = new PosFragment();
-        Fragment neg = new NegFragment();
+        Fragment pos = new FragmentPos();
+        Fragment neg = new FragmentNeg();
         //Fragment next = new NextFragment();
 
-        EffectsAdapter adapter = new EffectsAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        AdapterEffects adapter = new AdapterEffects(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.add_fragment(pos,"Positive");
         adapter.add_fragment(neg,"Negative");
        // adapter.add_fragment(next,"Next");

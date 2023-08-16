@@ -5,17 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeAndHabitsAdapter extends FragmentPagerAdapter {
+public class AdapterTimeAndHabits extends FragmentPagerAdapter {
 
     List<Fragment> fragments;
     List<String> title;
 
-    public TimeAndHabitsAdapter(@NonNull FragmentManager fm, int behavior) {
+    public AdapterTimeAndHabits(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
         fragments = new ArrayList<>();
         title = new ArrayList<>();

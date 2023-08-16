@@ -1,7 +1,5 @@
 package com.example.repairbrain20;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,19 +16,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.List;
 import java.util.Map;
 
-public class NextFragment extends Fragment {
+public class FragmentPos extends Fragment {
 
-    ListView listView;
+    ListView listView = null;
+    ImageView img;
     Listener listener;
     View view;
 
-    NextFragment()
+    FragmentPos()
     {
 
     }
@@ -44,21 +39,14 @@ public class NextFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        this.img = view.findViewById(R.id.no_results);
         listView = view.findViewById(R.id.list);
+
         this.view = view;
-        listener =  new Listener(getActivity(),view,"next_steps");
+
+        listener = new Listener(getActivity(),view,"positive_effects");
 
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
     }
 
     @Override
@@ -70,6 +58,7 @@ public class NextFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_add_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -81,14 +70,14 @@ public class NextFragment extends Fragment {
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(getActivity(),CommonPosNegNextAct.class);
-                intent.putExtra("effect","next_steps");
+                Intent intent = new Intent(getActivity(), ActCommonPosNegNext.class);
+                intent.putExtra("effect","positive_effects");
                 startActivity(intent);
                 break;
 
             case R.id.remove:
                 Map<String,String> result = listener.getEffectsMap();
-                listView.setAdapter(new PosNegNextAdapter(getActivity(),view,result,"next_steps",true));
+                listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"positive_effects",true));
                 break;
 
             case R.id.reset:
@@ -96,5 +85,10 @@ public class NextFragment extends Fragment {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

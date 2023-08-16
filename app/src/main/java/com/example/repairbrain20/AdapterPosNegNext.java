@@ -24,14 +24,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PosNegNextAdapter extends BaseAdapter {
+public class AdapterPosNegNext extends BaseAdapter {
 
     Activity activity;
-    Map<String,String> map;
-    List<String> keys;
+    Map<String,String> map = new HashMap<>();
+    List<String> keys = new ArrayList<>();
     boolean delete = false;
     String effect;
     ViewPager pager;
@@ -39,7 +40,7 @@ public class PosNegNextAdapter extends BaseAdapter {
     ImageView img;
     View view;
 
-    PosNegNextAdapter(Activity act,View view,Map<String,String> map,String effect)
+    AdapterPosNegNext(Activity act, View view, Map<String,String> map, String effect)
     {
         this.activity = act;
         this.pager = act.findViewById(R.id.view_pager);
@@ -49,17 +50,23 @@ public class PosNegNextAdapter extends BaseAdapter {
         this.list = view.findViewById(R.id.list);
         this.img = view.findViewById(R.id.no_results);
 
-        this.map = map;
+        if(map!=null) this.map.putAll(map);
         this.effect = effect;
 
-        if(map==null || map.size()==0) show_image_view(R.drawable.noresultfound);
+        if(this.map.size() == 0) show_image_view(R.drawable.noresultfound);
 
         else
         {
-            keys =  new ArrayList<>(map.keySet());
+            keys.addAll(this.map.keySet());
             img.setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
         }
+    }
+
+    AdapterPosNegNext(Activity act, View view, Map<String,String> map, String type, boolean delete)
+    {
+        this(act,view,map,type);
+        this.delete = delete;
     }
 
     public void show_image_view(int id)
@@ -68,12 +75,6 @@ public class PosNegNextAdapter extends BaseAdapter {
         img.setForegroundGravity(Gravity.CENTER);
         list.setVisibility(View.GONE);
         Glide.with(img).load(id).into(img);
-    }
-
-    PosNegNextAdapter(Activity act,View view,Map<String,String> map,String type,boolean delete)
-    {
-        this(act,view,map,type);
-        this.delete = delete;
     }
 
     @Override
@@ -125,7 +126,7 @@ public class PosNegNextAdapter extends BaseAdapter {
                                 Toast.makeText(activity,"Effect Removed",Toast.LENGTH_LONG).show();
                                 map.remove(key);
                                 Log.e("map_uruttu",map.toString());
-                                list.setAdapter(new PosNegNextAdapter(activity,PosNegNextAdapter.this.view,map,effect,PosNegNextAdapter.this.delete));
+                                list.setAdapter(new AdapterPosNegNext(activity, AdapterPosNegNext.this.view,map,effect, AdapterPosNegNext.this.delete));
                             }
                         });
                     }

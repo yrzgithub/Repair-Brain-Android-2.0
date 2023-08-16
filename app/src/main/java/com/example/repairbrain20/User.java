@@ -1,6 +1,6 @@
 package com.example.repairbrain20;
 
-import static com.example.repairbrain20.CreateAccountAct.title;
+import static com.example.repairbrain20.ActCreateAccount.title;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -218,7 +218,7 @@ public class User implements OnCompleteListener<AuthResult> {
                         editor.putString("email",email).putString("password",password).commit();
 
                         User.uid = user.getUid();
-                        Intent intent = new Intent(act, MainActivity.class);
+                        Intent intent = new Intent(act, ActAddictionsSteps.class);
                         act.startActivity(intent);
                     }
                     else

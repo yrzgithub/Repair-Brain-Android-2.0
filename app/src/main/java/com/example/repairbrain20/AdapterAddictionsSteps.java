@@ -9,12 +9,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddictionsStepsAdapter extends FragmentPagerAdapter {
+public class AdapterAddictionsSteps extends FragmentPagerAdapter {
 
     List<Fragment> fragments = new ArrayList<>();
     List<String> titles = new ArrayList<>();
 
-    AddictionsStepsAdapter(FragmentManager manager)
+    AdapterAddictionsSteps(FragmentManager manager)
     {
         super(manager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }

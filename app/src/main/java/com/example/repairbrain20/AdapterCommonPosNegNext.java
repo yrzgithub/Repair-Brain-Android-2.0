@@ -12,21 +12,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CommonPosNegNextAdapter extends BaseAdapter {
+public class AdapterCommonPosNegNext extends BaseAdapter {
 
     Activity act;
-    List<String> keys;
-    Map<String,Common> map;
+    List<String> keys = new ArrayList<>();
+    Map<String,Common> map = new HashMap<>();
 
-    CommonPosNegNextAdapter(Activity act, Map<String,Common> map)
+    AdapterCommonPosNegNext(Activity act, Map<String,Common> map)
     {
         this.act = act;
-        this.map = map;
 
-        keys = new ArrayList<>(map.keySet());
+        if(map!=null) this.map.putAll(map);
+        keys.addAll(map.keySet());
     }
 
     @Override

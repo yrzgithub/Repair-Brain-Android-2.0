@@ -8,16 +8,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,10 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
-import java.util.List;
 import java.util.Map;
 
-public class CommonPosNegNextAct extends AppCompatActivity {
+public class ActCommonPosNegNext extends AppCompatActivity {
 
     ListView list;
     ImageView loading;
@@ -82,8 +78,8 @@ public class CommonPosNegNextAct extends AppCompatActivity {
                             }
                         });
 
-                        CommonPosNegNextAdapter adapter = new CommonPosNegNextAdapter(CommonPosNegNextAct.this, common);
-                        CommonPosNegNextAct.this.list.setAdapter(adapter);
+                        AdapterCommonPosNegNext adapter = new AdapterCommonPosNegNext(ActCommonPosNegNext.this, common);
+                        ActCommonPosNegNext.this.list.setAdapter(adapter);
                     }
                 });
     }
@@ -116,19 +112,19 @@ public class CommonPosNegNextAct extends AppCompatActivity {
 
                                 if(!isValid(name_))
                                 {
-                                    Toast.makeText(CommonPosNegNextAct.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ActCommonPosNegNext.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
                                 if(!isValid(source_))
                                 {
-                                    Toast.makeText(CommonPosNegNextAct.this,"Source cannot be empty",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ActCommonPosNegNext.this,"Source cannot be empty",Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
                                 if(!isValid(link_))
                                 {
-                                    Toast.makeText(CommonPosNegNextAct.this,"Link cannot be empty",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ActCommonPosNegNext.this,"Link cannot be empty",Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
@@ -146,7 +142,7 @@ public class CommonPosNegNextAct extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     bar.dismiss();
-                                                    Toast.makeText(CommonPosNegNextAct.this,"Suggestion saved",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(ActCommonPosNegNext.this,"Suggestion saved",Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }

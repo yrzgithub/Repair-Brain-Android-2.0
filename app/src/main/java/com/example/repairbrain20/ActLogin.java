@@ -3,35 +3,17 @@ package com.example.repairbrain20;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,13 +21,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 
-import java.security.Permission;
 import java.util.Calendar;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class ActLogin extends AppCompatActivity implements View.OnClickListener {
 
     Button signup_btn,login_btn;
     TextView topic,forget_password_text,create_account;
@@ -156,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId())
         {
             case R.id.sign_up:
-                Intent signup_intent = new Intent(LoginActivity.this,CreateAccountAct.class);
+                Intent signup_intent = new Intent(ActLogin.this, ActCreateAccount.class);
                 startActivity(signup_intent);
                 break;
 
@@ -168,20 +147,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.create_account:
-                startActivity(new Intent(this,CreateAccountAct.class));
+                startActivity(new Intent(this, ActCreateAccount.class));
                 break;
 
             case R.id.login:
                 String username_or_email = id_or_email_edit_txt.getText().toString();
                 String password = password_edit_txt.getText().toString();
 
-                if(!CreateAccountAct.isValidString(username_or_email))
+                if(!ActCreateAccount.isValidString(username_or_email))
                 {
                     Toast.makeText(this,"Invalid Username",Toast.LENGTH_LONG).show();
                     break;
                 }
 
-                if(!CreateAccountAct.isValidString(password))
+                if(!ActCreateAccount.isValidString(password))
                 {
                     Toast.makeText(this,"Invalid Password",Toast.LENGTH_LONG).show();
                     break;
@@ -196,7 +175,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 {
                     user.login_with_email_and_password();
                 }
-
                 break;
 
             case R.id.login_with_google:

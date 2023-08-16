@@ -7,12 +7,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EffectsAdapter extends FragmentPagerAdapter {
+public class AdapterEffects extends FragmentPagerAdapter {
 
     List<String> tab_title = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
 
-    EffectsAdapter(FragmentManager manager, int position)
+    AdapterEffects(FragmentManager manager, int position)
     {
         super(manager,position);
     }

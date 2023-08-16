@@ -1,22 +1,15 @@
 package com.example.repairbrain20;
 
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.PermissionInfo;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import java.security.Permission;
-import java.security.Permissions;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -31,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationManager manager = createChannel();
 
-        Intent open = new Intent(context,LoginActivity.class);
+        Intent open = new Intent(context, ActLogin.class);
         PendingIntent open_pending = PendingIntent.getActivity(context,100,open,PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,ID)
