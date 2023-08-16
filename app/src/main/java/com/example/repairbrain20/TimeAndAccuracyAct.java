@@ -11,21 +11,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 
-public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClickListener {
+public class TimeAndAccuracyAct extends AppCompatActivity implements View.OnClickListener {
 
     static int last_accuracy_percent = 0;
     ViewPager pager;
@@ -79,18 +71,16 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
 
         LinearLayout home = findViewById(R.id.home);
         LinearLayout time_gone = findViewById(R.id.time_gone);
-        LinearLayout habits_ = findViewById(R.id.habits);
         LinearLayout effects = findViewById(R.id.effects);
-        LinearLayout next_steps = findViewById(R.id.next_steps);
+        LinearLayout addictions = findViewById(R.id.addictions);
         LinearLayout about = findViewById(R.id.about);
         LinearLayout contact_developer = findViewById(R.id.contact_developer);
         LinearLayout logout = findViewById(R.id.logout);
 
         home.setOnClickListener(this);
         time_gone.setOnClickListener(this);
-        habits_.setOnClickListener(this);
         effects.setOnClickListener(this);
-        next_steps.setOnClickListener(this);
+        addictions.setOnClickListener(this);
         about.setOnClickListener(this);
         contact_developer.setOnClickListener(this);
         logout.setOnClickListener(this);
@@ -144,26 +134,19 @@ public class HabitsAndAccuracy extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.time_gone:
-                intent = new Intent(this,HabitsAndAccuracy.class);
+                intent = new Intent(this, TimeAndAccuracyAct.class);
                 intent.putExtra("tab",0);
                 startActivity(intent);
                 break;
 
-            case R.id.habits:
-                intent = new Intent(this,HabitsAndAccuracy.class);
-                intent.putExtra("tab",1);
+            case R.id.addictions:
+                intent = new Intent(this,AddictionsStepsAct.class);
                 startActivity(intent);
                 break;
 
             case R.id.effects:
                 intent = new Intent(this,EffectsTabsAct.class);
                 intent.putExtra("tab",0);
-                startActivity(intent);
-                break;
-
-            case R.id.next_steps:
-                intent = new Intent(this,EffectsTabsAct.class);
-                intent.putExtra("tab",2);
                 startActivity(intent);
                 break;
 

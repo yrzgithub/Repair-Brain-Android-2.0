@@ -3,15 +3,9 @@ package com.example.repairbrain20;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.fonts.FontStyle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -23,25 +17,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.function.Predicate;
 
 public class HabitsAdapter extends BaseAdapter {
 
@@ -54,7 +43,6 @@ public class HabitsAdapter extends BaseAdapter {
     TextView percent = null;
     ImageView up_or_down = null;
     TextView accuracy = null;
-
     List<String> keys = new ArrayList<>();
     Map<String,ReplaceHabits> habits;
     String today_date;
@@ -95,8 +83,6 @@ public class HabitsAdapter extends BaseAdapter {
         today_date = DateTimeFormatter.ofPattern("dd-MM-yy").format(date_time);
         today_day = DateTimeFormatter.ofPattern("E").format(date_time);
 
-        //Toast.makeText(act,today_day,Toast.LENGTH_SHORT).show();
-
         if(habits!=null)
         {
             if(habits.size()>0)
@@ -120,6 +106,17 @@ public class HabitsAdapter extends BaseAdapter {
 
             }
 
+            for(Map.Entry<String,ReplaceHabits> e : habits.entrySet())
+            {
+                List<String> show_on = e.getValue().getShow_on();
+                String habit_name = e.getKey();
+
+                if(show_on.contains(today_day))
+                {
+                    enabled_keys.add(habit_name);
+                }
+            }
+
             accuracy.setText("Replacing Accuracy :");
 
             this.states = new boolean[habits.size()];
@@ -135,23 +132,12 @@ public class HabitsAdapter extends BaseAdapter {
             no_results.setImageResource(R.drawable.noresultfound);
         }
 
-        for(Map.Entry<String,ReplaceHabits> e : habits.entrySet())
-        {
-            List<String> show_on = e.getValue().getShow_on();
-            String habit_name = e.getKey();
-
-            if(show_on.contains(today_day))
-            {
-                enabled_keys.add(habit_name);
-            }
-        }
-
         enabled_key_size = enabled_keys.size();
 
         this.habits = habits;
         habits_copy = habits;
 
-        reference = User.getReference();
+        reference = User.getAddictionReference();
     }
 
     @SuppressLint("SetTextI18n")
@@ -234,7 +220,7 @@ public class HabitsAdapter extends BaseAdapter {
                         Snackbar bar = Snackbar.make(main,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
                         bar.show();
 
-                        User.getReference()
+                        User.getAddictionReference()
                                 .child("replace_habits")
                                 .child(keys.get(i))
                                 .removeValue()
@@ -355,8 +341,8 @@ public class HabitsAdapter extends BaseAdapter {
 
         current_percent = percent;
 
-        int diff = percent - HabitsAndAccuracy.last_accuracy_percent;
-        Log.e("last_accuracy_uruttu",String.valueOf(diff + " " +HabitsAndAccuracy.last_accuracy_percent));
+        int diff = percent - TimeAndAccuracyAct.last_accuracy_percent;
+        Log.e("last_accuracy_uruttu",String.valueOf(diff + " " + TimeAndAccuracyAct.last_accuracy_percent));
 
        if(diff>=0)
         {

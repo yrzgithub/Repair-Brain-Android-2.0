@@ -1,23 +1,13 @@
 package com.example.repairbrain20;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CursorAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,12 +24,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +60,7 @@ public class Listener {
                 .load(R.drawable.loading_pink_list)
                 .into(loading);
 
-        list_effects_reference = User.getReference();
+        list_effects_reference = User.getAddictionReference();
 
         if(list_effects_reference!=null)
         {
@@ -123,7 +111,7 @@ public class Listener {
             }
         });
 
-        DatabaseReference reference = User.getReference();
+        DatabaseReference reference = User.getAddictionReference();
 
         if(reference!=null)
         {
@@ -169,7 +157,7 @@ public class Listener {
 
                         String date_added =  date_time.format(formatter);
 
-                        DatabaseReference reference = User.getReference();
+                        DatabaseReference reference = User.getAddictionReference();
 
                         if(reference!=null)
                         {
@@ -205,7 +193,7 @@ public class Listener {
 
     public void reset()
     {
-        DatabaseReference reference = User.getReference();
+        DatabaseReference reference = User.getAddictionReference();
 
         if(reference!=null)
         {

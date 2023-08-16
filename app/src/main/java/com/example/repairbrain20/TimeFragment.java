@@ -1,11 +1,13 @@
 package com.example.repairbrain20;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -13,8 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,12 +26,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -44,6 +39,7 @@ public class TimeFragment extends Fragment {
     EditText neg_edit=null,pos_edit=null,next_edit=null;
     Button effects = null, next = null;
     ProgressBar progress;
+    ImageView loading;
     //MediaPlayer player;
 
     @Override
@@ -59,9 +55,7 @@ public class TimeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         progress = view.findViewById(R.id.progress);
-
-        // Animation animation = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_progress);
-        // progress.startAnimation(animation);
+        progress.setMax(24);
 
         time_gone = view.findViewById(R.id.time_gone);
         lastly_relapse = view.findViewById(R.id.lastly_relapsed);
@@ -69,9 +63,11 @@ public class TimeFragment extends Fragment {
         pos_effect = view.findViewById(R.id.pos_effect);
         neg_effect = view.findViewById(R.id.neg_effects);
         hrs_left = view.findViewById(R.id.hrs);
+
+        LinearLayout root = view.findViewById(R.id.root);
         TextView left_txt = view.findViewById(R.id.hrs_left);
 
-        ImageView loading = view.findViewById(R.id.loading);
+        loading = view.findViewById(R.id.loading);
         Glide.with(getActivity())
                 .load(R.drawable.loading_pink_list)
                 .into(loading);
@@ -81,17 +77,8 @@ public class TimeFragment extends Fragment {
         pos_effect.setSelected(true);
         neg_effect.setSelected(true);
 
-        // effects = view.findViewById(R.id.effects);
-        //next = view.findViewById(R.id.next);
 
-        LinearLayout root = view.findViewById(R.id.root);
-
-        // player = MediaPlayer.create(this,R.raw.ticksound);
-        // player.setLooping(true);
-
-        progress.setMax(24);
-
-        DatabaseReference reference = User.getReference();
+        DatabaseReference reference = User.getAddictionReference();
 
         if(reference!=null)
         {
@@ -106,15 +93,11 @@ public class TimeFragment extends Fragment {
                             {
                                 ProgressData progress_data = snapshot.getValue(ProgressData.class);
 
-                                // Log.e("sanjay_snap",user_data.toString());
-
                                 String positive_effect = progress_data.getLastly_noted_positive_effects();
                                 String negative_effect = progress_data.getLastly_noted_negative_effects();
                                 String next_step_ = progress_data.getLastly_noted_next_steps();
 
-                                HabitsAndAccuracy.last_accuracy_percent = progress_data.getLast_accuracy_percent();
-
-                                Log.e("time_fragment",positive_effect + " " + negative_effect + " " + next_step_);
+                                TimeAndAccuracyAct.last_accuracy_percent = progress_data.getLast_accuracy_percent();
 
                                 pos_effect.setText(positive_effect);
                                 neg_effect.setText(negative_effect);
@@ -166,7 +149,7 @@ public class TimeFragment extends Fragment {
 
                                         String format = "%d days %d hrs %d mins %d secs";
                                         String time = String.format(format,days,hours,minutes,seconds);
-                                      //  Log.e("sanjay_uruttu",time);
+
                                         time_gone.setText(time);
 
                                         handler.postDelayed(this,1000);
@@ -179,37 +162,44 @@ public class TimeFragment extends Fragment {
 
                                 time_gone.setEnabled(true);
                             }
+                            else
+                            {
+                                loading.setImageResource(R.drawable.noresultfound);
+                            }
                         }
                     });
         }
 
-       /* next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),EffectsTabsAct.class);
-                startActivity(intent);
-            }
-        }); */
+        else
+        {
+           no_results();
+        }
 
-      /*  effects.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    }
 
-                Intent intent = new Intent(getActivity(),EffectsTabsAct.class);
-                intent.putExtra("effect",0);
-                startActivity(intent);
-            }
-        });
-       */
+    public void no_results()
+    {
+        loading.setImageResource(R.drawable.noresultfound);
 
-        root.setOnClickListener(new View.OnClickListener() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.app_name)
+                .setIcon(R.drawable.ic_launcher_foreground)
+                .setMessage("No Addiction Found")
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getActivity(),AddictionsStepsAct.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-            @Override
-            public void onClick(View view) {
-                // player.pause();
-            }
-        });
-
+                    }
+                })
+                .create()
+                .show();
     }
 
     public LocalDateTime getLocalDateTime(Map<String,Object> data,String key)

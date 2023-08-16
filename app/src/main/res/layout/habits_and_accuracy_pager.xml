@@ -112,15 +112,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:id="@+id/habits"
                     android:padding="5dp"
+                    android:id="@+id/addictions"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/contact_developer"/>
+                        android:src="@drawable/effects"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -128,7 +128,7 @@
                         android:textColor="@color/black"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/habits"
+                        android:text="@string/addictions"
                         android:textSize="20sp"/>
 
                 </LinearLayout>
@@ -154,31 +154,6 @@
                         android:layout_marginStart="10dp"
                         android:layout_gravity="center_vertical"
                         android:text="@string/effects"
-                        android:textSize="20sp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/next_steps"
-                    android:padding="5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/contact_developer"/>
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/next_steps_"
                         android:textSize="20sp"/>
 
                 </LinearLayout>

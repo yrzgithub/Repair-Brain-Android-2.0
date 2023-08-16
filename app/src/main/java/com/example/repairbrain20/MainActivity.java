@@ -14,15 +14,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 
@@ -49,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         free_button.startAnimation(animation);
         hand_cuffed_button.startAnimation(animation);
 
-        Intent intent = new Intent(MainActivity.this,HabitsAndAccuracy.class);
+        Intent intent = new Intent(MainActivity.this, TimeAndAccuracyAct.class);
 
         free_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                lastly_relapsed_data.child("minute").setValue(date_time.getMinute());
                lastly_relapsed_data.child("second").setValue(date_time.getSecond()); */
 
-                User.getReference().child("lastly_relapsed").setValue(new Time(LocalDateTime.now()))
+                User.getAddictionReference().child("lastly_relapsed").setValue(new Time(LocalDateTime.now()))
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -86,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Toast.makeText(this,User.selected_addiction + " Selected",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

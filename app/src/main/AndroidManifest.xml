@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RepairBrain20">
+        <activity
+            android:name=".AddictionsStepsAct"
+            android:exported="false" />
         <activity
             android:name=".Settings"
             android:exported="false" />
@@ -33,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HabitsAndAccuracy"
+            android:name=".TimeAndAccuracyAct"
             android:exported="false" />
         <activity
             android:name=".CreateAccountAct"

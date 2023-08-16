@@ -1,64 +1,42 @@
 package com.example.repairbrain20;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class HabitsWindow extends Fragment {
 
@@ -100,7 +78,7 @@ public class HabitsWindow extends Fragment {
             percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
          */
 
-        DatabaseReference reference = User.getReference();
+        DatabaseReference reference = User.getAddictionReference();
 
         if(reference!=null)
         {
@@ -298,7 +276,11 @@ public class HabitsWindow extends Fragment {
 
                         HabitsAdapter adapter = new HabitsAdapter(getActivity(),HabitsWindow.this.view,habits_map);
 
-                        User.getReference()
+                        DatabaseReference reference = User.getAddictionReference();
+
+                        if(reference==null) return;
+
+                        reference
                                 .child("replace_habits")
                                 .child(habit_)
                                 .setValue(habits)
@@ -351,7 +333,7 @@ public class HabitsWindow extends Fragment {
                 Snackbar reset = Snackbar.make(main,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
                 reset.show();
 
-                User.getReference()
+                User.getAddictionReference()
                         .child("replace_habits")
                         .removeValue(new DatabaseReference.CompletionListener() {
                             @Override

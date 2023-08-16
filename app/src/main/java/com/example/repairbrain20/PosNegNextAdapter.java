@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class PosNegNextAdapter extends BaseAdapter {
 
@@ -115,7 +112,7 @@ public class PosNegNextAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Log.e("uruttu_click",String.valueOf(i));
 
-                    DatabaseReference reference = User.getReference();
+                    DatabaseReference reference = User.getAddictionReference();
 
                     if(reference!=null)
                     {

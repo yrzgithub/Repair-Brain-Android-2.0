@@ -30,12 +30,12 @@ public class EffectsTabsAct extends AppCompatActivity {
 
         Fragment pos = new PosFragment();
         Fragment neg = new NegFragment();
-        Fragment next = new NextFragment();
+        //Fragment next = new NextFragment();
 
         EffectsAdapter adapter = new EffectsAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.add_fragment(pos,"Positive");
         adapter.add_fragment(neg,"Negative");
-        adapter.add_fragment(next,"Next");
+       // adapter.add_fragment(next,"Next");
 
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);

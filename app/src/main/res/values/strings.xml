@@ -27,7 +27,7 @@
     <string name="date_added">Date Added :</string>
     <string name="show_on">Show On :</string>
     <string name="habit">Habit</string>
-    <string name="not_found">waiting</string>
+    <string name="not_found">...</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="positive">Positive</string>
@@ -81,5 +81,7 @@
     <string name="link">Link</string>
     <string name="accuracy">Accuracy</string>
     <string name="logout">Logout</string>
+    <string name="addictions">Addictions</string>
+    <string name="addiction_name">Addiction Name</string>
 
 </resources>

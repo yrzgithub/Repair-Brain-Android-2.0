@@ -1,6 +1,7 @@
 package com.example.repairbrain20;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ class ProgressData {
     ProgressData(String default_text)
     {
         this.default_text = default_text;
-        //lastly_noted_positive_effect = lastly_noted_negative_effect  = lastly_noted_next_step = default_text;
+        lastly_noted_positive_effects = lastly_noted_negative_effects = lastly_noted_next_steps = "...";
     }
 
     public int getLast_accuracy_percent() {
@@ -196,9 +197,11 @@ class ReplaceHabits
 
     }
 
-    public ReplaceHabits(Map<String, Integer> days_data, List<String> show_on) {
+    ReplaceHabits(Map<String, Integer> days_data, List<String> show_on) {
+
         this.days_data = days_data;
         this.show_on = show_on;
+
     }
 
     ReplaceHabits(List<String> show_on)
@@ -252,6 +255,40 @@ class Common
 
     public void setSource(String source) {
         this.source = source;
+    }
+}
+
+class Addiction
+{
+    String date_added;
+    Time lastly_relapsed;
+
+    Addiction()
+    {
+
+    }
+
+    Addiction(LocalDateTime local_date_time)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+        date_added =  local_date_time.format(formatter);
+        lastly_relapsed = new Time(local_date_time);
+    }
+
+    public String getDate_added() {
+        return date_added;
+    }
+
+    public void setDate_added(String date_added) {
+        this.date_added = date_added;
+    }
+
+    public Time getLastly_relapsed() {
+        return lastly_relapsed;
+    }
+
+    public void setLastly_relapsed(Time lastly_relapsed) {
+        this.lastly_relapsed = lastly_relapsed;
     }
 }
 

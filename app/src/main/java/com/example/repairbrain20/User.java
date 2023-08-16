@@ -1,6 +1,5 @@
 package com.example.repairbrain20;
 
-import static android.content.Context.CONNECTIVITY_SERVICE;
 import static com.example.repairbrain20.CreateAccountAct.title;
 
 import android.app.Activity;
@@ -10,22 +9,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,7 +26,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 public class User implements OnCompleteListener<AuthResult> {
@@ -47,11 +38,13 @@ public class User implements OnCompleteListener<AuthResult> {
     AlertDialog.Builder alert;
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ids_reference = database.getReference().child("ids");
+    DatabaseReference user_reference;
     static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
     boolean use_username;
     static String uid;
     SharedPreferences.Editor editor;
     SharedPreferences preference;
+    static String selected_addiction;
 
     User()
     {
@@ -69,6 +62,8 @@ public class User implements OnCompleteListener<AuthResult> {
 
         preference = act.getSharedPreferences("login_data",Context.MODE_PRIVATE);
         this.editor = preference.edit();
+
+        selected_addiction = preference.getString("addiction",null);
 
         alert = new AlertDialog.Builder(act)
                 .setTitle(title)
@@ -228,7 +223,7 @@ public class User implements OnCompleteListener<AuthResult> {
                     }
                     else
                     {
-                        alert.setMessage("Email not verified");
+                        //Toast.makeText(act,"Email",Toast.LENGTH_SHORT).show();
                         alert.setPositiveButton("Ok",null);
                         alert.setNegativeButton("Verify", new DialogInterface.OnClickListener() {
                             @Override
@@ -236,6 +231,7 @@ public class User implements OnCompleteListener<AuthResult> {
                                 User.this.send_verification_email();
                             }
                         });
+                        send_alert("Email not verified");
                     }
                 }
             }
@@ -273,6 +269,11 @@ public class User implements OnCompleteListener<AuthResult> {
 
     public void send_verification_email()
     {
+        if(!progress.isShowing())
+        {
+            progress.show();
+        }
+
         progress.setMessage("Sending Email verification link");
 
         FirebaseUser user = auth.getCurrentUser();
@@ -287,7 +288,15 @@ public class User implements OnCompleteListener<AuthResult> {
 
                     if(task.isSuccessful())
                     {
-                        send_alert("Email verification link sent");
+                        ids_reference
+                                .child(User.this.username)
+                                .setValue(email)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        send_alert("Email verification link sent");
+                                    }
+                                });
                     }
                     else {
                         Exception e = task.getException();
@@ -322,12 +331,28 @@ public class User implements OnCompleteListener<AuthResult> {
         return User.uid;
     }
 
-    public static DatabaseReference getReference()
+    public static DatabaseReference getAddictionReference()
+    {
+        if(User.uid!=null && selected_addiction!=null)
+        {
+            return database.getReference().child(User.uid).child(selected_addiction);
+        }
+        return null;
+    }
+
+    public static void setAddiction(Activity act,String addiction)
+    {
+        User.selected_addiction = addiction;
+        act.getSharedPreferences("login_data",Context.MODE_PRIVATE).edit().putString("addiction",addiction).apply();
+    }
+
+    public static DatabaseReference getMainReference()
     {
         if(User.uid!=null)
         {
             return database.getReference().child(User.uid);
         }
+
         return null;
     }
 
