@@ -83,5 +83,6 @@
     <string name="logout">Logout</string>
     <string name="addictions">Addictions</string>
     <string name="addiction_name">Addiction Name</string>
+    <string name="trigger_name">Trigger Name</string>
 
 </resources>

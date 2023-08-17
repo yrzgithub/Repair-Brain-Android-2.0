@@ -2,13 +2,30 @@ package com.example.repairbrain20;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.GenericTypeIndicator;
+
+import java.util.Map;
 
 public class FragmentTriggers extends Fragment {
+
+    ImageView 
 
     public FragmentTriggers() {
 
@@ -16,6 +33,7 @@ public class FragmentTriggers extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
 
@@ -23,5 +41,50 @@ public class FragmentTriggers extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_triggers, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        ListView list = view.findViewById(R.id.list);
+        ImageView loading = view.findViewById(R.id.loading);
+
+        User.getAddictionReference().child("triggers")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                          Map<String,Trigger> map =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Trigger>>() {
+                              @NonNull
+                              @Override
+                              public String toString() {
+                                  return super.toString();
+                              }
+                          });
+
+                        DatabaseReference reference = User.getAddictionReference();
+
+                        if(reference==null || map.size()==0)
+                        {
+
+                        }
+                        else
+                        {
+                            list.setAdapter(new AdapterTriggers(getActivity(),map));
+                        }
+                    }
+                });
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }
