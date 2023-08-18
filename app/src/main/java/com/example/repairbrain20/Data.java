@@ -197,14 +197,14 @@ class ReplaceHabits
 
     }
 
-    ReplaceHabits(Map<String, Integer> days_data, List<String> show_on) {
+    public ReplaceHabits(Map<String, Integer> days_data, List<String> show_on) {
 
         this.days_data = days_data;
         this.show_on = show_on;
 
     }
 
-    ReplaceHabits(List<String> show_on)
+    public ReplaceHabits(List<String> show_on)
     {
         this.show_on = show_on;
     }
