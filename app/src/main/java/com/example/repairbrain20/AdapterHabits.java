@@ -49,7 +49,6 @@ public class AdapterHabits extends BaseAdapter {
     String today_date;
     static int current_percent = 0;
     boolean[] states;
-    String[] days = {"Sun","Mon","Tue","Wed","Thru","Fri","Sat"};
     static Map<String,ReplaceHabits> habits_copy = new HashMap<>();
     DatabaseReference reference;
     LinearLayout main;
@@ -116,8 +115,6 @@ public class AdapterHabits extends BaseAdapter {
                 enabled_keys.add(habit_name);
             }
         }
-
-        accuracy.setText("Replacing Accuracy :");
 
         this.states = new boolean[this.habits.size()];
         Arrays.fill(this.states,false);
@@ -333,8 +330,8 @@ public class AdapterHabits extends BaseAdapter {
 
         current_percent = percent;
 
-        int diff = percent - ActTimeAndAccuracy.last_accuracy_percent;
-        Log.e("last_accuracy_uruttu",String.valueOf(diff + " " + ActTimeAndAccuracy.last_accuracy_percent));
+        int diff = percent - ActRecovery.last_accuracy_percent;
+        Log.e("last_accuracy_uruttu",String.valueOf(diff + " " + ActRecovery.last_accuracy_percent));
 
        if(diff>=0)
         {

@@ -218,7 +218,7 @@ public class User implements OnCompleteListener<AuthResult> {
                         editor.putString("email",email).putString("password",password).commit();
 
                         User.uid = user.getUid();
-                        Intent intent = new Intent(act, ActAddictionsSteps.class);
+                        Intent intent = new Intent(act, ActRepairs.class);
                         act.startActivity(intent);
                     }
                     else

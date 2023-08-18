@@ -1,5 +1,7 @@
 package com.example.repairbrain20;
 
+import static com.example.repairbrain20.R.*;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +29,8 @@ import java.util.Map;
 
 public class FragmentTriggers extends Fragment {
 
-    ImageView 
+    ListView list;
+    ImageView loading;
 
     public FragmentTriggers() {
 
@@ -40,42 +45,63 @@ public class FragmentTriggers extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_triggers, container, false);
+        return inflater.inflate(layout.fragment_triggers, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        ListView list = view.findViewById(R.id.list);
-        ImageView loading = view.findViewById(R.id.loading);
+        list = view.findViewById(id.list);
+        loading = view.findViewById(id.loading);
 
-        User.getAddictionReference().child("triggers")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                          Map<String,Trigger> map =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Trigger>>() {
-                              @NonNull
-                              @Override
-                              public String toString() {
-                                  return super.toString();
-                              }
-                          });
+        Glide.with(getActivity()).load(drawable.loading_pink_list).into(loading);
 
-                        DatabaseReference reference = User.getAddictionReference();
+        DatabaseReference reference = User.getAddictionReference();
 
-                        if(reference==null || map.size()==0)
-                        {
+        if(reference!=null)
+        {
+            reference.child("triggers")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            Map<String,Trigger> map =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Trigger>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
+                                }
+                            });
 
+                            if(map==null || map.size()==0)
+                            {
+                                no_results();
+                            }
+                            else
+                            {
+                                list.setAdapter(new AdapterTriggers(getActivity(),map));
+                            }
                         }
-                        else
-                        {
-                            list.setAdapter(new AdapterTriggers(getActivity(),map));
-                        }
-                    }
-                });
+                    });
+        }
+        else
+        {
+            no_results();
+        }
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void no_results()
+    {
+
+       // Toast.makeText(getActivity(),"No results",Toast.LENGTH_SHORT).show();
+
+        //list.setVisibility(View.GONE);
+        //loading.setVisibility(View.VISIBLE);
+        //loading.setBackgroundResource(R.drawable.noresultfound);
+
+        Glide.with(getActivity()).load(R.drawable.noresultfound).into(loading);
     }
 
     @Override

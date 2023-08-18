@@ -7,7 +7,7 @@
     android:gravity="center"
     android:id="@+id/main"
     android:orientation="vertical"
-    tools:context=".ActMain">
+    tools:context=".ActHome">
 
     <TextView
         android:layout_width="match_parent"

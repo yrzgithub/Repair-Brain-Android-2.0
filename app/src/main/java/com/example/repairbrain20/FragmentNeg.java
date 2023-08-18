@@ -65,7 +65,7 @@ public class FragmentNeg extends Fragment {
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(getActivity(), ActCommonPosNegNext.class);
+                Intent intent = new Intent(getActivity(), ActCommon.class);
                 intent.putExtra("effect","negative_effects");
                 startActivity(intent);
                 break;

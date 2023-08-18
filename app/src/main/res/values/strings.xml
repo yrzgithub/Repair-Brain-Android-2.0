@@ -3,7 +3,7 @@
     <string name="app_name">Repair Brain 2.0</string>
     <string name="are_you_free_or_addicted">Are You Free Or Addicted?</string>
     <string name="none">none</string>
-    <string name="time_gone">Time Gone</string>
+
     <string name="lastly_relapsed">Relapsed On</string>
     <string name="next_step">Next Step</string>
     <string name="ve_effect">+ve Effect</string>
@@ -81,8 +81,15 @@
     <string name="link">Link</string>
     <string name="accuracy">Accuracy</string>
     <string name="logout">Logout</string>
-    <string name="addictions">Addictions</string>
+
     <string name="addiction_name">Addiction Name</string>
     <string name="trigger_name">Trigger Name</string>
+    <string name="progress">Progress</string>
+    <string name="triggers">Triggers</string>
+    <string name="practices">Practices</string>
+    <string name="recovery">Recovery</string>
+
+    <string name="repairs">Repairs</string>
+    <string name="journey">Journey</string>
 
 </resources>

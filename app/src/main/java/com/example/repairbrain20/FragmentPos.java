@@ -70,7 +70,7 @@ public class FragmentPos extends Fragment {
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(getActivity(), ActCommonPosNegNext.class);
+                Intent intent = new Intent(getActivity(), ActCommon.class);
                 intent.putExtra("effect","positive_effects");
                 startActivity(intent);
                 break;

@@ -30,7 +30,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 
 import java.util.Map;
 
-public class ActCommonPosNegNext extends AppCompatActivity {
+public class ActCommon extends AppCompatActivity {
 
     ListView list;
     ImageView loading;
@@ -78,8 +78,8 @@ public class ActCommonPosNegNext extends AppCompatActivity {
                             }
                         });
 
-                        AdapterCommonPosNegNext adapter = new AdapterCommonPosNegNext(ActCommonPosNegNext.this, common);
-                        ActCommonPosNegNext.this.list.setAdapter(adapter);
+                        AdapterCommonPosNegNext adapter = new AdapterCommonPosNegNext(ActCommon.this, common);
+                        ActCommon.this.list.setAdapter(adapter);
                     }
                 });
     }
@@ -112,19 +112,19 @@ public class ActCommonPosNegNext extends AppCompatActivity {
 
                                 if(!isValid(name_))
                                 {
-                                    Toast.makeText(ActCommonPosNegNext.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ActCommon.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
                                 if(!isValid(source_))
                                 {
-                                    Toast.makeText(ActCommonPosNegNext.this,"Source cannot be empty",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ActCommon.this,"Source cannot be empty",Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
                                 if(!isValid(link_))
                                 {
-                                    Toast.makeText(ActCommonPosNegNext.this,"Link cannot be empty",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ActCommon.this,"Link cannot be empty",Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
@@ -142,7 +142,7 @@ public class ActCommonPosNegNext extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     bar.dismiss();
-                                                    Toast.makeText(ActCommonPosNegNext.this,"Suggestion saved",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(ActCommon.this,"Suggestion saved",Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }

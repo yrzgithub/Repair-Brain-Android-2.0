@@ -1,21 +1,16 @@
 package com.example.repairbrain20;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -36,27 +31,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FragmentAddiction extends Fragment {
+public class ActRepairs extends AppCompatActivity {
 
     SharedPreferences preference;
     SharedPreferences.Editor editor;
     ListView list;
     ImageView no_results;
 
-    public FragmentAddiction() {
-        // Required empty public constructor
-    }
-
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_act_repairs);
 
-        super.onViewCreated(view, savedInstanceState);
-
-        preference = getActivity().getSharedPreferences("login_data", Context.MODE_PRIVATE);
+        preference = getSharedPreferences("login_data", Context.MODE_PRIVATE);
         editor = preference.edit();
 
-        list = view.findViewById(R.id.list);
-        no_results = view.findViewById(R.id.no_results);
+        list = findViewById(R.id.list);
+        no_results = findViewById(R.id.no_results);
 
         Glide.with(this)
                 .load(R.drawable.loading_pink_list)
@@ -85,7 +76,7 @@ public class FragmentAddiction extends Fragment {
                         }
                         else
                         {
-                            list.setAdapter(new AdapterAddictionsList(getActivity(),addictions));
+                            list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions));
                             no_results.setVisibility(View.GONE);
                             list.setVisibility(View.VISIBLE);
                         }
@@ -93,24 +84,13 @@ public class FragmentAddiction extends Fragment {
                 });
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_addiction,null);
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
             case R.id.add:
-                View view = View.inflate(getActivity(),R.layout.alert_dialog,null);
+                View view = View.inflate(this,R.layout.alert_dialog,null);
 
                 AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
                 addiction_edit.setHint("Search or Enter");
@@ -126,10 +106,10 @@ public class FragmentAddiction extends Fragment {
                 List<String> suggestion = new ArrayList<>();
                 suggestion.add("uruttu");
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestion);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestion);
                 addiction_edit.setAdapter(adapter);
 
-                new AlertDialog.Builder(getActivity())
+                new AlertDialog.Builder(this)
                         .setView(view)
                         .setNegativeButton("cancel",null)
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -142,7 +122,7 @@ public class FragmentAddiction extends Fragment {
                                     Addiction addiction = new Addiction(LocalDateTime.now());
                                     String addiction_ = addiction_edit.getText().toString();
 
-                                    Snackbar snack = Snackbar.make(getView(),"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                    Snackbar snack = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     snack.show();
 
                                     reference
@@ -153,13 +133,13 @@ public class FragmentAddiction extends Fragment {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if(task.isSuccessful())
                                                     {
-                                                        User.setAddiction(getActivity(),addiction_);
+                                                        User.setAddiction(ActRepairs.this,addiction_);
                                                         snack.dismiss();
-                                                        Toast.makeText(getActivity(),"Addiction Added",Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(ActRepairs.this,"Addiction Added",Toast.LENGTH_SHORT).show();
 
-                                                        AdapterAddictionsList.addiction_copy.remove(addiction_);
+                                                        AdapterRepairsList.addiction_copy.remove(addiction_);
 
-                                                        list.setAdapter(new AdapterAddictionsList(getActivity(),false));
+                                                        list.setAdapter(new AdapterRepairsList(ActRepairs.this,false));
                                                     }
                                                 }
                                             });
@@ -170,7 +150,7 @@ public class FragmentAddiction extends Fragment {
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AdapterAddictionsList(getActivity(),true));
+                list.setAdapter(new AdapterRepairsList(ActRepairs.this,true));
                 break;
 
             case R.id.reset:
@@ -180,8 +160,8 @@ public class FragmentAddiction extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.habits_frament_menu,menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.habits_frament_menu,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

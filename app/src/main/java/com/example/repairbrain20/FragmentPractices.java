@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FragmentHabits extends Fragment {
+public class FragmentPractices extends Fragment {
 
     ListView list_view;
     ImageView no_results = null;
@@ -97,7 +97,7 @@ public class FragmentHabits extends Fragment {
                                 }
                             });
 
-                            list_view.setAdapter(new AdapterHabits(getActivity(), FragmentHabits.this.view,habits));
+                            list_view.setAdapter(new AdapterHabits(getActivity(), FragmentPractices.this.view,habits));
                         }
                     });
         }
@@ -274,7 +274,7 @@ public class FragmentHabits extends Fragment {
                             habits_map.put(habit_,habits);
                         }
 
-                        AdapterHabits adapter = new AdapterHabits(getActivity(), FragmentHabits.this.view,habits_map);
+                        AdapterHabits adapter = new AdapterHabits(getActivity(), FragmentPractices.this.view,habits_map);
 
                         DatabaseReference reference = User.getAddictionReference();
 
@@ -325,7 +325,7 @@ public class FragmentHabits extends Fragment {
                 {
                     Toast.makeText(getActivity(),"Habit List is Empty",Toast.LENGTH_LONG).show();
                 }
-                AdapterHabits remove_adapter = new AdapterHabits(getActivity(), FragmentHabits.this.view,true);
+                AdapterHabits remove_adapter = new AdapterHabits(getActivity(), FragmentPractices.this.view,true);
                 list_view.setAdapter(remove_adapter);
                 break;
 
@@ -340,7 +340,7 @@ public class FragmentHabits extends Fragment {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 reset.dismiss();
 
-                                list_view.setAdapter(new AdapterHabits(getActivity(), FragmentHabits.this.view,null));
+                                list_view.setAdapter(new AdapterHabits(getActivity(), FragmentPractices.this.view,null));
                                 Toast.makeText(getContext(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
                             }
                         });

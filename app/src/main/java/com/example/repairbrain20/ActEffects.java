@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class ActEffectsTabs extends AppCompatActivity {
+public class ActEffects extends AppCompatActivity {
 
     CheckNetwork network_check;
     ConnectivityManager cm;

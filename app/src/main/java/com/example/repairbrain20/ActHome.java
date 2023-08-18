@@ -20,7 +20,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.time.LocalDateTime;
 
-public class ActMain extends AppCompatActivity {
+public class ActHome extends AppCompatActivity {
 
     ImageButton free_button = null,hand_cuffed_button = null;
     CheckNetwork network_check;
@@ -43,7 +43,7 @@ public class ActMain extends AppCompatActivity {
         free_button.startAnimation(animation);
         hand_cuffed_button.startAnimation(animation);
 
-        Intent intent = new Intent(ActMain.this, ActTimeAndAccuracy.class);
+        Intent intent = new Intent(ActHome.this, ActRecovery.class);
 
         free_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class ActMain extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(ActMain.this,"Starting time rested",Toast.LENGTH_LONG).show();
+                                Toast.makeText(ActHome.this,"Starting time rested",Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -81,7 +81,7 @@ public class ActMain extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(this,User.selected_addiction + " Selected",Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this,User.selected_addiction + " Selected",Toast.LENGTH_SHORT).show();
 
     }
 

@@ -22,14 +22,20 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/time_gone"
-                    android:id="@+id/habit"/>
+                    android:text="@string/progress"
+                    android:id="@+id/progress"/>
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/accuracy"
-                    android:id="@+id/accuracy"/>
+                    android:text="@string/triggers"
+                    android:id="@+id/triggers"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/practices"
+                    android:id="@+id/practices"/>
 
             </com.google.android.material.tabs.TabLayout>
 
@@ -88,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:padding="5dp"
-                    android:id="@+id/time_gone"
+                    android:id="@+id/recovery"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -103,32 +109,7 @@
                         android:textColor="@color/black"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/time_gone"
-                        android:textSize="20sp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:padding="5dp"
-                    android:id="@+id/addictions"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/effects"/>
-
-                    <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:layout_marginStart="10dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/addictions"
+                        android:text="@string/recovery"
                         android:textSize="20sp"/>
 
                 </LinearLayout>
@@ -162,7 +143,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:id="@+id/about"
+                    android:padding="5dp"
+                    android:id="@+id/journey"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/effects"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/journey"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/repairs"
                     android:padding="5dp"
                     android:orientation="horizontal">
 
@@ -171,6 +177,31 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/about"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/repairs"
+                        android:textSize="20sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:id="@+id/about"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/effects"/>
 
                     <TextView
                         android:layout_width="fill_parent"

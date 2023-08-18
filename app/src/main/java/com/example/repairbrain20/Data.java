@@ -292,4 +292,28 @@ class Addiction
     }
 }
 
+class Trigger
+{
 
+    String date_added;
+
+    Trigger()
+    {
+
+    }
+
+    Trigger(LocalDateTime date_time)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+
+        this.date_added =  date_time.format(formatter);
+    }
+
+    public String getDate_added() {
+        return date_added;
+    }
+
+    public void setDate_added(String date_added) {
+        this.date_added = date_added;
+    }
+}

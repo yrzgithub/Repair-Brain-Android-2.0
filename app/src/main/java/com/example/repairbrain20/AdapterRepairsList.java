@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdapterAddictionsList extends BaseAdapter {
+public class AdapterRepairsList extends BaseAdapter {
 
     Map<String,Addiction> addictions = new HashMap<>();
     List<String> keys = new ArrayList<>();
@@ -34,7 +34,7 @@ public class AdapterAddictionsList extends BaseAdapter {
     boolean delete = false;
     ListView list;
 
-    AdapterAddictionsList(Activity act, Map<String,Addiction> addictions)
+    AdapterRepairsList(Activity act, Map<String,Addiction> addictions)
     {
         this.addictions.putAll(addictions);
         this.keys.addAll(addictions.keySet());
@@ -42,11 +42,11 @@ public class AdapterAddictionsList extends BaseAdapter {
 
         this.list = act.findViewById(R.id.list);
 
-        AdapterAddictionsList.addiction_copy = this.addictions;
+        AdapterRepairsList.addiction_copy = this.addictions;
 
     }
 
-    AdapterAddictionsList(Activity act, boolean delete)
+    AdapterRepairsList(Activity act, boolean delete)
     {
         this(act,addiction_copy);
 
@@ -131,7 +131,7 @@ public class AdapterAddictionsList extends BaseAdapter {
                     User.setAddiction(act,addiction_name);
                     Toast.makeText(act,addiction_name+" Selected",Toast.LENGTH_SHORT).show();
                     User.setAddiction(act,addiction_name);
-                    act.startActivity(new Intent(act, ActTimeAndAccuracy.class));
+                    act.startActivity(new Intent(act, ActHome.class));
                 }
             });
         }

@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class ActTimeAndAccuracy extends AppCompatActivity implements View.OnClickListener {
+public class ActRecovery extends AppCompatActivity implements View.OnClickListener {
 
     static int last_accuracy_percent = 0;
     ViewPager pager;
@@ -28,7 +28,7 @@ public class ActTimeAndAccuracy extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_time_accuracy);
+        setContentView(R.layout.activity_recovery);
 
         DrawerLayout drawer = findViewById(R.id.drawer);
 
@@ -48,12 +48,17 @@ public class ActTimeAndAccuracy extends AppCompatActivity implements View.OnClic
      /*   ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
         cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager)); */
 
-        FragmentTime accuracy = new FragmentTime();
-        FragmentHabits habits = new FragmentHabits();
+        FragmentProgress progress = new FragmentProgress();
+        FragmentTriggers triggers = new FragmentTriggers();
+        //FragmentSteps steps = new FragmentSteps();
+        FragmentPractices practices = new FragmentPractices();
 
         AdapterTimeAndHabits adapter = new AdapterTimeAndHabits(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        adapter.add_tab(accuracy,"TIME GONE");
-        adapter.add_tab(habits,"ACCURACY");
+
+        adapter.add_tab(progress,"Progress");
+        adapter.add_tab(triggers,"Triggers");
+        //adapter.add_tab(steps,"Steps");
+        adapter.add_tab(practices,"Practices");
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
@@ -70,31 +75,26 @@ public class ActTimeAndAccuracy extends AppCompatActivity implements View.OnClic
          */
 
         LinearLayout home = findViewById(R.id.home);
-        LinearLayout time_gone = findViewById(R.id.time_gone);
+        LinearLayout recovery = findViewById(R.id.recovery);
         LinearLayout effects = findViewById(R.id.effects);
-        LinearLayout addictions = findViewById(R.id.addictions);
+        LinearLayout repairs = findViewById(R.id.repairs);
+        LinearLayout journey = findViewById(R.id.journey);
         LinearLayout about = findViewById(R.id.about);
         LinearLayout contact_developer = findViewById(R.id.contact_developer);
         LinearLayout logout = findViewById(R.id.logout);
 
         home.setOnClickListener(this);
-        time_gone.setOnClickListener(this);
+        recovery.setOnClickListener(this);
         effects.setOnClickListener(this);
-        addictions.setOnClickListener(this);
+        repairs.setOnClickListener(this);
+        journey.setOnClickListener(this);
         about.setOnClickListener(this);
         contact_developer.setOnClickListener(this);
         logout.setOnClickListener(this);
-
-        Intent intent = getIntent();
-        if(intent!=null)
-        {
-            tabs.selectTab(tabs.getTabAt(intent.getIntExtra("tab",0)));
-        }
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent;
 
         if(toggle.onOptionsItemSelected(item))
         {
@@ -129,28 +129,33 @@ public class ActTimeAndAccuracy extends AppCompatActivity implements View.OnClic
         switch (view.getId())
         {
             case R.id.home:
-                intent = new Intent(this, ActMain.class);
+                intent = new Intent(this, ActHome.class);
                 startActivity(intent);
                 break;
 
-            case R.id.time_gone:
-                intent = new Intent(this, ActTimeAndAccuracy.class);
-                intent.putExtra("tab",0);
-                startActivity(intent);
-                break;
-
-            case R.id.addictions:
-                intent = new Intent(this, ActAddictionsSteps.class);
+            case R.id.recovery:
+                intent = new Intent(this, ActRecovery.class);
                 startActivity(intent);
                 break;
 
             case R.id.effects:
-                intent = new Intent(this, ActEffectsTabs.class);
-                intent.putExtra("tab",0);
+                intent = new Intent(this, ActEffects.class);
+                startActivity(intent);
+                break;
+
+            case R.id.journey:
+                intent = new Intent(this, ActRelapses.class);
+                startActivity(intent);
+                break;
+
+            case R.id.repairs:
+                intent = new Intent(this, ActRepairs.class);
                 startActivity(intent);
                 break;
 
             case R.id.about:
+                intent = new Intent(this,ActAbout.class);
+                startActivity(intent);
                 break;
 
             case R.id.contact_developer:

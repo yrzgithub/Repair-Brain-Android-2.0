@@ -18,13 +18,13 @@ import android.widget.ListView;
 
 import java.util.Map;
 
-public class FragmentNext extends Fragment {
+public class FragmentSteps extends Fragment {
 
     ListView listView;
     Listener listener;
     View view;
 
-    FragmentNext()
+    FragmentSteps()
     {
 
     }
@@ -75,7 +75,7 @@ public class FragmentNext extends Fragment {
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(getActivity(), ActCommonPosNegNext.class);
+                Intent intent = new Intent(getActivity(), ActCommon.class);
                 intent.putExtra("effect","next_steps");
                 startActivity(intent);
                 break;
