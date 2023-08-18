@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdapterHabits extends BaseAdapter {
+public class AdapterPractices extends BaseAdapter {
 
     Activity act;
 
@@ -61,7 +61,7 @@ public class AdapterHabits extends BaseAdapter {
     int enabled_key_size = 1;
 
 
-    AdapterHabits(Activity act, View view, Map<String,ReplaceHabits> habits)
+    AdapterPractices(Activity act, View view, Map<String,ReplaceHabits> habits)
     {
         this.act = act;
         this.view = view;
@@ -130,7 +130,7 @@ public class AdapterHabits extends BaseAdapter {
     }
 
     @SuppressLint("SetTextI18n")
-    AdapterHabits(Activity act, View view, boolean delete)
+    AdapterPractices(Activity act, View view, boolean delete)
     {
         this(act,view,habits_copy);
         this.delete = delete;
@@ -204,7 +204,7 @@ public class AdapterHabits extends BaseAdapter {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(AdapterHabits.this.delete)
+                    if(AdapterPractices.this.delete)
                     {
                         Snackbar bar = Snackbar.make(main,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
                         bar.show();
@@ -228,11 +228,11 @@ public class AdapterHabits extends BaseAdapter {
                                         if(task.isSuccessful())
                                         {
                                             Toast.makeText(act,"Habit Removed",Toast.LENGTH_SHORT).show();
-                                            ListView view = AdapterHabits.this.view.findViewById(R.id.list);
-                                            AdapterHabits.this.habits.remove(key);
-                                            AdapterHabits.habits_copy = AdapterHabits.this.habits;
+                                            ListView view = AdapterPractices.this.view.findViewById(R.id.list);
+                                            AdapterPractices.this.habits.remove(key);
+                                            AdapterPractices.habits_copy = AdapterPractices.this.habits;
 
-                                            view.setAdapter(new AdapterHabits(act, AdapterHabits.this.view,true));
+                                            view.setAdapter(new AdapterPractices(act, AdapterPractices.this.view,true));
                                         }
                                         else
                                         {
@@ -257,7 +257,7 @@ public class AdapterHabits extends BaseAdapter {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     states[i] = b;
 
-                    if(!AdapterHabits.this.delete)
+                    if(!AdapterPractices.this.delete)
                     {
                         if(habit_enabled)
                         {

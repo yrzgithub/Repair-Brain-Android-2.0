@@ -101,7 +101,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/timegone"/>
+                        android:src="@drawable/recovery"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -151,7 +151,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/effects"/>
+                        android:src="@drawable/journey"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -176,7 +176,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/about"/>
+                        android:src="@drawable/repair"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -201,7 +201,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/effects"/>
+                        android:src="@drawable/about"/>
 
                     <TextView
                         android:layout_width="fill_parent"
@@ -251,7 +251,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/contact_developer"/>
+                        android:src="@drawable/logout"/>
 
                     <TextView
                         android:layout_width="fill_parent"

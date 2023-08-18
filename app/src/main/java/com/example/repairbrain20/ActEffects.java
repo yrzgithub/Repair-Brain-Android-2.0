@@ -34,7 +34,7 @@ public class ActEffects extends AppCompatActivity {
 
         AdapterEffects adapter = new AdapterEffects(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.add_fragment(pos,"Positive");
-        adapter.add_fragment(neg,"Negative");
+        adapter.add_fragment(neg,"Withdrawal");
        // adapter.add_fragment(next,"Next");
 
         pager.setAdapter(adapter);

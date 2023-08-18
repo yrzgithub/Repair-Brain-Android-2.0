@@ -192,7 +192,7 @@ class ReplaceHabits
     Map<String,Integer> days_data = new HashMap<>();
     List<String> show_on = new ArrayList<>();
 
-    public ReplaceHabits()
+    ReplaceHabits()
     {
 
     }
@@ -263,12 +263,12 @@ class Addiction
     String date_added;
     Time lastly_relapsed;
 
-    Addiction()
+    public Addiction()
     {
 
     }
 
-    Addiction(LocalDateTime local_date_time)
+    public Addiction(LocalDateTime local_date_time)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
         date_added =  local_date_time.format(formatter);

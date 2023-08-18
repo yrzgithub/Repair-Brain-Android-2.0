@@ -100,7 +100,21 @@ public class AdapterPosNegNext extends BaseAdapter {
 
         TextView text_widget = view.findViewById(R.id.effect);
         TextView date_widget = view.findViewById(R.id.date);
+
+        ImageView icon = view.findViewById(R.id.image);
         ImageView delete = view.findViewById(R.id.delete);
+
+        if(this.effect.equals("positive_effects"))
+        {
+            icon.setImageResource(R.drawable.positive_effect);
+        }
+        else if(this.effect.equals("negative_effects"))
+        {
+            icon.setImageResource(R.drawable.negative_effects);
+        }
+        else {
+            icon.setImageResource(R.drawable.next_step);
+        }
 
         String key = keys.get(i);
 
