@@ -22,11 +22,6 @@ public class FragmentNeg extends Fragment {
     Listener listener;
     View view;
 
-    FragmentNeg()
-    {
-
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);

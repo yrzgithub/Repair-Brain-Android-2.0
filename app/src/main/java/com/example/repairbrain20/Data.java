@@ -258,17 +258,17 @@ class Common
     }
 }
 
-class Addiction
+class Repairs
 {
     String date_added;
     Time lastly_relapsed;
 
-    public Addiction()
+    Repairs()
     {
 
     }
 
-    public Addiction(LocalDateTime local_date_time)
+    public Repairs(LocalDateTime local_date_time)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
         date_added =  local_date_time.format(formatter);
@@ -289,31 +289,5 @@ class Addiction
 
     public void setLastly_relapsed(Time lastly_relapsed) {
         this.lastly_relapsed = lastly_relapsed;
-    }
-}
-
-class Trigger
-{
-
-    String date_added;
-
-    Trigger()
-    {
-
-    }
-
-    Trigger(LocalDateTime date_time)
-    {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
-
-        this.date_added =  date_time.format(formatter);
-    }
-
-    public String getDate_added() {
-        return date_added;
-    }
-
-    public void setDate_added(String date_added) {
-        this.date_added = date_added;
     }
 }

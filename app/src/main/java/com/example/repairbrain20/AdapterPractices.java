@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -92,8 +93,15 @@ public class AdapterPractices extends BaseAdapter {
             percent.setVisibility(View.VISIBLE);
         }
 
+        else
+        {
+            no_results.setVisibility(View.VISIBLE);
+            habits_list.setVisibility(View.GONE);
+            Glide.with(act).load(R.drawable.noresultfound).into(no_results);
+        }
+
         try {
-            snack = Snackbar.make(main,"Reload the frame",BaseTransientBottomBar.LENGTH_INDEFINITE);
+            snack = Snackbar.make(main,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
             snack.setAction("Reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -126,7 +134,7 @@ public class AdapterPractices extends BaseAdapter {
         habits_copy.clear();
         habits_copy.putAll(this.habits);
 
-        reference = User.getAddictionReference();
+        reference = User.getRepairReference();
     }
 
     @SuppressLint("SetTextI18n")
@@ -137,6 +145,8 @@ public class AdapterPractices extends BaseAdapter {
 
         if(delete)
         {
+            percent.setText("0%");
+
             if(keys.size()>0)
             {
                 up_or_down.setVisibility(View.GONE);
@@ -209,7 +219,7 @@ public class AdapterPractices extends BaseAdapter {
                         Snackbar bar = Snackbar.make(main,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
                         bar.show();
 
-                        User.getAddictionReference()
+                        User.getRepairReference()
                                 .child("replace_habits")
                                 .child(keys.get(i))
                                 .removeValue()

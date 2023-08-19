@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Map;
 
@@ -23,11 +24,6 @@ public class FragmentSteps extends Fragment {
     ListView listView;
     Listener listener;
     View view;
-
-    FragmentSteps()
-    {
-
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +78,14 @@ public class FragmentSteps extends Fragment {
 
             case R.id.remove:
                 Map<String,String> result = listener.getEffectsMap();
-                listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"next_steps",true));
+                if(result==null || result.size()==0)
+                {
+                    Toast.makeText(getActivity(),"Steps list is empty",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"next_steps",true));
+                }
                 break;
 
             case R.id.reset:

@@ -11,12 +11,12 @@
         android:layout_width="30dp"
         android:layout_height="75dp"
         android:layout_gravity="start"
+        android:src="@drawable/failure"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/triggers" />
+        android:layout_marginEnd="10dp" />
 
     <TextView
-        android:id="@+id/trigger_name"
+        android:id="@+id/relapses"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -24,22 +24,22 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/image"
         android:gravity="center_vertical"
-        android:text="@string/trigger_name"
+        android:text="@string/relapsed_date"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/date_added_text"
+        android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/image"
         android:layout_marginStart="5dp"
-        android:text="@string/date_added"
+        android:text="@string/progress"
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/date_added"
+        android:id="@+id/time_gone"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
         android:ellipsize="marquee"
@@ -48,18 +48,7 @@
         android:maxLines="1"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/date_added_text"
+        android:layout_toEndOf="@+id/progress"
         android:textColor="@color/black" />
-
-    <ImageView
-        android:id="@+id/delete"
-        android:visibility="gone"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/delete_icon"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"/>
 
 </RelativeLayout>

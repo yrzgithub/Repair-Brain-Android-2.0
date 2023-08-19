@@ -24,7 +24,7 @@
             android:name=".ActRepairs"
             android:exported="false" />
         <activity
-            android:name=".ActRelapses"
+            android:name=".ActJourney"
             android:exported="false" />
         <activity
             android:name=".ActAddictionsSteps"

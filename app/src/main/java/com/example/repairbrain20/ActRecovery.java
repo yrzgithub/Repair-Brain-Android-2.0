@@ -45,34 +45,21 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         network_check =  new CheckNetwork(this,pager);
         cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
-     /*   ConnectivityManager cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager)); */
+        //cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
 
         FragmentProgress progress = new FragmentProgress();
         FragmentTriggers triggers = new FragmentTriggers();
-        //FragmentSteps steps = new FragmentSteps();
         FragmentPractices practices = new FragmentPractices();
 
         AdapterTimeAndHabits adapter = new AdapterTimeAndHabits(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
         adapter.add_tab(progress,"Progress");
         adapter.add_tab(triggers,"Triggers");
-        //adapter.add_tab(steps,"Steps");
         adapter.add_tab(practices,"Practices");
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
 
-        // DrawerLayout views
-
-        /*
-            home.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(HabitsAndAccuracy.this,"clicked",Toast.LENGTH_SHORT).show();
-                }
-            });
-         */
 
         LinearLayout home = findViewById(R.id.home);
         LinearLayout recovery = findViewById(R.id.recovery);
@@ -82,6 +69,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         LinearLayout about = findViewById(R.id.about);
         LinearLayout contact_developer = findViewById(R.id.contact_developer);
         LinearLayout logout = findViewById(R.id.logout);
+
 
         home.setOnClickListener(this);
         recovery.setOnClickListener(this);
@@ -144,7 +132,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.journey:
-                intent = new Intent(this, ActRelapses.class);
+                intent = new Intent(this, ActJourney.class);
                 startActivity(intent);
                 break;
 

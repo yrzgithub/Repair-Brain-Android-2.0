@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,8 @@ public class AdapterPosNegNext extends BaseAdapter {
     ListView list;
     ImageView img;
     View view;
+    Snackbar snack;
+    RelativeLayout main;
 
     AdapterPosNegNext(Activity act, View view, Map<String,String> map, String effect)
     {
@@ -49,6 +53,24 @@ public class AdapterPosNegNext extends BaseAdapter {
 
         this.list = view.findViewById(R.id.list);
         this.img = view.findViewById(R.id.no_results);
+        this.main = view.findViewById(R.id.main);
+
+        try
+        {
+            snack = Snackbar.make(main,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
+            snack.setAction("Reload", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    act.recreate();
+                }
+            });
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        this.map.clear();
 
         if(map!=null) this.map.putAll(map);
         this.effect = effect;
@@ -67,6 +89,8 @@ public class AdapterPosNegNext extends BaseAdapter {
     {
         this(act,view,map,type);
         this.delete = delete;
+
+        if(snack!=null && map.size()>0 && delete) snack.show();
     }
 
     public void show_image_view(int id)
@@ -127,7 +151,7 @@ public class AdapterPosNegNext extends BaseAdapter {
                 public void onClick(View view) {
                     Log.e("uruttu_click",String.valueOf(i));
 
-                    DatabaseReference reference = User.getAddictionReference();
+                    DatabaseReference reference = User.getRepairReference();
 
                     if(reference!=null)
                     {
@@ -138,8 +162,9 @@ public class AdapterPosNegNext extends BaseAdapter {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 bar.dismiss();
                                 Toast.makeText(activity,"Effect Removed",Toast.LENGTH_LONG).show();
+
                                 map.remove(key);
-                                Log.e("map_uruttu",map.toString());
+
                                 list.setAdapter(new AdapterPosNegNext(activity, AdapterPosNegNext.this.view,map,effect, AdapterPosNegNext.this.delete));
                             }
                         });

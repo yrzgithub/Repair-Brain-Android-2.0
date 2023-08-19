@@ -62,7 +62,7 @@ public class ActRepairs extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        Map<String,Addiction> addictions =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Addiction>>() {
+                        Map<String, Repairs> addictions =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Repairs>>() {
                             @NonNull
                             @Override
                             public String toString() {
@@ -119,7 +119,7 @@ public class ActRepairs extends AppCompatActivity {
                                 DatabaseReference reference =  User.getMainReference();
                                 if(reference!=null)
                                 {
-                                    Addiction addiction = new Addiction(LocalDateTime.now());
+                                    Repairs addiction = new Repairs(LocalDateTime.now());
                                     String addiction_ = addiction_edit.getText().toString();
 
                                     Snackbar snack = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
@@ -161,7 +161,7 @@ public class ActRepairs extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.habits_frament_menu,menu);
+        getMenuInflater().inflate(R.menu.update_database_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 }

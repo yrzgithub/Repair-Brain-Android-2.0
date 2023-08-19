@@ -60,29 +60,25 @@ public class Listener {
                 .load(R.drawable.loading_pink_list)
                 .into(loading);
 
-        list_effects_reference = User.getAddictionReference();
+        list_effects_reference = User.getRepairReference();
 
         if(list_effects_reference!=null)
         {
             list_effects_reference.child(type).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                   if(task.isSuccessful())
-                   {
-                       map = task.getResult().getValue(new GenericTypeIndicator<Map<String, String>>() {
-                           @NonNull
-                           @Override
-                           public String toString() {
-                               return super.toString();
-                           }
-                       });
+                    map = task.getResult().getValue(new GenericTypeIndicator<Map<String, String>>() {
+                        @NonNull
+                        @Override
+                        public String toString() {
+                            return super.toString();
+                        }
+                    });
 
-                       list.setVisibility(View.VISIBLE);
-                       loading.setVisibility(View.GONE);
+                    list.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
 
-                       list.setAdapter(new AdapterPosNegNext(act,view,map,type));
-
-                   }
+                    list.setAdapter(new AdapterPosNegNext(act,view,map,type));
                 }
             });
         }
@@ -95,9 +91,6 @@ public class Listener {
 
     public void addEffect()
     {
-        /* EditText effect_view = new EditText(activity);
-        effect_view.setHint("Enter the " + effect); */
-
         View view = View.inflate(act,R.layout.alert_dialog,null);
         AutoCompleteTextView search = view.findViewById(R.id.effects_list);
         search.setThreshold(0);
@@ -111,7 +104,7 @@ public class Listener {
             }
         });
 
-        DatabaseReference reference = User.getAddictionReference();
+        DatabaseReference reference = User.getRepairReference();
 
         if(reference!=null)
         {
@@ -131,8 +124,6 @@ public class Listener {
                                 });
 
                                 List<String> suggestions = new ArrayList<>(map.keySet());
-
-                            // Toast.makeText(act, "Common " + effect_name +" fetched",Toast.LENGTH_LONG).show();
 
                                 ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
                                 search.setAdapter(adapter);
@@ -157,7 +148,7 @@ public class Listener {
 
                         String date_added =  date_time.format(formatter);
 
-                        DatabaseReference reference = User.getAddictionReference();
+                        DatabaseReference reference = User.getRepairReference();
 
                         if(reference!=null)
                         {
@@ -177,8 +168,6 @@ public class Listener {
 
                                             map.put(effect_new,date_added);
 
-                                            Log.e("kathorathil",map.toString());
-
                                             Toast.makeText(act,"Successfully Added",Toast.LENGTH_LONG).show();
                                             list.setAdapter(new AdapterPosNegNext(act,Listener.this.view,map,type));
                                         }
@@ -193,7 +182,7 @@ public class Listener {
 
     public void reset()
     {
-        DatabaseReference reference = User.getAddictionReference();
+        DatabaseReference reference = User.getRepairReference();
 
         if(reference!=null)
         {

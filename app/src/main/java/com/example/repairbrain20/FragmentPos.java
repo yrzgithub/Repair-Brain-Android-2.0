@@ -25,11 +25,6 @@ public class FragmentPos extends Fragment {
     Listener listener;
     View view;
 
-    FragmentPos()
-    {
-
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);

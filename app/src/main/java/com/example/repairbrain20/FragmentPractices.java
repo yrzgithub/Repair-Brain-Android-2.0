@@ -41,10 +41,7 @@ import java.util.Map;
 public class FragmentPractices extends Fragment {
 
     ListView list_view;
-    ImageView no_results = null;
-    TextView percent;
     View view;
-    LinearLayout main;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,23 +59,12 @@ public class FragmentPractices extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         this.view = view;
-
-        main = view.findViewById(R.id.main);
-
         list_view = view.findViewById(R.id.list);
-        no_results = view.findViewById(R.id.no_results);
-        percent = view.findViewById(R.id.percent);
 
-        Glide.with(no_results)
-                .load(R.drawable.loading_pink_list)
-                .into(no_results);
+        DatabaseReference reference = User.getRepairReference();
+        ImageView no_results = view.findViewById(R.id.no_results);
 
-        /*
-            add = view.findViewById(R.id.add);
-            percent.setText(String.valueOf(HabitsAndAccuracy.last_accuracy_percent));
-         */
-
-        DatabaseReference reference = User.getAddictionReference();
+        Glide.with(no_results).load(R.drawable.loading_pink_list).into(no_results);
 
         if(reference!=null)
         {
@@ -276,7 +262,7 @@ public class FragmentPractices extends Fragment {
 
                         AdapterPractices adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view,habits_map);
 
-                        DatabaseReference reference = User.getAddictionReference();
+                        DatabaseReference reference = User.getRepairReference();
 
                         if(reference==null) return;
 
@@ -289,7 +275,6 @@ public class FragmentPractices extends Fragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         connect.dismiss();
                                         Toast.makeText(getActivity(),"Habit Added",Toast.LENGTH_SHORT).show();
-                                        percent.setText("0%");
                                         list_view.setAdapter(adapter);
                                     }
                                 });
@@ -306,7 +291,7 @@ public class FragmentPractices extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.habits_frament_menu,menu);
+        inflater.inflate(R.menu.update_database_menu,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -325,15 +310,18 @@ public class FragmentPractices extends Fragment {
                 {
                     Toast.makeText(getActivity(),"Habit List is Empty",Toast.LENGTH_LONG).show();
                 }
-                AdapterPractices remove_adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view,true);
-                list_view.setAdapter(remove_adapter);
+                else
+                {
+                    AdapterPractices remove_adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view,true);
+                    list_view.setAdapter(remove_adapter);
+                }
                 break;
 
             case R.id.reset:
-                Snackbar reset = Snackbar.make(main,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                Snackbar reset = Snackbar.make(FragmentPractices.this.view,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
                 reset.show();
 
-                User.getAddictionReference()
+                User.getRepairReference()
                         .child("replace_habits")
                         .removeValue(new DatabaseReference.CompletionListener() {
                             @Override

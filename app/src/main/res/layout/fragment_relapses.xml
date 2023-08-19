@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ActEffects">
+    tools:context=".FragmentRelapses">
 
     <ListView
         android:id="@+id/list"
@@ -14,7 +12,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
-        android:layout_weight="1"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
         android:allowUndo="true"
@@ -26,13 +23,12 @@
         android:visibility="gone"/>
 
     <ImageView
-        android:id="@+id/no_results"
+        android:id="@+id/loading"
         android:visibility="visible"
         android:src="@drawable/loading_pink_list"
         android:layout_marginBottom="95dp"
-        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/none" />
 
-</LinearLayout>
+</FrameLayout>

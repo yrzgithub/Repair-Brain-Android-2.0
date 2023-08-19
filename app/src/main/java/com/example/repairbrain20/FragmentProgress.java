@@ -78,7 +78,7 @@ public class FragmentProgress extends Fragment {
         neg_effect.setSelected(true);
 
 
-        DatabaseReference reference = User.getAddictionReference();
+        DatabaseReference reference = User.getRepairReference();
 
         if(reference!=null)
         {
@@ -112,7 +112,6 @@ public class FragmentProgress extends Fragment {
                                 }
                                 catch (Exception | Error e)
                                 {
-                                    Log.e("sanjay_timef",e.getMessage());
                                     time_gone.setText(R.string.not_found);
                                     lastly_relapse.setText(R.string.not_found);
                                     return;

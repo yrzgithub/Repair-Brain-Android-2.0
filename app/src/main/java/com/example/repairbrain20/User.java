@@ -331,7 +331,7 @@ public class User implements OnCompleteListener<AuthResult> {
         return User.uid;
     }
 
-    public static DatabaseReference getAddictionReference()
+    public static DatabaseReference getRepairReference()
     {
         if(User.uid!=null && selected_addiction!=null)
         {

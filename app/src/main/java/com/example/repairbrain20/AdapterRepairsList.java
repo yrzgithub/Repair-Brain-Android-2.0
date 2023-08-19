@@ -27,14 +27,14 @@ import java.util.Map;
 
 public class AdapterRepairsList extends BaseAdapter {
 
-    Map<String,Addiction> addictions = new HashMap<>();
+    Map<String, Repairs> addictions = new HashMap<>();
     List<String> keys = new ArrayList<>();
     Activity act;
-    static Map<String,Addiction> addiction_copy = new HashMap<>();
+    static Map<String, Repairs> addiction_copy = new HashMap<>();
     boolean delete = false;
     ListView list;
 
-    AdapterRepairsList(Activity act, Map<String,Addiction> addictions)
+    AdapterRepairsList(Activity act, Map<String, Repairs> addictions)
     {
         this.addictions.putAll(addictions);
         this.keys.addAll(addictions.keySet());
@@ -73,7 +73,7 @@ public class AdapterRepairsList extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        view = act.getLayoutInflater().inflate(R.layout.custom_addiction_list_view,null);
+        view = act.getLayoutInflater().inflate(R.layout.custom_repair_list_view,null);
         view.setBackgroundResource(R.drawable.round_layout);
 
         RelativeLayout main = view.findViewById(R.id.main);
@@ -85,7 +85,7 @@ public class AdapterRepairsList extends BaseAdapter {
 
         String addiction_name = keys.get(i);
 
-        Addiction addiction = this.addictions.get(addiction_name);
+        Repairs addiction = this.addictions.get(addiction_name);
         String date_added = addiction.getDate_added();
 
         if(this.delete)

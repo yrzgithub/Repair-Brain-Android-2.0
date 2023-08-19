@@ -2,10 +2,12 @@ package com.example.repairbrain20;
 
 import static com.example.repairbrain20.R.*;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,16 +24,23 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.GenericTypeIndicator;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentTriggers extends Fragment {
 
     ListView list;
     ImageView loading;
+    View view;
 
     public FragmentTriggers() {
 
@@ -51,12 +61,14 @@ public class FragmentTriggers extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        this.view = view;
+
         list = view.findViewById(id.list);
         loading = view.findViewById(id.loading);
 
         Glide.with(getActivity()).load(drawable.loading_pink_list).into(loading);
 
-        DatabaseReference reference = User.getAddictionReference();
+        DatabaseReference reference = User.getRepairReference();
 
         if(reference!=null)
         {
@@ -65,7 +77,7 @@ public class FragmentTriggers extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            Map<String,Trigger> map =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Trigger>>() {
+                            Map<String,String> map =  task.getResult().getValue(new GenericTypeIndicator<Map<String, String>>() {
                                 @NonNull
                                 @Override
                                 public String toString() {
@@ -73,44 +85,103 @@ public class FragmentTriggers extends Fragment {
                                 }
                             });
 
-                            if(map==null || map.size()==0)
-                            {
-                                no_results();
-                            }
-                            else
-                            {
-                                list.setAdapter(new AdapterTriggers(getActivity(),map));
-                            }
+                            list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map));
+
                         }
                     });
-        }
-        else
-        {
-            no_results();
         }
 
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void no_results()
-    {
-
-       // Toast.makeText(getActivity(),"No results",Toast.LENGTH_SHORT).show();
-
-        //list.setVisibility(View.GONE);
-        //loading.setVisibility(View.VISIBLE);
-        //loading.setBackgroundResource(R.drawable.noresultfound);
-
-        Glide.with(getActivity()).load(R.drawable.noresultfound).into(loading);
-    }
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.update_database_menu,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId())
+        {
+            case R.id.add:
+
+                View view = getLayoutInflater().inflate(R.layout.alert_dialog,null);
+                AutoCompleteTextView triggers_view = view.findViewById(id.effects_list);
+
+                triggers_view.setHint("Search or Enter");
+                triggers_view.setThreshold(0);
+
+                DatabaseReference reference = User.getRepairReference();
+                if(reference!=null)
+                {
+                    new AlertDialog.Builder(getActivity())
+                            .setView(view)
+                            .setNegativeButton("Cancel",null)
+                            .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String trigger_name = triggers_view.getText().toString();
+
+                                    LocalDateTime local_time = LocalDateTime.now();
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+
+                                    String time_ = local_time.format(formatter);
+
+                                    Snackbar snack = Snackbar.make(FragmentTriggers.this.view,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                    snack.show();
+
+                                    reference
+                                            .child("triggers")
+                                            .child(trigger_name)
+                                            .setValue(time_)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    snack.dismiss();
+                                                    Toast.makeText(getActivity(),"Trigger added",Toast.LENGTH_SHORT).show();
+
+                                                    Map<String,String> map =  AdapterTriggers.triggers_copy;
+                                                    map.put(trigger_name,time_);
+
+                                                    AdapterTriggers adapter = new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map);
+                                                    list.setAdapter(adapter);
+                                                }
+                                            });
+                                }
+                            })
+                            .create()
+                            .show();
+                }
+                break;
+
+            case id.remove:
+                Map<String,String> copy = AdapterTriggers.triggers_copy;
+                if(copy==null || copy.size()==0)
+                {
+                    Toast.makeText(getActivity(),"Triggers list is empty",Toast.LENGTH_SHORT).show();
+                }
+                list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,true));
+                break;
+
+            case id.reset:
+                reference = User.getRepairReference();
+                Snackbar snack = Snackbar.make(FragmentTriggers.this.view,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                snack.show();
+                reference.child("triggers")
+                        .removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                snack.dismiss();
+                                Toast.makeText(getActivity(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
+                                AdapterTriggers adapter = new AdapterTriggers(getActivity(),FragmentTriggers.this.view,new HashMap<>());
+                            }
+                        });
+                break;
+
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

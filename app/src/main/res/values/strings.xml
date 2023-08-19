@@ -84,12 +84,14 @@
 
     <string name="addiction_name">Addiction Name</string>
     <string name="trigger_name">Trigger Name</string>
-    <string name="progress">Progress</string>
+    <string name="progress">Progress : </string>
     <string name="triggers">Triggers</string>
     <string name="practices">Practices</string>
     <string name="recovery">Recovery</string>
 
     <string name="repairs">Repairs</string>
     <string name="journey">Journey</string>
+    <string name="relapses">Relapses</string>
+    <string name="relapsed_date">Relapsed Date</string>
 
 </resources>
