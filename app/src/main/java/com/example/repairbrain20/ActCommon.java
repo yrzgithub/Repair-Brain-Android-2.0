@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -28,7 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ActCommon extends AppCompatActivity {
 
@@ -38,6 +42,8 @@ public class ActCommon extends AppCompatActivity {
     CheckNetwork check;
     String type;
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
+    AdapterCommonPosNegNext adapter;
+    Map<String, Common> common;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,11 @@ public class ActCommon extends AppCompatActivity {
         Intent intent = getIntent();
         type = intent.getStringExtra("effect");
 
+        if(type==null)
+        {
+            type = "addictions";
+        }
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
         reference.child("common_" + type)
@@ -70,7 +81,7 @@ public class ActCommon extends AppCompatActivity {
                         loading.setVisibility(View.GONE);
                         list.setVisibility(View.VISIBLE);
 
-                        Map<String, Common> common = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                        common = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                             @NonNull
                             @Override
                             public String toString() {
@@ -78,7 +89,7 @@ public class ActCommon extends AppCompatActivity {
                             }
                         });
 
-                        AdapterCommonPosNegNext adapter = new AdapterCommonPosNegNext(ActCommon.this, common);
+                        adapter = new AdapterCommonPosNegNext(ActCommon.this, common);
                         ActCommon.this.list.setAdapter(adapter);
                     }
                 });
@@ -87,6 +98,28 @@ public class ActCommon extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.common_effects_steps_menu,menu);
+
+        MenuItem search = menu.findItem(R.id.search);
+
+        androidx.appcompat.widget.SearchView complete = (androidx.appcompat.widget.SearchView) search.getActionView();
+        complete.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(common!=null)
+                {
+                   Map<String,Common> adapter = common.entrySet().stream().filter(entry->entry.getKey().toLowerCase().contains(newText.toLowerCase())).collect(Collectors.toMap(x->x.getKey(),x->x.getValue()));
+                   list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this,adapter));
+                }
+                return true;
+            }
+        });
+
+
         return super.onCreateOptionsMenu(menu);
     }
 

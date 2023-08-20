@@ -2,13 +2,16 @@ package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -26,10 +30,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -97,13 +103,36 @@ public class ActRepairs extends AppCompatActivity {
                 addiction_edit.setHint("Search or Enter");
                 addiction_edit.setThreshold(0);
 
-                DatabaseReference reference = User.getMainReference();
+                addiction_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        addiction_edit.showDropDown();
+                    }
+                });
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 reference.child("common_addictions")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                
+                                Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return super.toString();
+                                    }
+                                });
+
+                                if(map!=null)
+                                {
+                                    List<String> list = new ArrayList<>(map.keySet());
+
+                                    Log.e("common_addictions", Arrays.toString(list.toArray()));
+
+                                    ArrayAdapter<String> common_list = new ArrayAdapter<>(ActRepairs.this,androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                                    addiction_edit.setAdapter(common_list);
+                                }
                             }
                         });
 
@@ -144,6 +173,11 @@ public class ActRepairs extends AppCompatActivity {
                         .show();
                 break;
 
+            case R.id.common:
+                Intent intent = new Intent(ActRepairs.this,ActCommon.class);
+                startActivity(intent);
+                break;
+
             case R.id.remove:
                 list.setAdapter(new AdapterRepairsList(ActRepairs.this,true));
                 break;
@@ -171,6 +205,7 @@ public class ActRepairs extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.update_database_menu,menu);
+
         return super.onCreateOptionsMenu(menu);
     }
 }

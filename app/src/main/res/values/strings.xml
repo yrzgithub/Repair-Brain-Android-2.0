@@ -95,5 +95,6 @@
     <string name="relapsed_date">Relapsed Date</string>
     <string name="time_gone">Progress : </string>
     <string name="progress">Progress</string>
+    <string name="search">Search</string>
 
 </resources>

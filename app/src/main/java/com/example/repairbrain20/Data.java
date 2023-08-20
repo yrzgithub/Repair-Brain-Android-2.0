@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Data{
+public class Data {
 
 }
 
@@ -20,7 +20,7 @@ class ProgressData {
     Time lastly_relapsed;
 
 
-    public ProgressData() {
+    ProgressData() {
 
     }
 
@@ -76,12 +76,12 @@ class Time
 {
     int day,hour,minute,second,month,year;
 
-    public Time()
+    Time()
     {
 
     }
 
-    public Time(int year, int month, int day, int hour, int minute, int second) {
+    Time(int year, int month, int day, int hour, int minute, int second) {
         this.day = day;
         this.hour = hour;
         this.minute = minute;
@@ -90,7 +90,7 @@ class Time
         this.year = year;
     }
 
-    public Time(LocalDateTime date_time)
+    Time(LocalDateTime date_time)
     {
         this.year = date_time.getYear();
         this.month = date_time.getMonthValue();
@@ -268,7 +268,7 @@ class Repairs
 
     }
 
-    public Repairs(LocalDateTime local_date_time)
+    Repairs(LocalDateTime local_date_time)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
         date_added =  local_date_time.format(formatter);
