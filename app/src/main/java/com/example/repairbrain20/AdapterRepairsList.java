@@ -33,25 +33,47 @@ public class AdapterRepairsList extends BaseAdapter {
     static Map<String, Repairs> addiction_copy = new HashMap<>();
     boolean delete = false;
     ListView list;
+    ImageView no_results;
+    Snackbar snack;
 
     AdapterRepairsList(Activity act, Map<String, Repairs> addictions)
     {
-        this.addictions.putAll(addictions);
-        this.keys.addAll(addictions.keySet());
         this.act = act;
 
         this.list = act.findViewById(R.id.list);
+        no_results = act.findViewById(R.id.no_results);
+
+        if(addictions!=null && addictions.size()>0)
+        {
+            list.setVisibility(View.VISIBLE);
+            no_results.setVisibility(View.GONE);
+            this.addictions.putAll(addictions);
+            this.keys.addAll(addictions.keySet());
+        }
+        else
+        {
+            list.setVisibility(View.GONE);
+            no_results.setVisibility(View.VISIBLE);
+            no_results.setImageResource(R.drawable.noresultfound);
+        }
+
+        snack = Snackbar.make(list,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
+        snack.setAction("Reload", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                act.recreate();
+            }
+        });
 
         AdapterRepairsList.addiction_copy = this.addictions;
-
     }
 
     AdapterRepairsList(Activity act, boolean delete)
     {
         this(act,addiction_copy);
-
-        this.addictions = addiction_copy;
         this.delete = delete;
+        if(delete && snack!=null && addiction_copy.size()>0) snack.show();
+
     }
 
     @Override
@@ -107,10 +129,14 @@ public class AdapterRepairsList extends BaseAdapter {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        snack.dismiss();
+
+                                        AdapterRepairsList.addiction_copy.remove(addiction_name);
+                                        list.setAdapter(new AdapterRepairsList(act,delete));
+
                                         if(task.isSuccessful())
                                         {
-                                            snack.dismiss();
-                                            Toast.makeText(act,"Addiction deleted",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(act,"Repair deleted",Toast.LENGTH_SHORT).show();
                                         }
                                         else
                                         {

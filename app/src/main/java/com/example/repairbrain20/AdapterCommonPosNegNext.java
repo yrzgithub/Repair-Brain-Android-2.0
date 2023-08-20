@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,8 +29,20 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     {
         this.act = act;
 
-        if(map!=null) this.map.putAll(map);
-        keys.addAll(map.keySet());
+        ImageView loading = act.findViewById(R.id.loading);
+        ListView list = act.findViewById(R.id.effects);
+
+        if(map!=null)
+        {
+            this.map.putAll(map);
+            keys.addAll(map.keySet());
+        }
+        else
+        {
+            list.setVisibility(View.GONE);
+            loading.setVisibility(View.VISIBLE);
+            Glide.with(loading).load(R.drawable.noresultfound).into(loading);
+        }
     }
 
     @Override

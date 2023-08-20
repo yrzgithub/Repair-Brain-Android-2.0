@@ -33,7 +33,7 @@
     <string name="positive">Positive Effects</string>
     <string name="negative">Side Effects</string>
     <string name="steps">Steps</string>
-    <string name="username_or_e_mail">Username or E-mail</string>
+    <string name="username_or_e_mail">E-mail</string>
     <string name="get_email_or_username">get email or username</string>
     <string name="password">Password</string>
     <string name="login">login</string>
@@ -84,7 +84,7 @@
 
     <string name="addiction_name">Addiction Name</string>
     <string name="trigger_name">Trigger Name</string>
-    <string name="progress">Progress : </string>
+
     <string name="triggers">Triggers</string>
     <string name="practices">Practices</string>
     <string name="recovery">Recovery</string>
@@ -93,5 +93,7 @@
     <string name="journey">Journey</string>
     <string name="relapses">Relapses</string>
     <string name="relapsed_date">Relapsed Date</string>
+    <string name="time_gone">Progress : </string>
+    <string name="progress">Progress</string>
 
 </resources>

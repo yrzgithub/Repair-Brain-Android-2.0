@@ -155,7 +155,7 @@ public class User implements OnCompleteListener<AuthResult> {
             @Override
             public void onSuccess(AuthResult authResult) {
 
-                send_verification_email();
+                User.this.send_verification_email();
 
                 FirebaseUser user = auth.getCurrentUser();
 
@@ -223,7 +223,6 @@ public class User implements OnCompleteListener<AuthResult> {
                     }
                     else
                     {
-                        //Toast.makeText(act,"Email",Toast.LENGTH_SHORT).show();
                         alert.setPositiveButton("Ok",null);
                         alert.setNegativeButton("Verify", new DialogInterface.OnClickListener() {
                             @Override

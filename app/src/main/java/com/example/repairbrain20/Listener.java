@@ -106,6 +106,8 @@ public class Listener {
 
         DatabaseReference reference = User.getRepairReference();
 
+        Log.e("common","common_" + type);
+
         if(reference!=null)
         {
             common_reference
@@ -123,10 +125,13 @@ public class Listener {
                                     }
                                 });
 
-                                List<String> suggestions = new ArrayList<>(map.keySet());
+                                if(map!=null)
+                                {
+                                    List<String> suggestions = new ArrayList<>(map.keySet());
 
-                                ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
-                                search.setAdapter(adapter);
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
+                                    search.setAdapter(adapter);
+                                }
                         }
                     });
         }
@@ -164,12 +169,8 @@ public class Listener {
                                             bar.dismiss();
                                             reference.child("lastly_noted_"+type).setValue(effect_new);
 
-                                            if(map==null) map = new HashMap<>();
-
-                                            map.put(effect_new,date_added);
-
                                             Toast.makeText(act,"Successfully Added",Toast.LENGTH_LONG).show();
-                                            list.setAdapter(new AdapterPosNegNext(act,Listener.this.view,map,type));
+                                            act.recreate();
                                         }
                                     });
                         }

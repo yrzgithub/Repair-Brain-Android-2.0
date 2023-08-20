@@ -192,7 +192,7 @@ class ReplaceHabits
     Map<String,Integer> days_data = new HashMap<>();
     List<String> show_on = new ArrayList<>();
 
-    ReplaceHabits()
+    public ReplaceHabits()
     {
 
     }

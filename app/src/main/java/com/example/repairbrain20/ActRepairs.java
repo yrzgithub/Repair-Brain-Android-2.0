@@ -1,6 +1,7 @@
 package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.GenericTypeIndicator;
 
@@ -37,6 +39,7 @@ public class ActRepairs extends AppCompatActivity {
     SharedPreferences.Editor editor;
     ListView list;
     ImageView no_results;
+    Map<String, Repairs> addictions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +65,21 @@ public class ActRepairs extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        Map<String, Repairs> addictions =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Repairs>>() {
-                            @NonNull
-                            @Override
-                            public String toString() {
-                                return super.toString();
-                            }
-                        });
-
-                        if(addictions==null || addictions.size()==0)
+                        if(task.isSuccessful())
                         {
-                            no_results.setImageResource(R.drawable.noresultfound);
+                            addictions =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Repairs>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
+                                }
+                            });
+
+                            list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions));
                         }
                         else
                         {
-                            list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions));
-                            no_results.setVisibility(View.GONE);
-                            list.setVisibility(View.VISIBLE);
+                            Glide.with(ActRepairs.this).load(R.drawable.noresultfound).into(no_results);
                         }
                     }
                 });
@@ -96,18 +97,8 @@ public class ActRepairs extends AppCompatActivity {
                 addiction_edit.setHint("Search or Enter");
                 addiction_edit.setThreshold(0);
 
-                addiction_edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addiction_edit.showDropDown();
-                    }
-                });
-
-                List<String> suggestion = new ArrayList<>();
-                suggestion.add("uruttu");
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestion);
-                addiction_edit.setAdapter(adapter);
+                DatabaseReference reference = User.getMainReference();
+                reference.child("common_addictions");
 
                 new AlertDialog.Builder(this)
                         .setView(view)
@@ -131,16 +122,13 @@ public class ActRepairs extends AppCompatActivity {
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if(task.isSuccessful())
-                                                    {
-                                                        User.setAddiction(ActRepairs.this,addiction_);
-                                                        snack.dismiss();
-                                                        Toast.makeText(ActRepairs.this,"Addiction Added",Toast.LENGTH_SHORT).show();
+                                                    User.setAddiction(ActRepairs.this,addiction_);
+                                                    snack.dismiss();
+                                                    Toast.makeText(ActRepairs.this,"Repair Added",Toast.LENGTH_SHORT).show();
 
-                                                        AdapterRepairsList.addiction_copy.remove(addiction_);
+                                                    AdapterRepairsList.addiction_copy.put(addiction_,addiction);
 
-                                                        list.setAdapter(new AdapterRepairsList(ActRepairs.this,false));
-                                                    }
+                                                    list.setAdapter(new AdapterRepairsList(ActRepairs.this,false));
                                                 }
                                             });
                                 }
@@ -154,6 +142,20 @@ public class ActRepairs extends AppCompatActivity {
                 break;
 
             case R.id.reset:
+                reference = User.getMainReference();
+                Snackbar snack = Snackbar.make(list,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                snack.show();
+                if(reference!=null)
+                {
+                    reference.removeValue(new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            snack.dismiss();
+                            Toast.makeText(getApplicationContext(),"Successfully resetted",Toast.LENGTH_LONG).show();
+                            list.setAdapter(new AdapterRepairsList(ActRepairs.this,null));
+                        }
+                    });
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

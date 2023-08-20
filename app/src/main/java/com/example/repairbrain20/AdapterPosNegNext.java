@@ -55,6 +55,8 @@ public class AdapterPosNegNext extends BaseAdapter {
         this.img = view.findViewById(R.id.no_results);
         this.main = view.findViewById(R.id.main);
 
+        this.effect = effect;
+
         try
         {
             snack = Snackbar.make(main,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
@@ -70,10 +72,10 @@ public class AdapterPosNegNext extends BaseAdapter {
 
         }
 
-        this.map.clear();
-
-        if(map!=null) this.map.putAll(map);
-        this.effect = effect;
+        if(map!=null)
+        {
+            this.map.putAll(map);
+        }
 
         if(this.map.size() == 0) show_image_view(R.drawable.noresultfound);
 
@@ -104,7 +106,7 @@ public class AdapterPosNegNext extends BaseAdapter {
     @Override
     public int getCount() {
         //Log.e("sanjay_map",String.valueOf(map.size()));
-        return map!=null?map.size():0;
+        return map.size();
     }
 
     @Override

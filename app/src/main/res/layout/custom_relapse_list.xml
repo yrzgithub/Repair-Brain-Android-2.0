@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/image"
         android:layout_marginStart="5dp"
-        android:text="@string/progress"
+        android:text="@string/time_gone"
         android:textColor="@color/black" />
 
     <TextView

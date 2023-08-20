@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -42,6 +43,7 @@ public class AdapterRelapses extends BaseAdapter {
         {
             Glide.with(activity).load(R.drawable.noresultfound).into(loading);
         }
+
     }
 
     @Override
