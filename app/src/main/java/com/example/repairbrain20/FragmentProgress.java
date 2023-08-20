@@ -121,7 +121,7 @@ public class FragmentProgress extends Fragment {
                                     return;
                                 }
 
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
                                 String lastly_relapsed_str = lastly_relapsed_object.format(formatter);
 
                                 loading.setVisibility(View.INVISIBLE);

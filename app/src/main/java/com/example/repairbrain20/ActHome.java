@@ -89,7 +89,7 @@ public class ActHome extends AppCompatActivity {
                             String format = "%d days %d hrs %d mins %d secs";
                             String time_ = String.format(format,days,hours,minutes,seconds);
 
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
                             String date = formatter.format(now);
 
                             Relapse relapse = new Relapse(date,time_);

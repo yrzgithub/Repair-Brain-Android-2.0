@@ -142,7 +142,7 @@ public class AdapterPosNegNext extends BaseAdapter {
             icon.setImageResource(R.drawable.negative_effects);
         }
         else {
-            icon.setImageResource(R.drawable.next_step);
+            icon.setImageResource(R.drawable.steps);
         }
 
         String key = keys.get(i);

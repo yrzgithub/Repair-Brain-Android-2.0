@@ -214,7 +214,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:contentDescription="@string/none"
-                        android:src="@drawable/next_step" />
+                        android:src="@drawable/steps" />
 
                     <TextView
                         android:layout_width="wrap_content"

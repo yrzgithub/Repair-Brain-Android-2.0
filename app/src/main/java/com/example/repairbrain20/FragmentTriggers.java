@@ -162,7 +162,7 @@ public class FragmentTriggers extends Fragment {
                                     String trigger_name = triggers_view.getText().toString();
 
                                     LocalDateTime local_time = LocalDateTime.now();
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
 
                                     String time_ = local_time.format(formatter);
 

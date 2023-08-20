@@ -149,7 +149,7 @@ public class Listener {
                         }
 
                         LocalDateTime date_time = LocalDateTime.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
 
                         String date_added =  date_time.format(formatter);
 

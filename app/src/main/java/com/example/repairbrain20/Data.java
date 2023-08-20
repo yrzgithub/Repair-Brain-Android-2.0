@@ -192,7 +192,7 @@ class ReplaceHabits
     Map<String,Integer> days_data = new HashMap<>();
     List<String> show_on = new ArrayList<>();
 
-    public ReplaceHabits()
+    ReplaceHabits()
     {
 
     }
@@ -270,7 +270,7 @@ class Repairs
 
     Repairs(LocalDateTime local_date_time)
     {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
         date_added =  local_date_time.format(formatter);
         lastly_relapsed = new Time(local_date_time);
     }
