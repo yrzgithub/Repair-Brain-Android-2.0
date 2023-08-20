@@ -98,7 +98,14 @@ public class ActRepairs extends AppCompatActivity {
                 addiction_edit.setThreshold(0);
 
                 DatabaseReference reference = User.getMainReference();
-                reference.child("common_addictions");
+                reference.child("common_addictions")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                
+                            }
+                        });
 
                 new AlertDialog.Builder(this)
                         .setView(view)
