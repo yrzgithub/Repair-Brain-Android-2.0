@@ -1,6 +1,7 @@
 package com.example.repairbrain20;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,13 +15,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
 import java.util.ArrayList;
@@ -89,13 +91,44 @@ public class FragmentPractices extends Fragment {
         }
     }
 
-    public void addHabit()
+    public void addPractice()
     {
         List<String> show_on = new ArrayList<String>();
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.habits_add,null);
 
-        EditText habit = view.findViewById(R.id.habit);
+        AutoCompleteTextView practice_view = view.findViewById(R.id.habit);
+        practice_view.setThreshold(0);
+
+        practice_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                practice_view.showDropDown();
+            }
+        });
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("common_practices");
+        reference
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                            @NonNull
+                            @Override
+                            public String toString() {
+                                return super.toString();
+                            }
+                        });
+
+                        if(map!=null)
+                        {
+                            List<String> list = new ArrayList<>(map.keySet());
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                            practice_view.setAdapter(adapter);
+                        }
+                    }
+                });
 
         CheckBox sun = view.findViewById(R.id.sun);
         CheckBox mon = view.findViewById(R.id.mon);
@@ -223,16 +256,16 @@ public class FragmentPractices extends Fragment {
 
         new AlertDialog.Builder(getActivity())
                 .setView(view)
-                .setIcon(R.drawable.ic_launcher_foreground)
+                .setIcon(R.drawable.icon_app)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        String habit_ = habit.getText().toString().trim();
+                        String habit_ = practice_view.getText().toString().trim();
 
                         if(habit_.trim().equals(""))
                         {
-                            Toast.makeText(getContext(),"Habit cannot be empty",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(),"Practice cannot be empty",Toast.LENGTH_LONG).show();
                             return;
                         }
 
@@ -274,7 +307,7 @@ public class FragmentPractices extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         connect.dismiss();
-                                        Toast.makeText(getActivity(),"Habit Added",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(),"Practice Added",Toast.LENGTH_SHORT).show();
                                         list_view.setAdapter(adapter);
                                     }
                                 });
@@ -301,7 +334,7 @@ public class FragmentPractices extends Fragment {
         switch (item.getItemId())
         {
             case R.id.add:
-                addHabit();
+                addPractice();
                 break;
 
             case R.id.remove:
@@ -315,6 +348,12 @@ public class FragmentPractices extends Fragment {
                     AdapterPractices remove_adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view,true);
                     list_view.setAdapter(remove_adapter);
                 }
+                break;
+
+            case R.id.common:
+                Intent intent = new Intent(getContext(),ActCommon.class);
+                intent.putExtra("common","common_practices");
+                startActivity(intent);
                 break;
 
             case R.id.reset:

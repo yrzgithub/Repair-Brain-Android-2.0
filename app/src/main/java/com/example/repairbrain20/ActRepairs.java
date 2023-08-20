@@ -175,6 +175,7 @@ public class ActRepairs extends AppCompatActivity {
 
             case R.id.common:
                 Intent intent = new Intent(ActRepairs.this,ActCommon.class);
+                intent.putExtra("common","common_addictions");
                 startActivity(intent);
                 break;
 

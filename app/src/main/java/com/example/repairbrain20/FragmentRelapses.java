@@ -55,7 +55,7 @@ public class FragmentRelapses extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            Map<String,String> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, String>>() {
+                            Map<String,Relapse> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Relapse>>() {
                                 @NonNull
                                 @Override
                                 public String toString() {

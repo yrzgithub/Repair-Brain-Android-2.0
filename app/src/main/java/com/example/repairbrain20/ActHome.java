@@ -92,7 +92,9 @@ public class ActHome extends AppCompatActivity {
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E,MMM dd yyyy");
                             String date = formatter.format(now);
 
-                            reference.child("relapses").child(date).setValue(time_);
+                            Relapse relapse = new Relapse(date,time_);
+
+                            reference.child("relapses").push().setValue(relapse);
                         }
                     });
 

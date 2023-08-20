@@ -24,6 +24,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -62,16 +64,11 @@ public class ActCommon extends AppCompatActivity {
                 .into(loading);
 
         Intent intent = getIntent();
-        type = intent.getStringExtra("effect");
-
-        if(type==null)
-        {
-            type = "addictions";
-        }
+        type = intent.getStringExtra("common");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
-        reference.child("common_" + type)
+        reference.child(type)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
@@ -168,7 +165,7 @@ public class ActCommon extends AppCompatActivity {
                                     Snackbar bar = Snackbar.make(list,"Saving", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     bar.show();
 
-                                    common_reference.child(type+"_suggestions")
+                                    common_reference.child("suggestions/"+type)
                                             .child(name_)
                                             .setValue(common)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -190,6 +187,16 @@ public class ActCommon extends AppCompatActivity {
                         })
                         .create()
                         .show();
+                break;
+
+            case R.id.request:
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                reference.child("requests").child(User.selected_addiction).child(type).setValue(User.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(ActCommon.this,"Request submitted",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
         return super.onOptionsItemSelected(item);

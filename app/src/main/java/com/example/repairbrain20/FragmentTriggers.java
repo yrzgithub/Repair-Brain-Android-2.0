@@ -3,6 +3,7 @@ package com.example.repairbrain20;
 import static com.example.repairbrain20.R.*;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,11 +31,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FragmentTriggers extends Fragment {
@@ -72,7 +77,7 @@ public class FragmentTriggers extends Fragment {
 
         if(reference!=null)
         {
-            reference.child("triggers")
+            reference.child("triggers/"+User.selected_addiction)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
@@ -106,14 +111,46 @@ public class FragmentTriggers extends Fragment {
         switch (item.getItemId())
         {
             case R.id.add:
-
                 View view = getLayoutInflater().inflate(R.layout.alert_dialog,null);
                 AutoCompleteTextView triggers_view = view.findViewById(id.effects_list);
 
                 triggers_view.setHint("Search or Enter");
                 triggers_view.setThreshold(0);
 
+                triggers_view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        triggers_view.showDropDown();
+                    }
+                });
+
+                DatabaseReference main_reference = FirebaseDatabase.getInstance().getReference();
+                main_reference
+                        .child("common_triggers")
+                        .child(User.selected_addiction)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return super.toString();
+                                    }
+                                });
+
+                                if(map!=null)
+                                {
+                                    List<String> list = new ArrayList<>(map.keySet());
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                                    triggers_view.setAdapter(adapter);
+                                }
+                            }
+                        });
+
                 DatabaseReference reference = User.getRepairReference();
+
                 if(reference!=null)
                 {
                     new AlertDialog.Builder(getActivity())
@@ -163,6 +200,12 @@ public class FragmentTriggers extends Fragment {
                     Toast.makeText(getActivity(),"Triggers list is empty",Toast.LENGTH_SHORT).show();
                 }
                 list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,true));
+                break;
+
+            case id.common:
+                Intent intent = new Intent(getActivity(),ActCommon.class);
+                intent.putExtra("common","common_triggers/"+User.selected_addiction);
+                startActivity(intent);
                 break;
 
             case id.reset:

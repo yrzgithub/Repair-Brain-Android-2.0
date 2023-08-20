@@ -22,10 +22,10 @@ import java.util.Map;
 public class AdapterRelapses extends BaseAdapter {
 
     Activity activity;
-    Map<String,String> relapses = new HashMap<>();
+    Map<String,Relapse> relapses = new HashMap<>();
     List<String> keys = new ArrayList<>();
 
-    AdapterRelapses(Activity act,View view, Map<String,String> map)
+    AdapterRelapses(Activity act,View view, Map<String,Relapse> map)
     {
         this.activity = act;
 
@@ -71,10 +71,13 @@ public class AdapterRelapses extends BaseAdapter {
         TextView time_gone = view.findViewById(R.id.time_gone);
 
         String key = keys.get(i);
-        String relapse_ = relapses.get(key);
+        Relapse relapse_ = relapses.get(key);
 
-        relapse.setText(key);
-        time_gone.setText(relapse_);
+        String date = relapse_.getDate();
+        String progress = relapse_.getProgress();
+
+        relapse.setText(date);
+        time_gone.setText(progress);
 
         return view;
     }

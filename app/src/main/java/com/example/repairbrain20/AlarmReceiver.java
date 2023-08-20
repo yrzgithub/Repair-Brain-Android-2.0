@@ -29,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,ID)
                 .setContentTitle(context.getResources().getString(R.string.app_name))
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.icon_app)
                 .setAutoCancel(true)
                 .setContentText("Are you free?")
                 .setContentIntent(open_pending)

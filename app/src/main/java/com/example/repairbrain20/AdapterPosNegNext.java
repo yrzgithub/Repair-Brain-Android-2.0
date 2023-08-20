@@ -127,6 +127,9 @@ public class AdapterPosNegNext extends BaseAdapter {
         TextView text_widget = view.findViewById(R.id.effect);
         TextView date_widget = view.findViewById(R.id.date);
 
+        text_widget.setSelected(true);
+        date_widget.setSelected(true);
+
         ImageView icon = view.findViewById(R.id.image);
         ImageView delete = view.findViewById(R.id.delete);
 
@@ -151,8 +154,6 @@ public class AdapterPosNegNext extends BaseAdapter {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("uruttu_click",String.valueOf(i));
-
                     DatabaseReference reference = User.getRepairReference();
 
                     if(reference!=null)
@@ -179,8 +180,6 @@ public class AdapterPosNegNext extends BaseAdapter {
         {
             delete.setVisibility(View.GONE);
         }
-
-        text_widget.setSelected(true);
 
         String show = key.substring(0,1).toUpperCase() + key.substring(1);
         text_widget.setText(show);

@@ -67,7 +67,7 @@ public class User implements OnCompleteListener<AuthResult> {
 
         alert = new AlertDialog.Builder(act)
                 .setTitle(title)
-                .setIcon(R.drawable.ic_launcher_foreground)
+                .setIcon(R.drawable.icon_app)
                 .setPositiveButton("OK",null)
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
@@ -99,6 +99,13 @@ public class User implements OnCompleteListener<AuthResult> {
         this.username = username;
     }
 
+
+    public static String getEmail()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null) return user.getEmail();
+        else return null;
+    }
 
     public boolean use_username()
     {

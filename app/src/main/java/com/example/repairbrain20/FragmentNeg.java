@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Map;
 
@@ -61,13 +62,20 @@ public class FragmentNeg extends Fragment {
 
             case R.id.common:
                 Intent intent = new Intent(getActivity(), ActCommon.class);
-                intent.putExtra("effect","negative_effects");
+                intent.putExtra("common","common_negative_effects");
                 startActivity(intent);
                 break;
 
             case R.id.remove:
                 Map<String,String> result = listener.getEffectsMap();
-                listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"negative_effects",true));
+                if(result==null || result.size()==0)
+                {
+                    Toast.makeText(getActivity(),"Symptoms list is empty",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"negative_effects",true));
+                }
                 break;
 
             case R.id.reset:

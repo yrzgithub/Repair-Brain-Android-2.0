@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -99,9 +100,9 @@ public class FragmentProgress extends Fragment {
 
                                 ActRecovery.last_accuracy_percent = progress_data.getLast_accuracy_percent();
 
-                                pos_effect.setText(positive_effect);
-                                neg_effect.setText(negative_effect);
-                                next_step.setText(next_step_);
+                                pos_effect.setText(positive_effect!=null? positive_effect : "...");
+                                neg_effect.setText(negative_effect!=null? negative_effect : "...");
+                                next_step.setText(next_step_!=null?next_step_ : "...");
 
                                 LocalDateTime lastly_relapsed_object;
 
@@ -114,6 +115,9 @@ public class FragmentProgress extends Fragment {
                                 {
                                     time_gone.setText(R.string.not_found);
                                     lastly_relapse.setText(R.string.not_found);
+                                    pos_effect.setText(R.string.not_found);
+                                    next_step.setText(R.string.not_found);
+                                    neg_effect.setText(R.string.not_found);
                                     return;
                                 }
 
@@ -182,7 +186,7 @@ public class FragmentProgress extends Fragment {
 
         new AlertDialog.Builder(getContext())
                 .setTitle(R.string.app_name)
-                .setIcon(R.drawable.ic_launcher_foreground)
+                .setIcon(R.drawable.icon_app)
                 .setMessage("No Addiction Found")
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override

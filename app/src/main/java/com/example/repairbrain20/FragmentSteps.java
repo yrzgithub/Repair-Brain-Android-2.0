@@ -72,7 +72,7 @@ public class FragmentSteps extends Fragment {
 
             case R.id.common:
                 Intent intent = new Intent(getActivity(), ActCommon.class);
-                intent.putExtra("effect","next_steps");
+                intent.putExtra("common","common_next_steps");
                 startActivity(intent);
                 break;
 

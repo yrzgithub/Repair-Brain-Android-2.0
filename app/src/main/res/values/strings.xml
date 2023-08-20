@@ -57,7 +57,7 @@
     <string name="effects">Effects</string>
     <string name="_0">00</string>
     <string name="show_all">Show All</string>
-    <string name="enter_the_habit">Enter the habit</string>
+    <string name="enter_the_habit">Enter the Practice</string>
     <string name="all">All</string>
     <string name="Sun">Sun</string>
     <string name="mon">Mon</string>
@@ -77,8 +77,8 @@
     <string name="show_common">Show Common</string>
     <string name="source">Source : </string>
     <string name="suggest">Suggest</string>
-    <string name="name">Name</string>
-    <string name="link">Link</string>
+    <string name="name">Name : </string>
+    <string name="link">Link : </string>
     <string name="accuracy">Accuracy</string>
     <string name="logout">Logout</string>
 
@@ -96,5 +96,6 @@
     <string name="time_gone">Progress : </string>
     <string name="progress">Progress</string>
     <string name="search">Search</string>
+    <string name="request">Request</string>
 
 </resources>

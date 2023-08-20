@@ -77,6 +77,7 @@ public class AdapterPractices extends BaseAdapter {
         this.habits_list = view.findViewById(R.id.list);
 
         accuracy.setText("Replacing Accuracy :");
+        percent.setText("0%");
 
         today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("E"));
 

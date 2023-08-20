@@ -291,3 +291,35 @@ class Repairs
         this.lastly_relapsed = lastly_relapsed;
     }
 }
+
+class Relapse
+{
+    String date,progress;
+
+    Relapse()
+    {
+
+    }
+
+    Relapse(String date,String progress)
+    {
+        this.date = date;
+        this.progress = progress;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
+}
