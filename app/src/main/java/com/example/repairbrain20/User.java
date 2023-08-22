@@ -147,7 +147,7 @@ public class User implements OnCompleteListener<AuthResult> {
                     {
                         User.this.email = snapshot.getValue(String.class);
                         Log.e("sanjay_email",User.this.email);
-                        progress.dismiss();
+                   //     progress.dismiss();
 
                         login_with_email_and_password();
                     }
@@ -375,6 +375,7 @@ public class User implements OnCompleteListener<AuthResult> {
     {
         if(User.uid!=null)
         {
+            Log.e("userid",User.uid);
             return database.getReference().child(User.uid);
         }
 

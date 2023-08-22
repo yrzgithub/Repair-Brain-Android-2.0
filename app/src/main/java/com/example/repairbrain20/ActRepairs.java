@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -62,12 +63,27 @@ public class ActRepairs extends AppCompatActivity {
                 .load(R.drawable.loading_pink_list)
                 .into(no_results);
 
+        //Toast.makeText(ActRepairs.this,"Success",Toast.LENGTH_SHORT).show();
+
         DatabaseReference reference = User.getMainReference();
 
-        if(reference==null) return;
+
+        if(reference==null)
+        {
+            Glide.with(ActRepairs.this).load(R.drawable.noresultfound).into(no_results);
+            return;
+        }
+
+       // Toast.makeText(this,"Started",Toast.LENGTH_SHORT).show();
 
         reference
                 .get()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ActRepairs.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
