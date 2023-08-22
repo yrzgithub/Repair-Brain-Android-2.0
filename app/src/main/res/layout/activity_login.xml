@@ -243,7 +243,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/login_with_google"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -265,6 +264,7 @@
                 android:src="@drawable/common_google_signin_btn_icon_dark_normal" />
 
             <Button
+                android:id="@+id/login_with_google"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
