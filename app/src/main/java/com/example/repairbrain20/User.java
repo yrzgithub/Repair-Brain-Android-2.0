@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -140,14 +141,25 @@ public class User implements OnCompleteListener<AuthResult> {
             show_progress("Connecting");
             Log.e("sanjay_username",username);
 
-            ids_reference.child(username).addValueEventListener(new ValueEventListener() {
+            ids_reference
+                    .child(username)
+                    .get().
+                    addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            send_alert("Connection failed");
+                            progress.dismiss();
+                        }
+                    })
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    DataSnapshot snapshot =  task.getResult();
                     if(snapshot.exists())
                     {
+                        Log.e("snapshot",snapshot.getValue().toString());
                         User.this.email = snapshot.getValue(String.class);
                         Log.e("sanjay_email",User.this.email);
-                   //     progress.dismiss();
 
                         login_with_email_and_password();
                     }
@@ -158,13 +170,14 @@ public class User implements OnCompleteListener<AuthResult> {
                         send_alert("Username not found");
                     }
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                        send_alert("Connection failed");
-                        progress.dismiss();
-                }
-            });
+            })
+                    .addOnCanceledListener(new OnCanceledListener() {
+                        @Override
+                        public void onCanceled() {
+                            send_alert("Connection failed");
+                            progress.dismiss();
+                        }
+                    });
         }
         else {
             send_alert("Invalid Username or Email");
