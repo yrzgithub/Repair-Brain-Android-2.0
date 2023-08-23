@@ -64,6 +64,7 @@ public class User implements OnCompleteListener<AuthResult> {
         this.progress = new ProgressDialog(act);
         progress.setCanceledOnTouchOutside(false);
         progress.setOnCancelListener(null);
+        progress.setIcon(R.drawable.icon_app);
 
         preference = act.getSharedPreferences("login_data",Context.MODE_PRIVATE);
         this.editor = preference.edit();

@@ -258,7 +258,7 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:contentDescription="@string/none"
-                        android:src="@drawable/about" />
+                        android:src="@drawable/negative_effects" />
 
                     <TextView
                         android:layout_width="wrap_content"

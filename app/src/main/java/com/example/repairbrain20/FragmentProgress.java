@@ -129,8 +129,23 @@ public class FragmentProgress extends Fragment {
                                 hrs_left.setVisibility(View.VISIBLE);
                                 left_txt.setVisibility(View.VISIBLE);
 
-                                Handler handler = new Handler();
+                                LocalDateTime now = LocalDateTime.now();
                                 LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
+
+                                Duration duration = Duration.between(finalLastly_relapsed_object,now);
+
+                                long days = duration.toDays();
+                                long hours = duration.toHours() % 24;
+                                long minutes = duration.toMinutes() % 60;
+                                long seconds = duration.getSeconds() % 60;
+
+                                Log.e("sanjay",String.valueOf(hours));
+
+                                int hrs = (int)hours;
+                                progress.setProgress(hrs); // change
+                                hrs_left.setText(String.format("%02d",24-hrs));
+
+                                Handler handler = new Handler();
                                 Runnable runnable = new Runnable() {
                                     @SuppressLint("DefaultLocale")
                                     @Override

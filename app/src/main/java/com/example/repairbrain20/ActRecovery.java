@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ActRecovery extends AppCompatActivity implements View.OnClickListener {
 
@@ -153,6 +155,8 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 SharedPreferences preferences = getSharedPreferences("login_data",MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear().apply();
+
+                FirebaseAuth.getInstance().signOut();
 
                 intent = new Intent(this, ActLogin.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

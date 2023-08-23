@@ -57,6 +57,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
     EditText id_or_email_edit_txt,password_edit_txt;
     LinearLayout main;
     CheckNetwork network_check;
+    ProgressDialog progress;
     ConnectivityManager cm;
     SharedPreferences preference;
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -249,8 +250,13 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                         .build();
 
                 GoogleSignInClient client = GoogleSignIn.getClient(this,gso);
-                Intent google_sign_in_intent =  client.getSignInIntent();
-                startActivityForResult(google_sign_in_intent,100);
+                client.revokeAccess().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Intent google_sign_in_intent =  client.getSignInIntent();
+                        startActivityForResult(google_sign_in_intent,100);
+                    }
+                });
                 break;
         }
     }
@@ -259,6 +265,14 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode==100)
         {
+            progress = new ProgressDialog(this);
+            progress.setCanceledOnTouchOutside(false);
+            progress.setOnCancelListener(null);
+            progress.setIcon(R.drawable.icon_app);
+            progress.setMessage("Logging In");
+
+            progress.show();
+
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             if(!task.isSuccessful())
@@ -279,6 +293,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 FirebaseUser user = auth.getCurrentUser();
+                                progress.dismiss();
                                 if(user!=null)
                                 {
                                     User.uid = user.getUid();
@@ -302,6 +317,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
 
     public void login_failed()
     {
+        progress.dismiss();
         Toast.makeText(this,"Login Failed",Toast.LENGTH_SHORT).show();
     }
 
