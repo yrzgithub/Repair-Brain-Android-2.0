@@ -78,6 +78,7 @@ public class FragmentProgress extends Fragment {
         pos_effect.setSelected(true);
         neg_effect.setSelected(true);
 
+
         DatabaseReference reference = User.getRepairReference();
 
         if(reference!=null)
@@ -133,10 +134,15 @@ public class FragmentProgress extends Fragment {
 
                                 Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
+                                long days = duration.toDays();
                                 long hours = duration.toHours() % 24;
+                                long minutes = duration.toMinutes() % 60;
+                                long seconds = duration.getSeconds() % 60;
+
+                                Log.e("sanjay",String.valueOf(hours));
 
                                 int hrs = (int)hours;
-                                progress.setProgress(hrs);
+                                progress.setProgress(hrs); // change
                                 hrs_left.setText(String.format("%02d",24-hrs));
 
                                 Handler handler = new Handler();
@@ -146,15 +152,17 @@ public class FragmentProgress extends Fragment {
                                     public void run() {
                                         LocalDateTime now = LocalDateTime.now();
 
-                                        Duration duration = Duration.between(lastly_relapsed_object,now);
+                                        Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
                                         long days = duration.toDays();
                                         long hours = duration.toHours() % 24;
                                         long minutes = duration.toMinutes() % 60;
                                         long seconds = duration.getSeconds() % 60;
 
+                                        Log.e("sanjay",String.valueOf(hours));
+
                                         int hrs = (int)hours;
-                                        progress.setProgress(hrs);
+                                        progress.setProgress(hrs); // change
                                         hrs_left.setText(String.format("%02d",24-hrs));
 
                                         String format = "%d days %d hrs %d mins %d secs";
