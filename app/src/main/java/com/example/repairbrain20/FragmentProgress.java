@@ -42,7 +42,6 @@ public class FragmentProgress extends Fragment {
     ProgressBar progress;
     ImageView loading;
     //MediaPlayer player;
-    static Duration duration;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -132,7 +131,7 @@ public class FragmentProgress extends Fragment {
                                 LocalDateTime now = LocalDateTime.now();
                                 LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
 
-                                duration = Duration.between(finalLastly_relapsed_object,now);
+                                Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
                                 long hours = duration.toHours() % 24;
 
@@ -145,7 +144,9 @@ public class FragmentProgress extends Fragment {
                                     @SuppressLint("DefaultLocale")
                                     @Override
                                     public void run() {
-                                        duration =  duration.plusSeconds(1);
+                                        LocalDateTime now = LocalDateTime.now();
+
+                                        Duration duration = Duration.between(lastly_relapsed_object,now);
 
                                         long days = duration.toDays();
                                         long hours = duration.toHours() % 24;

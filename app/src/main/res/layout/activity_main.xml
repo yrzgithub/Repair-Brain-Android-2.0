@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/are_you_free_or_addicted"
+        android:text="@string/repaired_or_impaired"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28sp"
