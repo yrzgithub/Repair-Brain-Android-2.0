@@ -42,6 +42,7 @@ public class FragmentProgress extends Fragment {
     ProgressBar progress;
     ImageView loading;
     //MediaPlayer player;
+    static Duration duration;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +78,6 @@ public class FragmentProgress extends Fragment {
         next_step.setSelected(true);
         pos_effect.setSelected(true);
         neg_effect.setSelected(true);
-
 
         DatabaseReference reference = User.getRepairReference();
 
@@ -132,17 +132,12 @@ public class FragmentProgress extends Fragment {
                                 LocalDateTime now = LocalDateTime.now();
                                 LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
 
-                                Duration duration = Duration.between(finalLastly_relapsed_object,now);
+                                duration = Duration.between(finalLastly_relapsed_object,now);
 
-                                long days = duration.toDays();
                                 long hours = duration.toHours() % 24;
-                                long minutes = duration.toMinutes() % 60;
-                                long seconds = duration.getSeconds() % 60;
-
-                                Log.e("sanjay",String.valueOf(hours));
 
                                 int hrs = (int)hours;
-                                progress.setProgress(hrs); // change
+                                progress.setProgress(hrs);
                                 hrs_left.setText(String.format("%02d",24-hrs));
 
                                 Handler handler = new Handler();
@@ -150,19 +145,15 @@ public class FragmentProgress extends Fragment {
                                     @SuppressLint("DefaultLocale")
                                     @Override
                                     public void run() {
-                                        LocalDateTime now = LocalDateTime.now();
-
-                                        Duration duration = Duration.between(finalLastly_relapsed_object,now);
+                                        duration =  duration.plusSeconds(1);
 
                                         long days = duration.toDays();
                                         long hours = duration.toHours() % 24;
                                         long minutes = duration.toMinutes() % 60;
                                         long seconds = duration.getSeconds() % 60;
 
-                                        Log.e("sanjay",String.valueOf(hours));
-
                                         int hrs = (int)hours;
-                                        progress.setProgress(hrs); // change
+                                        progress.setProgress(hrs);
                                         hrs_left.setText(String.format("%02d",24-hrs));
 
                                         String format = "%d days %d hrs %d mins %d secs";
