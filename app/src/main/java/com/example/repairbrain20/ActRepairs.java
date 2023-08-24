@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,6 +56,8 @@ public class ActRepairs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_repairs);
 
+        AdapterRepairsList.delete = false;
+
         preference = getSharedPreferences("login_data", Context.MODE_PRIVATE);
         editor = preference.edit();
 
@@ -65,8 +68,6 @@ public class ActRepairs extends AppCompatActivity {
                 .load(R.drawable.loading_pink_list)
                 .into(no_results);
 
-        //Toast.makeText(ActRepairs.this,"Success",Toast.LENGTH_SHORT).show();
-
         DatabaseReference reference = User.getMainReference();
 
 
@@ -76,35 +77,25 @@ public class ActRepairs extends AppCompatActivity {
             return;
         }
 
-       // Toast.makeText(this,"Started",Toast.LENGTH_SHORT).show();
-
         reference
-                .get()
-                .addOnFailureListener(new OnFailureListener() {
+                .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ActRepairs.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if(task.isSuccessful())
-                        {
-                            addictions =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Repairs>>() {
-                                @NonNull
-                                @Override
-                                public String toString() {
-                                    return super.toString();
-                                }
-                            });
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        addictions =  snapshot.getValue(new GenericTypeIndicator<Map<String, Repairs>>() {
+                            @NonNull
+                            @Override
+                            public String toString() {
+                                return super.toString();
+                            }
+                        });
 
-                            list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions));
-                        }
-                        else
-                        {
-                            Glide.with(ActRepairs.this).load(R.drawable.noresultfound).into(no_results);
-                        }
+                        if(AdapterRepairsList.delete) list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions,true));
+                        else list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Glide.with(ActRepairs.this).load(R.drawable.noresultfound).into(no_results);
                     }
                 });
     }
@@ -178,11 +169,6 @@ public class ActRepairs extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     User.setAddiction(ActRepairs.this,addiction_);
                                                     snack.dismiss();
-                                                    Toast.makeText(ActRepairs.this,"Repair Added",Toast.LENGTH_SHORT).show();
-
-                                                    AdapterRepairsList.addiction_copy.put(addiction_,addiction);
-
-                                                    list.setAdapter(new AdapterRepairsList(ActRepairs.this,false));
                                                 }
                                             });
                                 }
@@ -198,7 +184,7 @@ public class ActRepairs extends AppCompatActivity {
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AdapterRepairsList(ActRepairs.this,true));
+                list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions,true));
                 break;
 
             case R.id.reset:
@@ -212,7 +198,6 @@ public class ActRepairs extends AppCompatActivity {
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                             snack.dismiss();
                             Toast.makeText(getApplicationContext(),"Successfully resetted",Toast.LENGTH_LONG).show();
-                            list.setAdapter(new AdapterRepairsList(ActRepairs.this,null));
                         }
                     });
                 }

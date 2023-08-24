@@ -7,10 +7,6 @@
         android:title="@string/add"
         app:showAsAction="ifRoom"/>
 
-    <item android:title="@string/add_common"
-        android:id="@+id/add_common"
-        app:showAsAction="never"/>
-
     <item android:id="@+id/common"
         android:title="@string/show_common"
         app:showAsAction="never"/>

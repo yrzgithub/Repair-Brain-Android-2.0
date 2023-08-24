@@ -30,8 +30,7 @@ public class AdapterRepairsList extends BaseAdapter {
     Map<String, Repairs> addictions = new HashMap<>();
     List<String> keys = new ArrayList<>();
     Activity act;
-    static Map<String, Repairs> addiction_copy = new HashMap<>();
-    boolean delete = false;
+    static boolean delete = false;
     ListView list;
     ImageView no_results;
     Snackbar snack;
@@ -55,6 +54,7 @@ public class AdapterRepairsList extends BaseAdapter {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
             no_results.setImageResource(R.drawable.noresultfound);
+            delete = false;
         }
 
         snack = Snackbar.make(list,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
@@ -64,15 +64,21 @@ public class AdapterRepairsList extends BaseAdapter {
                 act.recreate();
             }
         });
-
-        AdapterRepairsList.addiction_copy = this.addictions;
     }
 
-    AdapterRepairsList(Activity act, boolean delete)
+    AdapterRepairsList(Activity act,Map<String, Repairs> addictions, boolean delete)
     {
-        this(act,addiction_copy);
-        this.delete = delete;
-        if(delete && snack!=null && addiction_copy.size()>0) snack.show();
+        this(act,addictions);
+        AdapterRepairsList.delete = delete;
+        if(delete && snack!=null && this.addictions.size()>0)
+        {
+            snack.show();
+        }
+
+        if(this.addictions.size()==0)
+        {
+            AdapterRepairsList.delete = false;
+        }
 
     }
 
@@ -131,18 +137,6 @@ public class AdapterRepairsList extends BaseAdapter {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         snack.dismiss();
-
-                                        AdapterRepairsList.addiction_copy.remove(title);
-                                        list.setAdapter(new AdapterRepairsList(act,delete));
-
-                                        if(task.isSuccessful())
-                                        {
-                                            Toast.makeText(act,"Repair deleted",Toast.LENGTH_SHORT).show();
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(act,"Something went wrong",Toast.LENGTH_LONG).show();
-                                        }
                                     }
                                 });
                     }
