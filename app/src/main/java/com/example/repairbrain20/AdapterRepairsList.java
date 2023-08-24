@@ -105,11 +105,10 @@ public class AdapterRepairsList extends BaseAdapter {
 
         ImageView delete_or_go = view.findViewById(R.id.delete_or_go);
 
-        String key = keys.get(i);
-        String title =  key.substring(0,1).toUpperCase() + key.substring(1).trim();
+        String addiction_name = keys.get(i);
 
-        Repairs addiction = this.addictions.get(title);
-        String date_added = addiction.getDate_added().trim();
+        Repairs addiction = this.addictions.get(addiction_name);
+        String date_added = addiction.getDate_added();
 
         if(this.delete)
         {
@@ -125,14 +124,14 @@ public class AdapterRepairsList extends BaseAdapter {
 
                     if(reference!=null)
                     {
-                        reference.child(title)
+                        reference.child(addiction_name)
                                 .removeValue()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         snack.dismiss();
 
-                                        AdapterRepairsList.addiction_copy.remove(title);
+                                        AdapterRepairsList.addiction_copy.remove(addiction_name);
                                         list.setAdapter(new AdapterRepairsList(act,delete));
 
                                         if(task.isSuccessful())
@@ -155,15 +154,15 @@ public class AdapterRepairsList extends BaseAdapter {
             main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    User.setAddiction(act, title);
-                    Toast.makeText(act, title +" Selected",Toast.LENGTH_SHORT).show();
-                    User.setAddiction(act, title);
+                    User.setAddiction(act,addiction_name);
+                    Toast.makeText(act,addiction_name+" Selected",Toast.LENGTH_SHORT).show();
+                    User.setAddiction(act,addiction_name);
                     act.startActivity(new Intent(act, ActHome.class));
                 }
             });
         }
 
-        addiction_name_view.setText(title);
+        addiction_name_view.setText(addiction_name);
         date_added_view.setText(date_added);
 
         return view;

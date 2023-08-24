@@ -189,9 +189,9 @@ public class AdapterPosNegNext extends BaseAdapter {
             delete.setVisibility(View.GONE);
         }
 
-        String show = key.substring(0,1).toUpperCase() + key.substring(1).trim();
+        String show = key.substring(0,1).toUpperCase() + key.substring(1);
         text_widget.setText(show);
-        date_widget.setText(map.get(key).trim());
+        date_widget.setText(map.get(key));
 
         return view;
     }
