@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentPos extends Fragment {
@@ -34,7 +31,7 @@ public class FragmentPos extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        AdapterPosNegNext.remove = false;
+        AdapterPosNeg.remove = false;
         super.onCreate(savedInstanceState);
     }
 
@@ -104,7 +101,7 @@ public class FragmentPos extends Fragment {
                 }
                 else
                 {
-                    listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"positive_effects",true));
+                    listView.setAdapter(new AdapterPosNeg(getActivity(),view,result,"positive_effects",true));
                 }
                 break;
 

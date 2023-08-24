@@ -9,7 +9,15 @@
     android:orientation="vertical"
     tools:context=".ActHome">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:id="@+id/welldone"/>
+
     <TextView
+        android:id="@+id/ask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

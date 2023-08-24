@@ -156,7 +156,7 @@ public class ActRepairs extends AppCompatActivity {
                                 if(reference!=null)
                                 {
                                     Repairs addiction = new Repairs(LocalDateTime.now());
-                                    String addiction_ = addiction_edit.getText().toString();
+                                    String addiction_ = addiction_edit.getText().toString().trim();
 
                                     Snackbar snack = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     snack.show();

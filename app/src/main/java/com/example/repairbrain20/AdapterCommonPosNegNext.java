@@ -138,16 +138,17 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
 
                     if(reference!=null)
                     {
-                        if(!present.contains(key))
+                        String key_trimmed = key.trim();
+                        if(!present.contains(key_trimmed))
                         {
                             bar.show();
-                            reference.child(type).child(key).setValue(today)
+                            reference.child(type).child(key_trimmed).setValue(today)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             bar.dismiss();
                                             go.setImageResource(R.drawable.tick);
-                                            present.add(key);
+                                            present.add(key_trimmed);
                                         }
                                     });
                         }

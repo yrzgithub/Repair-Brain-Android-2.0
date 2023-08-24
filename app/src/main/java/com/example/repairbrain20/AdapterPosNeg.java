@@ -2,18 +2,15 @@ package com.example.repairbrain20;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdapterPosNegNext extends BaseAdapter {
+public class AdapterPosNeg extends BaseAdapter {
 
     Activity activity;
     Map<String,String> map = new HashMap<>();
@@ -45,7 +42,7 @@ public class AdapterPosNegNext extends BaseAdapter {
     RelativeLayout main;
     static boolean remove = false;
 
-    AdapterPosNegNext(Activity act, View view, Map<String,String> map, String effect)
+    AdapterPosNeg(Activity act, View view, Map<String,String> map, String effect)
     {
         this.activity = act;
         this.pager = act.findViewById(R.id.view_pager);
@@ -92,7 +89,7 @@ public class AdapterPosNegNext extends BaseAdapter {
         }
     }
 
-    AdapterPosNegNext(Activity act, View view, Map<String,String> map, String type, boolean delete)
+    AdapterPosNeg(Activity act, View view, Map<String,String> map, String type, boolean delete)
     {
         this(act,view,map,type);
         this.delete = remove =  delete;

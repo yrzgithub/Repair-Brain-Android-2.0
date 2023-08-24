@@ -27,7 +27,7 @@ public class FragmentNeg extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        AdapterPosNegNext.remove = false;
+        AdapterPosNeg.remove = false;
         super.onCreate(savedInstanceState);
     }
 
@@ -92,7 +92,7 @@ public class FragmentNeg extends Fragment {
                 }
                 else
                 {
-                    listView.setAdapter(new AdapterPosNegNext(getActivity(),view,result,"negative_effects",true));
+                    listView.setAdapter(new AdapterPosNeg(getActivity(),view,result,"negative_effects",true));
                 }
                 break;
 

@@ -29,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,8 +75,8 @@ public class Listener {
                         }
                     });
 
-                    if(AdapterPosNegNext.remove) list.setAdapter(new AdapterPosNegNext(act,view,map,type,true));
-                    else list.setAdapter(new AdapterPosNegNext(act,view,map,type));
+                    if(AdapterPosNeg.remove) list.setAdapter(new AdapterPosNeg(act,view,map,type,true));
+                    else list.setAdapter(new AdapterPosNeg(act,view,map,type));
                 }
 
                 @Override
@@ -145,7 +144,7 @@ public class Listener {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String effect_new = search.getText().toString();
+                        String effect_new = search.getText().toString().trim();
 
                         if(effect_new.trim().equals("")) {
                             Toast.makeText(act.getApplicationContext(),"Invalid " + type.replace("_"," ").substring(0,type.length()-1),Toast.LENGTH_SHORT).show();

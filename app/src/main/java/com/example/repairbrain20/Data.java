@@ -323,3 +323,35 @@ class Relapse
         this.progress = progress;
     }
 }
+
+class Step
+{
+    String link,source_name;
+
+    Step()
+    {
+
+    }
+
+    Step(String source_name,String link)
+    {
+        this.link = link;
+        this.source_name = source_name;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getSource_name() {
+        return source_name;
+    }
+
+    public void setSource_name(String source_name) {
+        this.source_name = source_name;
+    }
+}

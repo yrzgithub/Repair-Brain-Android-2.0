@@ -45,16 +45,16 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text="@string/name"/>
+            android:text="@string/step"/>
 
         <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="8dp"
             android:layout_gravity="bottom"
             android:textColor="@color/black"
-            android:hint="Enter name"
+            android:hint="@string/enter_step"
             android:textSize="16sp" />
 
         <TextView
@@ -66,7 +66,7 @@
             android:text="@string/source"/>
 
         <EditText
-            android:id="@+id/source"
+            android:id="@+id/source_name"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginStart="5dp"
@@ -87,7 +87,7 @@
             android:id="@+id/link"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="8dp"
             android:layout_gravity="bottom"
             android:textColor="@color/black"
             android:hint="@string/paste_source_link"

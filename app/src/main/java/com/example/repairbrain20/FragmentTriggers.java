@@ -176,7 +176,7 @@ public class FragmentTriggers extends Fragment {
                             .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    String trigger_name = triggers_view.getText().toString();
+                                    String trigger_name = triggers_view.getText().toString().trim();
 
                                     LocalDateTime local_time = LocalDateTime.now();
                                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");

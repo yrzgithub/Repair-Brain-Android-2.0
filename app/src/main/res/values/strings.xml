@@ -75,10 +75,10 @@
     <string name="contact_developer">Contact Developer</string>
     <string name="next_steps_">Next Steps</string>
     <string name="show_common">Show Common</string>
-    <string name="source">Source : </string>
+    <string name="source">Source</string>
     <string name="suggest">Suggest</string>
-    <string name="name">Name : </string>
-    <string name="link">Link : </string>
+    <string name="name">Name</string>
+    <string name="link">Link</string>
     <string name="accuracy">Accuracy</string>
     <string name="logout">Logout</string>
 
@@ -98,5 +98,10 @@
     <string name="search">Search</string>
     <string name="request">Request</string>
     <string name="add_common">Add common</string>
+    <string name="enter_step">Enter step</string>
+    <string name="paste_source_link">Paste source link</string>
+    <string name="enter_source">Enter source</string>
+    <string name="select_or_enter">Select or Enter</string>
+    <string name="source_colon">Source :</string>
 
 </resources>

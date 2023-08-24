@@ -38,7 +38,7 @@ public class AdapterPractices extends BaseAdapter {
 
     Activity act;
 
-    String[] days_list = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
+    String[] days_list = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
     String today;
     boolean delete = false;
     int count = 0;
@@ -295,13 +295,14 @@ public class AdapterPractices extends BaseAdapter {
         {
             if(show_on.contains(day))
             {
+                if(day.equals("Thu")) day = "Thur";
                 builder.append(day).append(",").append(" ");
             }
         }
 
         String show_on_string = builder.delete(builder.length()-2,builder.length()-1).toString().trim(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
 
-        String show_ = key.substring(0,1).toUpperCase() + key.substring(1);
+        String show_ = key.substring(0,1).toUpperCase() + key.substring(1).trim();
         text.setText(show_);
         show.setText(show_on_string);
 

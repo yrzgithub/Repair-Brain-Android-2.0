@@ -210,11 +210,11 @@ public class FragmentPractices extends Fragment {
                     case R.id.thur:
                         if(b)
                         {
-                            show_on.add("Thur");
+                            show_on.add("Thu");
                         }
                         else
                         {
-                            show_on.remove("Thur");
+                            show_on.remove("Thu");
                         }
                         break;
 
@@ -263,7 +263,7 @@ public class FragmentPractices extends Fragment {
 
                         String habit_ = practice_view.getText().toString().trim();
 
-                        if(habit_.trim().equals(""))
+                        if(habit_.equals(""))
                         {
                             Toast.makeText(getContext(),"Practice cannot be empty",Toast.LENGTH_LONG).show();
                             return;
