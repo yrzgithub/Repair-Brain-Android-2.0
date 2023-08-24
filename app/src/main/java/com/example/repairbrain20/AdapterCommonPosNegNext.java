@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
@@ -37,13 +39,15 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     String today,type;
     DatabaseReference reference;
     List<String> present;
+    Snackbar bar;
+    ListView list;
 
     AdapterCommonPosNegNext(Activity act, Map<String,Common> map)
     {
         this.act = act;
 
         ImageView loading = act.findViewById(R.id.loading);
-        ListView list = act.findViewById(R.id.effects);
+        list = act.findViewById(R.id.effects);
 
         if(map!=null)
         {
@@ -64,6 +68,10 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         this.add = add;
         this.type = type.replace("common_","");
         this.present = present;
+
+        if(this.present==null) this.present = new ArrayList<>();
+
+        bar = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
 
         LocalDateTime local_date_time = LocalDateTime.now();
         today = DateTimeFormatter.ofPattern("E, MMM dd yyyy").format(local_date_time);
@@ -132,10 +140,12 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
                     {
                         if(!present.contains(key))
                         {
+                            bar.show();
                             reference.child(type).child(key).setValue(today)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+                                            bar.dismiss();
                                             go.setImageResource(R.drawable.tick);
                                             present.add(key);
                                         }

@@ -33,7 +33,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class FragmentTriggers extends Fragment {
     ListView list;
     ImageView loading;
     View view;
+    Map<String,String> map;
 
     public FragmentTriggers() {
 
@@ -54,6 +57,7 @@ public class FragmentTriggers extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        AdapterTriggers.delete = false;
         super.onCreate(savedInstanceState);
     }
 
@@ -78,11 +82,10 @@ public class FragmentTriggers extends Fragment {
         if(reference!=null)
         {
             reference.child("triggers/"+User.selected_addiction)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    .addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            Map<String,String> map =  task.getResult().getValue(new GenericTypeIndicator<Map<String, String>>() {
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            map =  snapshot.getValue(new GenericTypeIndicator<Map<String, String>>() {
                                 @NonNull
                                 @Override
                                 public String toString() {
@@ -90,7 +93,14 @@ public class FragmentTriggers extends Fragment {
                                 }
                             });
 
-                            list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map));
+                            if(map==null) map = new HashMap<>();
+
+                            if(AdapterTriggers.delete) list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map,true));
+                            else list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
                         }
                     });
@@ -107,6 +117,9 @@ public class FragmentTriggers extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        DatabaseReference reference;
+        Intent intent;
 
         switch (item.getItemId())
         {
@@ -149,7 +162,7 @@ public class FragmentTriggers extends Fragment {
                             }
                         });
 
-                DatabaseReference reference = User.getRepairReference();
+                reference = User.getRepairReference();
 
                 if(reference!=null)
                 {
@@ -170,7 +183,7 @@ public class FragmentTriggers extends Fragment {
                                     snack.show();
 
                                     reference
-                                            .child("triggers")
+                                            .child("triggers/"+User.selected_addiction)
                                             .child(trigger_name)
                                             .setValue(time_)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -178,12 +191,6 @@ public class FragmentTriggers extends Fragment {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     snack.dismiss();
                                                     Toast.makeText(getActivity(),"Trigger added",Toast.LENGTH_SHORT).show();
-
-                                                    Map<String,String> map =  AdapterTriggers.triggers_copy;
-                                                    map.put(trigger_name,time_);
-
-                                                    AdapterTriggers adapter = new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map);
-                                                    list.setAdapter(adapter);
                                                 }
                                             });
                                 }
@@ -194,17 +201,24 @@ public class FragmentTriggers extends Fragment {
                 break;
 
             case id.remove:
-                Map<String,String> copy = AdapterTriggers.triggers_copy;
-                if(copy==null || copy.size()==0)
-                {
-                    Toast.makeText(getActivity(),"Triggers list is empty",Toast.LENGTH_SHORT).show();
-                }
-                list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,true));
+                list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map,true));
+                break;
+
+            case id.add_common:
+                ArrayList<String> present = new ArrayList<>(map.keySet());
+
+                intent = new Intent(getActivity(),ActCommon.class);
+                intent.putExtra("common","common_triggers/"+User.selected_addiction);
+                intent.putExtra("add",true);
+                intent.putExtra("present",(Serializable)present);
+                startActivity(intent);
                 break;
 
             case id.common:
-                Intent intent = new Intent(getActivity(),ActCommon.class);
+                intent = new Intent(getActivity(),ActCommon.class);
                 intent.putExtra("common","common_triggers/"+User.selected_addiction);
+                intent.putExtra("add",false);
+                intent.putExtra("present",(Serializable) null);
                 startActivity(intent);
                 break;
 
@@ -218,7 +232,6 @@ public class FragmentTriggers extends Fragment {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 snack.dismiss();
                                 Toast.makeText(getActivity(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
-                                AdapterTriggers adapter = new AdapterTriggers(getActivity(),FragmentTriggers.this.view,new HashMap<>());
                             }
                         });
                 break;

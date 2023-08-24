@@ -48,6 +48,7 @@ public class ActCommon extends AppCompatActivity {
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
     AdapterCommonPosNegNext adapter;
     Map<String, Common> common;
+    ArrayList<String> present;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class ActCommon extends AppCompatActivity {
 
                         if(add)
                         {
-                            ArrayList<String> present = (ArrayList<String>) intent.getSerializableExtra("present");
+                            present = (ArrayList<String>) intent.getSerializableExtra("present");
                             adapter = new AdapterCommonPosNegNext(ActCommon.this,common,present,type, true);
                         }
                         else
@@ -121,13 +122,13 @@ public class ActCommon extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if(common!=null)
                 {
-                   Map<String,Common> adapter = common.entrySet().stream().filter(entry->entry.getKey().toLowerCase().contains(newText.toLowerCase())).collect(Collectors.toMap(x->x.getKey(),x->x.getValue()));
-                   list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this,adapter));
+                   Map<String,Common> map = common.entrySet().stream().filter(entry->entry.getKey().toLowerCase().contains(newText.toLowerCase())).collect(Collectors.toMap(x->x.getKey(),x->x.getValue()));
+                   if(add) list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this,map,present,type,true));
+                   else list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this,map));
                 }
                 return true;
             }
         });
-
 
         return super.onCreateOptionsMenu(menu);
     }

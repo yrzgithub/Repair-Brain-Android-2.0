@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,11 +36,11 @@ import java.util.Map;
 public class AdapterTriggers extends BaseAdapter {
     Activity act;
     Map<String,String> triggers = new HashMap<>();
-    static Map<String,String> triggers_copy = new HashMap<>();
     List<String> keys = new ArrayList<>();
-    boolean delete = false;
+    static boolean delete = false;
     View view;
     ListView list;
+    Snackbar bar;
 
     AdapterTriggers(Activity activity,View view, Map<String,String> map)
     {
@@ -49,11 +50,12 @@ public class AdapterTriggers extends BaseAdapter {
         list = view.findViewById(R.id.list);
         ImageView loading = view.findViewById(R.id.loading);
 
-        if(map==null || map.size()==0)
+        if(map.size()==0)
         {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             Glide.with(activity).load(R.drawable.noresultfound).into(loading);
+            delete = false;
         }
         else
         {
@@ -62,16 +64,21 @@ public class AdapterTriggers extends BaseAdapter {
             triggers.putAll(map);
             keys.addAll(map.keySet());
         }
-
-        triggers_copy.clear();
-        triggers_copy.putAll(triggers);
-
     }
 
-    AdapterTriggers(Activity activity,View view,boolean delete)
+    AdapterTriggers(Activity activity,View view,Map<String,String> trigger,boolean delete)
     {
-        this(activity,view,triggers_copy);
-        this.delete = delete;
+        this(activity,view,trigger);
+        AdapterTriggers.delete = delete;
+
+        bar = Snackbar.make(list,"Reload",BaseTransientBottomBar.LENGTH_INDEFINITE);
+        bar.setAction("Reload", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                act.recreate();
+            }
+        });
+        bar.show();
     }
 
     @Override
@@ -100,7 +107,7 @@ public class AdapterTriggers extends BaseAdapter {
         TextView date_added = view.findViewById(R.id.date_added);
         ImageView delete = view.findViewById(R.id.delete);
 
-        if(this.delete)
+        if(AdapterTriggers.delete)
         {
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {
@@ -113,18 +120,12 @@ public class AdapterTriggers extends BaseAdapter {
 
                     DatabaseReference reference = User.getRepairReference();
                     reference
-                            .child("triggers")
+                            .child("triggers/"+User.selected_addiction)
                             .child(key)
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                     snack.dismiss();
-                                    Toast.makeText(act,"Trigger Removed",Toast.LENGTH_SHORT).show();
-
-                                    AdapterTriggers.this.triggers.remove(key);
-                                    AdapterTriggers.triggers_copy.remove(key);
-
-                                    list.setAdapter(new AdapterTriggers(act,AdapterTriggers.this.view,true));
                                 }
                             });
                 }
