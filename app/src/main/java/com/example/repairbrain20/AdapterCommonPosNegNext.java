@@ -41,6 +41,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     List<String> present;
     Snackbar bar;
     ListView list;
+    boolean next_steps = false;
 
     AdapterCommonPosNegNext(Activity act, Map<String,Common> map)
     {
@@ -68,6 +69,13 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         this.add = add;
         this.type = type.replace("common_","");
         this.present = present;
+
+        //Toast.makeText(act,type,Toast.LENGTH_SHORT).show();
+
+        if(this.type.equals("next_steps"))
+        {
+            next_steps = true;
+        }
 
         if(this.present==null) this.present = new ArrayList<>();
 
@@ -142,7 +150,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
                         if(!present.contains(key_trimmed))
                         {
                             bar.show();
-                            reference.child(type).child(key_trimmed).setValue(today)
+                            reference.child(type).child(key_trimmed).setValue(next_steps?new Step(source_name,link):today)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

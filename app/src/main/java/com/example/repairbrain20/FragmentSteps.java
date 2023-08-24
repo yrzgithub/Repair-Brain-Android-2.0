@@ -47,6 +47,7 @@ public class FragmentSteps extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        StepsAdapter.delete = false;
         super.onCreate(savedInstanceState);
     }
 
@@ -74,7 +75,8 @@ public class FragmentSteps extends Fragment {
                         }
                     });
 
-                    list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map));
+                    if(StepsAdapter.delete) list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map,true));
+                    else list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map));
                 }
 
                 @Override
@@ -150,9 +152,9 @@ public class FragmentSteps extends Fragment {
                                     return;
                                 }
 
-                                if(!FragmentSteps.isValidLink(link_))
+                                if(!source_name_.equals("") && link_.equals(""))
                                 {
-                                    Toast.makeText(getActivity(),"Invalid Link",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(),"Please paste the link",Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
@@ -209,7 +211,7 @@ public class FragmentSteps extends Fragment {
                 }
                 else
                 {
-                    list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map));
+                    list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map,true));
                 }
                 break;
 
