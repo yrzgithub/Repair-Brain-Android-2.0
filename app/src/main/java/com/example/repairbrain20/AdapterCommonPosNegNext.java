@@ -107,8 +107,8 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         TextView source = view.findViewById(R.id.source);
         ImageView go = view.findViewById(R.id.go);
 
-        String key = keys.get(i).trim();
-        String title =  key.substring(0,1).toUpperCase() + key.substring(1);
+        String key = keys.get(i);
+        String title =  key.substring(0,1).toUpperCase() + key.substring(1).trim();
 
         if(this.add)
         {
@@ -167,7 +167,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
             }
         });
 
-        source.setText(source_name);
+        source.setText(source_name.trim());
 
         return view;
     }
