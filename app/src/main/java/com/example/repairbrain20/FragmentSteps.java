@@ -216,7 +216,17 @@ public class FragmentSteps extends Fragment {
                 break;
 
             case R.id.reset:
-
+                reference = User.getRepairReference();
+                if(reference!=null)
+                {
+                    reference.child("next_steps")
+                            .removeValue(new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                    Toast.makeText(getActivity(),"Successfully resetted",Toast.LENGTH_LONG).show();
+                                }
+                            });
+                }
                 break;
         }
         return true;

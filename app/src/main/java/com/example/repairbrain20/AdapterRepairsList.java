@@ -117,7 +117,7 @@ public class AdapterRepairsList extends BaseAdapter {
         Repairs addiction = this.addictions.get(title);
         String date_added = addiction.getDate_added();
 
-        if(this.delete)
+        if(delete)
         {
             delete_or_go.setImageResource(R.drawable.delete_icon);
 
@@ -126,9 +126,6 @@ public class AdapterRepairsList extends BaseAdapter {
                 public void onClick(View view) {
                     DatabaseReference reference = User.getMainReference();
 
-                    Snackbar snack = Snackbar.make(list,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                    snack.show();
-
                     if(reference!=null)
                     {
                         reference.child(title)
@@ -136,7 +133,7 @@ public class AdapterRepairsList extends BaseAdapter {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        snack.dismiss();
+
                                     }
                                 });
                     }

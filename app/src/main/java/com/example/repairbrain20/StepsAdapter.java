@@ -68,6 +68,13 @@ public class StepsAdapter extends BaseAdapter {
         try
         {
             snack = Snackbar.make(view,"Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
+            snack.setAction("reload", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    act.recreate();
+                }
+            });
+            snack.show();
         }
         catch (Exception e)
         {
@@ -136,6 +143,7 @@ public class StepsAdapter extends BaseAdapter {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     if(delete_reference!=null)
                     {
                         if(snack!=null) snack.show();

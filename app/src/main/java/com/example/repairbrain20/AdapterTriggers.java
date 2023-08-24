@@ -129,9 +129,6 @@ public class AdapterTriggers extends BaseAdapter {
                 public void onClick(View view) {
                     String key = trigger_name.getText().toString();
 
-                    Snackbar snack = Snackbar.make(AdapterTriggers.this.view,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                    snack.show();
-
                     DatabaseReference reference = User.getRepairReference();
                     reference
                             .child("triggers/"+User.selected_addiction)
@@ -139,7 +136,7 @@ public class AdapterTriggers extends BaseAdapter {
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                    snack.dismiss();
+
                                 }
                             });
                 }

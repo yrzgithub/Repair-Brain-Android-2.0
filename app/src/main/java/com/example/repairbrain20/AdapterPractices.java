@@ -42,9 +42,9 @@ public class AdapterPractices extends BaseAdapter {
     String today;
     boolean delete = false;
     int count = 0;
-    TextView percent = null;
-    ImageView up_or_down = null;
-    TextView accuracy = null;
+    TextView percent;
+    ImageView up_or_down;
+    TextView accuracy;
     List<String> keys = new ArrayList<>();
     Map<String,ReplaceHabits> habits = new HashMap<>();
     String today_date;
@@ -217,9 +217,6 @@ public class AdapterPractices extends BaseAdapter {
                 public void onClick(View view) {
                     if(AdapterPractices.this.delete)
                     {
-                        Snackbar bar = Snackbar.make(main,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                        bar.show();
-
                         User.getRepairReference()
                                 .child("replace_habits")
                                 .child(keys.get(i))
@@ -233,8 +230,6 @@ public class AdapterPractices extends BaseAdapter {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-
-                                        bar.dismiss();
 
                                         if(task.isSuccessful())
                                         {

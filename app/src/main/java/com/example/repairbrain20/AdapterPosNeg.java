@@ -168,12 +168,10 @@ public class AdapterPosNeg extends BaseAdapter {
 
                     if(reference!=null)
                     {
-                         Snackbar bar = Snackbar.make(pager,"Removing", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                         bar.show();
                         reference.child(effect).child(key).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                bar.dismiss();
+
                             }
                         });
                     }
