@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -64,10 +65,10 @@ public class Listener {
 
         if(list_effects_reference!=null)
         {
-            list_effects_reference.child(type).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            list_effects_reference.child(type).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    map = task.getResult().getValue(new GenericTypeIndicator<Map<String, String>>() {
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    map = snapshot.getValue(new GenericTypeIndicator<Map<String, String>>() {
                         @NonNull
                         @Override
                         public String toString() {
@@ -75,10 +76,12 @@ public class Listener {
                         }
                     });
 
-                    list.setVisibility(View.VISIBLE);
-                    loading.setVisibility(View.GONE);
-
                     list.setAdapter(new AdapterPosNegNext(act,view,map,type));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
         }
@@ -170,7 +173,6 @@ public class Listener {
                                             reference.child("lastly_noted_"+type).setValue(effect_new);
 
                                             Toast.makeText(act,"Successfully Added",Toast.LENGTH_LONG).show();
-                                            act.recreate();
                                         }
                                     });
                         }
@@ -194,7 +196,6 @@ public class Listener {
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                     bar.dismiss();
                     Toast.makeText(act,"Successfully Resetted",Toast.LENGTH_SHORT).show();
-                    list.setAdapter(new AdapterPosNegNext(act,view,null,type));
                 }
             });
         }

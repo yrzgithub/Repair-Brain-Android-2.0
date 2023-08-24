@@ -11,9 +11,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +33,10 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     Activity act;
     List<String> keys = new ArrayList<>();
     Map<String,Common> map = new HashMap<>();
+    boolean add = false;
+    String today,type;
+    DatabaseReference reference;
+    List<String> present;
 
     AdapterCommonPosNegNext(Activity act, Map<String,Common> map)
     {
@@ -43,6 +56,17 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
             loading.setVisibility(View.VISIBLE);
             Glide.with(loading).load(R.drawable.noresultfound).into(loading);
         }
+    }
+
+    AdapterCommonPosNegNext(Activity act,Map<String,Common> map,ArrayList<String> present,String type,boolean add)
+    {
+        this(act,map);
+        this.add = add;
+        this.type = type.replace("common_","");
+        this.present = present;
+
+        LocalDateTime local_date_time = LocalDateTime.now();
+        today = DateTimeFormatter.ofPattern("E, MMM dd yyyy").format(local_date_time);
     }
 
     @Override
@@ -78,6 +102,18 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         String key = keys.get(i).trim();
         String title =  key.substring(0,1).toUpperCase() + key.substring(1);
 
+        if(this.add)
+        {
+            if(present.contains(key))
+            {
+                go.setImageResource(R.drawable.tick);
+            }
+            else
+            {
+                go.setImageResource(R.drawable.add);
+            }
+        }
+
         effect.setSelected(true);
         effect.setText(title);
 
@@ -88,10 +124,36 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(link));
-                act.startActivity(intent);
+                if(AdapterCommonPosNegNext.this.add)
+                {
+                    reference = User.getRepairReference();
+
+                    if(reference!=null)
+                    {
+                        if(!present.contains(key))
+                        {
+                            reference.child(type).child(key).setValue(today)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            go.setImageResource(R.drawable.tick);
+                                            present.add(key);
+                                        }
+                                    });
+                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(act,"Something went wrong",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(link));
+                    act.startActivity(intent);
+                }
             }
         });
 

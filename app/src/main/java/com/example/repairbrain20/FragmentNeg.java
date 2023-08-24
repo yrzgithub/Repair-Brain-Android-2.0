@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class FragmentNeg extends Fragment {
@@ -54,15 +55,31 @@ public class FragmentNeg extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         switch (item.getItemId())
         {
             case R.id.add:
                 listener.addEffect();
                 break;
 
-            case R.id.common:
-                Intent intent = new Intent(getActivity(), ActCommon.class);
+            case R.id.add_common:
+                Map<String,String> map = listener.getEffectsMap();
+                ArrayList<String> present;
+                if(map==null) present = new ArrayList<>();
+                else present = new ArrayList<>(map.keySet());
+
+                intent = new Intent(getActivity(), ActCommon.class);
                 intent.putExtra("common","common_negative_effects");
+                intent.putExtra("add",true);
+                intent.putExtra("present",present);
+
+                startActivity(intent);
+                break;
+
+            case R.id.common:
+                intent = new Intent(getActivity(), ActCommon.class);
+                intent.putExtra("common","common_negative_effects");
+                intent.putExtra("add",false);
                 startActivity(intent);
                 break;
 

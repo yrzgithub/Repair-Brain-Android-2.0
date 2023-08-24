@@ -77,7 +77,7 @@ public class AdapterPosNegNext extends BaseAdapter {
             this.map.putAll(map);
         }
 
-        if(this.map.size() == 0) show_image_view(R.drawable.noresultfound);
+        if(this.map.size() == 0 || map==null) show_image_view(R.drawable.noresultfound);
 
         else
         {
@@ -100,7 +100,7 @@ public class AdapterPosNegNext extends BaseAdapter {
         img.setVisibility(View.VISIBLE);
         img.setForegroundGravity(Gravity.CENTER);
         list.setVisibility(View.GONE);
-        Glide.with(img).load(id).into(img);
+        if(!activity.isDestroyed()) Glide.with(img).load(id).into(img);
     }
 
     @Override

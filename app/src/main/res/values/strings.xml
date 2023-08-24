@@ -97,5 +97,6 @@
     <string name="progress">Progress</string>
     <string name="search">Search</string>
     <string name="request">Request</string>
+    <string name="add_common">Add common</string>
 
 </resources>

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentPos extends Fragment {
@@ -34,6 +39,8 @@ public class FragmentPos extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+        //Toast.makeText(getActivity(),"created",Toast.LENGTH_SHORT).show();
 
         this.img = view.findViewById(R.id.no_results);
         listView = view.findViewById(R.id.list);
@@ -59,15 +66,32 @@ public class FragmentPos extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         switch (item.getItemId())
         {
             case R.id.add:
                 listener.addEffect();
                 break;
 
-            case R.id.common:
-                Intent intent = new Intent(getActivity(), ActCommon.class);
+            case R.id.add_common:
+                Map<String,String> map = listener.getEffectsMap();
+                ArrayList<String> present;
+                if(map==null) present = new ArrayList<>();
+                else present = new ArrayList<>(map.keySet());
+
+                intent = new Intent(getActivity(), ActCommon.class);
                 intent.putExtra("common","common_positive_effects");
+                intent.putExtra("add",true);
+                intent.putExtra("present",present);
+
+                startActivity(intent);
+                break;
+
+            case R.id.common:
+                intent = new Intent(getActivity(), ActCommon.class);
+                intent.putExtra("common","common_positive_effects");
+                intent.putExtra("add",false);
+                intent.putExtra("map",(Serializable) null);
                 startActivity(intent);
                 break;
 

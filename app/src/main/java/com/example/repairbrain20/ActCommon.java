@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,6 +44,7 @@ public class ActCommon extends AppCompatActivity {
     ConnectivityManager cm;
     CheckNetwork check;
     String type;
+    boolean add;
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
     AdapterCommonPosNegNext adapter;
     Map<String, Common> common;
@@ -65,6 +67,7 @@ public class ActCommon extends AppCompatActivity {
 
         Intent intent = getIntent();
         type = intent.getStringExtra("common");
+        add = intent.getBooleanExtra("add",false);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
@@ -86,7 +89,16 @@ public class ActCommon extends AppCompatActivity {
                             }
                         });
 
-                        adapter = new AdapterCommonPosNegNext(ActCommon.this, common);
+                        if(add)
+                        {
+                            ArrayList<String> present = (ArrayList<String>) intent.getSerializableExtra("present");
+                            adapter = new AdapterCommonPosNegNext(ActCommon.this,common,present,type, true);
+                        }
+                        else
+                        {
+                            adapter = new AdapterCommonPosNegNext(ActCommon.this, common);
+                        }
+
                         ActCommon.this.list.setAdapter(adapter);
                     }
                 });
