@@ -106,10 +106,10 @@ public class AdapterRepairsList extends BaseAdapter {
         ImageView delete_or_go = view.findViewById(R.id.delete_or_go);
 
         String key = keys.get(i);
-        String title =  key.substring(0,1).toUpperCase() + key.substring(1).trim();
+        String title =  key.substring(0,1).toUpperCase() + key.substring(1);
 
         Repairs addiction = this.addictions.get(title);
-        String date_added = addiction.getDate_added().trim();
+        String date_added = addiction.getDate_added();
 
         if(this.delete)
         {

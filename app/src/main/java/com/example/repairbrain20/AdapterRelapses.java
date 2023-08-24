@@ -73,8 +73,8 @@ public class AdapterRelapses extends BaseAdapter {
         String key = keys.get(i);
         Relapse relapse_ = relapses.get(key);
 
-        String date = relapse_.getDate().trim();
-        String progress = relapse_.getProgress().trim();
+        String date = relapse_.getDate();
+        String progress = relapse_.getProgress();
 
         relapse.setText(date);
         time_gone.setText(progress);

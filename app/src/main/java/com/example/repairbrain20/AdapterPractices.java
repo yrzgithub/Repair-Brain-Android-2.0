@@ -301,7 +301,7 @@ public class AdapterPractices extends BaseAdapter {
 
         String show_on_string = builder.delete(builder.length()-2,builder.length()-1).toString().trim(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
 
-        String show_ = key.substring(0,1).toUpperCase() + key.substring(1).trim();
+        String show_ = key.substring(0,1).toUpperCase() + key.substring(1);
         text.setText(show_);
         show.setText(show_on_string);
 
