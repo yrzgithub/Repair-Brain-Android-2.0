@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -41,20 +42,37 @@ public class AdapterTriggers extends BaseAdapter {
     View view;
     ListView list;
     Snackbar bar;
+    LinearLayout main;
 
     AdapterTriggers(Activity activity,View view, Map<String,String> map)
     {
         this.act = activity;
         this.view = view;
+        this.main = view.findViewById(R.id.main);
 
         list = view.findViewById(R.id.list);
         ImageView loading = view.findViewById(R.id.loading);
+
+        try
+        {
+            bar = Snackbar.make(main,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
+            bar.setAction("Reload", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    act.recreate();
+                }
+            });
+        }
+        catch (Exception e)
+        {
+
+        }
 
         if(map.size()==0)
         {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
-            Glide.with(activity).load(R.drawable.noresultfound).into(loading);
+            if(activity!=null && !activity.isDestroyed()) Glide.with(loading).load(R.drawable.noresultfound).into(loading);
             delete = false;
         }
         else
@@ -71,14 +89,10 @@ public class AdapterTriggers extends BaseAdapter {
         this(activity,view,trigger);
         AdapterTriggers.delete = delete;
 
-        bar = Snackbar.make(list,"Reload",BaseTransientBottomBar.LENGTH_INDEFINITE);
-        bar.setAction("Reload", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                act.recreate();
-            }
-        });
-        bar.show();
+        if(bar!=null && this.triggers.size()>0 && delete)
+        {
+            bar.show();
+        }
     }
 
     @Override

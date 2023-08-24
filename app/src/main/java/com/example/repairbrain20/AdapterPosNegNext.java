@@ -64,7 +64,6 @@ public class AdapterPosNegNext extends BaseAdapter {
             snack.setAction("Reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //remove = false;
                     act.recreate();
                 }
             });
@@ -114,7 +113,7 @@ public class AdapterPosNegNext extends BaseAdapter {
         img.setVisibility(View.VISIBLE);
         img.setForegroundGravity(Gravity.CENTER);
         list.setVisibility(View.GONE);
-        if(!activity.isDestroyed()) Glide.with(img).load(id).into(img);
+        if(activity!=null && !activity.isDestroyed()) Glide.with(img).load(id).into(img);
     }
 
     @Override

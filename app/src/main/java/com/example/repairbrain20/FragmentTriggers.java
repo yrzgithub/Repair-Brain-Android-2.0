@@ -93,7 +93,11 @@ public class FragmentTriggers extends Fragment {
                                 }
                             });
 
-                            if(map==null) map = new HashMap<>();
+                            if(map==null)
+                            {
+                                map = new HashMap<>();
+                                AdapterTriggers.delete = false;
+                            }
 
                             if(AdapterTriggers.delete) list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map,true));
                             else list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map));
