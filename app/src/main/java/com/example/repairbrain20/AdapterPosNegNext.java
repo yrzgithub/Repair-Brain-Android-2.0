@@ -43,6 +43,7 @@ public class AdapterPosNegNext extends BaseAdapter {
     View view;
     Snackbar snack;
     RelativeLayout main;
+    static boolean remove = false;
 
     AdapterPosNegNext(Activity act, View view, Map<String,String> map, String effect)
     {
@@ -63,6 +64,7 @@ public class AdapterPosNegNext extends BaseAdapter {
             snack.setAction("Reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //remove = false;
                     act.recreate();
                 }
             });
@@ -77,7 +79,11 @@ public class AdapterPosNegNext extends BaseAdapter {
             this.map.putAll(map);
         }
 
-        if(this.map.size() == 0 || map==null) show_image_view(R.drawable.noresultfound);
+        if(this.map.size() == 0 || map==null)
+        {
+            remove = false;
+            show_image_view(R.drawable.noresultfound);
+        }
 
         else
         {
@@ -90,9 +96,17 @@ public class AdapterPosNegNext extends BaseAdapter {
     AdapterPosNegNext(Activity act, View view, Map<String,String> map, String type, boolean delete)
     {
         this(act,view,map,type);
-        this.delete = delete;
+        this.delete = remove =  delete;
 
-        if(snack!=null && map.size()>0 && delete) snack.show();
+        if(snack!=null && this.map.size()>0 && delete)
+        {
+            snack.show();
+        }
+
+        if(this.map.size()==0)
+        {
+            remove = false;
+        }
     }
 
     public void show_image_view(int id)
@@ -164,11 +178,6 @@ public class AdapterPosNegNext extends BaseAdapter {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 bar.dismiss();
-                                Toast.makeText(activity,"Effect Removed",Toast.LENGTH_LONG).show();
-
-                                map.remove(key);
-
-                                list.setAdapter(new AdapterPosNegNext(activity, AdapterPosNegNext.this.view,map,effect, AdapterPosNegNext.this.delete));
                             }
                         });
                     }

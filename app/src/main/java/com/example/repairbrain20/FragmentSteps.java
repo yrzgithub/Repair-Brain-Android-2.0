@@ -29,6 +29,7 @@ public class FragmentSteps extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        AdapterPosNegNext.remove = false;
         super.onCreate(savedInstanceState);
     }
 

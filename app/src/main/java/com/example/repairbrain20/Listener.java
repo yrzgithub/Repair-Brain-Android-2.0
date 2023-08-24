@@ -76,7 +76,8 @@ public class Listener {
                         }
                     });
 
-                    list.setAdapter(new AdapterPosNegNext(act,view,map,type));
+                    if(AdapterPosNegNext.remove) list.setAdapter(new AdapterPosNegNext(act,view,map,type,true));
+                    else list.setAdapter(new AdapterPosNegNext(act,view,map,type));
                 }
 
                 @Override
