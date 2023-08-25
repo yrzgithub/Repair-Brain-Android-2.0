@@ -3,6 +3,7 @@ package com.example.repairbrain20;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +18,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +46,8 @@ public class StepsAdapter extends BaseAdapter {
     static boolean delete = false;
     DatabaseReference delete_reference;
     Snackbar snack;
+    StorageReference reference = FirebaseStorage.getInstance().getReference();
+    Map<String,Drawable> drawables = new HashMap<>();
 
     StepsAdapter(Activity act,View view, Map<String, Step> map)
     {
@@ -56,7 +67,7 @@ public class StepsAdapter extends BaseAdapter {
         {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            Glide.with(activity).load(R.drawable.noresultfound).into(no_results);
+            if(activity!=null) Glide.with(activity).load(R.drawable.noresultfound).into(no_results);
         }
     }
 
@@ -74,11 +85,15 @@ public class StepsAdapter extends BaseAdapter {
                     act.recreate();
                 }
             });
-            snack.show();
         }
         catch (Exception e)
         {
 
+        }
+
+        if(snack!=null && this.steps.size()>0)
+        {
+            snack.show();
         }
 
         delete_reference = User.getRepairReference();
@@ -109,6 +124,7 @@ public class StepsAdapter extends BaseAdapter {
 
         ImageView image = view.findViewById(R.id.go);
         ImageView delete = view.findViewById(R.id.delete);
+        ImageView start = view.findViewById(R.id.image);
 
         if(StepsAdapter.delete)
         {
@@ -157,13 +173,52 @@ public class StepsAdapter extends BaseAdapter {
                 }
             });
         }
+        else
+        {
+            StorageReference download_reference  = reference.child("icons/").child(source_name.toLowerCase()+".png");
 
-        final String source_copy = source_link;
+            if(drawables.containsKey(source_name))
+            {
+                start.setImageDrawable(drawables.get(source_name));
+            }
+            else
+            {
+                final String final_source_name = source_name;
+
+                try
+                {
+                    download_reference.getDownloadUrl()
+                            .addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if (task.isSuccessful()) {
+                                        if(!activity.isDestroyed())
+                                        {
+                                            Glide.with(activity).asDrawable().load(task.getResult()).into(new SimpleTarget<Drawable>() {
+                                                @Override
+                                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                                    drawables.put(final_source_name,resource);
+                                                    start.setImageDrawable(resource);
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+                }
+                catch (Exception e)
+                {
+                    Log.e("image","image not found");
+                }
+            }
+        }
+
+        final String source_link_copy = source_link;
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(source_copy.equals(""))
+                if(source_link_copy.equals("") || FragmentSteps.isValidLink(source_link_copy))
                 {
                     Toast.makeText(activity,"Source link not found",Toast.LENGTH_SHORT).show();
                     return;
@@ -171,11 +226,11 @@ public class StepsAdapter extends BaseAdapter {
 
                 try
                 {
-                    String link = source_copy;
+                    String link = source_link_copy;
 
                     if(!link.startsWith("http"))
                     {
-                        link = "https://" + source_copy;
+                        link = "https://" + source_link_copy;
                     }
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);

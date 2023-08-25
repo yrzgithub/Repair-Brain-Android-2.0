@@ -237,7 +237,6 @@ public class User implements OnCompleteListener<AuthResult> {
         Log.e("uruttu",this.email + " " + password);
         
         Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email,password);
-
         show_progress("Logging In");
 
         result.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -259,6 +258,7 @@ public class User implements OnCompleteListener<AuthResult> {
 
                         User.uid = user.getUid();
                         Intent intent = new Intent(act, ActRepairs.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         act.startActivity(intent);
                     }
                     else

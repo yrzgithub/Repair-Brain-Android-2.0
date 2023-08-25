@@ -152,26 +152,22 @@ public class ActRepairs extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                DatabaseReference reference =  User.getMainReference();
-                                if(reference!=null)
-                                {
-                                    Repairs addiction = new Repairs(LocalDateTime.now());
-                                    String addiction_ = addiction_edit.getText().toString().trim();
+                                Repairs addiction = new Repairs(LocalDateTime.now());
+                                String addiction_ = addiction_edit.getText().toString().trim();
 
-                                    Snackbar snack = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                                    snack.show();
+                                Snackbar snack = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                snack.show();
 
-                                    reference
-                                            .child(addiction_)
-                                            .setValue(addiction)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    User.setAddiction(ActRepairs.this,addiction_);
-                                                    snack.dismiss();
-                                                }
-                                            });
-                                }
+                                reference
+                                        .child(addiction_)
+                                        .setValue(addiction)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                User.setAddiction(ActRepairs.this,addiction_);
+                                                snack.dismiss();
+                                            }
+                                        });
                             }
                         })
                         .show();

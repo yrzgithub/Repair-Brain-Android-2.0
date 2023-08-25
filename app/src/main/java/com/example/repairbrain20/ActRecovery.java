@@ -68,7 +68,6 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         LinearLayout home = findViewById(R.id.home);
         LinearLayout recovery = findViewById(R.id.recovery);
         LinearLayout effects = findViewById(R.id.effects);
-        LinearLayout repairs = findViewById(R.id.repairs);
         LinearLayout journey = findViewById(R.id.journey);
         LinearLayout about = findViewById(R.id.about);
         LinearLayout contact_developer = findViewById(R.id.contact_developer);
@@ -78,7 +77,6 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         home.setOnClickListener(this);
         recovery.setOnClickListener(this);
         effects.setOnClickListener(this);
-        repairs.setOnClickListener(this);
         journey.setOnClickListener(this);
         about.setOnClickListener(this);
         contact_developer.setOnClickListener(this);
@@ -137,11 +135,6 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
 
             case R.id.journey:
                 intent = new Intent(this, ActJourney.class);
-                startActivity(intent);
-                break;
-
-            case R.id.repairs:
-                intent = new Intent(this, ActRepairs.class);
                 startActivity(intent);
                 break;
 

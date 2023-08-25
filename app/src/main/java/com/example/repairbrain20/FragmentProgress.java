@@ -88,6 +88,12 @@ public class FragmentProgress extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
 
+                            if(!task.isSuccessful())
+                            {
+                                Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
                             DataSnapshot snapshot = task.getResult();
 
                             if(snapshot!=null && snapshot.exists())

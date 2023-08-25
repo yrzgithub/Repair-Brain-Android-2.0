@@ -47,14 +47,14 @@
             android:textSize="18sp"
             android:text="@string/step"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginStart="8dp"
             android:layout_gravity="bottom"
             android:textColor="@color/black"
-            android:hint="@string/enter_step"
+            android:hint="@string/search_or_enter"
             android:textSize="16sp" />
 
         <TextView
@@ -65,7 +65,7 @@
             android:textSize="18sp"
             android:text="@string/source"/>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/source_name"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"

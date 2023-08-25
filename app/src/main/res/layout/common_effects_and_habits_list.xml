@@ -40,7 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/image"
         android:layout_marginStart="5dp"
-        android:text="@string/source"
+        android:text="@string/source_colon"
         android:textColor="@color/black" />
 
     <TextView

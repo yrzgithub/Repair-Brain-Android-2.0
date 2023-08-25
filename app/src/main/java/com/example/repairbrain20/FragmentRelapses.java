@@ -55,15 +55,18 @@ public class FragmentRelapses extends Fragment {
                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            Map<String,Relapse> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Relapse>>() {
-                                @NonNull
-                                @Override
-                                public String toString() {
-                                    return super.toString();
-                                }
-                            });
-                            AdapterRelapses relapse_adapter = new AdapterRelapses(getActivity(),FragmentRelapses.this.view,map);
-                           list.setAdapter(relapse_adapter);
+                            if(task.isSuccessful())
+                            {
+                                Map<String,Relapse> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Relapse>>() {
+                                    @NonNull
+                                    @Override
+                                    public String toString() {
+                                        return super.toString();
+                                    }
+                                });
+                                AdapterRelapses relapse_adapter = new AdapterRelapses(getActivity(),FragmentRelapses.this.view,map);
+                                list.setAdapter(relapse_adapter);
+                            }
                         }
                     });
 

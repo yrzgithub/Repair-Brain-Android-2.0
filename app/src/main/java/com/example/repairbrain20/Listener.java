@@ -107,11 +107,9 @@ public class Listener {
             }
         });
 
-        DatabaseReference reference = User.getRepairReference();
-
         Log.e("common","common_" + type);
 
-        if(reference!=null)
+        if(common_reference!=null)
         {
             common_reference
                     .child("common_" + type)

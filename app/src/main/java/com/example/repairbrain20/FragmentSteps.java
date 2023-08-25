@@ -17,6 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -30,10 +33,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class FragmentSteps extends Fragment {
@@ -43,6 +48,7 @@ public class FragmentSteps extends Fragment {
     View view;
     DatabaseReference reference;
     Map<String,Step> map;
+    DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +64,7 @@ public class FragmentSteps extends Fragment {
         list = view.findViewById(R.id.list);
         no_results = view.findViewById(R.id.no_results);
 
-        Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
+        Glide.with(no_results).load(R.drawable.loading_pink_list).into(no_results);
 
         reference = User.getRepairReference();
 
@@ -81,7 +87,7 @@ public class FragmentSteps extends Fragment {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_SHORT).show();
+                  if(getActivity()!=null)  Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -108,21 +114,35 @@ public class FragmentSteps extends Fragment {
             case R.id.add:
                 View view_ = getLayoutInflater().inflate(R.layout.custom_adapter_steps,null);
 
-                EditText step_name = view_.findViewById(R.id.name);
+                AutoCompleteTextView step_name = view_.findViewById(R.id.name);
                 EditText link = view_.findViewById(R.id.link);
-                EditText source_name = view_.findViewById(R.id.source_name);
+                AutoCompleteTextView source_name = view_.findViewById(R.id.source_name);
 
-                DatabaseReference main_reference = User.getMainReference();
+                step_name.setThreshold(0);
+                source_name.setThreshold(0);
+                step_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        step_name.showDropDown();
+                    }
+                });
 
-                if(main_reference!=null)
+                source_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        source_name.showDropDown();
+                    }
+                });
+
+                if(common_reference!=null)
                 {
-                    main_reference
+                    common_reference
                             .child("common_next_steps")
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    Map<String,Step> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Step>>() {
+                                    Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                                         @NonNull
                                         @Override
                                         public String toString() {
@@ -130,8 +150,51 @@ public class FragmentSteps extends Fragment {
                                         }
                                     });
 
+                                    if(map!=null)
+                                    {
+                                        ArrayList<String> list = new ArrayList<>(map.keySet());
+
+                                        step_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                Common common = map.get(list.get(i));
+                                                String source_ = common.getSource();
+                                                String link_ = common.getLink();
+
+                                                link.setText(link_);
+                                                source_name.setText(source_);
+                                            }
+                                        });
+
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                                        step_name.setAdapter(adapter);
+                                    }
                                 }
                             });
+
+                    common_reference
+                            .child("common_steps_sources")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    List<String> keys = task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
+                                        @NonNull
+                                        @Override
+                                        public String toString() {
+                                            return super.toString();
+                                        }
+                                    });
+
+                                    if(keys!=null)
+                                    {
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,keys);
+                                        source_name.setAdapter(adapter);
+                                    }
+
+                                }
+                            });
+
                 }
 
                 DatabaseReference reference = User.getRepairReference();

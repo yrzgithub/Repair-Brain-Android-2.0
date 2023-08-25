@@ -322,6 +322,11 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onResume() {
         // cm.registerDefaultNetworkCallback(network_check);
         super.onResume();
