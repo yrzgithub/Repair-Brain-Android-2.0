@@ -95,6 +95,35 @@ public class ActHome extends AppCompatActivity {
                             Relapse relapse = new Relapse(date,time_);
 
                             reference.child("relapses").push().setValue(relapse);
+
+                            DatabaseReference count_reference = reference.child("relapsed_count");
+                            count_reference
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                            Integer count = 0;
+
+                                            if(task.isSuccessful())
+                                            {
+                                                count = task.getResult().getValue(Integer.class);
+                                                if(count==null)
+                                                {
+                                                    count = 1;
+                                                }
+                                                else
+                                                {
+                                                    count+=1;
+                                                }
+
+                                                count_reference.setValue(count);
+
+                                                startActivity(new Intent(ActHome.this,ActJourney.class));
+
+                                                Toast.makeText(ActHome.this, count +" times relapsed",Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
                         }
                     });
 
@@ -102,7 +131,7 @@ public class ActHome extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(ActHome.this,"Starting time rested",Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(ActHome.this,"Starting time rested",Toast.LENGTH_LONG).show();
                                 }
                             });
 
