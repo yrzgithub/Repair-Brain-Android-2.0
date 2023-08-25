@@ -97,6 +97,7 @@ public class FragmentSteps extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_effects, container, false);
     }
 
@@ -177,20 +178,22 @@ public class FragmentSteps extends Fragment {
                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    List<String> keys = task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
-                                        @NonNull
-                                        @Override
-                                        public String toString() {
-                                            return super.toString();
-                                        }
-                                    });
-
-                                    if(keys!=null)
+                                    if(task.isSuccessful())
                                     {
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,keys);
-                                        source_name.setAdapter(adapter);
-                                    }
+                                        List<String> keys = task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
+                                            @NonNull
+                                            @Override
+                                            public String toString() {
+                                                return super.toString();
+                                            }
+                                        });
 
+                                        if(keys!=null)
+                                        {
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,keys);
+                                            source_name.setAdapter(adapter);
+                                        }
+                                    }
                                 }
                             });
 

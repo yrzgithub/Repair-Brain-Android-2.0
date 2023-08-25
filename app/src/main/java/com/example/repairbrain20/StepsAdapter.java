@@ -218,7 +218,7 @@ public class StepsAdapter extends BaseAdapter {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(source_link_copy.equals("") || FragmentSteps.isValidLink(source_link_copy))
+                if(source_link_copy.equals(""))
                 {
                     Toast.makeText(activity,"Source link not found",Toast.LENGTH_SHORT).show();
                     return;
