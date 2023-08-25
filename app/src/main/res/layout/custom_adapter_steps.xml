@@ -49,6 +49,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/name"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginStart="8dp"
@@ -67,6 +68,7 @@
 
         <AutoCompleteTextView
             android:id="@+id/source_name"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_marginStart="5dp"

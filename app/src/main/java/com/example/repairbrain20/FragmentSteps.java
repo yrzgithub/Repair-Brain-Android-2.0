@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -142,6 +143,9 @@ public class FragmentSteps extends Fragment {
                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                                    if(!task.isSuccessful()) return;
+
                                     Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                                         @NonNull
                                         @Override
@@ -220,6 +224,18 @@ public class FragmentSteps extends Fragment {
                                 if(!source_name_.equals("") && link_.equals(""))
                                 {
                                     Toast.makeText(getActivity(),"Please paste the link",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                if(!source_name_.equals("") && !isValidLink(link_))
+                                {
+                                    Toast.makeText(getActivity(),"Invalid source link",Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
+                                if(step.matches("[\\[\\].$#]*"))
+                                {
+                                    Toast.makeText(getActivity(),"Invalid source name",Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
