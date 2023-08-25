@@ -209,6 +209,9 @@ public class FragmentTriggers extends Fragment {
                 break;
 
             case id.add_common:
+
+                AdapterTriggers.delete = false;
+
                 ArrayList<String> present = new ArrayList<>(map.keySet());
 
                 intent = new Intent(getActivity(),ActCommon.class);

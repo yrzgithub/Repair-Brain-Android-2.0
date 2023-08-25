@@ -70,7 +70,6 @@ public class ActRepairs extends AppCompatActivity {
 
         DatabaseReference reference = User.getMainReference();
 
-
         if(reference==null)
         {
             Glide.with(ActRepairs.this).load(R.drawable.noresultfound).into(no_results);
@@ -137,8 +136,6 @@ public class ActRepairs extends AppCompatActivity {
                                 {
                                     List<String> list = new ArrayList<>(map.keySet());
 
-                                    Log.e("common_addictions", Arrays.toString(list.toArray()));
-
                                     ArrayAdapter<String> common_list = new ArrayAdapter<>(ActRepairs.this,androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
                                     addiction_edit.setAdapter(common_list);
                                 }
@@ -155,19 +152,30 @@ public class ActRepairs extends AppCompatActivity {
                                 Repairs addiction = new Repairs(LocalDateTime.now());
                                 String addiction_ = addiction_edit.getText().toString().trim();
 
+                                if(!Data.isValidKey(addiction_))
+                                {
+                                    Toast.makeText(ActRepairs.this,"Invalid Repair",Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
                                 Snackbar snack = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                 snack.show();
 
-                                reference
-                                        .child(addiction_)
-                                        .setValue(addiction)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                User.setAddiction(ActRepairs.this,addiction_);
-                                                snack.dismiss();
-                                            }
-                                        });
+                                DatabaseReference main_reference = User.getMainReference();
+
+                                if(main_reference!=null)
+                                {
+                                    main_reference
+                                            .child(addiction_)
+                                            .setValue(addiction)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    User.setAddiction(ActRepairs.this,addiction_);
+                                                    snack.dismiss();
+                                                }
+                                            });
+                                }
                             }
                         })
                         .show();

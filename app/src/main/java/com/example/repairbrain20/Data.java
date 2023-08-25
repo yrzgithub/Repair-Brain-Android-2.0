@@ -6,9 +6,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 public class Data {
+
+    static boolean isValidKey(String key)
+    {
+        Pattern pattern = Pattern.compile("[\\[\\].$#]*");
+        return !pattern.matcher(key).matches();
+    }
 
 }
 

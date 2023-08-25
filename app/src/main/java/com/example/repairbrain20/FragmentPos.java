@@ -72,6 +72,9 @@ public class FragmentPos extends Fragment {
                 break;
 
             case R.id.add_common:
+
+                AdapterPosNeg.remove = false;
+
                 Map<String,String> map = listener.getEffectsMap();
                 ArrayList<String> present;
                 if(map==null) present = new ArrayList<>();

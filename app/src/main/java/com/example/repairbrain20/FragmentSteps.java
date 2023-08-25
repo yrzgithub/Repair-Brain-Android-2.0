@@ -265,6 +265,8 @@ public class FragmentSteps extends Fragment {
 
             case R.id.add_common:
 
+                StepsAdapter.delete = false;
+
                 ArrayList<String> present;
                 if(map==null) present = new ArrayList<>();
                 else present = new ArrayList<>(map.keySet());
