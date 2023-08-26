@@ -156,6 +156,12 @@ public class Listener {
 
                         DatabaseReference reference = User.getRepairReference();
 
+                        if(!Data.isValidKey(effect_new))
+                        {
+                            Toast.makeText(act,"Invalid effect name",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         if(reference!=null)
                         {
                             Snackbar bar = Snackbar.make(list,"Adding",BaseTransientBottomBar.LENGTH_INDEFINITE);

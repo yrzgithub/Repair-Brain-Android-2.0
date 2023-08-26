@@ -142,6 +142,12 @@ public class User implements OnCompleteListener<AuthResult> {
             show_progress("Connecting");
             Log.e("sanjay_username",username);
 
+            if(!Data.isValidKey(username))
+            {
+                Toast.makeText(act,"Invalid username",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             ids_reference
                     .child(username)
                     .get().

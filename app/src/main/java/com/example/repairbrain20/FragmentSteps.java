@@ -233,7 +233,7 @@ public class FragmentSteps extends Fragment {
                                     return;
                                 }
 
-                                if(step.matches("[\\[\\].$#]*"))
+                                if(!Data.isValidKey(step))
                                 {
                                     Toast.makeText(getActivity(),"Invalid source name",Toast.LENGTH_LONG).show();
                                     return;

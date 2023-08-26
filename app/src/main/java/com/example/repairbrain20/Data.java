@@ -1,5 +1,11 @@
 package com.example.repairbrain20;
 
+import android.util.Patterns;
+
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.utilities.Validation;
+import com.google.firebase.ktx.Firebase;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,10 +17,9 @@ import java.util.regex.Pattern;
 
 public class Data {
 
-    static boolean isValidKey(String key)
+    public static boolean isValidKey(String key)
     {
-        Pattern pattern = Pattern.compile("[\\[\\].$#]*");
-        return !pattern.matcher(key).matches();
+        return key.matches("^(?![\\[\\].$#])[^\\[\\].$#]*$");
     }
 
 }

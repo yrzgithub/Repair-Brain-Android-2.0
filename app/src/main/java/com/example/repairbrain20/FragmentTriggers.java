@@ -183,6 +183,12 @@ public class FragmentTriggers extends Fragment {
 
                                     String time_ = local_time.format(formatter);
 
+                                    if(!Data.isValidKey(trigger_name))
+                                    {
+                                        Toast.makeText(getActivity(),"Invalid trigger name",Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
                                     Snackbar snack = Snackbar.make(FragmentTriggers.this.view,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     snack.show();
 

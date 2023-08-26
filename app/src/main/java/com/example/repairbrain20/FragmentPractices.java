@@ -297,6 +297,12 @@ public class FragmentPractices extends Fragment {
 
                         DatabaseReference reference = User.getRepairReference();
 
+                        if(!Data.isValidKey(habit_))
+                        {
+                            Toast.makeText(getActivity(),"Invalid habit name",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         if(reference==null) return;
 
                         reference
