@@ -22,7 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         this.context = context;
 
-        Toast.makeText(context,"received",Toast.LENGTH_LONG).show();
+      //  Toast.makeText(context,"received",Toast.LENGTH_LONG).show();
 
         NotificationManager manager = createChannel();
 
@@ -41,7 +41,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         managerCompat.notify(100, builder.build());
 
-        Toast.makeText(context,"Received",Toast.LENGTH_LONG).show();
+       // Toast.makeText(context,"Received",Toast.LENGTH_LONG).show();
     }
 
     public NotificationManager createChannel()
