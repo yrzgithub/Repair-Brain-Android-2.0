@@ -94,7 +94,7 @@ public class ActRepairs extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Glide.with(ActRepairs.this).load(R.drawable.noresultfound).into(no_results);
+
                     }
                 });
     }
@@ -150,7 +150,7 @@ public class ActRepairs extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 Repairs addiction = new Repairs(LocalDateTime.now());
-                                String addiction_ = addiction_edit.getText().toString().trim();
+                                String addiction_ = addiction_edit.getText().toString().trim().toLowerCase();
 
                                 if(!Data.isValidKey(addiction_))
                                 {

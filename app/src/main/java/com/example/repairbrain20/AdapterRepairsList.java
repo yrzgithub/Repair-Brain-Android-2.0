@@ -2,11 +2,14 @@ package com.example.repairbrain20;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,12 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageException;
@@ -42,7 +48,6 @@ public class AdapterRepairsList extends BaseAdapter {
     ListView list;
     ImageView no_results;
     Snackbar snack;
-    StorageReference storage = FirebaseStorage.getInstance().getReference();
 
     AdapterRepairsList(Activity act, Map<String, Repairs> addictions)
     {
@@ -120,7 +125,7 @@ public class AdapterRepairsList extends BaseAdapter {
 
         ImageView delete_or_go = view.findViewById(R.id.delete_or_go);
 
-        String key = keys.get(i);
+        String key = keys.get(i).trim().toLowerCase();
         String title =  key.substring(0,1).toUpperCase() + key.substring(1);
 
         Repairs addiction = this.addictions.get(key);
@@ -129,33 +134,51 @@ public class AdapterRepairsList extends BaseAdapter {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User.setAddiction(act, title);
                 Toast.makeText(act, title +" Selected",Toast.LENGTH_SHORT).show();
                 User.setAddiction(act, title);
                 act.startActivity(new Intent(act, ActHome.class));
             }
         });
 
+        DatabaseReference reference = User.getMainReference();
+
+        if(reference!=null)
+        {
+            reference
+                    .child(key)
+                    .child("note")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if(task.isSuccessful())
+                            {
+                                String link = task.getResult().getValue(String.class);
+                                if(link==null)
+                                {
+                                    delete_or_go.setImageResource(R.drawable.note);
+                                }
+                            }
+                        }
+                    });
+        }
+
         if(delete)
         {
             delete_or_go.setImageResource(R.drawable.delete_icon);
             main.setEnabled(false);
         }
-        else
-        {
-            delete_or_go.setImageResource(R.drawable.go);
-        }
 
         delete_or_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(delete)
                 {
-                    DatabaseReference reference = User.getMainReference();
-
                     if(reference!=null)
                     {
-                        reference.child(title)
+                        reference
+                                .child(key)
                                 .removeValue()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -164,49 +187,79 @@ public class AdapterRepairsList extends BaseAdapter {
                                     }
                                 });
                     }
-                    else
+                }
+
+                else
+                {
+                    if(reference!=null)
                     {
-                        try
-                        {
-                            String file_name = key.toLowerCase().replace(" ","_");
+                        reference
+                                .child(key)
+                                .child("note")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                            File file = File.createTempFile(file_name,".txt");
+                                        if(task.isSuccessful())
+                                        {
+                                            String link = task.getResult().getValue(String.class);
 
-                            storage
-                                    .child(file_name+".txt")
-                                    .getFile(file)
-                                    .addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
-                                            try
+                                            if(link==null)
                                             {
-                                                FileReader reader = new FileReader(file);
-                                                char[] buffer = new char[100];
-                                                StringBuilder builder= new StringBuilder();
 
-                                                while (reader.read(buffer,0,100)!=1)
+                                                View view_ = act.getLayoutInflater().inflate(R.layout.alert_note,null);
+                                                EditText link_ = view_.findViewById(R.id.effects_list);
+
+                                                new AlertDialog.Builder(act)
+                                                        .setView(view_)
+                                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                String link = link_.getText().toString();
+
+                                                                if(!FragmentSteps.isValidLink(link))
+                                                                {
+                                                                    Toast.makeText(act,"Invalid link",Toast.LENGTH_LONG).show();
+                                                                    return;
+                                                                }
+
+                                                                reference.child(key).child("note").setValue(link);
+                                                            }
+                                                        })
+                                                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                            }
+                                                        })
+                                                        .create()
+                                                        .show();
+                                            }
+                                            else
+                                            {
+                                                try
                                                 {
-                                                    builder.append(String.valueOf(buffer));
+                                                    if(!link.startsWith("http"))
+                                                    {
+                                                        link = "https://" + link;
+                                                    }
+
+                                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                                    intent.setData(Uri.parse(link));
+                                                    act.startActivity(intent);
                                                 }
-
-                                                String file_data = builder.toString();
-
-                                                Log.e("txt_file",file_data);
+                                                catch (Exception | Error e)
+                                                {
+                                                    Toast.makeText(act,"Invalid note link",Toast.LENGTH_SHORT).show();
+                                                }
                                             }
-                                            catch (Exception | Error ignored)
-                                            {
-
-                                            }
-
                                         }
-                                    });
-                        }
-                        catch (Exception e)
-                        {
-
-                        }
+                                    }
+                                });
                     }
                 }
+
             }
         });
 

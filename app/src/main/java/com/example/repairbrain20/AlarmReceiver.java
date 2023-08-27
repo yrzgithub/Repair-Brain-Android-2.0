@@ -22,6 +22,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         this.context = context;
 
+        Toast.makeText(context,"received",Toast.LENGTH_LONG).show();
+
         NotificationManager manager = createChannel();
 
         Intent open = new Intent(context, ActLogin.class);
@@ -37,7 +39,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
 
-        manager.notify(100, builder.build());
+        managerCompat.notify(100, builder.build());
 
         Toast.makeText(context,"Received",Toast.LENGTH_LONG).show();
     }

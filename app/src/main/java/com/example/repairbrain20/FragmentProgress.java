@@ -186,10 +186,6 @@ public class FragmentProgress extends Fragment {
 
                                 time_gone.setEnabled(true);
                             }
-                            else
-                            {
-                                loading.setImageResource(R.drawable.noresultfound);
-                            }
                         }
                     });
         }

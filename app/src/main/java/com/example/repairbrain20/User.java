@@ -387,7 +387,7 @@ public class User implements OnCompleteListener<AuthResult> {
 
     public static void setAddiction(Activity act,String addiction)
     {
-        User.selected_addiction = addiction;
+        User.selected_addiction = addiction.toLowerCase();
         act.getSharedPreferences("login_data",Context.MODE_PRIVATE).edit().putString("addiction",addiction).apply();
     }
 

@@ -104,5 +104,6 @@
     <string name="select_or_enter">Select or Enter</string>
     <string name="source_colon">Source :</string>
     <string name="search_or_enter">Search or Enter</string>
+    <string name="paste_the_note_link">Paste the note link</string>
 
 </resources>

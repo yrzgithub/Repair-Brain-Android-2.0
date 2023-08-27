@@ -1,6 +1,5 @@
 package com.example.repairbrain20;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -54,7 +52,7 @@ public class FragmentSteps extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        StepsAdapter.delete = false;
+        AdapterSteps.delete = false;
         super.onCreate(savedInstanceState);
     }
 
@@ -82,8 +80,8 @@ public class FragmentSteps extends Fragment {
                         }
                     });
 
-                    if(StepsAdapter.delete) list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map,true));
-                    else list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map));
+                    if(AdapterSteps.delete) list.setAdapter(new AdapterSteps(getActivity(),FragmentSteps.this.view,map,true));
+                    else list.setAdapter(new AdapterSteps(getActivity(),FragmentSteps.this.view,map));
                 }
 
                 @Override
@@ -265,7 +263,7 @@ public class FragmentSteps extends Fragment {
 
             case R.id.add_common:
 
-                StepsAdapter.delete = false;
+                AdapterSteps.delete = false;
 
                 ArrayList<String> present;
                 if(map==null) present = new ArrayList<>();
@@ -294,7 +292,7 @@ public class FragmentSteps extends Fragment {
                 }
                 else
                 {
-                    list.setAdapter(new StepsAdapter(getActivity(),FragmentSteps.this.view,map,true));
+                    list.setAdapter(new AdapterSteps(getActivity(),FragmentSteps.this.view,map,true));
                 }
                 break;
 

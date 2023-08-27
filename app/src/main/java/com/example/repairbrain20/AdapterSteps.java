@@ -2,7 +2,6 @@ package com.example.repairbrain20;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
@@ -20,7 +19,6 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -28,7 +26,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -36,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StepsAdapter extends BaseAdapter {
+public class AdapterSteps extends BaseAdapter {
 
     Map<String,Step> steps = new HashMap<>();
     Activity activity;
@@ -49,7 +46,7 @@ public class StepsAdapter extends BaseAdapter {
     StorageReference reference = FirebaseStorage.getInstance().getReference();
     Map<String,Drawable> drawables = new HashMap<>();
 
-    StepsAdapter(Activity act,View view, Map<String, Step> map)
+    AdapterSteps(Activity act, View view, Map<String, Step> map)
     {
         activity = act;
 
@@ -71,10 +68,10 @@ public class StepsAdapter extends BaseAdapter {
         }
     }
 
-    StepsAdapter(Activity act,View view, Map<String, Step> map,boolean delete)
+    AdapterSteps(Activity act, View view, Map<String, Step> map, boolean delete)
     {
         this(act,view,map);
-        StepsAdapter.delete = delete;
+        AdapterSteps.delete = delete;
 
         try
         {
@@ -126,7 +123,7 @@ public class StepsAdapter extends BaseAdapter {
         ImageView delete = view.findViewById(R.id.delete);
         ImageView start = view.findViewById(R.id.image);
 
-        if(StepsAdapter.delete)
+        if(AdapterSteps.delete)
         {
             image.setVisibility(View.GONE);
             delete.setVisibility(View.VISIBLE);
@@ -154,7 +151,7 @@ public class StepsAdapter extends BaseAdapter {
         step.setText(key.trim());
         source.setText(source_name);
 
-        if(StepsAdapter.delete)
+        if(AdapterSteps.delete)
         {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override

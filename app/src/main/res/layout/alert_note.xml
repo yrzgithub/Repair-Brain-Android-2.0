@@ -29,11 +29,12 @@
 
     </LinearLayout>
 
-    <AutoCompleteTextView
+    <EditText
         android:id="@+id/effects_list"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:completionThreshold="0"
+        android:layout_marginTop="3dp"
+        android:hint="@string/paste_the_note_link"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

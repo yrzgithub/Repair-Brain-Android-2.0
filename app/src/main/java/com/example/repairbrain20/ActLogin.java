@@ -7,10 +7,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -112,8 +117,8 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR,8);
-        calendar.set(Calendar.MINUTE,55);
+        calendar.set(Calendar.HOUR,5);
+        calendar.set(Calendar.MINUTE,0);
         calendar.set(Calendar.SECOND,0);
 
         AlarmManager manager = getSystemService(AlarmManager.class);
@@ -121,8 +126,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         Intent alarm_intent = new Intent(this,AlarmReceiver.class);
         PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_IMMUTABLE);
 
-        manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
-
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis()+AlarmManager.INTERVAL_DAY,AlarmManager.INTERVAL_DAY,alarm_pending);
 
         preference = getSharedPreferences("login_data",MODE_PRIVATE);
 
