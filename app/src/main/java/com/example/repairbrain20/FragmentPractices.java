@@ -269,6 +269,12 @@ public class FragmentPractices extends Fragment {
                             return;
                         }
 
+                        if(!Data.isValidKey(habit_))
+                        {
+                            Toast.makeText(getActivity(),"Invalid habit name",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         if(show_on.size()==0)
                         {
                             Toast.makeText(getContext(),"Days not selected",Toast.LENGTH_LONG).show();
@@ -296,12 +302,6 @@ public class FragmentPractices extends Fragment {
                         AdapterPractices adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view,habits_map);
 
                         DatabaseReference reference = User.getRepairReference();
-
-                        if(!Data.isValidKey(habit_))
-                        {
-                            Toast.makeText(getActivity(),"Invalid habit name",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
 
                         if(reference==null) return;
 
