@@ -45,8 +45,6 @@ import java.util.Map;
 
 public class ActRepairs extends AppCompatActivity {
 
-    SharedPreferences preference;
-    SharedPreferences.Editor editor;
     ListView list;
     ImageView no_results;
     Map<String, Repairs> addictions;
@@ -57,9 +55,6 @@ public class ActRepairs extends AppCompatActivity {
         setContentView(R.layout.activity_act_repairs);
 
         AdapterRepairsList.delete = false;
-
-        preference = getSharedPreferences("login_data", Context.MODE_PRIVATE);
-        editor = preference.edit();
 
         list = findViewById(R.id.list);
         no_results = findViewById(R.id.no_results);

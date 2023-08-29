@@ -7,7 +7,7 @@
     android:id="@+id/main"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".ActEffects"
+    tools:context=".ActEvolution"
     tools:visibility="visible">
 
     <com.google.android.material.tabs.TabLayout
@@ -22,12 +22,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/positive" />
+            android:text="@string/changes" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/negative" />
+            android:text="@string/challenges" />
 
     </com.google.android.material.tabs.TabLayout>
 

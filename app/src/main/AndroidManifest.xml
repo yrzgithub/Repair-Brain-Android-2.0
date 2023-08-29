@@ -55,7 +55,7 @@
             android:name=".ActCreateAccount"
             android:exported="false" />
         <activity
-            android:name=".ActEffects"
+            android:name=".ActEvolution"
             android:exported="false" />
         <activity
             android:name=".ActHome"

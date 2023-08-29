@@ -1,7 +1,6 @@
 package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,9 +17,6 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import javax.microedition.khronos.opengles.GL;
 
 public class ActRecovery extends AppCompatActivity implements View.OnClickListener {
 
@@ -129,7 +125,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.effects:
-                intent = new Intent(this, ActEffects.class);
+                intent = new Intent(this, ActEvolution.class);
                 startActivity(intent);
                 break;
 

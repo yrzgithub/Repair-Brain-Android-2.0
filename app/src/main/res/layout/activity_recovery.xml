@@ -135,7 +135,7 @@ android:id="@+id/drawer">
                         android:textColor="@color/black"
                         android:layout_marginStart="10dp"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/effects"
+                        android:text="Growth"
                         android:textSize="20sp"/>
 
                 </LinearLayout>
