@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.utilities.Validation;
 import com.google.firebase.ktx.Firebase;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -165,39 +166,6 @@ class Time
         this.year = year;
     }
 }
-
-
-class Plot
-{
-    List<Integer> date,value;
-
-    Plot()
-    {
-
-    }
-
-    public Plot(List<Integer> date, List<Integer> value) {
-        this.date = date;
-        this.value = value;
-    }
-
-    public List<Integer> getDate() {
-        return date;
-    }
-
-    public void setDate(List<Integer> date) {
-        this.date = date;
-    }
-
-    public List<Integer> getValue() {
-        return value;
-    }
-
-    public void setValue(List<Integer> value) {
-        this.value = value;
-    }
-}
-
 
 class ReplaceHabits
 {
@@ -367,3 +335,60 @@ class Step
         this.source_name = source_name;
     }
 }
+
+class Insight
+{
+    String source,link;
+
+    Insight()
+    {
+
+    }
+
+    Insight(String src,String lnk)
+    {
+        this.source = src;
+        this.link = lnk;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

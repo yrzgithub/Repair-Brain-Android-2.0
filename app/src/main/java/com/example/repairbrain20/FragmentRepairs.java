@@ -97,7 +97,7 @@ public class FragmentRepairs extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Glide.with(FragmentRepairs.this).load(R.drawable.noresultfound).into(no_results);
                     }
                 });
     }
