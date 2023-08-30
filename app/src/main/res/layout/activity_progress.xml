@@ -1,307 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.drawerlayout.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_weight="5">
+
+        <ImageView
+            android:id="@+id/loading"
+            android:layout_width="0dp"
+            android:visibility="visible"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/none"
+            android:src="@drawable/loading_pink_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/progress" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            android:indeterminateOnly="false"
+            android:progress="100"
+            android:progressDrawable="@drawable/progress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hrs_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="@string/hrs_left"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".53"
+            app:layout_constraintStart_toStartOf="@+id/progress"
+            app:layout_constraintTop_toTopOf="@+id/progress"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/hrs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:text="@string/_0"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/progress"
+            app:layout_constraintHorizontal_bias=".40"
+            app:layout_constraintStart_toStartOf="@+id/progress"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/time_gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_weight=".8"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="@string/not_found"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:rowCount="4"
+        android:columnCount="2"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <LinearLayout
-            android:id="@+id/root"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical"
-            tools:context=".TimeActivity">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:orientation="horizontal">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_weight="5">
-
-                <ImageView
-                    android:id="@+id/loading"
-                    android:layout_width="0dp"
-                    android:visibility="visible"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/none"
-                    android:src="@drawable/loading_pink_list"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/progress" />
-
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="invisible"
-                    android:indeterminateOnly="false"
-                    android:progress="100"
-                    android:progressDrawable="@drawable/progress"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/hrs_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center"
-                    android:text="@string/hrs_left"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias=".53"
-                    app:layout_constraintStart_toStartOf="@+id/progress"
-                    app:layout_constraintTop_toTopOf="@+id/progress"
-                    app:layout_constraintVertical_bias="0.5" />
-
-                <TextView
-                    android:id="@+id/hrs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:gravity="center"
-                    android:text="@string/_0"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/progress"
-                    app:layout_constraintHorizontal_bias=".40"
-                    app:layout_constraintStart_toStartOf="@+id/progress"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias=".5" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:background="@drawable/brain" />
 
             <TextView
-                android:id="@+id/time_gone"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_weight=".8"
-                android:ellipsize="marquee"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:text="@string/not_found"
+                android:layout_gravity="start"
+                android:padding="15dp"
+                android:text="@string/lastly_relapsed"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="40dp"
-                android:rowCount="4"
-                android:columnCount="2"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="0"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/brain" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:padding="15dp"
-                        android:text="@string/lastly_relapsed"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/lastly_relapsed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="1"
-                    android:layout_gravity="center_vertical"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text="@string/not_found"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/none"
-                        android:src="@drawable/positive_effect" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:padding="15dp"
-                        android:text="@string/ve_effect"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/pos_effect"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="1"
-                    android:layout_gravity="center_vertical"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text="@string/not_found"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="3"
-                    android:layout_column="0"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/none"
-                        android:src="@drawable/steps" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:padding="15dp"
-                        android:text="@string/next_step"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/next_step"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="3"
-                    android:layout_column="1"
-                    android:ellipsize="marquee"
-                    android:gravity="start"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:maxLines="1"
-                    android:padding="15dp"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text="@string/not_found"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="0"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/none"
-                        android:src="@drawable/negative_effects" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:padding="15dp"
-                        android:text="@string/neg_ve_effect"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/neg_effects"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="1"
-                    android:layout_gravity="center_vertical"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:padding="15dp"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:text="@string/not_found"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </GridLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/lastly_relapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/not_found"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/fragment_add_menu"
-        android:id="@+id/navigation">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:orientation="horizontal">
 
-    </com.google.android.material.navigation.NavigationView>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/none"
+                android:src="@drawable/positive_effect" />
 
-</androidx.drawerlayout.widget.DrawerLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:padding="15dp"
+                android:text="@string/ve_effect"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/pos_effect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/not_found"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/none"
+                android:src="@drawable/steps" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:padding="15dp"
+                android:text="@string/next_step"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/next_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:ellipsize="marquee"
+            android:gravity="start"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="1"
+            android:padding="15dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/not_found"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/none"
+                android:src="@drawable/negative_effects" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:padding="15dp"
+                android:text="@string/neg_ve_effect"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/neg_effects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="15dp"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/not_found"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </GridLayout>
+
+</LinearLayout>

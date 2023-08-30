@@ -104,5 +104,8 @@
     <string name="changes">Changes</string>
     <string name="challenges">Challenges</string>
     <string name="growth">Growth</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="insights">Insights</string>
 
 </resources>

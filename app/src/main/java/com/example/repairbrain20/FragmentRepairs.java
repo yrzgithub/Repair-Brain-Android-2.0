@@ -1,35 +1,31 @@
 package com.example.repairbrain20;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,25 +35,37 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class ActRepairs extends AppCompatActivity {
+public class FragmentRepairs extends Fragment {
 
     ListView list;
     ImageView no_results;
     Map<String, Repairs> addictions;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_act_repairs);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_repairs, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         AdapterRepairsList.delete = false;
 
-        list = findViewById(R.id.list);
-        no_results = findViewById(R.id.no_results);
+        list = view.findViewById(R.id.list);
+        no_results = view.findViewById(R.id.no_results);
 
         Glide.with(this)
                 .load(R.drawable.loading_pink_list)
@@ -67,7 +75,7 @@ public class ActRepairs extends AppCompatActivity {
 
         if(reference==null)
         {
-            Glide.with(ActRepairs.this).load(R.drawable.noresultfound).into(no_results);
+            Glide.with(getActivity()).load(R.drawable.noresultfound).into(no_results);
             return;
         }
 
@@ -83,8 +91,8 @@ public class ActRepairs extends AppCompatActivity {
                             }
                         });
 
-                        if(AdapterRepairsList.delete) list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions,true));
-                        else list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions));
+                        if(AdapterRepairsList.delete) list.setAdapter(new AdapterRepairsList(getActivity(),addictions,true));
+                        else list.setAdapter(new AdapterRepairsList(getActivity(),addictions));
                     }
 
                     @Override
@@ -97,10 +105,10 @@ public class ActRepairs extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
+
+        switch (item.getItemId()) {
             case R.id.add:
-                View view = View.inflate(this,R.layout.alert_dialog,null);
+                View view = View.inflate(getActivity(), R.layout.alert_dialog, null);
 
                 AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
                 addiction_edit.setHint("Search or Enter");
@@ -119,7 +127,7 @@ public class ActRepairs extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                Map<String, Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                                     @NonNull
                                     @Override
                                     public String toString() {
@@ -127,19 +135,18 @@ public class ActRepairs extends AppCompatActivity {
                                     }
                                 });
 
-                                if(map!=null)
-                                {
+                                if (map != null) {
                                     List<String> list = new ArrayList<>(map.keySet());
 
-                                    ArrayAdapter<String> common_list = new ArrayAdapter<>(ActRepairs.this,androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                                    ArrayAdapter<String> common_list = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                                     addiction_edit.setAdapter(common_list);
                                 }
                             }
                         });
 
-                new AlertDialog.Builder(this)
+                new AlertDialog.Builder(getActivity())
                         .setView(view)
-                        .setNegativeButton("cancel",null)
+                        .setNegativeButton("cancel", null)
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -147,26 +154,24 @@ public class ActRepairs extends AppCompatActivity {
                                 Repairs addiction = new Repairs(LocalDateTime.now());
                                 String addiction_ = addiction_edit.getText().toString().trim().toLowerCase();
 
-                                if(!Data.isValidKey(addiction_))
-                                {
-                                    Toast.makeText(ActRepairs.this,"Invalid Repair",Toast.LENGTH_SHORT).show();
+                                if (!Data.isValidKey(addiction_)) {
+                                    Toast.makeText(getActivity(), "Invalid Repair", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                Snackbar snack = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                Snackbar snack = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                 snack.show();
 
                                 DatabaseReference main_reference = User.getMainReference();
 
-                                if(main_reference!=null)
-                                {
+                                if (main_reference != null) {
                                     main_reference
                                             .child(addiction_)
                                             .setValue(addiction)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    User.setAddiction(ActRepairs.this,addiction_);
+                                                    User.setAddiction(getActivity(), addiction_);
                                                     snack.dismiss();
                                                 }
                                             });
@@ -177,44 +182,37 @@ public class ActRepairs extends AppCompatActivity {
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(ActRepairs.this,ActCommon.class);
-                intent.putExtra("common","common_addictions");
+                Intent intent = new Intent(getActivity(), ActCommon.class);
+                intent.putExtra("common", "common_addictions");
                 startActivity(intent);
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AdapterRepairsList(ActRepairs.this,addictions,true));
+                list.setAdapter(new AdapterRepairsList(getActivity(), addictions, true));
                 break;
 
             case R.id.reset:
                 reference = User.getMainReference();
-                Snackbar snack = Snackbar.make(list,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                Snackbar snack = Snackbar.make(list, "Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
                 snack.show();
-                if(reference!=null)
-                {
+                if (reference != null) {
                     reference.removeValue(new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                             snack.dismiss();
-                            Toast.makeText(getApplicationContext(),"Successfully resetted",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Successfully resetted", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.update_database_menu,menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public void onBackPressed() {
-        FirebaseAuth.getInstance().signOut();
-        super.onBackPressed();
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.update_database_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

@@ -65,7 +65,6 @@ public class FragmentProgress extends Fragment {
         neg_effect = view.findViewById(R.id.neg_effects);
         hrs_left = view.findViewById(R.id.hrs);
 
-        LinearLayout root = view.findViewById(R.id.root);
         TextView left_txt = view.findViewById(R.id.hrs_left);
 
         loading = view.findViewById(R.id.loading);
@@ -208,7 +207,7 @@ public class FragmentProgress extends Fragment {
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getActivity(), ActRepairs.class);
+                        Intent intent = new Intent(getActivity(), ActRepairsInsights.class);
                         startActivity(intent);
                     }
                 })

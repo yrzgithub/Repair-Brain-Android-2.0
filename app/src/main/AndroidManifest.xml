@@ -28,7 +28,7 @@
             android:name=".ActAbout"
             android:exported="false" />
         <activity
-            android:name=".ActRepairs"
+            android:name=".ActRepairsInsights"
             android:exported="false" />
         <activity
             android:name=".ActJourney"

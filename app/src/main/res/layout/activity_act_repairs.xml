@@ -1,38 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ActEvolution">
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+    xmlns:uruttu="http://schemas.android.com/apk/res/android"
+    uruttu:layout_height="match_parent"
+    uruttu:layout_width="match_parent"
+    uruttu:orientation="vertical">
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="10dp"
-        android:layout_weight="1"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
-        android:allowUndo="true"
-        android:background="@null"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:visibility="gone"/>
+    <com.google.android.material.tabs.TabLayout
+        uruttu:id="@+id/tabs"
+        uruttu:layout_width="match_parent"
+        uruttu:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/no_results"
-        android:visibility="visible"
-        android:src="@drawable/loading_pink_list"
-        android:layout_marginBottom="75dp"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/none" />
+        <com.google.android.material.tabs.TabItem
+            uruttu:layout_width="wrap_content"
+            uruttu:layout_height="wrap_content"
+            uruttu:text="@string/repairs"/>
+
+        <com.google.android.material.tabs.TabItem
+            uruttu:layout_width="wrap_content"
+            uruttu:layout_height="wrap_content"
+            uruttu:text="@string/insights"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        uruttu:layout_width="wrap_content"
+        uruttu:layout_height="fill_parent"
+        uruttu:id="@+id/pager"/>
 
 </LinearLayout>
