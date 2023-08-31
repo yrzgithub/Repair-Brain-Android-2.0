@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SET_ALARM"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -17,35 +17,30 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RepairBrain20">
-
-        <receiver android:name=".AlarmReceiver"
-            android:roundIcon="@drawable/icon_app"/>
-
-        <activity
-            android:name=".ActAbout"
-            android:exported="false" />
-
-        <activity
-            android:name=".ActRepairsInsights"
-            android:exported="false" />
-
-        <activity
-            android:name=".ActJourney"
-            android:exported="false" />
-
+        android:theme="@style/Theme.RepairBrain20" >
         <activity
             android:name=".ActSettings"
             android:exported="false" />
 
+        <receiver
+            android:name=".AlarmReceiver"
+            android:roundIcon="@drawable/icon_app" />
+
+        <activity
+            android:name=".ActAbout"
+            android:exported="false" />
+        <activity
+            android:name=".ActRepairsInsights"
+            android:exported="false" />
+        <activity
+            android:name=".ActJourney"
+            android:exported="false" />
         <activity
             android:name=".ActCommon"
             android:exported="false" />
-
         <activity
             android:name=".ActLogin"
-            android:exported="true">
-
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

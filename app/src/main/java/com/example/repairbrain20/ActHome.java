@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,17 +32,11 @@ import java.util.concurrent.Executor;
 public class ActHome extends AppCompatActivity {
 
     ImageButton free_button = null,hand_cuffed_button = null;
-    CheckNetwork network_check;
-    ConnectivityManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        LinearLayout main = findViewById(R.id.main);
-       /* network_check =  new CheckNetwork(this,main);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class); */
 
         free_button = findViewById(R.id.free_image);
         hand_cuffed_button = findViewById(R.id.hand_cuffed_image);
@@ -144,25 +139,17 @@ public class ActHome extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        // cm.registerDefaultNetworkCallback(network_check);
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        // cm.unregisterNetworkCallback(network_check);
-        super.onPause();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        // getMenuInflater().inflate(R.menu.fragment_add_menu,menu);
-        return false;
+        getMenuInflater().inflate(R.menu.home_menu,menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.settings)
+        {
+            startActivity(new Intent(ActHome.this, ActSettings.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 }

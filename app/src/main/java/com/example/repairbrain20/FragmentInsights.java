@@ -70,33 +70,36 @@ public class FragmentInsights extends Fragment {
         list = view.findViewById(R.id.list);
 
         DatabaseReference reference = User.getMainReference();
-        reference
-                .child("insights")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        insights = snapshot.getValue(new GenericTypeIndicator<Map<String, Insight>>() {
-                            @NonNull
-                            @Override
-                            public String toString() {
-                                return super.toString();
-                            }
-                        });
+        if(reference!=null)
+        {
+            reference
+                    .child("insights")
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            insights = snapshot.getValue(new GenericTypeIndicator<Map<String, Insight>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
+                                }
+                            });
 
-                        AdapterListInsights adapter;
+                            AdapterListInsights adapter;
 
-                        if(AdapterListInsights.remove) adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights,true);
-                        else adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights);
+                            if(AdapterListInsights.remove) adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights,true);
+                            else adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights);
 
-                        list.setAdapter(adapter);
-                    }
+                            list.setAdapter(adapter);
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("uruttu_insights_error",error.getMessage());
-                        if(getActivity()!=null) Glide.with(FragmentInsights.this).load(R.drawable.noresultfound).into(no_results);
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("uruttu_insights_error",error.getMessage());
+                            if(getActivity()!=null) Glide.with(FragmentInsights.this).load(R.drawable.noresultfound).into(no_results);
+                        }
+                    });
+        }
     }
 
     @Override
