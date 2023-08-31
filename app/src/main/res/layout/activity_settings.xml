@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:orientation="vertical"
@@ -25,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="13dp">
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"/>
 
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/auto_login_switch"
@@ -46,72 +47,6 @@
             android:layout_alignParentEnd="true"
             android:contentDescription="@string/none"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/change_username_rel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="23dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Username"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="10dp"/>
-
-        <TextView
-            android:id="@+id/username_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="admin"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_gravity="end"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/password_rel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="23dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Password"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="10dp"/>
-
-        <TextView
-            android:id="@+id/password_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="password"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_gravity="end"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
 
     </RelativeLayout>
 
@@ -123,7 +58,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_gravity="start"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"/>
 
@@ -138,20 +73,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
         android:text="Notifications"
+        android:layout_marginBottom="5dp"
         android:textStyle="bold"
         android:textColor="#00DEFF"
         android:textSize="20sp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"/>
 
     <RelativeLayout
+        android:id="@+id/notification_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -165,16 +101,17 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"/>
 
-        <CheckBox
-            android:id="@+id/notify_check"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/notify_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/time_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

@@ -170,6 +170,7 @@ public class User implements OnCompleteListener<AuthResult> {
                         User.this.email = null;
                         progress.dismiss();
                         send_alert("Username not found");
+                        editor.clear().commit();
                     }
                 }
             })

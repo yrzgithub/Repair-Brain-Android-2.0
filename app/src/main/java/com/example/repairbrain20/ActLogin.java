@@ -45,13 +45,10 @@ import java.util.Calendar;
 
 public class ActLogin extends AppCompatActivity implements View.OnClickListener {
 
-    Button signup_btn,login_btn,google_btn;
+    Button login_btn,google_btn;
     TextView topic,forget_password_text,create_account;
     EditText id_or_email_edit_txt,password_edit_txt;
-    LinearLayout main;
-    CheckNetwork network_check;
     ProgressDialog progress;
-    ConnectivityManager cm;
     SharedPreferences preference;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     GoogleSignInOptions gso;
@@ -61,6 +58,8 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        AppSettings settings = new AppSettings(this);
 
         if(getSupportActionBar()!=null)
         {
@@ -114,7 +113,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         Intent alarm_intent = new Intent(this,AlarmReceiver.class);
         PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_MUTABLE);
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES,alarm_pending);
 
         preference = getSharedPreferences("login_data",MODE_PRIVATE);
 
@@ -129,7 +128,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
             id_or_email_edit_txt.setText(username);
 
             user = new User(this,username,password);
-           // user.login_with_username();
+            if(settings.isAuto_login()) user.login_with_username();
         }
 
         else if(email!=null)
@@ -137,7 +136,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
             id_or_email_edit_txt.setText(email);
 
             user = new User(this,email,password);
-           // user.login_with_email_and_password();
+            if(settings.isAuto_login()) user.login_with_email_and_password();
         }
 
         if(password!=null) password_edit_txt.setText(password);
@@ -163,12 +162,6 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                 EditText edit = view_.findViewById(R.id.effects_list);
                 edit.setHint("Enter your E-mail");
 
-                ProgressDialog progress = new ProgressDialog(this);
-                progress.setMessage("Sending Password Reset Link");
-                progress.setCanceledOnTouchOutside(false);
-                progress.setOnCancelListener(null);
-                progress.show();
-
                 new AlertDialog.Builder(this)
                         .setView(view_)
                         .setPositiveButton("Send", new DialogInterface.OnClickListener() {
@@ -178,12 +171,23 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                                 if(!email_.matches(User.email_regex))
                                 {
                                     Toast.makeText(ActLogin.this,"Invalid email",Toast.LENGTH_LONG).show();
+                                    return;
                                 }
+
+                                ProgressDialog progress = new ProgressDialog(ActLogin.this);
+                                progress.setMessage("Sending Password Reset Link");
+                                progress.setCanceledOnTouchOutside(false);
+                                progress.setOnCancelListener(null);
+                                progress.show();
+
                                 auth.
                                     sendPasswordResetEmail(email_)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+
+                                            progress.dismiss();
+
                                             if(task.isSuccessful())
                                             {
                                                 progress.dismiss();

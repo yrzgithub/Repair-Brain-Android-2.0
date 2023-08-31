@@ -210,6 +210,10 @@ public class FragmentRepairs extends Fragment {
                     });
                 }
                 break;
+
+            case R.id.settings:
+                startActivity(new Intent(getActivity(),ActSettings.class));
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -217,7 +221,7 @@ public class FragmentRepairs extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.update_database_menu,menu);
+        inflater.inflate(R.menu.repair_menu,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

@@ -6,8 +6,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
@@ -24,13 +26,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         this.context = context;
 
-
-       createChannel();
+        createChannel();
 
         Intent open = new Intent(context, ActLogin.class);
-        PendingIntent open_pending = PendingIntent.getActivity(context,100,open,PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent open_pending = PendingIntent.getActivity(context, 100, open, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ID)
                 .setContentTitle(context.getResources().getString(R.string.app_name))
                 .setSmallIcon(R.drawable.icon_app)
                 .setAutoCancel(true)
@@ -40,6 +41,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
 
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         managerCompat.notify(100, builder.build());
     }
 

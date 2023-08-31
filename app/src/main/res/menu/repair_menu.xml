@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add"
+        android:title="@string/add"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/common"
+        android:title="@string/show_common"
+        app:showAsAction="never"/>
+
+    <item android:title="@string/remove"
+        android:id="@+id/remove"
+        app:showAsAction="never"/>
+
+    <item android:title="@string/reset"
+        android:id="@+id/reset"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/settings"
+        android:title="@string/settings"/>
+
+</menu>
