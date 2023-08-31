@@ -83,8 +83,6 @@ public class FragmentInsights extends Fragment {
                             }
                         });
 
-                        Log.e("uruttu_insights",insights.toString());
-
                         AdapterListInsights adapter;
 
                         if(AdapterListInsights.remove) adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights,true);
@@ -190,16 +188,19 @@ public class FragmentInsights extends Fragment {
                                 Snackbar snack = Snackbar.make(FragmentInsights.this.view,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                 snack.show();
 
-                                reference
-                                        .child("insights")
-                                        .child(name_)
-                                        .setValue(new Insight(source_,link_))
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                snack.dismiss();
-                                            }
-                                        });
+                                if(reference!=null)
+                                {
+                                    reference
+                                            .child("insights")
+                                            .child(name_)
+                                            .setValue(new Insight(source_,link_))
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    snack.dismiss();
+                                                }
+                                            });
+                                }
                             }
                         })
                         .setNegativeButton("Cancel",null)
@@ -219,6 +220,16 @@ public class FragmentInsights extends Fragment {
                 break;
 
             case R.id.reset:
+                if(reference!=null)
+                {
+                    reference.child("insights")
+                            .removeValue(new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                    Toast.makeText(getActivity(),"Successfully resetted",Toast.LENGTH_LONG).show();
+                                }
+                            });
+                }
                 break;
 
         }

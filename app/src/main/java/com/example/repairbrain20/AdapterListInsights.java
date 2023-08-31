@@ -57,11 +57,16 @@ public class AdapterListInsights extends BaseAdapter {
         ListView list = view.findViewById(R.id.list);
         ImageView no_results = view.findViewById(R.id.no_results);
 
+        if(map!=null)
+        {
+            this.insights.putAll(map);
+            this.keys.addAll(map.keySet());
+        }
+
         if(map==null || insights.size()==0)
         {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            //no_results.setImageResource(R.drawable.noresultfound);
             if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             remove = false;
         }
@@ -69,8 +74,6 @@ public class AdapterListInsights extends BaseAdapter {
         {
             list.setVisibility(View.VISIBLE);
             no_results.setVisibility(View.GONE);
-            this.insights.putAll(map);
-            this.keys.addAll(map.keySet());
         }
     }
 
