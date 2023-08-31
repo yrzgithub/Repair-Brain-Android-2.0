@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
@@ -68,7 +70,6 @@ public class AdapterRepairsList extends BaseAdapter {
         {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            //no_results.setImageResource(R.drawable.noresultfound);
             if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             delete = false;
         }
@@ -94,16 +95,10 @@ public class AdapterRepairsList extends BaseAdapter {
 
         }
 
-        if(delete && snack!=null && this.addictions.size()>0)
+        if(AdapterRepairsList.delete && snack!=null && this.addictions.size()>0)
         {
             snack.show();
         }
-
-        if(this.addictions.size()==0)
-        {
-            AdapterRepairsList.delete = false;
-        }
-
     }
 
     @Override
@@ -152,27 +147,6 @@ public class AdapterRepairsList extends BaseAdapter {
 
         DatabaseReference reference = User.getMainReference();
 
-        if(reference!=null)
-        {
-            reference
-                    .child(key)
-                    .child("note")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if(task.isSuccessful())
-                            {
-                                String link = task.getResult().getValue(String.class);
-                                if(link==null)
-                                {
-                                    delete_or_go.setImageResource(R.drawable.note);
-                                }
-                            }
-                        }
-                    });
-        }
-
         if(delete)
         {
             delete_or_go.setImageResource(R.drawable.delete_icon);
@@ -187,15 +161,12 @@ public class AdapterRepairsList extends BaseAdapter {
                 {
                     if(reference!=null)
                     {
-                        reference
-                                .child(key)
-                                .removeValue()
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                    }
-                                });
+                        reference.child(key).removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                if(snack!=null) snack.dismiss();
+                            }
+                        });
                     }
                 }
 
@@ -217,6 +188,8 @@ public class AdapterRepairsList extends BaseAdapter {
 
                                             if(link==null)
                                             {
+
+                                                Toast.makeText(act,"Note link not found",Toast.LENGTH_SHORT).show();
 
                                                 View view_ = act.getLayoutInflater().inflate(R.layout.alert_note,null);
                                                 EditText link_ = view_.findViewById(R.id.effects_list);

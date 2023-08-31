@@ -166,7 +166,6 @@ public class AdapterListInsights extends BaseAdapter {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     if(delete_reference!=null)
                     {
                         if(snack!=null) snack.show();
