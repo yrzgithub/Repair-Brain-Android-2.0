@@ -18,6 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RepairBrain20">
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:roundIcon="@drawable/icon_app" />
+
         <activity
             android:name=".ActContactDeveloper"
             android:exported="false" />
@@ -25,13 +30,6 @@
             android:name=".ActSettings"
             android:exported="false" />
 
-        <receiver
-            android:name=".AlarmReceiver"
-            android:roundIcon="@drawable/icon_app" />
-
-        <activity
-            android:name=".ActAbout"
-            android:exported="false" />
         <activity
             android:name=".ActRepairsInsights"
             android:exported="false" />

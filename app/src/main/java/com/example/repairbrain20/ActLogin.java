@@ -61,6 +61,19 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
 
         AppSettings settings = new AppSettings(this);
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY,settings.getHour());
+        calendar.set(Calendar.MINUTE,settings.getMinute());
+        calendar.set(Calendar.SECOND,0);
+
+        AlarmManager manager =  (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Intent alarm_intent = new Intent(this,AlarmReceiver.class);
+        PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_MUTABLE);
+
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+
         if(getSupportActionBar()!=null)
         {
             getSupportActionBar().hide();

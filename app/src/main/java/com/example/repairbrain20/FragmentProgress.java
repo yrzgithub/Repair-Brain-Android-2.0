@@ -188,37 +188,6 @@ public class FragmentProgress extends Fragment {
                         }
                     });
         }
-
-        else
-        {
-           no_results();
-        }
-
-    }
-
-    public void no_results()
-    {
-        loading.setImageResource(R.drawable.noresultfound);
-
-        new AlertDialog.Builder(getContext())
-                .setTitle(R.string.app_name)
-                .setIcon(R.drawable.icon_app)
-                .setMessage("No Addiction Found")
-                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent(getActivity(), ActRepairsInsights.class);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .create()
-                .show();
     }
 
     public LocalDateTime getLocalDateTime(Map<String,Object> data,String key)

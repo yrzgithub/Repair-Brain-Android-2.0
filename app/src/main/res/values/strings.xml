@@ -114,5 +114,6 @@
     <string name="show_notification">Show Notification</string>
     <string name="show_by">Show By</string>
     <string name="_2_10_pm">2:10 PM</string>
+    <string name="username_">Username :</string>
 
 </resources>

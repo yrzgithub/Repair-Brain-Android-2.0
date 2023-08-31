@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         this.context = context;
 
-       // Toast.makeText(context,"Received",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context,"Received",Toast.LENGTH_SHORT).show();
 
         AppSettings settings = new AppSettings(context);
 

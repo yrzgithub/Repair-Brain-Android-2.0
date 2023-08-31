@@ -36,21 +36,6 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recovery);
 
-        AppSettings settings = new AppSettings(this);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY,19);
-        calendar.set(Calendar.MINUTE,44);
-        calendar.set(Calendar.SECOND,0);
-
-        AlarmManager manager =  (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        Intent alarm_intent = new Intent(this,AlarmReceiver.class);
-        PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_MUTABLE);
-
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
-
         DrawerLayout drawer = findViewById(R.id.drawer);
 
         toggle = new ActionBarDrawerToggle(this,drawer,R.string.open,R.string.close);
