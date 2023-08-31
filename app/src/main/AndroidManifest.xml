@@ -22,26 +22,30 @@
         <receiver android:name=".AlarmReceiver"
             android:roundIcon="@drawable/icon_app"/>
 
-
-
         <activity
             android:name=".ActAbout"
             android:exported="false" />
+
         <activity
             android:name=".ActRepairsInsights"
             android:exported="false" />
+
         <activity
             android:name=".ActJourney"
             android:exported="false" />
+
         <activity
             android:name=".ActSettings"
             android:exported="false" />
+
         <activity
             android:name=".ActCommon"
             android:exported="false" />
+
         <activity
             android:name=".ActLogin"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

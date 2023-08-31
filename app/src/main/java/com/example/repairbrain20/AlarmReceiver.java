@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.time.LocalDateTime;
+
 public class AlarmReceiver extends BroadcastReceiver {
 
     final String CHANNEL_NAME = "ask";
@@ -22,9 +24,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         this.context = context;
 
-      //  Toast.makeText(context,"received",Toast.LENGTH_LONG).show();
 
-        NotificationManager manager = createChannel();
+       createChannel();
 
         Intent open = new Intent(context, ActLogin.class);
         PendingIntent open_pending = PendingIntent.getActivity(context,100,open,PendingIntent.FLAG_IMMUTABLE);
@@ -40,8 +41,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
 
         managerCompat.notify(100, builder.build());
-
-       // Toast.makeText(context,"Received",Toast.LENGTH_LONG).show();
     }
 
     public NotificationManager createChannel()
