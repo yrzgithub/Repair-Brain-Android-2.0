@@ -19,12 +19,11 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:visibility="gone"/>
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/no_results"
-        android:visibility="visible"
+        android:visibility="gone"
         android:src="@drawable/loading_pink_list"
         android:layout_gravity="center"
         android:layout_width="match_parent"

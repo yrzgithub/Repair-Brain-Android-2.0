@@ -64,7 +64,9 @@ public class AdapterSteps extends BaseAdapter {
         {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            if(activity!=null) Glide.with(activity).load(R.drawable.noresultfound).into(no_results);
+            //no_results.setImageResource(R.drawable.noresultfound);
+            if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
+            delete = false;
         }
     }
 
@@ -88,7 +90,7 @@ public class AdapterSteps extends BaseAdapter {
 
         }
 
-        if(snack!=null && this.steps.size()>0)
+        if(delete && snack!=null && this.steps.size()>0)
         {
             snack.show();
         }

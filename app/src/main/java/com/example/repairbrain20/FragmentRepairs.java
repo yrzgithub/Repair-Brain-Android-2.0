@@ -43,12 +43,11 @@ public class FragmentRepairs extends Fragment {
     ListView list;
     ImageView no_results;
     Map<String, Repairs> addictions;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         setHasOptionsMenu(true);
-
         super.onCreate(savedInstanceState);
     }
 
@@ -61,6 +60,7 @@ public class FragmentRepairs extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view = view;
 
         AdapterRepairsList.delete = false;
 
@@ -91,13 +91,15 @@ public class FragmentRepairs extends Fragment {
                             }
                         });
 
-                        if(AdapterRepairsList.delete) list.setAdapter(new AdapterRepairsList(getActivity(),addictions,true));
-                        else list.setAdapter(new AdapterRepairsList(getActivity(),addictions));
+                        addictions.remove("insights");
+
+                        if(AdapterRepairsList.delete) list.setAdapter(new AdapterRepairsList(getActivity(),FragmentRepairs.this.view,addictions,true));
+                        else list.setAdapter(new AdapterRepairsList(getActivity(),FragmentRepairs.this.view,addictions));
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Glide.with(FragmentRepairs.this).load(R.drawable.noresultfound).into(no_results);
+                        //Glide.with(FragmentRepairs.this).load(R.drawable.noresultfound).into(no_results);
                     }
                 });
     }
@@ -188,7 +190,7 @@ public class FragmentRepairs extends Fragment {
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AdapterRepairsList(getActivity(), addictions, true));
+                list.setAdapter(new AdapterRepairsList(getActivity(),FragmentRepairs.this.view, addictions,true));
                 break;
 
             case R.id.reset:

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -49,12 +50,12 @@ public class AdapterRepairsList extends BaseAdapter {
     ImageView no_results;
     Snackbar snack;
 
-    AdapterRepairsList(Activity act, Map<String, Repairs> addictions)
+    AdapterRepairsList(Activity act,View view, Map<String, Repairs> addictions)
     {
         this.act = act;
 
-        this.list = act.findViewById(R.id.list);
-        no_results = act.findViewById(R.id.no_results);
+        this.list = view.findViewById(R.id.list);
+        no_results = view.findViewById(R.id.no_results);
 
         if(addictions!=null && addictions.size()>0)
         {
@@ -67,23 +68,32 @@ public class AdapterRepairsList extends BaseAdapter {
         {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            no_results.setImageResource(R.drawable.noresultfound);
+            //no_results.setImageResource(R.drawable.noresultfound);
+            if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             delete = false;
         }
-
-        snack = Snackbar.make(list,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
-        snack.setAction("Reload", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                act.recreate();
-            }
-        });
     }
 
-    AdapterRepairsList(Activity act,Map<String, Repairs> addictions, boolean delete)
+    AdapterRepairsList(Activity act,View view,Map<String, Repairs> addictions, boolean delete)
     {
-        this(act,addictions);
+        this(act,view,addictions);
         AdapterRepairsList.delete = delete;
+
+        try
+        {
+            snack = Snackbar.make(list,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
+            snack.setAction("Reload", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    act.recreate();
+                }
+            });
+        }
+        catch (Exception ignored)
+        {
+
+        }
+
         if(delete && snack!=null && this.addictions.size()>0)
         {
             snack.show();

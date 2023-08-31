@@ -6,7 +6,9 @@
         android:title="@string/add"
         app:showAsAction="ifRoom"/>
 
-    <item android:visible="@+id/delete"
+    <item
+        android:id="@+id/delete"
+        android:enabled="true"
         android:title="@string/remove"/>
 
     <item android:title="@string/reset"

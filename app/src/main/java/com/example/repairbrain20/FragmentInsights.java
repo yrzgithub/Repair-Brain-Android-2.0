@@ -15,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -24,9 +26,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
@@ -38,10 +43,14 @@ public class FragmentInsights extends Fragment {
 
     ImageView no_results;
     ListView list;
+    DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
+    Map<String,Insight> insights;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        AdapterListInsights.remove = false;
         super.onCreate(savedInstanceState);
     }
 
@@ -55,10 +64,10 @@ public class FragmentInsights extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        this.view = view;
+
         no_results = view.findViewById(R.id.no_results);
         list = view.findViewById(R.id.list);
-
-        Glide.with(this).load(R.drawable.noresultfound).into(no_results);
 
         DatabaseReference reference = User.getMainReference();
         reference
@@ -66,7 +75,7 @@ public class FragmentInsights extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Map<String,Insight> insights = snapshot.getValue(new GenericTypeIndicator<Map<String, Insight>>() {
+                        insights = snapshot.getValue(new GenericTypeIndicator<Map<String, Insight>>() {
                             @NonNull
                             @Override
                             public String toString() {
@@ -74,7 +83,13 @@ public class FragmentInsights extends Fragment {
                             }
                         });
 
-                        AdapterListInsights adapter = new AdapterListInsights(getActivity(),view,insights);
+                        Log.e("uruttu_insights",insights.toString());
+
+                        AdapterListInsights adapter;
+
+                        if(AdapterListInsights.remove) adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights,true);
+                        else adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights);
+
                         list.setAdapter(adapter);
                     }
 
@@ -98,8 +113,45 @@ public class FragmentInsights extends Fragment {
                 View view = getActivity().getLayoutInflater().inflate(R.layout.custom_adapter_steps,null);
 
                 EditText name = view.findViewById(R.id.name);
-                EditText source = view.findViewById(R.id.source_name);
+                AutoCompleteTextView source = view.findViewById(R.id.source_name);
                 EditText link = view.findViewById(R.id.link);
+
+                source.setThreshold(0);
+
+                source.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        source.showDropDown();
+                    }
+                });
+
+                if(common_reference!=null)
+                {
+                    common_reference
+                            .child("common_steps_sources")
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        List<String> keys = task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
+                                            @NonNull
+                                            @Override
+                                            public String toString() {
+                                                return super.toString();
+                                            }
+                                        });
+
+                                        if(keys!=null)
+                                        {
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,keys);
+                                            source.setAdapter(adapter);
+                                        }
+                                    }
+                                }
+                            });
+                    }
 
                 new AlertDialog.Builder(getActivity())
                         .setView(view)
@@ -135,6 +187,9 @@ public class FragmentInsights extends Fragment {
                                     return;
                                 }
 
+                                Snackbar snack = Snackbar.make(FragmentInsights.this.view,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                snack.show();
+
                                 reference
                                         .child("insights")
                                         .child(name_)
@@ -142,7 +197,7 @@ public class FragmentInsights extends Fragment {
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-
+                                                snack.dismiss();
                                             }
                                         });
                             }
@@ -153,11 +208,18 @@ public class FragmentInsights extends Fragment {
                 break;
 
             case R.id.delete:
+                if(insights==null || insights.size()==0)
+                {
+                    Toast.makeText(getActivity(),"Insights list is empty",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    list.setAdapter(new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights,true));
+                }
                 break;
 
             case R.id.reset:
                 break;
-
 
         }
 
@@ -167,7 +229,6 @@ public class FragmentInsights extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_insights,menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }
 
