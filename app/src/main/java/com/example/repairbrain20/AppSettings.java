@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.Nullable;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,10 +16,11 @@ public class AppSettings
     boolean show_notification = true;
     int hour,minute;
     SharedPreferences.Editor editor;
+    SharedPreferences preferences;
 
     AppSettings(Activity act)
     {
-        SharedPreferences preferences = act.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        preferences = act.getSharedPreferences("settings", Context.MODE_PRIVATE);
         editor = preferences.edit();
 
         auto_login = preferences.getBoolean("auto_login",false);
@@ -36,6 +38,11 @@ public class AppSettings
         show_notification = preferences.getBoolean("show_notification",true);
         hour = preferences.getInt("hour",7);
         minute = preferences.getInt("minute",0);
+    }
+
+    public SharedPreferences getSharedPreference()
+    {
+        return preferences;
     }
 
     public boolean isAuto_login() {

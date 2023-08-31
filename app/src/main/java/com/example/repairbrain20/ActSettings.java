@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -40,7 +41,7 @@ import java.util.Calendar;
 
 public class ActSettings extends AppCompatActivity {
 
-    RelativeLayout auto_login,notification;
+    RelativeLayout auto_login,notification,time_rel;
     SwitchCompat auto_login_switch,notification_switch;
     TextView delete,time;
     LinearLayout main;
@@ -56,6 +57,7 @@ public class ActSettings extends AppCompatActivity {
 
         auto_login = findViewById(R.id.login_rel);
         notification = findViewById(R.id.notification_rel);
+        time_rel = findViewById(R.id.time_rel);
 
         time = findViewById(R.id.notify_time_txt);
 
@@ -63,6 +65,11 @@ public class ActSettings extends AppCompatActivity {
         notification_switch = findViewById(R.id.notify_switch);
 
         delete = findViewById(R.id.del_acc);
+
+        auto_login_switch.setChecked(settings.isAuto_login());
+        notification_switch.setChecked(settings.isShow_notification());
+
+        setTime(settings);
 
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,12 +128,10 @@ public class ActSettings extends AppCompatActivity {
             }
         });
 
-        notification.setOnClickListener(new View.OnClickListener() {
+        time_rel.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(ActSettings.this,"clicked",Toast.LENGTH_SHORT).show();;
 
                 Calendar calender = Calendar.getInstance();
                 int hour = calender.get(Calendar.HOUR_OF_DAY);
@@ -137,9 +142,28 @@ public class ActSettings extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                         settings.setHour(hour);
                         settings.setMinute(minute);
+                        setTime(settings);
                     }
-                },hour,minute,true).show();
+                },hour,minute,false).show();
             }
         });
+    }
+
+    public void setTime(AppSettings settings)
+    {
+        int hour = settings.getHour();
+        int minute = settings.getMinute();
+
+        String time;
+
+        if(hour>12)
+        {
+            time = String.format("%02d:%02d %s",hour-12,minute,"PM");
+        }
+        else
+        {
+            time = String.format("%02d:%02d %s",hour,minute,"AM");
+        }
+        this.time.setText(time);
     }
 }
