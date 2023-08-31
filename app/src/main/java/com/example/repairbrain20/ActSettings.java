@@ -126,6 +126,8 @@ public class ActSettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Toast.makeText(ActSettings.this,"clicked",Toast.LENGTH_SHORT).show();;
+
                 Calendar calender = Calendar.getInstance();
                 int hour = calender.get(Calendar.HOUR_OF_DAY);
                 int minute = calender.get(Calendar.MINUTE);

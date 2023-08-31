@@ -1,5 +1,6 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,25 +27,30 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         this.context = context;
 
-        createChannel();
+        AppSettings settings = new AppSettings(context);
 
-        Intent open = new Intent(context, ActLogin.class);
-        PendingIntent open_pending = PendingIntent.getActivity(context, 100, open, PendingIntent.FLAG_IMMUTABLE);
+        if(settings.isShow_notification())
+        {
+            createChannel();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ID)
-                .setContentTitle(context.getResources().getString(R.string.app_name))
-                .setSmallIcon(R.drawable.icon_app)
-                .setAutoCancel(true)
-                .setContentText("Are you free?")
-                .setContentIntent(open_pending)
-                .setPriority(NotificationManager.IMPORTANCE_MAX);
+            Intent open = new Intent(context, ActLogin.class);
+            PendingIntent open_pending = PendingIntent.getActivity(context, 100, open, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ID)
+                    .setContentTitle(context.getResources().getString(R.string.app_name))
+                    .setSmallIcon(R.drawable.icon_app)
+                    .setAutoCancel(true)
+                    .setContentText("Are you free?")
+                    .setContentIntent(open_pending)
+                    .setPriority(NotificationManager.IMPORTANCE_MAX);
 
-        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            return;
+            NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
+
+            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            managerCompat.notify(100, builder.build());
         }
-        managerCompat.notify(100, builder.build());
     }
 
     public NotificationManager createChannel()

@@ -27,6 +27,17 @@ public class AppSettings
         minute = preferences.getInt("minute",0);
     }
 
+    AppSettings(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        editor = preferences.edit();
+
+        auto_login = preferences.getBoolean("auto_login",false);
+        show_notification = preferences.getBoolean("show_notification",true);
+        hour = preferences.getInt("hour",7);
+        minute = preferences.getInt("minute",0);
+    }
+
     public boolean isAuto_login() {
         return auto_login;
     }
