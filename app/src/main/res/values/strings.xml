@@ -108,5 +108,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="insights">Insights</string>
     <string name="settings">Settings</string>
+    <string name="auto_login">Auto Login</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="notifications">Notifications</string>
+    <string name="show_notification">Show Notification</string>
+    <string name="show_by">Show By</string>
+    <string name="_2_10_pm">2:10 PM</string>
 
 </resources>

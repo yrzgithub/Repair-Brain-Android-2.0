@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
         android:layout_marginBottom="5dp"
         android:textStyle="bold"
         android:textColor="#00DEFF"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Auto Login"
+            android:text="@string/auto_login"
             android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:textSize="18sp"
@@ -54,7 +54,7 @@
         android:id="@+id/del_acc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete Account"
+        android:text="@string/delete_account"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_gravity="start"
@@ -73,7 +73,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Notifications"
+        android:text="@string/notifications"
         android:layout_marginBottom="5dp"
         android:textStyle="bold"
         android:textColor="#00DEFF"
@@ -92,7 +92,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show Notification"
+            android:text="@string/show_notification"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_gravity="center"
@@ -120,7 +120,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Notification Time"
+            android:text="@string/show_by"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_gravity="start"
@@ -132,7 +132,7 @@
             android:id="@+id/notify_time_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2:10 PM"
+            android:text="@string/_2_10_pm"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_gravity="end"

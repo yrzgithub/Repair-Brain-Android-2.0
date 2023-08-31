@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -22,6 +23,8 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         this.context = context;
+
+       // Toast.makeText(context,"Received",Toast.LENGTH_SHORT).show();
 
         AppSettings settings = new AppSettings(context);
 
@@ -42,8 +45,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
 
-            managerCompat.notify(100, builder.build());
-
+            managerCompat.notify(2002, builder.build());
         }
     }
 

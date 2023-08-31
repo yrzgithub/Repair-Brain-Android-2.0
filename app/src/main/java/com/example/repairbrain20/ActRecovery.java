@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,8 +40,8 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY,settings.getHour());
-        calendar.set(Calendar.MINUTE,settings.getMinute());
+        calendar.set(Calendar.HOUR_OF_DAY,19);
+        calendar.set(Calendar.MINUTE,44);
         calendar.set(Calendar.SECOND,0);
 
         AlarmManager manager =  (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -48,7 +49,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         Intent alarm_intent = new Intent(this,AlarmReceiver.class);
         PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_MUTABLE);
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_FIFTEEN_MINUTES,alarm_pending);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
 
         DrawerLayout drawer = findViewById(R.id.drawer);
 
@@ -154,11 +155,13 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.about:
-                intent = new Intent(this,ActAbout.class);
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://github.com/yrzgithub/Repair-Brain-Android-3.0"));
                 startActivity(intent);
                 break;
 
             case R.id.contact_developer:
+                startActivity(new Intent(this,ActContactDeveloper.class));
                 break;
 
             case R.id.logout:
