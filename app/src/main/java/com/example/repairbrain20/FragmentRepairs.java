@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -114,6 +116,9 @@ public class FragmentRepairs extends Fragment {
         switch (item.getItemId()) {
             case R.id.add:
                 View view = View.inflate(getActivity(), R.layout.add_repair, null);
+
+                AppCompatSpinner spinner = view.findViewById(R.id.spinner);
+                spinner.setAdapter(new ArrayAdapter<String>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Arrays.stream(RepairsType.values()).map(RepairsType::getName).toArray(String[]::new)));
 
                 AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
                 addiction_edit.setThreshold(0);

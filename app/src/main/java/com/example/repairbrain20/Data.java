@@ -3,9 +3,11 @@ package com.example.repairbrain20;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntFunction;
 
 
 public class Data {
@@ -242,6 +244,11 @@ enum RepairsType
 
     public String getName() {
         return name;
+    }
+
+    public String[] getValues()
+    {
+        return Arrays.stream(values()).map(RepairsType::getName).toArray(String[]::new);
     }
 }
 
