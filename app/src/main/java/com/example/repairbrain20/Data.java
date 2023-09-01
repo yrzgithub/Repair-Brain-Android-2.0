@@ -1,19 +1,11 @@
 package com.example.repairbrain20;
 
-import android.util.Patterns;
-
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.utilities.Validation;
-import com.google.firebase.ktx.Firebase;
-
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 
 public class Data {
@@ -238,21 +230,38 @@ class Common
     }
 }
 
+enum RepairsType
+{
+    Physical("Physical"),Mental("Mental"),Emotional("Emotional"),Spiritual("Spiritual");
+    final String name;
+
+    private RepairsType(String name)
+    {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
 class Repairs
 {
     String date_added;
     Time lastly_relapsed;
+    RepairsType type;
 
     Repairs()
     {
 
     }
 
-    Repairs(LocalDateTime local_date_time)
+    Repairs(LocalDateTime local_date_time,RepairsType type)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
         date_added =  local_date_time.format(formatter);
         lastly_relapsed = new Time(local_date_time);
+        this.type = type;
     }
 
     public String getDate_added() {
@@ -269,6 +278,14 @@ class Repairs
 
     public void setLastly_relapsed(Time lastly_relapsed) {
         this.lastly_relapsed = lastly_relapsed;
+    }
+
+    public RepairsType getType() {
+        return type;
+    }
+
+    public void setType(RepairsType type) {
+        this.type = type;
     }
 }
 

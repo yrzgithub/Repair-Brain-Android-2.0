@@ -113,10 +113,9 @@ public class FragmentRepairs extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.add:
-                View view = View.inflate(getActivity(), R.layout.alert_dialog, null);
+                View view = View.inflate(getActivity(), R.layout.add_repair, null);
 
                 AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
-                addiction_edit.setHint("Search or Enter");
                 addiction_edit.setThreshold(0);
 
                 addiction_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -156,7 +155,7 @@ public class FragmentRepairs extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                Repairs addiction = new Repairs(LocalDateTime.now());
+                                Repairs addiction = new Repairs(LocalDateTime.now(),RepairsType.Physical);
                                 String addiction_ = addiction_edit.getText().toString().trim();
 
                                 if (!Data.isValidKey(addiction_)) {
