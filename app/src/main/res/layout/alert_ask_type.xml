@@ -29,12 +29,10 @@
 
     </LinearLayout>
 
-    <AutoCompleteTextView
-        android:id="@+id/effects_list"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:completionThreshold="0"
+    <androidx.appcompat.widget.AppCompatSpinner
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"/>
 
 </LinearLayout>
