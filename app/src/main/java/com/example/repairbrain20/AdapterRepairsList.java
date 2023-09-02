@@ -130,8 +130,7 @@ public class AdapterRepairsList extends BaseAdapter {
 
         ImageView delete_or_go = view.findViewById(R.id.delete_or_go);
 
-        String key = keys.get(i).trim().toLowerCase();
-        String title =  key.substring(0,1).toUpperCase() + key.substring(1);
+        String key = keys.get(i);
 
         Repairs addiction = this.addictions.get(key);
 
@@ -142,8 +141,8 @@ public class AdapterRepairsList extends BaseAdapter {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(act, title +" Selected",Toast.LENGTH_SHORT).show();
-                User.setAddiction(act, title);
+                Toast.makeText(act, key +" Selected",Toast.LENGTH_SHORT).show();
+                User.setAddiction(act, key);
                 act.startActivity(new Intent(act, ActHome.class));
             }
         });
@@ -247,7 +246,7 @@ public class AdapterRepairsList extends BaseAdapter {
             }
         });
 
-        addiction_name_view.setText(title);
+        addiction_name_view.setText(key);
         date_added_view.setText(date_added);
 
         return view;
