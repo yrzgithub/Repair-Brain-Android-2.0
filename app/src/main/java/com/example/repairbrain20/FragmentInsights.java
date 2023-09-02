@@ -69,6 +69,8 @@ public class FragmentInsights extends Fragment {
         no_results = view.findViewById(R.id.no_results);
         list = view.findViewById(R.id.list);
 
+        Glide.with(this).load(R.drawable.noresultfound).into(no_results);
+
         DatabaseReference reference = User.getMainReference();
         if(reference!=null)
         {
