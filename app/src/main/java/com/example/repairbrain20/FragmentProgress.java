@@ -123,6 +123,8 @@ public class FragmentProgress extends Fragment {
                                     pos_effect.setText(R.string.not_found);
                                     next_step.setText(R.string.not_found);
                                     neg_effect.setText(R.string.not_found);
+                                    progress.setVisibility(View.VISIBLE);
+                                    loading.setVisibility(View.GONE);
                                     return;
                                 }
 
@@ -156,6 +158,12 @@ public class FragmentProgress extends Fragment {
 
                                 lastly_relapse.setText(lastly_relapsed_str);
                                 time_gone.setEnabled(true);
+                            }
+
+                            else
+                            {
+                                progress.setVisibility(View.VISIBLE);
+                                loading.setVisibility(View.GONE);
                             }
                         }
                     });
