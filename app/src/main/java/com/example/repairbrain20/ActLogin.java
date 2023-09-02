@@ -65,7 +65,6 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY,settings.getHour());
         calendar.set(Calendar.MINUTE,settings.getMinute());
-        calendar.set(Calendar.SECOND,0);
 
         AlarmManager manager =  (AlarmManager) getSystemService(ALARM_SERVICE);
 
