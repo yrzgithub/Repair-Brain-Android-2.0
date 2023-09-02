@@ -247,7 +247,7 @@ class Repairs
 
     }
 
-    Repairs(LocalDateTime local_date_time)
+    Repairs(LocalDateTime local_date_time,boolean type)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
         date_added =  local_date_time.format(formatter);
