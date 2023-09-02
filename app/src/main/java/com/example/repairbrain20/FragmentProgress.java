@@ -164,8 +164,6 @@ public class FragmentProgress extends Fragment {
                                         long minutes = duration.toMinutes() % 60;
                                         long seconds = duration.getSeconds() % 60;
 
-                                        Log.e("sanjay",String.valueOf(hours));
-
                                         int hrs = (int)hours;
                                         progress.setProgress(hrs); // change
                                         hrs_left.setText(String.format("%02d",24-hrs));

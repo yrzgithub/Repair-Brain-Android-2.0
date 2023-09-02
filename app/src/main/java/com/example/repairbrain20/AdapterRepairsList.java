@@ -130,10 +130,13 @@ public class AdapterRepairsList extends BaseAdapter {
 
         ImageView delete_or_go = view.findViewById(R.id.delete_or_go);
 
-        String key = keys.get(i);
+        String key = keys.get(i).trim().toLowerCase();
         String title =  key.substring(0,1).toUpperCase() + key.substring(1);
 
         Repairs addiction = this.addictions.get(key);
+
+        DatabaseReference reference = User.getMainReference();
+
         String date_added = addiction.getDate_added();
 
         main.setOnClickListener(new View.OnClickListener() {
@@ -144,8 +147,6 @@ public class AdapterRepairsList extends BaseAdapter {
                 act.startActivity(new Intent(act, ActHome.class));
             }
         });
-
-        DatabaseReference reference = User.getMainReference();
 
         if(delete)
         {

@@ -157,7 +157,7 @@ public class FragmentRepairs extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 Repairs addiction = new Repairs(LocalDateTime.now());
-                                String addiction_ = addiction_edit.getText().toString().trim();
+                                String addiction_ = addiction_edit.getText().toString().trim().toLowerCase();
 
                                 if (!Data.isValidKey(addiction_)) {
                                     Toast.makeText(getActivity(), "Invalid Repair", Toast.LENGTH_SHORT).show();
