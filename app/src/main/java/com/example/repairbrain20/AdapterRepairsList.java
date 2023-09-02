@@ -208,6 +208,7 @@ public class AdapterRepairsList extends BaseAdapter {
                                                                 }
 
                                                                 reference.child(key).child("note").setValue(link);
+                                                                browse(link);
                                                             }
                                                         })
                                                         .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -221,21 +222,7 @@ public class AdapterRepairsList extends BaseAdapter {
                                             }
                                             else
                                             {
-                                                try
-                                                {
-                                                    if(!link.startsWith("http"))
-                                                    {
-                                                        link = "https://" + link;
-                                                    }
-
-                                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                                                    intent.setData(Uri.parse(link));
-                                                    act.startActivity(intent);
-                                                }
-                                                catch (Exception | Error e)
-                                                {
-                                                    Toast.makeText(act,"Invalid note link",Toast.LENGTH_SHORT).show();
-                                                }
+                                                browse(link);
                                             }
                                         }
                                     }
@@ -251,4 +238,24 @@ public class AdapterRepairsList extends BaseAdapter {
 
         return view;
     }
+
+    public void browse(String link)
+    {
+        try
+        {
+            if(!link.startsWith("http"))
+            {
+                link = "https://" + link;
+            }
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(link));
+            act.startActivity(intent);
+        }
+        catch (Exception | Error e)
+        {
+            Toast.makeText(act,"Invalid note link",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
