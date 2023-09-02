@@ -1,13 +1,19 @@
 package com.example.repairbrain20;
 
+import android.util.Patterns;
+
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.core.utilities.Validation;
+import com.google.firebase.ktx.Firebase;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.IntFunction;
+import java.util.regex.Pattern;
 
 
 public class Data {
@@ -229,26 +235,6 @@ class Common
 
     public void setSource(String source) {
         this.source = source;
-    }
-}
-
-enum RepairsType
-{
-    Physical("Physical"),Mental("Mental"),Emotional("Emotional"),Spiritual("Spiritual");
-    final String name;
-
-    private RepairsType(String name)
-    {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String[] getValues()
-    {
-        return Arrays.stream(values()).map(RepairsType::getName).toArray(String[]::new);
     }
 }
 
