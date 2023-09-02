@@ -253,6 +253,8 @@ public class FragmentSteps extends Fragment {
                                                     snack.dismiss();
                                                 }
                                             });
+
+                                    reference.child("lastly_noted_next_steps").setValue(step);
                                 }
                             }
                         })

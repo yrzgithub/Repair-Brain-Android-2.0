@@ -181,29 +181,4 @@ public class FragmentProgress extends Fragment {
                     });
         }
     }
-
-    public LocalDateTime getLocalDateTime(Map<String,Object> data,String key)
-    {
-
-        Map<String,Object> map;
-
-        try {
-            map = (Map<String, Object>) data.get(key);
-            assert map!=null;
-        }
-        catch (Exception | Error e)
-        {
-            return null;
-        }
-
-        int year = Integer.valueOf(map.get("year").toString());
-        int month = Integer.parseInt(map.get("month").toString());
-        int day = Integer.parseInt(map.get("day").toString());
-        int hour = Integer.parseInt(map.get("hour").toString());
-        int minute = Integer.parseInt(map.get("minute").toString());
-        int second = Integer.parseInt(map.get("second").toString());
-
-        return LocalDateTime.of(year,month,day,hour,minute,second);
-    }
-
 }

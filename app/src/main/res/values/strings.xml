@@ -6,8 +6,6 @@
 
     <string name="lastly_relapsed">Relapsed On</string>
     <string name="next_step">Next Step</string>
-    <string name="ve_effect">+ve Effect</string>
-    <string name="neg_ve_effect">-ve Effect</string>
     <string name="enter_the_positive_effect">Enter the +ve effect</string>
     <string name="enter_the_ve_effect">Enter the -ve effect</string>
     <string name="enter_the_next_step">Enter the next step</string>
@@ -48,7 +46,7 @@
     <string name="verify_password">Verify Password</string>
     <string name="hrs_left">hrs left</string>
     <string name="habits">Habits</string>
-    <string name="change">change</string>
+    <string name="change">Change</string>
     <string name="next">next</string>
     <string name="effects">Effects</string>
     <string name="_0">00</string>
@@ -115,5 +113,6 @@
     <string name="show_by">Show By</string>
     <string name="_2_10_pm">2:10 PM</string>
     <string name="username_">Username :</string>
+    <string name="challenge">Challenge</string>
 
 </resources>

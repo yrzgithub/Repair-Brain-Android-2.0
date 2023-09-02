@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:padding="15dp"
-                android:text="@string/ve_effect"
+                android:text="@string/change"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -253,7 +253,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:padding="15dp"
-                android:text="@string/neg_ve_effect"
+                android:text="@string/challenge"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
