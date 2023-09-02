@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 
 public class Data {
 
+    static float CURRENT_VERSION = 3.0F;
+
     public static boolean isValidKey(String key)
     {
         return key.matches("^(?![\\[\\].$#])[^\\[\\].$#]*$");
@@ -390,5 +392,31 @@ class Contact
 
     public void setLink(String link) {
         this.link = link;
+    }
+}
+
+class Version
+{
+    String link,name;
+
+    Version()
+    {
+
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

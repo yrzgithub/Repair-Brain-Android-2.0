@@ -2,6 +2,7 @@ package com.example.repairbrain20;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -9,17 +10,26 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -70,6 +80,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         LinearLayout recovery = findViewById(R.id.recovery);
         LinearLayout effects = findViewById(R.id.effects);
         LinearLayout journey = findViewById(R.id.journey);
+        LinearLayout update = findViewById(R.id.update);
         LinearLayout about = findViewById(R.id.about);
         LinearLayout contact_developer = findViewById(R.id.contact_developer);
         LinearLayout logout = findViewById(R.id.logout);
@@ -79,6 +90,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         recovery.setOnClickListener(this);
         effects.setOnClickListener(this);
         journey.setOnClickListener(this);
+        update.setOnClickListener(this);
         about.setOnClickListener(this);
         contact_developer.setOnClickListener(this);
         logout.setOnClickListener(this);
@@ -139,10 +151,61 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
 
+            case R.id.update:
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+                ProgressDialog progress = new ProgressDialog(this);
+                progress.setCanceledOnTouchOutside(false);
+                progress.setOnCancelListener(null);
+                progress.setMessage("Checking");
+                progress.show();
+
+                reference
+                        .child("versions")
+                        .child("latest_version")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                progress.dismiss();
+
+                                if(task.isSuccessful())
+                                {
+                                    Version version = task.getResult().getValue(Version.class);
+                                    try
+                                    {
+                                        float latest_version = Float.parseFloat(version.getName());
+                                        if(Data.CURRENT_VERSION<latest_version)
+                                        {
+                                            new AlertDialog.Builder(ActRecovery.this)
+                                                    .setTitle(R.string.app_name)
+                                                    .setIcon(R.drawable.icon_app)
+                                                    .setMessage("Update Available")
+                                                    .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            open_github();
+                                                        }
+                                                    })
+                                                    .setNegativeButton("Cancel",null)
+                                                    .show();
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(ActRecovery.this,"Already in Latest Version",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Toast.makeText(ActRecovery.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        });
+                break;
+
             case R.id.about:
-                intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://github.com/yrzgithub/Repair-Brain-Android-3.0"));
-                startActivity(intent);
+                open_github();
                 break;
 
             case R.id.contact_developer:
@@ -162,4 +225,12 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
         }
     }
+
+    public void open_github()
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://github.com/yrzgithub/Repair-Brain-Android-3.0"));
+        startActivity(intent);
+    }
+
 }
