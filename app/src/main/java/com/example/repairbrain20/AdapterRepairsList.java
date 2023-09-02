@@ -153,6 +153,17 @@ public class AdapterRepairsList extends BaseAdapter {
             main.setEnabled(false);
         }
 
+        delete_or_go.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if(!delete)
+                {
+                    add_note(reference,key);
+                }
+                return true;
+            }
+        });
+
         delete_or_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,37 +199,8 @@ public class AdapterRepairsList extends BaseAdapter {
 
                                             if(link==null)
                                             {
-
                                                 Toast.makeText(act,"Note link not found",Toast.LENGTH_SHORT).show();
-
-                                                View view_ = act.getLayoutInflater().inflate(R.layout.alert_note,null);
-                                                EditText link_ = view_.findViewById(R.id.effects_list);
-
-                                                new AlertDialog.Builder(act)
-                                                        .setView(view_)
-                                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                                String link = link_.getText().toString();
-
-                                                                if(!FragmentSteps.isValidLink(link))
-                                                                {
-                                                                    Toast.makeText(act,"Invalid link",Toast.LENGTH_LONG).show();
-                                                                    return;
-                                                                }
-
-                                                                reference.child(key).child("note").setValue(link);
-                                                                browse(link);
-                                                            }
-                                                        })
-                                                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                            }
-                                                        })
-                                                        .create()
-                                                        .show();
+                                                add_note(reference,key);
                                             }
                                             else
                                             {
@@ -256,6 +238,38 @@ public class AdapterRepairsList extends BaseAdapter {
         {
             Toast.makeText(act,"Invalid note link",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void add_note(DatabaseReference reference,String key)
+    {
+        View view_ = act.getLayoutInflater().inflate(R.layout.alert_note,null);
+        EditText link_ = view_.findViewById(R.id.effects_list);
+
+        new AlertDialog.Builder(act)
+                .setView(view_)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String link = link_.getText().toString();
+
+                        if(!FragmentSteps.isValidLink(link))
+                        {
+                            Toast.makeText(act,"Invalid link",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        reference.child(key).child("note").setValue(link);
+                        browse(link);
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .create()
+                .show();
     }
 
 }

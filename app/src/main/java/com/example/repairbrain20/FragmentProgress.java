@@ -139,12 +139,7 @@ public class FragmentProgress extends Fragment {
 
                                 Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
-                                long days = duration.toDays();
                                 long hours = duration.toHours() % 24;
-                                long minutes = duration.toMinutes() % 60;
-                                long seconds = duration.getSeconds() % 60;
-
-                                Log.e("sanjay",String.valueOf(hours));
 
                                 int hrs = (int)hours;
                                 progress.setProgress(hrs); // change
@@ -165,7 +160,6 @@ public class FragmentProgress extends Fragment {
                                         long seconds = duration.getSeconds() % 60;
 
                                         int hrs = (int)hours;
-                                        progress.setProgress(hrs); // change
                                         hrs_left.setText(String.format("%02d",24-hrs));
 
                                         String format = "%d days %d hrs %d mins %d secs";
