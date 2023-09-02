@@ -220,7 +220,6 @@ class Common
         this.source = source;
         this.link = link;
     }
-
     public String getLink() {
         return link;
     }
