@@ -139,10 +139,7 @@ public class FragmentProgress extends Fragment {
 
                                 Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
-                                long days = duration.toDays();
                                 long hours = duration.toHours() % 24;
-                                long minutes = duration.toMinutes() % 60;
-                                long seconds = duration.getSeconds() % 60;
 
                                 Log.e("sanjay",String.valueOf(hours));
 
@@ -164,10 +161,7 @@ public class FragmentProgress extends Fragment {
                                         long minutes = duration.toMinutes() % 60;
                                         long seconds = duration.getSeconds() % 60;
 
-                                        Log.e("sanjay",String.valueOf(hours));
-
                                         int hrs = (int)hours;
-                                        progress.setProgress(hrs); // change
                                         hrs_left.setText(String.format("%02d",24-hrs));
 
                                         String format = "%d days %d hrs %d mins %d secs";
@@ -189,29 +183,4 @@ public class FragmentProgress extends Fragment {
                     });
         }
     }
-
-    public LocalDateTime getLocalDateTime(Map<String,Object> data,String key)
-    {
-
-        Map<String,Object> map;
-
-        try {
-            map = (Map<String, Object>) data.get(key);
-            assert map!=null;
-        }
-        catch (Exception | Error e)
-        {
-            return null;
-        }
-
-        int year = Integer.valueOf(map.get("year").toString());
-        int month = Integer.parseInt(map.get("month").toString());
-        int day = Integer.parseInt(map.get("day").toString());
-        int hour = Integer.parseInt(map.get("hour").toString());
-        int minute = Integer.parseInt(map.get("minute").toString());
-        int second = Integer.parseInt(map.get("second").toString());
-
-        return LocalDateTime.of(year,month,day,hour,minute,second);
-    }
-
 }
