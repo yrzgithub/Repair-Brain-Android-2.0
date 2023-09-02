@@ -72,7 +72,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         Intent alarm_intent = new Intent(this,AlarmReceiver.class);
         PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_MUTABLE);
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+        manager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
 
         if(getSupportActionBar()!=null)
         {

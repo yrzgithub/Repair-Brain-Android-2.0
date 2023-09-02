@@ -79,8 +79,6 @@ public class ActHome extends AppCompatActivity {
                             long minutes = duration.toMinutes() % 60;
                             long seconds = duration.getSeconds() % 60;
 
-                            Log.e("sanjay",String.valueOf(hours));
-
                             String format = "%d days %d hrs %d mins %d secs";
                             String time_ = String.format(format,days,hours,minutes,seconds);
 
