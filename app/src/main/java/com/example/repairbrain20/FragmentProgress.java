@@ -123,6 +123,8 @@ public class FragmentProgress extends Fragment {
                                     pos_effect.setText(R.string.not_found);
                                     next_step.setText(R.string.not_found);
                                     neg_effect.setText(R.string.not_found);
+                                    progress.setVisibility(View.VISIBLE);
+                                    loading.setVisibility(View.GONE);
                                     return;
                                 }
 
@@ -139,51 +141,29 @@ public class FragmentProgress extends Fragment {
 
                                 Duration duration = Duration.between(finalLastly_relapsed_object,now);
 
-                                long days = duration.toDays();
                                 long hours = duration.toHours() % 24;
-                                long minutes = duration.toMinutes() % 60;
-                                long seconds = duration.getSeconds() % 60;
-
-                                Log.e("sanjay",String.valueOf(hours));
 
                                 int hrs = (int)hours;
                                 progress.setProgress(hrs); // change
                                 hrs_left.setText(String.format("%02d",24-hrs));
 
-                                Handler handler = new Handler();
-                                Runnable runnable = new Runnable() {
-                                    @SuppressLint("DefaultLocale")
-                                    @Override
-                                    public void run() {
-                                        LocalDateTime now = LocalDateTime.now();
+                                long days = duration.toDays();
+                                long minutes = duration.toMinutes() % 60;
+                                long seconds = duration.getSeconds() % 60;
 
-                                        Duration duration = Duration.between(finalLastly_relapsed_object,now);
+                                String format = "%d days %d hrs %d mins %d secs";
+                                String time = String.format(format,days,hours,minutes,seconds);
 
-                                        long days = duration.toDays();
-                                        long hours = duration.toHours() % 24;
-                                        long minutes = duration.toMinutes() % 60;
-                                        long seconds = duration.getSeconds() % 60;
-
-                                        Log.e("sanjay",String.valueOf(hours));
-
-                                        int hrs = (int)hours;
-                                        progress.setProgress(hrs); // change
-                                        hrs_left.setText(String.format("%02d",24-hrs));
-
-                                        String format = "%d days %d hrs %d mins %d secs";
-                                        String time = String.format(format,days,hours,minutes,seconds);
-
-                                        time_gone.setText(time);
-
-                                        handler.postDelayed(this,1000);
-                                    }
-                                };
-
-                                runnable.run();
+                                time_gone.setText(time);
 
                                 lastly_relapse.setText(lastly_relapsed_str);
-
                                 time_gone.setEnabled(true);
+                            }
+
+                            else
+                            {
+                                progress.setVisibility(View.VISIBLE);
+                                loading.setVisibility(View.GONE);
                             }
                         }
                     });
