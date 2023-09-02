@@ -130,7 +130,7 @@ public class AdapterRepairsList extends BaseAdapter {
 
         ImageView delete_or_go = view.findViewById(R.id.delete_or_go);
 
-        String key = keys.get(i).trim().toLowerCase();
+        String key = keys.get(i);
         String title =  key.substring(0,1).toUpperCase() + key.substring(1);
 
         Repairs addiction = this.addictions.get(key);
