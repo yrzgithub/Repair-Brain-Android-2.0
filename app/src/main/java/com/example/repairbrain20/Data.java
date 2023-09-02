@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 public class Data {
 
-    static float CURRENT_VERSION = 3.0F;
+    static float CURRENT_VERSION = 2.0F;
 
     public static boolean isValidKey(String key)
     {

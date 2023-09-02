@@ -1,6 +1,7 @@
 package com.example.repairbrain20;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -97,7 +98,6 @@ public class FragmentInsights extends Fragment {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("uruttu_insights_error",error.getMessage());
                             if(getActivity()!=null) Glide.with(FragmentInsights.this).load(R.drawable.noresultfound).into(no_results);
                         }
                     });
@@ -235,6 +235,10 @@ public class FragmentInsights extends Fragment {
                                 }
                             });
                 }
+                break;
+
+            case R.id.settings:
+                startActivity(new Intent(getActivity(),ActSettings.class));
                 break;
 
         }

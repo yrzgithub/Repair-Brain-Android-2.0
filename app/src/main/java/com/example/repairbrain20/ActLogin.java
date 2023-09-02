@@ -240,6 +240,13 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                 break;
 
             case R.id.login_with_google:
+                ProgressDialog progress = new ProgressDialog(this);
+                progress.setMessage("Fetching Accounts");
+                progress.setOnCancelListener(null);
+                progress.setCanceledOnTouchOutside(false);
+
+                progress.show();
+
                 gso = new GoogleSignInOptions.Builder(DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))
                         .requestEmail()
@@ -249,6 +256,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                 client.revokeAccess().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        progress.dismiss();
                         Intent google_sign_in_intent =  client.getSignInIntent();
                         startActivityForResult(google_sign_in_intent,100);
                     }
