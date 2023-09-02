@@ -117,14 +117,17 @@ public class AdapterListDeveloperContact extends BaseAdapter {
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if(task.isSuccessful())
                                 {
-                                    Glide.with(activity).asDrawable().load(task.getResult())
-                                            .into(new SimpleTarget<Drawable>() {
-                                                @Override
-                                                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                                    icons.put(key_name,resource);
-                                                    image.setImageDrawable(resource);
-                                                }
-                                            });
+                                    if(!activity.isDestroyed())
+                                    {
+                                        Glide.with(activity).asDrawable().load(task.getResult())
+                                                .into(new SimpleTarget<Drawable>() {
+                                                    @Override
+                                                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                                        icons.put(key_name,resource);
+                                                        image.setImageDrawable(resource);
+                                                    }
+                                                });
+                                    }
                                 }
                             }
                         });
