@@ -256,19 +256,17 @@ class Repairs
 {
     String date_added;
     Time lastly_relapsed;
-    RepairsType type;
 
     Repairs()
     {
 
     }
 
-    Repairs(LocalDateTime local_date_time,RepairsType type)
+    Repairs(LocalDateTime local_date_time)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
         date_added =  local_date_time.format(formatter);
         lastly_relapsed = new Time(local_date_time);
-        this.type = type;
     }
 
     public String getDate_added() {
@@ -285,14 +283,6 @@ class Repairs
 
     public void setLastly_relapsed(Time lastly_relapsed) {
         this.lastly_relapsed = lastly_relapsed;
-    }
-
-    public RepairsType getType() {
-        return type;
-    }
-
-    public void setType(RepairsType type) {
-        this.type = type;
     }
 }
 

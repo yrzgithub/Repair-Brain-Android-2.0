@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
@@ -37,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -116,82 +113,74 @@ public class FragmentRepairs extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.add:
-                View view_ = View.inflate(getActivity(), R.layout.alert_ask_type, null);
-                new AlertDialog.Builder(getActivity())
-                        .setView(view_)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                View view = View.inflate(getActivity(), R.layout.alert_dialog, null);
+
+                AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
+                addiction_edit.setHint("Search or Enter");
+                addiction_edit.setThreshold(0);
+
+                addiction_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean b) {
+                        addiction_edit.showDropDown();
+                    }
+                });
+
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                reference.child("common_addictions")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                View view = View.inflate(getActivity(), R.layout.add_repair, null);
-
-                                AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
-                                addiction_edit.setThreshold(0);
-
-                                addiction_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                Map<String, Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                    @NonNull
                                     @Override
-                                    public void onFocusChange(View view, boolean b) {
-                                        addiction_edit.showDropDown();
+                                    public String toString() {
+                                        return super.toString();
                                     }
                                 });
 
-                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                                reference.child("common_addictions")
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                                Map<String, Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
-                                                    @NonNull
-                                                    @Override
-                                                    public String toString() {
-                                                        return super.toString();
-                                                    }
-                                                });
+                                if (map != null) {
+                                    List<String> list = new ArrayList<>(map.keySet());
 
-                                                if (map != null) {
-                                                    List<String> list = new ArrayList<>(map.keySet());
+                                    ArrayAdapter<String> common_list = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
+                                    addiction_edit.setAdapter(common_list);
+                                }
+                            }
+                        });
 
-                                                    ArrayAdapter<String> common_list = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
-                                                    addiction_edit.setAdapter(common_list);
+                new AlertDialog.Builder(getActivity())
+                        .setView(view)
+                        .setNegativeButton("cancel", null)
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                Repairs addiction = new Repairs(LocalDateTime.now());
+                                String addiction_ = addiction_edit.getText().toString().trim();
+
+                                if (!Data.isValidKey(addiction_)) {
+                                    Toast.makeText(getActivity(), "Invalid Repair", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                Snackbar snack = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                snack.show();
+
+                                DatabaseReference main_reference = User.getMainReference();
+
+                                if (main_reference != null) {
+                                    main_reference
+                                            .child(addiction_)
+                                            .setValue(addiction)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    User.setAddiction(getActivity(), addiction_);
+                                                    snack.dismiss();
                                                 }
-                                            }
-                                        });
-
-                                new AlertDialog.Builder(getActivity())
-                                        .setView(view)
-                                        .setNegativeButton("cancel", null)
-                                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                                Repairs addiction = new Repairs(LocalDateTime.now(),RepairsType.Physical);
-                                                String addiction_ = addiction_edit.getText().toString().trim();
-
-                                                if (!Data.isValidKey(addiction_)) {
-                                                    Toast.makeText(getActivity(), "Invalid Repair", Toast.LENGTH_SHORT).show();
-                                                    return;
-                                                }
-
-                                                Snackbar snack = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                                                snack.show();
-
-                                                DatabaseReference main_reference = User.getMainReference();
-
-                                                if (main_reference != null) {
-                                                    main_reference
-                                                            .child(addiction_)
-                                                            .setValue(addiction)
-                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    User.setAddiction(getActivity(), addiction_);
-                                                                    snack.dismiss();
-                                                                }
-                                                            });
-                                                }
-                                            }
-                                        })
-                                        .show();
+                                            });
+                                }
                             }
                         })
                         .show();
@@ -208,7 +197,7 @@ public class FragmentRepairs extends Fragment {
                 break;
 
             case R.id.reset:
-                DatabaseReference reference = User.getMainReference();
+                reference = User.getMainReference();
                 Snackbar snack = Snackbar.make(list, "Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
                 snack.show();
                 if (reference != null) {
