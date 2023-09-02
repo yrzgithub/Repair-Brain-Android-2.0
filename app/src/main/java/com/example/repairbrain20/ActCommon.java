@@ -171,7 +171,7 @@ public class ActCommon extends AppCompatActivity {
                                     return;
                                 }
 
-                                Common common = new Common(source_,link_);
+                                Common common = new Common(source_,link_); // common act
 
                                 if(common_reference!=null)
                                 {
