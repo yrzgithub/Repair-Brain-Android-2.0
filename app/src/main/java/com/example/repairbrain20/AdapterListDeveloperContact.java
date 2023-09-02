@@ -1,7 +1,6 @@
 package com.example.repairbrain20;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
@@ -88,23 +87,9 @@ public class AdapterListDeveloperContact extends BaseAdapter {
 
         String key_name = keys.get(i);
 
-        Contact contact_ = contact.get(key_name);
-
-        String username_ = contact_.getUsername();
-        String link = contact_.getLink();
-
-        go.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(link));
-                activity.startActivity(intent);
-            }
-        });
-
         if (icons.containsKey(key_name))
         {
-            image.setImageDrawable(icons.get(key_name));
+            image.setBackground(icons.get(key_name));
         }
         else
         {
@@ -122,7 +107,7 @@ public class AdapterListDeveloperContact extends BaseAdapter {
                                                 @Override
                                                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                                                     icons.put(key_name,resource);
-                                                    image.setImageDrawable(resource);
+                                                    image.setBackground(resource);
                                                 }
                                             });
                                 }
@@ -132,7 +117,6 @@ public class AdapterListDeveloperContact extends BaseAdapter {
         }
 
         name.setText(key_name);
-        username.setText(username_);
 
         return view;
     }
