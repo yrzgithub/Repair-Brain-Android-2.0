@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,10 +18,10 @@
         <ImageView
             android:id="@+id/loading"
             android:layout_width="0dp"
-            android:visibility="visible"
             android:layout_height="wrap_content"
             android:contentDescription="@string/none"
             android:src="@drawable/loading_pink_list"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/progress" />
@@ -31,10 +30,10 @@
             android:id="@+id/progress"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
             android:indeterminateOnly="false"
             android:progress="100"
             android:progressDrawable="@drawable/progress"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,13 +43,13 @@
             android:id="@+id/hrs_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="@string/hrs_left"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".53"
@@ -62,12 +61,12 @@
             android:id="@+id/hrs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:gravity="center"
             android:text="@string/_0"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/progress"
             app:layout_constraintHorizontal_bias=".40"
@@ -98,10 +97,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="40dp"
-        android:rowCount="4"
         android:columnCount="2"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:paddingRight="5dp"
+        android:rowCount="4">
 
         <LinearLayout
             android:layout_width="wrap_content"

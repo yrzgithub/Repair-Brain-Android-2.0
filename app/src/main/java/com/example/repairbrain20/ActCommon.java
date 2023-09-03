@@ -55,7 +55,7 @@ public class ActCommon extends AppCompatActivity {
         loading = findViewById(R.id.loading);
 
         cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-        check = new CheckNetwork(this,main);
+        check = new CheckNetwork(this, main);
 
         Glide.with(loading)
                 .load(R.drawable.loading_pink_list)
@@ -63,7 +63,7 @@ public class ActCommon extends AppCompatActivity {
 
         Intent intent = getIntent();
         type = intent.getStringExtra("common");
-        add = intent.getBooleanExtra("add",false);
+        add = intent.getBooleanExtra("add", false);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
@@ -85,13 +85,10 @@ public class ActCommon extends AppCompatActivity {
                             }
                         });
 
-                        if(add)
-                        {
+                        if (add) {
                             present = (ArrayList<String>) intent.getSerializableExtra("present");
-                            adapter = new AdapterCommonPosNegNext(ActCommon.this,common,present,type, true);
-                        }
-                        else
-                        {
+                            adapter = new AdapterCommonPosNegNext(ActCommon.this, common, present, type, true);
+                        } else {
                             adapter = new AdapterCommonPosNegNext(ActCommon.this, common);
                         }
 
@@ -102,7 +99,7 @@ public class ActCommon extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.common_effects_steps_menu,menu);
+        getMenuInflater().inflate(R.menu.common_effects_steps_menu, menu);
 
         MenuItem search = menu.findItem(R.id.search);
 
@@ -115,11 +112,11 @@ public class ActCommon extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(common!=null)
-                {
-                   Map<String,Common> map = common.entrySet().stream().filter(entry->entry.getKey().toLowerCase().contains(newText.toLowerCase())).collect(Collectors.toMap(x->x.getKey(),x->x.getValue()));
-                   if(add) list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this,map,present,type,true));
-                   else list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this,map));
+                if (common != null) {
+                    Map<String, Common> map = common.entrySet().stream().filter(entry -> entry.getKey().toLowerCase().contains(newText.toLowerCase())).collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+                    if (add)
+                        list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this, map, present, type, true));
+                    else list.setAdapter(new AdapterCommonPosNegNext(ActCommon.this, map));
                 }
                 return true;
             }
@@ -130,14 +127,13 @@ public class ActCommon extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        View view = LayoutInflater.from(this).inflate(R.layout.suggest_alert_dialog,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.suggest_alert_dialog, null);
 
         EditText name = view.findViewById(R.id.name);
         EditText source = view.findViewById(R.id.source);
         EditText link = view.findViewById(R.id.link);
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.suggest:
                 new AlertDialog.Builder(this)
                         .setView(view)
@@ -148,39 +144,35 @@ public class ActCommon extends AppCompatActivity {
                                 String source_ = source.getText().toString();
                                 String link_ = link.getText().toString();
 
-                                if(!isValid(name_))
-                                {
-                                    Toast.makeText(ActCommon.this,"Name cannot be empty",Toast.LENGTH_SHORT).show();
+                                if (!isValid(name_)) {
+                                    Toast.makeText(ActCommon.this, "Name cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if(!isValid(source_))
-                                {
-                                    Toast.makeText(ActCommon.this,"Source cannot be empty",Toast.LENGTH_SHORT).show();
+                                if (!isValid(source_)) {
+                                    Toast.makeText(ActCommon.this, "Source cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if(!isValid(link_))
-                                {
-                                    Toast.makeText(ActCommon.this,"Link cannot be empty",Toast.LENGTH_SHORT).show();
+                                if (!isValid(link_)) {
+                                    Toast.makeText(ActCommon.this, "Link cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                Common common = new Common(source_,link_); // common act
+                                Common common = new Common(source_, link_); // common act
 
-                                if(common_reference!=null)
-                                {
-                                    Snackbar bar = Snackbar.make(list,"Saving", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                if (common_reference != null) {
+                                    Snackbar bar = Snackbar.make(list, "Saving", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     bar.show();
 
-                                    common_reference.child("suggestions/"+type)
+                                    common_reference.child("suggestions/" + type)
                                             .child(name_)
                                             .setValue(common)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     bar.dismiss();
-                                                    Toast.makeText(ActCommon.this,"Suggestion saved",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(ActCommon.this, "Suggestion saved", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }
@@ -202,7 +194,7 @@ public class ActCommon extends AppCompatActivity {
                 reference.child("requests").child(User.selected_addiction).child(type).setValue(User.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(ActCommon.this,"Request submitted",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActCommon.this, "Request submitted", Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
@@ -222,8 +214,7 @@ public class ActCommon extends AppCompatActivity {
         super.onPause();
     }
 
-    public boolean isValid(String str)
-    {
+    public boolean isValid(String str) {
         return !str.trim().equals("");
     }
 }

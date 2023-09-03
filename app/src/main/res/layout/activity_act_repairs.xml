@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<LinearLayout
-    xmlns:uruttu="http://schemas.android.com/apk/res/android"
-    uruttu:layout_height="match_parent"
+<LinearLayout xmlns:uruttu="http://schemas.android.com/apk/res/android"
     uruttu:layout_width="match_parent"
+    uruttu:layout_height="match_parent"
     uruttu:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
@@ -13,18 +12,18 @@
         <com.google.android.material.tabs.TabItem
             uruttu:layout_width="wrap_content"
             uruttu:layout_height="wrap_content"
-            uruttu:text="@string/repairs"/>
+            uruttu:text="@string/repairs" />
 
         <com.google.android.material.tabs.TabItem
             uruttu:layout_width="wrap_content"
             uruttu:layout_height="wrap_content"
-            uruttu:text="@string/insights"/>
+            uruttu:text="@string/insights" />
 
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
+        uruttu:id="@+id/pager"
         uruttu:layout_width="wrap_content"
-        uruttu:layout_height="fill_parent"
-        uruttu:id="@+id/pager"/>
+        uruttu:layout_height="fill_parent" />
 
 </LinearLayout>

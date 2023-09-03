@@ -12,9 +12,8 @@ public class AdapterEffects extends FragmentPagerAdapter {
     List<String> tab_title = new ArrayList<>();
     List<Fragment> fragments = new ArrayList<>();
 
-    AdapterEffects(FragmentManager manager, int position)
-    {
-        super(manager,position);
+    AdapterEffects(FragmentManager manager, int position) {
+        super(manager, position);
     }
 
     @Override
@@ -27,8 +26,7 @@ public class AdapterEffects extends FragmentPagerAdapter {
         return fragments.size();
     }
 
-    public void add_fragment(Fragment fragment,String title)
-    {
+    public void add_fragment(Fragment fragment, String title) {
         fragments.add(fragment);
         tab_title.add(title);
     }

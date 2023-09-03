@@ -51,7 +51,7 @@ public class FragmentPractices extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_habits,container,false);
+        return inflater.inflate(R.layout.activity_habits, container, false);
     }
 
     @Override
@@ -66,8 +66,7 @@ public class FragmentPractices extends Fragment {
 
         Glide.with(no_results).load(R.drawable.loading_pink_list).into(no_results);
 
-        if(reference!=null)
-        {
+        if (reference != null) {
             reference
                     .child("replace_habits")
                     .get()
@@ -75,7 +74,7 @@ public class FragmentPractices extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                            Map<String,ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
+                            Map<String, ReplaceHabits> habits = task.getResult().getValue(new GenericTypeIndicator<Map<String, ReplaceHabits>>() {
                                 @NonNull
                                 @Override
                                 public String toString() {
@@ -83,17 +82,16 @@ public class FragmentPractices extends Fragment {
                                 }
                             });
 
-                            list_view.setAdapter(new AdapterPractices(getActivity(), FragmentPractices.this.view,habits));
+                            list_view.setAdapter(new AdapterPractices(getActivity(), FragmentPractices.this.view, habits));
                         }
                     });
         }
     }
 
-    public void addPractice()
-    {
+    public void addPractice() {
         List<String> show_on = new ArrayList<String>();
 
-        View view = getActivity().getLayoutInflater().inflate(R.layout.habits_add,null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.habits_add, null);
 
         AutoCompleteTextView practice_view = view.findViewById(R.id.habit);
         practice_view.setThreshold(0);
@@ -111,7 +109,7 @@ public class FragmentPractices extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                        Map<String, Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                             @NonNull
                             @Override
                             public String toString() {
@@ -119,10 +117,9 @@ public class FragmentPractices extends Fragment {
                             }
                         });
 
-                        if(map!=null)
-                        {
+                        if (map != null) {
                             List<String> list = new ArrayList<>(map.keySet());
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                             practice_view.setAdapter(adapter);
                         }
                     }
@@ -140,11 +137,9 @@ public class FragmentPractices extends Fragment {
         CompoundButton.OnCheckedChangeListener checked_listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                switch (compoundButton.getId())
-                {
+                switch (compoundButton.getId()) {
                     case R.id.all:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.clear();
                             sun.setChecked(true);
                             mon.setChecked(true);
@@ -158,84 +153,63 @@ public class FragmentPractices extends Fragment {
 
 
                     case R.id.sun:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.add("Sun");
-                        }
-                        else
-                        {
+                        } else {
                             show_on.remove("Sun");
                         }
                         break;
 
 
                     case R.id.mon:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.add("Mon");
-                        }
-                        else
-                        {
+                        } else {
                             show_on.remove("Mon");
                         }
                         break;
 
 
                     case R.id.tue:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.add("Tue");
-                        }
-                        else
-                        {
+                        } else {
                             show_on.remove("Tue");
                         }
                         break;
 
 
                     case R.id.wed:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.add("Wed");
-                        }
-                        else
-                        {
+                        } else {
                             show_on.remove("Wed");
                         }
                         break;
 
 
                     case R.id.thur:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.add("Thu");
-                        }
-                        else
-                        {
+                        } else {
                             show_on.remove("Thu");
                         }
                         break;
 
 
                     case R.id.fri:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.add("Fri");
-                        }
-                        else
-                        {
+                        } else {
                             show_on.remove("Fri");
                         }
                         break;
 
 
                     case R.id.sat:
-                        if(b)
-                        {
+                        if (b) {
                             show_on.add("Sat");
-                        }
-                        else
-                        {
+                        } else {
                             show_on.remove("Sat");
                         }
                         break;
@@ -261,47 +235,41 @@ public class FragmentPractices extends Fragment {
 
                         String habit_ = practice_view.getText().toString().trim();
 
-                        if(habit_.equals(""))
-                        {
-                            Toast.makeText(getContext(),"Practice cannot be empty",Toast.LENGTH_LONG).show();
+                        if (habit_.equals("")) {
+                            Toast.makeText(getContext(), "Practice cannot be empty", Toast.LENGTH_LONG).show();
                             return;
                         }
 
-                        if(!Data.isValidKey(habit_))
-                        {
-                            Toast.makeText(getActivity(),"Invalid habit name",Toast.LENGTH_SHORT).show();
+                        if (!Data.isValidKey(habit_)) {
+                            Toast.makeText(getActivity(), "Invalid habit name", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
-                        if(show_on.size()==0)
-                        {
-                            Toast.makeText(getContext(),"Days not selected",Toast.LENGTH_LONG).show();
+                        if (show_on.size() == 0) {
+                            Toast.makeText(getContext(), "Days not selected", Toast.LENGTH_LONG).show();
                             return;
                         }
 
-                        Snackbar connect =  Snackbar.make(getView(),"Connecting",Snackbar.LENGTH_INDEFINITE);
+                        Snackbar connect = Snackbar.make(getView(), "Connecting", Snackbar.LENGTH_INDEFINITE);
                         connect.show();
 
                         ReplaceHabits habits = new ReplaceHabits(show_on);
 
-                        Map<String,ReplaceHabits> habits_map;
+                        Map<String, ReplaceHabits> habits_map;
                         habits_map = AdapterPractices.habits_copy;
 
-                        if(habits_map!=null)
-                        {
-                            habits_map.put(habit_,habits);
-                        }
-                        else
-                        {
+                        if (habits_map != null) {
+                            habits_map.put(habit_, habits);
+                        } else {
                             habits_map = new HashMap<>();
-                            habits_map.put(habit_,habits);
+                            habits_map.put(habit_, habits);
                         }
 
-                        AdapterPractices adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view,habits_map);
+                        AdapterPractices adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view, habits_map);
 
                         DatabaseReference reference = User.getRepairReference();
 
-                        if(reference==null) return;
+                        if (reference == null) return;
 
                         reference
                                 .child("replace_habits")
@@ -311,7 +279,7 @@ public class FragmentPractices extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         connect.dismiss();
-                                        Toast.makeText(getActivity(),"Practice Added",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "Practice Added", Toast.LENGTH_SHORT).show();
                                         list_view.setAdapter(adapter);
                                     }
                                 });
@@ -328,40 +296,36 @@ public class FragmentPractices extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.update_database_menu,menu);
+        inflater.inflate(R.menu.update_database_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.add:
                 addPractice();
                 break;
 
             case R.id.remove:
-                Map<String,ReplaceHabits> habits_copy =  AdapterPractices.habits_copy;
-                if(habits_copy==null || habits_copy.size()==0)
-                {
-                    Toast.makeText(getActivity(),"Habit List is Empty",Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    AdapterPractices remove_adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view,true);
+                Map<String, ReplaceHabits> habits_copy = AdapterPractices.habits_copy;
+                if (habits_copy == null || habits_copy.size() == 0) {
+                    Toast.makeText(getActivity(), "Habit List is Empty", Toast.LENGTH_LONG).show();
+                } else {
+                    AdapterPractices remove_adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view, true);
                     list_view.setAdapter(remove_adapter);
                 }
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(getContext(),ActCommon.class);
-                intent.putExtra("common","common_practices");
+                Intent intent = new Intent(getContext(), ActCommon.class);
+                intent.putExtra("common", "common_practices");
                 startActivity(intent);
                 break;
 
             case R.id.reset:
-                Snackbar reset = Snackbar.make(FragmentPractices.this.view,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                Snackbar reset = Snackbar.make(FragmentPractices.this.view, "Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
                 reset.show();
 
                 User.getRepairReference()
@@ -371,8 +335,8 @@ public class FragmentPractices extends Fragment {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 reset.dismiss();
 
-                                list_view.setAdapter(new AdapterPractices(getActivity(), FragmentPractices.this.view,null));
-                                Toast.makeText(getContext(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
+                                list_view.setAdapter(new AdapterPractices(getActivity(), FragmentPractices.this.view, null));
+                                Toast.makeText(getContext(), "Successfully Resetted", Toast.LENGTH_SHORT).show();
                             }
                         });
                 break;

@@ -18,8 +18,8 @@ public class ActJourney extends AppCompatActivity {
         ViewPager pager = findViewById(R.id.view_pager);
 
         AdapterJourney adapter = new AdapterJourney(getSupportFragmentManager());
-        adapter.add_tab(new FragmentRelapses(),"Relapses");
-        adapter.add_tab(new FragmentSteps(),"Steps");
+        adapter.add_tab(new FragmentRelapses(), "Relapses");
+        adapter.add_tab(new FragmentSteps(), "Steps");
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);

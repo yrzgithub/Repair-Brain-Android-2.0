@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -11,13 +10,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:paddingBottom="16dp"
         android:layout_gravity="center"
-        android:gravity="center"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="15dp"
+        android:paddingBottom="16dp">
 
         <TextView
             android:id="@+id/accuracy"
@@ -46,8 +45,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:src="@drawable/up"
-            android:padding="3dp" />
+            android:padding="3dp"
+            android:src="@drawable/up" />
 
     </LinearLayout>
 
@@ -56,21 +55,20 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:visibility="gone"/>
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/no_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="175dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="175dp"
         android:src="@drawable/noresultfound"
-        android:visibility="visible"
-        />
+        android:visibility="visible" />
 
 </LinearLayout>

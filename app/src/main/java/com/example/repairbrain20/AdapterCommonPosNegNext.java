@@ -33,52 +33,46 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
 
     Activity act;
     List<String> keys = new ArrayList<>();
-    Map<String,Common> map = new HashMap<>();
+    Map<String, Common> map = new HashMap<>();
     boolean add = false;
-    String today,type;
+    String today, type;
     DatabaseReference reference;
     List<String> present;
     Snackbar bar;
     ListView list;
     boolean next_steps = false;
 
-    AdapterCommonPosNegNext(Activity act, Map<String,Common> map)
-    {
+    AdapterCommonPosNegNext(Activity act, Map<String, Common> map) {
         this.act = act;
 
         ImageView loading = act.findViewById(R.id.loading);
         list = act.findViewById(R.id.effects);
 
-        if(map!=null)
-        {
+        if (map != null) {
             this.map.putAll(map);
             keys.addAll(map.keySet());
-        }
-        else
-        {
+        } else {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             Glide.with(loading).load(R.drawable.noresultfound).into(loading);
         }
     }
 
-    AdapterCommonPosNegNext(Activity act,Map<String,Common> map,ArrayList<String> present,String type,boolean add)
-    {
-        this(act,map);
+    AdapterCommonPosNegNext(Activity act, Map<String, Common> map, ArrayList<String> present, String type, boolean add) {
+        this(act, map);
         this.add = add;
-        this.type = type.replace("common_","");
+        this.type = type.replace("common_", "");
         this.present = present;
 
         //Toast.makeText(act,type,Toast.LENGTH_SHORT).show();
 
-        if(this.type.equals("next_steps"))
-        {
+        if (this.type.equals("next_steps")) {
             next_steps = true;
         }
 
-        if(this.present==null) this.present = new ArrayList<>();
+        if (this.present == null) this.present = new ArrayList<>();
 
-        bar = Snackbar.make(list,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+        bar = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
 
         LocalDateTime local_date_time = LocalDateTime.now();
         today = DateTimeFormatter.ofPattern("E, MMM dd yyyy").format(local_date_time);
@@ -86,7 +80,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return keys!=null?keys.size():0;
+        return keys != null ? keys.size() : 0;
     }
 
     @Override
@@ -99,8 +93,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         return i;
     }
 
-    public Common getCommon(int i)
-    {
+    public Common getCommon(int i) {
         return map.get(keys.get(i));
     }
 
@@ -108,7 +101,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        view = LayoutInflater.from(act).inflate(R.layout.common_effects_and_habits_list,null);
+        view = LayoutInflater.from(act).inflate(R.layout.common_effects_and_habits_list, null);
 
         TextView effect = view.findViewById(R.id.effect);
         TextView source = view.findViewById(R.id.source);
@@ -116,14 +109,10 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
 
         String key = keys.get(i);
 
-        if(this.add)
-        {
-            if(present.contains(key))
-            {
+        if (this.add) {
+            if (present.contains(key)) {
                 go.setImageResource(R.drawable.tick);
-            }
-            else
-            {
+            } else {
                 go.setImageResource(R.drawable.add);
             }
         }
@@ -138,17 +127,14 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(AdapterCommonPosNegNext.this.add)
-                {
+                if (AdapterCommonPosNegNext.this.add) {
                     reference = User.getRepairReference();
 
-                    if(reference!=null)
-                    {
+                    if (reference != null) {
                         String key_trimmed = key.trim();
-                        if(!present.contains(key_trimmed))
-                        {
+                        if (!present.contains(key_trimmed)) {
                             bar.show();
-                            reference.child(type).child(key_trimmed).setValue(next_steps?new Step(source_name,link):today)
+                            reference.child(type).child(key_trimmed).setValue(next_steps ? new Step(source_name, link) : today)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -158,14 +144,10 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
                                         }
                                     });
                         }
+                    } else {
+                        Toast.makeText(act, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        Toast.makeText(act,"Something went wrong",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else
-                {
+                } else {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(link));

@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ActHome extends AppCompatActivity {
 
-    ImageButton free_button = null,hand_cuffed_button = null;
+    ImageButton free_button = null, hand_cuffed_button = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class ActHome extends AppCompatActivity {
         free_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent.putExtra("free",true);
+                intent.putExtra("free", true);
                 startActivity(intent);
             }
         });
@@ -55,17 +55,16 @@ public class ActHome extends AppCompatActivity {
 
                 DatabaseReference reference = User.getRepairReference();
 
-                if(reference!=null)
-                {
+                if (reference != null) {
                     reference.child("lastly_relapsed").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             Time time = task.getResult().getValue(Time.class);
-                            LocalDateTime localDateTime = LocalDateTime.of(time.getYear(),time.getMonth(),time.getDay(),time.getHour(),time.getMinute(),time.getSecond());
+                            LocalDateTime localDateTime = LocalDateTime.of(time.getYear(), time.getMonth(), time.getDay(), time.getHour(), time.getMinute(), time.getSecond());
 
                             LocalDateTime now = LocalDateTime.now();
 
-                            Duration duration =  Duration.between(localDateTime,now);
+                            Duration duration = Duration.between(localDateTime, now);
 
                             long days = duration.toDays();
                             long hours = duration.toHours() % 24;
@@ -73,12 +72,12 @@ public class ActHome extends AppCompatActivity {
                             long seconds = duration.getSeconds() % 60;
 
                             String format = "%d days %d hrs %d mins %d secs";
-                            String time_ = String.format(format,days,hours,minutes,seconds);
+                            String time_ = String.format(format, days, hours, minutes, seconds);
 
                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
                             String date = formatter.format(now);
 
-                            Relapse relapse = new Relapse(date,time_);
+                            Relapse relapse = new Relapse(date, time_);
 
                             reference.child("relapses").push().setValue(relapse);
 
@@ -89,18 +88,17 @@ public class ActHome extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                                            if(task.isSuccessful())
-                                            {
-                                                DaysDifference difference =  task.getResult().getValue(DaysDifference.class);
+                                            if (task.isSuccessful()) {
+                                                DaysDifference difference = task.getResult().getValue(DaysDifference.class);
 
                                                 long diff = difference.getDifference();
                                                 int count = difference.getCount();
 
                                                 count_reference.setValue(new DaysDifference(difference));
 
-                                                startActivity(new Intent(ActHome.this,ActJourney.class));
+                                                startActivity(new Intent(ActHome.this, ActJourney.class));
 
-                                                Toast.makeText(ActHome.this, count + " times relapsed in " + diff + " days",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(ActHome.this, count + " times relapsed in " + diff + " days", Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     });
@@ -115,7 +113,7 @@ public class ActHome extends AppCompatActivity {
                                 }
                             });
 
-                    intent.putExtra("free",false);
+                    intent.putExtra("free", false);
                     startActivity(intent);
                 }
             }
@@ -125,14 +123,13 @@ public class ActHome extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.home_menu,menu);
+        getMenuInflater().inflate(R.menu.home_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.settings)
-        {
+        if (item.getItemId() == R.id.settings) {
             startActivity(new Intent(ActHome.this, ActSettings.class));
         }
         return super.onOptionsItemSelected(item);

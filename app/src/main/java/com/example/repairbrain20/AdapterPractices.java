@@ -36,9 +36,10 @@ import java.util.Map;
 
 public class AdapterPractices extends BaseAdapter {
 
+    static int current_percent = 0;
+    static Map<String, ReplaceHabits> habits_copy = new HashMap<>();
     Activity act;
-
-    String[] days_list = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+    String[] days_list = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
     String today;
     boolean delete = false;
     int count = 0;
@@ -46,11 +47,9 @@ public class AdapterPractices extends BaseAdapter {
     ImageView up_or_down;
     TextView accuracy;
     List<String> keys = new ArrayList<>();
-    Map<String,ReplaceHabits> habits = new HashMap<>();
+    Map<String, ReplaceHabits> habits = new HashMap<>();
     String today_date;
-    static int current_percent = 0;
     boolean[] states;
-    static Map<String,ReplaceHabits> habits_copy = new HashMap<>();
     DatabaseReference reference;
     LinearLayout main;
     View view;
@@ -62,8 +61,7 @@ public class AdapterPractices extends BaseAdapter {
     int enabled_key_size = 1;
 
 
-    AdapterPractices(Activity act, View view, Map<String,ReplaceHabits> habits)
-    {
+    AdapterPractices(Activity act, View view, Map<String, ReplaceHabits> habits) {
         this.act = act;
         this.view = view;
 
@@ -85,48 +83,42 @@ public class AdapterPractices extends BaseAdapter {
         today_date = DateTimeFormatter.ofPattern("dd-MM-yy").format(date_time);
         today_day = DateTimeFormatter.ofPattern("E").format(date_time);
 
-        if(habits!=null) this.habits.putAll(habits);
+        if (habits != null) this.habits.putAll(habits);
 
         if (this.habits.size() > 0) {
             habits_list.setVisibility(View.VISIBLE);
             no_results.setVisibility(View.GONE);
             up_or_down.setVisibility(View.VISIBLE);
             percent.setVisibility(View.VISIBLE);
-        }
-
-        else
-        {
+        } else {
             no_results.setVisibility(View.VISIBLE);
             habits_list.setVisibility(View.GONE);
             Glide.with(act).load(R.drawable.noresultfound).into(no_results);
         }
 
         try {
-            snack = Snackbar.make(main,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
+            snack = Snackbar.make(main, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
             snack.setAction("Reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     act.recreate();
                 }
             });
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
 
-        for(Map.Entry<String,ReplaceHabits> e : this.habits.entrySet())
-        {
+        for (Map.Entry<String, ReplaceHabits> e : this.habits.entrySet()) {
             List<String> show_on = e.getValue().getShow_on();
             String habit_name = e.getKey();
 
-            if(show_on.contains(today_day))
-            {
+            if (show_on.contains(today_day)) {
                 enabled_keys.add(habit_name);
             }
         }
 
         this.states = new boolean[this.habits.size()];
-        Arrays.fill(this.states,false);
+        Arrays.fill(this.states, false);
 
         keys.addAll(this.habits.keySet());
 
@@ -139,24 +131,19 @@ public class AdapterPractices extends BaseAdapter {
     }
 
     @SuppressLint("SetTextI18n")
-    AdapterPractices(Activity act, View view, boolean delete)
-    {
-        this(act,view,habits_copy);
+    AdapterPractices(Activity act, View view, boolean delete) {
+        this(act, view, habits_copy);
         this.delete = delete;
 
-        if(delete)
-        {
+        if (delete) {
             percent.setText("0%");
 
-            if(keys.size()>0)
-            {
+            if (keys.size() > 0) {
                 up_or_down.setVisibility(View.GONE);
                 percent.setVisibility(View.GONE);
                 accuracy.setText("Select Items To Remove");
-                if(snack!=null) snack.show();
-            }
-            else
-            {
+                if (snack != null) snack.show();
+            } else {
                 up_or_down.setVisibility(View.VISIBLE);
                 percent.setVisibility(View.VISIBLE);
                 accuracy.setText("Replacing Accuracy :");
@@ -182,7 +169,7 @@ public class AdapterPractices extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = act.getLayoutInflater().inflate(R.layout.custom_habits_list,null,false);
+        view = act.getLayoutInflater().inflate(R.layout.custom_habits_list, null, false);
 
         RelativeLayout main = view.findViewById(R.id.main);
 
@@ -209,14 +196,12 @@ public class AdapterPractices extends BaseAdapter {
 
         view.setBackgroundResource(R.drawable.round_layout);
 
-        if(this.delete)
-        {
+        if (this.delete) {
             check.setVisibility(View.GONE);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(AdapterPractices.this.delete)
-                    {
+                    if (AdapterPractices.this.delete) {
                         User.getRepairReference()
                                 .child("replace_habits")
                                 .child(keys.get(i))
@@ -224,35 +209,30 @@ public class AdapterPractices extends BaseAdapter {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(act,"Connection Failed",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(act, "Connection Failed", Toast.LENGTH_LONG).show();
                                     }
                                 })
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
-                                        if(task.isSuccessful())
-                                        {
-                                            Toast.makeText(act,"Practice Removed",Toast.LENGTH_SHORT).show();
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(act, "Practice Removed", Toast.LENGTH_SHORT).show();
                                             ListView view = AdapterPractices.this.view.findViewById(R.id.list);
                                             AdapterPractices.this.habits.remove(key);
                                             AdapterPractices.habits_copy = AdapterPractices.this.habits;
 
-                                            view.setAdapter(new AdapterPractices(act, AdapterPractices.this.view,true));
-                                        }
-                                        else
-                                        {
+                                            view.setAdapter(new AdapterPractices(act, AdapterPractices.this.view, true));
+                                        } else {
                                             String message = task.getException().getMessage();
-                                            Toast.makeText(act,message,Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(act, message, Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     }
                 }
             });
-        }
-        else
-        {
+        } else {
             delete.setVisibility(View.GONE);
             check.setVisibility(View.VISIBLE);
             boolean checked = states[i];
@@ -263,20 +243,17 @@ public class AdapterPractices extends BaseAdapter {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     states[i] = b;
 
-                    if(!AdapterPractices.this.delete)
-                    {
-                        if(habit_enabled)
-                        {
+                    if (!AdapterPractices.this.delete) {
+                        if (habit_enabled) {
                             update_percentage(b);
-                            update_value(key,b);
+                            update_value(key, b);
                         }
                     }
                 }
             });
         }
 
-        if(!habit_enabled && !this.delete)
-        {
+        if (!habit_enabled && !this.delete) {
             main.setEnabled(false);
             check.setEnabled(false);
             delete.setEnabled(false);
@@ -286,50 +263,45 @@ public class AdapterPractices extends BaseAdapter {
 
         StringBuilder builder = new StringBuilder();
 
-        for(String day : days_list)
-        {
-            if(show_on.contains(day))
-            {
-                if(day.equals("Thu")) day = "Thur";
+        for (String day : days_list) {
+            if (show_on.contains(day)) {
+                if (day.equals("Thu")) day = "Thur";
                 builder.append(day).append(",").append(" ");
             }
         }
 
-        String show_on_string = builder.delete(builder.length()-2,builder.length()-1).toString().trim(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
+        String show_on_string = builder.delete(builder.length() - 2, builder.length() - 1).toString().trim(); //deleteCharAt(builder.lastIndexOf(" ")).deleteCharAt(builder.lastIndexOf(","))
 
-        String show_ = key.substring(0,1).toUpperCase() + key.substring(1).trim();
+        String show_ = key.substring(0, 1).toUpperCase() + key.substring(1).trim();
         text.setText(show_);
         show.setText(show_on_string);
 
         return view;
     }
 
-    public void update_value(String key,Boolean b)
-    {
-        if(reference!=null)
-        {
+    public void update_value(String key, Boolean b) {
+        if (reference != null) {
             reference
                     .child("replace_habits")
                     .child(key)
                     .child("days_data")
                     .child(today_date)
-                    .setValue(b?1:0);
+                    .setValue(b ? 1 : 0);
         }
     }
 
-    public void update_percentage(boolean b)
-    {
-        if(b) ++count; else --count;
+    public void update_percentage(boolean b) {
+        if (b) ++count;
+        else --count;
 
         int size = enabled_key_size;
 
-        if(size==0) return;
+        if (size == 0) return;
 
         int percent = (count * 100) / size;
-        this.percent.setText(percent+"%");
+        this.percent.setText(percent + "%");
 
-        if(reference!=null)
-        {
+        if (reference != null) {
             reference
                     .child("last_accuracy_percent")
                     .setValue(percent);
@@ -338,13 +310,11 @@ public class AdapterPractices extends BaseAdapter {
         current_percent = percent;
 
         int diff = percent - ActRecovery.last_accuracy_percent;
-        Log.e("last_accuracy_uruttu",String.valueOf(diff + " " + ActRecovery.last_accuracy_percent));
+        Log.e("last_accuracy_uruttu", diff + " " + ActRecovery.last_accuracy_percent);
 
-       if(diff>=0)
-        {
+        if (diff >= 0) {
             up_or_down.setImageResource(R.drawable.up);
-        }
-        else {
+        } else {
             up_or_down.setImageResource(R.drawable.down);
         }
     }

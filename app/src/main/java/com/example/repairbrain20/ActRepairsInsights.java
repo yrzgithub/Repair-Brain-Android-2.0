@@ -22,8 +22,8 @@ public class ActRepairsInsights extends AppCompatActivity {
         FragmentInsights insights = new FragmentInsights();
 
         AdapterRepairsAndInsights adapter = new AdapterRepairsAndInsights(getSupportFragmentManager());
-        adapter.add_tab(repairs,"Repairs");
-        adapter.add_tab(insights,"Insights");
+        adapter.add_tab(repairs, "Repairs");
+        adapter.add_tab(insights, "Insights");
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);

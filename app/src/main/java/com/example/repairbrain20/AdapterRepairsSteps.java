@@ -14,9 +14,8 @@ public class AdapterRepairsSteps extends FragmentPagerAdapter {
     List<Fragment> fragments = new ArrayList<>();
     List<String> titles = new ArrayList<>();
 
-    AdapterRepairsSteps(FragmentManager manager)
-    {
-        super(manager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+    AdapterRepairsSteps(FragmentManager manager) {
+        super(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @Nullable
@@ -36,8 +35,7 @@ public class AdapterRepairsSteps extends FragmentPagerAdapter {
         return fragments.size();
     }
 
-    public void add_tab(Fragment fragment,String title)
-    {
+    public void add_tab(Fragment fragment, String title) {
         fragments.add(fragment);
         titles.add(title);
     }

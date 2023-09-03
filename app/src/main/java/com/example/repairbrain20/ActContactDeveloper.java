@@ -32,18 +32,16 @@ public class ActContactDeveloper extends AppCompatActivity {
 
         Glide.with(this).load(R.drawable.loading_pink_list).into(loading);
 
-        if(reference!=null)
-        {
+        if (reference != null) {
             reference
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if(task.isSuccessful())
-                            {
+                            if (task.isSuccessful()) {
                                 loading.setVisibility(View.GONE);
                                 list.setVisibility(View.VISIBLE);
-                                Map<String,Contact> map =  task.getResult().getValue(new GenericTypeIndicator<Map<String, Contact>>() {
+                                Map<String, Contact> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Contact>>() {
                                     @NonNull
                                     @Override
                                     public String toString() {
@@ -51,10 +49,8 @@ public class ActContactDeveloper extends AppCompatActivity {
                                     }
                                 });
 
-                                list.setAdapter(new AdapterListDeveloperContact(ActContactDeveloper.this,map));
-                            }
-                            else
-                            {
+                                list.setAdapter(new AdapterListDeveloperContact(ActContactDeveloper.this, map));
+                            } else {
                                 Glide.with(ActContactDeveloper.this).load(R.drawable.noresultfound).into(loading);
                             }
                         }

@@ -41,7 +41,7 @@ public class FragmentInsights extends Fragment {
     ImageView no_results;
     ListView list;
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
-    Map<String,Insight> insights;
+    Map<String, Insight> insights;
     View view;
 
     @Override
@@ -69,8 +69,7 @@ public class FragmentInsights extends Fragment {
         Glide.with(this).load(R.drawable.noresultfound).into(no_results);
 
         DatabaseReference reference = User.getMainReference();
-        if(reference!=null)
-        {
+        if (reference != null) {
             reference
                     .child("insights")
                     .addValueEventListener(new ValueEventListener() {
@@ -86,15 +85,18 @@ public class FragmentInsights extends Fragment {
 
                             AdapterListInsights adapter;
 
-                            if(AdapterListInsights.remove) adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights,true);
-                            else adapter = new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights);
+                            if (AdapterListInsights.remove)
+                                adapter = new AdapterListInsights(getActivity(), FragmentInsights.this.view, insights, true);
+                            else
+                                adapter = new AdapterListInsights(getActivity(), FragmentInsights.this.view, insights);
 
                             list.setAdapter(adapter);
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            if(getActivity()!=null) Glide.with(FragmentInsights.this).load(R.drawable.noresultfound).into(no_results);
+                            if (getActivity() != null)
+                                Glide.with(FragmentInsights.this).load(R.drawable.noresultfound).into(no_results);
                         }
                     });
         }
@@ -105,11 +107,10 @@ public class FragmentInsights extends Fragment {
 
         DatabaseReference reference = User.getMainReference();
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.add:
 
-                View view = getActivity().getLayoutInflater().inflate(R.layout.custom_adapter_steps,null);
+                View view = getActivity().getLayoutInflater().inflate(R.layout.custom_adapter_steps, null);
 
                 EditText name = view.findViewById(R.id.name);
                 AutoCompleteTextView source = view.findViewById(R.id.source_name);
@@ -124,16 +125,14 @@ public class FragmentInsights extends Fragment {
                     }
                 });
 
-                if(common_reference!=null)
-                {
+                if (common_reference != null) {
                     common_reference
                             .child("common_steps_sources")
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if(task.isSuccessful())
-                                    {
+                                    if (task.isSuccessful()) {
                                         List<String> keys = task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
                                             @NonNull
                                             @Override
@@ -142,15 +141,14 @@ public class FragmentInsights extends Fragment {
                                             }
                                         });
 
-                                        if(keys!=null)
-                                        {
-                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,keys);
+                                        if (keys != null) {
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, keys);
                                             source.setAdapter(adapter);
                                         }
                                     }
                                 }
                             });
-                    }
+                }
 
                 new AlertDialog.Builder(getActivity())
                         .setView(view)
@@ -162,39 +160,34 @@ public class FragmentInsights extends Fragment {
                                 String source_ = source.getText().toString();
                                 String link_ = link.getText().toString();
 
-                                if(name_.equals(""))
-                                {
-                                    Toast.makeText(getActivity(),"Insight cannot be empty",Toast.LENGTH_SHORT).show();
+                                if (name_.equals("")) {
+                                    Toast.makeText(getActivity(), "Insight cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if(!source_.equals("") && link_.equals(""))
-                                {
-                                    Toast.makeText(getActivity(),"Please paste the link",Toast.LENGTH_SHORT).show();
+                                if (!source_.equals("") && link_.equals("")) {
+                                    Toast.makeText(getActivity(), "Please paste the link", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if(!link_.equals("") && !FragmentSteps.isValidLink(link_))
-                                {
-                                    Toast.makeText(getActivity(),"Invalid source link",Toast.LENGTH_LONG).show();
+                                if (!link_.equals("") && !FragmentSteps.isValidLink(link_)) {
+                                    Toast.makeText(getActivity(), "Invalid source link", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
-                                if(!Data.isValidKey(name_))
-                                {
-                                    Toast.makeText(getActivity(),"Invalid Insight name",Toast.LENGTH_LONG).show();
+                                if (!Data.isValidKey(name_)) {
+                                    Toast.makeText(getActivity(), "Invalid Insight name", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
-                                Snackbar snack = Snackbar.make(FragmentInsights.this.view,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                Snackbar snack = Snackbar.make(FragmentInsights.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                 snack.show();
 
-                                if(reference!=null)
-                                {
+                                if (reference != null) {
                                     reference
                                             .child("insights")
                                             .child(name_)
-                                            .setValue(new Insight(source_,link_))
+                                            .setValue(new Insight(source_, link_))
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
@@ -204,37 +197,33 @@ public class FragmentInsights extends Fragment {
                                 }
                             }
                         })
-                        .setNegativeButton("Cancel",null)
+                        .setNegativeButton("Cancel", null)
                         .create()
                         .show();
                 break;
 
             case R.id.delete:
-                if(insights==null || insights.size()==0)
-                {
-                    Toast.makeText(getActivity(),"Insights list is empty",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    list.setAdapter(new AdapterListInsights(getActivity(),FragmentInsights.this.view,insights,true));
+                if (insights == null || insights.size() == 0) {
+                    Toast.makeText(getActivity(), "Insights list is empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    list.setAdapter(new AdapterListInsights(getActivity(), FragmentInsights.this.view, insights, true));
                 }
                 break;
 
             case R.id.reset:
-                if(reference!=null)
-                {
+                if (reference != null) {
                     reference.child("insights")
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                    Toast.makeText(getActivity(),"Successfully resetted",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "Successfully resetted", Toast.LENGTH_LONG).show();
                                 }
                             });
                 }
                 break;
 
             case R.id.settings:
-                startActivity(new Intent(getActivity(),ActSettings.class));
+                startActivity(new Intent(getActivity(), ActSettings.class));
                 break;
 
         }
@@ -244,7 +233,7 @@ public class FragmentInsights extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_insights,menu);
+        inflater.inflate(R.menu.menu_insights, menu);
     }
 }
 

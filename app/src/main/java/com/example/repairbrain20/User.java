@@ -30,29 +30,26 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class User implements OnCompleteListener<AuthResult> {
 
+    static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
+    static String uid;
+    static String selected_addiction;
     FirebaseAuth auth = FirebaseAuth.getInstance();
-
-    String firstname,lastname,username,password,email,full_name;
+    String firstname, lastname, username, password, email, full_name;
     Activity act;
     ProgressDialog progress;
     AlertDialog.Builder alert;
-    static FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ids_reference = database.getReference().child("ids");
     DatabaseReference user_reference;
-    static String email_regex = "^[a-zA-Z0-9+.-_]+@[a-zA-Z0-9.-]+$";
     boolean use_username;
-    static String uid;
     SharedPreferences.Editor editor;
     SharedPreferences preference;
-    static String selected_addiction;
 
-    User()
-    {
+    User() {
 
     }
 
-    User(Activity act,String email_or_username,String password)
-    {
+    User(Activity act, String email_or_username, String password) {
         this.act = act;
         this.password = password;
 
@@ -61,15 +58,15 @@ public class User implements OnCompleteListener<AuthResult> {
         progress.setOnCancelListener(null);
         progress.setIcon(R.drawable.icon_app);
 
-        preference = act.getSharedPreferences("login_data",Context.MODE_PRIVATE);
+        preference = act.getSharedPreferences("login_data", Context.MODE_PRIVATE);
         this.editor = preference.edit();
 
-        selected_addiction = preference.getString("addiction",null);
+        selected_addiction = preference.getString("addiction", null);
 
         alert = new AlertDialog.Builder(act)
                 .setTitle(title)
                 .setIcon(R.drawable.icon_app)
-                .setPositiveButton("OK",null)
+                .setPositiveButton("OK", null)
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -77,27 +74,22 @@ public class User implements OnCompleteListener<AuthResult> {
                     }
                 });
 
-        if (email_or_username.matches(email_regex))
-        {
+        if (email_or_username.matches(email_regex)) {
             this.email = email_or_username;
             this.use_username = false;
-        }
-        else
-        {
+        } else {
             this.username = email_or_username;
             this.use_username = true;
         }
     }
 
-    User(Activity act,FirebaseUser user)
-    {
-        this(act,user.getEmail(),null);
+    User(Activity act, FirebaseUser user) {
+        this(act, user.getEmail(), null);
     }
 
-    User(Activity act,String firstname, String lastname, String username, String password, String email)
-    {
+    User(Activity act, String firstname, String lastname, String username, String password, String email) {
 
-        this(act,email,password);
+        this(act, email, password);
 
         this.firstname = firstname;
         this.lastname = lastname;
@@ -105,20 +97,42 @@ public class User implements OnCompleteListener<AuthResult> {
         this.username = username;
     }
 
-    public static String getEmail()
-    {
+    public static String getEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user!=null) return user.getEmail();
+        if (user != null) return user.getEmail();
         else return null;
     }
 
-    public boolean use_username()
-    {
+    public static String getUid() {
+        return User.uid;
+    }
+
+    public static DatabaseReference getRepairReference() {
+        if (User.uid != null && selected_addiction != null) {
+            return database.getReference().child(User.uid).child(selected_addiction);
+        }
+        return null;
+    }
+
+    public static void setAddiction(Activity act, String addiction) {
+        User.selected_addiction = addiction;
+        act.getSharedPreferences("login_data", Context.MODE_PRIVATE).edit().putString("addiction", addiction).apply();
+    }
+
+    public static DatabaseReference getMainReference() {
+        if (User.uid != null) {
+            Log.e("userid", User.uid);
+            return database.getReference().child(User.uid);
+        }
+
+        return null;
+    }
+
+    public boolean use_username() {
         return use_username;
     }
 
-    public void login_with_credentials(AuthCredential credential)
-    {
+    public void login_with_credentials(AuthCredential credential) {
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -132,14 +146,12 @@ public class User implements OnCompleteListener<AuthResult> {
 
         String username = this.username;
 
-        if(email==null)
-        {
+        if (email == null) {
             show_progress("Connecting");
-            Log.e("sanjay_username",username);
+            Log.e("sanjay_username", username);
 
-            if(!Data.isValidKey(username))
-            {
-                Toast.makeText(act,"Invalid username",Toast.LENGTH_SHORT).show();
+            if (!Data.isValidKey(username)) {
+                Toast.makeText(act, "Invalid username", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -154,26 +166,23 @@ public class User implements OnCompleteListener<AuthResult> {
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    DataSnapshot snapshot =  task.getResult();
-                    if(snapshot.exists())
-                    {
-                        Log.e("snapshot",snapshot.getValue().toString());
-                        User.this.email = snapshot.getValue(String.class);
-                        Log.e("sanjay_email",User.this.email);
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            DataSnapshot snapshot = task.getResult();
+                            if (snapshot.exists()) {
+                                Log.e("snapshot", snapshot.getValue().toString());
+                                User.this.email = snapshot.getValue(String.class);
+                                Log.e("sanjay_email", User.this.email);
 
-                        login_with_email_and_password();
-                    }
-                    else
-                    {
-                        User.this.email = null;
-                        progress.dismiss();
-                        send_alert("Username not found");
-                        editor.clear().commit();
-                    }
-                }
-            })
+                                login_with_email_and_password();
+                            } else {
+                                User.this.email = null;
+                                progress.dismiss();
+                                send_alert("Username not found");
+                                editor.clear().commit();
+                            }
+                        }
+                    })
                     .addOnCanceledListener(new OnCanceledListener() {
                         @Override
                         public void onCanceled() {
@@ -181,17 +190,15 @@ public class User implements OnCompleteListener<AuthResult> {
                             progress.dismiss();
                         }
                     });
-        }
-        else {
+        } else {
             send_alert("Invalid Username or Email");
         }
     }
 
-    public void create_user()
-    {
+    public void create_user() {
         show_progress("Creating Account");
 
-        Task<AuthResult> results =  auth.createUserWithEmailAndPassword(this.email,this.password);
+        Task<AuthResult> results = auth.createUserWithEmailAndPassword(this.email, this.password);
 
         results.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
@@ -201,8 +208,7 @@ public class User implements OnCompleteListener<AuthResult> {
 
                 FirebaseUser user = auth.getCurrentUser();
 
-                if(user!=null)
-                {
+                if (user != null) {
                     UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                             .setDisplayName(User.this.full_name)
                             .build();
@@ -216,7 +222,7 @@ public class User implements OnCompleteListener<AuthResult> {
             @Override
             public void onFailure(@NonNull Exception e) {
                 String error = e.getMessage();
-                Log.e("sanjay",error);
+                Log.e("sanjay", error);
 
                 send_alert(error);
             }
@@ -225,47 +231,40 @@ public class User implements OnCompleteListener<AuthResult> {
         results.addOnCompleteListener(this);
     }
 
-    public void login_with_email_and_password()
-    {
+    public void login_with_email_and_password() {
 
         String password = this.password;
 
-        if(this.email==null)
-        {
-            Log.e("sanjay","Cannot login");
+        if (this.email == null) {
+            Log.e("sanjay", "Cannot login");
             return;
         }
 
-        Log.e("uruttu",this.email + " " + password);
-        
-        Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email,password);
+        Log.e("uruttu", this.email + " " + password);
+
+        Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email, password);
         show_progress("Logging In");
 
         result.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 FirebaseUser user = authResult.getUser();
-                if(user!=null)
-                {
-                    if(user.isEmailVerified())
-                    {
-                        if(use_username) editor.putString("username",username);
+                if (user != null) {
+                    if (user.isEmailVerified()) {
+                        if (use_username) editor.putString("username", username);
 
-                        if(!preference.contains("email") || !preference.contains("username"))
-                        {
-                            Toast.makeText(act,"Login details saved",Toast.LENGTH_SHORT).show();
+                        if (!preference.contains("email") || !preference.contains("username")) {
+                            Toast.makeText(act, "Login details saved", Toast.LENGTH_SHORT).show();
                         }
 
-                        editor.putString("email",email).putString("password",password).commit();
+                        editor.putString("email", email).putString("password", password).commit();
 
                         User.uid = user.getUid();
                         Intent intent = new Intent(act, ActRepairsInsights.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         act.startActivity(intent);
-                    }
-                    else
-                    {
-                        alert.setPositiveButton("Ok",null);
+                    } else {
+                        alert.setPositiveButton("Ok", null);
                         alert.setNegativeButton("Verify", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -281,7 +280,7 @@ public class User implements OnCompleteListener<AuthResult> {
         result.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e("Sanjay",e.toString());
+                Log.e("Sanjay", e.toString());
                 String message = e.getMessage();
                 send_alert(message);
             }
@@ -290,28 +289,23 @@ public class User implements OnCompleteListener<AuthResult> {
         result.addOnCompleteListener(this);
     }
 
-    public  void show_progress(String message)
-    {
+    public void show_progress(String message) {
         progress.setMessage(message);
 
-        if(!progress.isShowing())
-        {
+        if (!progress.isShowing()) {
             progress.show();
         }
     }
 
-    public  void send_alert(String msg)
-    {
-        if(progress.isShowing()) progress.dismiss();
+    public void send_alert(String msg) {
+        if (progress.isShowing()) progress.dismiss();
 
         alert.setMessage(msg);
         alert.show();
     }
 
-    public void send_verification_email()
-    {
-        if(!progress.isShowing())
-        {
+    public void send_verification_email() {
+        if (!progress.isShowing()) {
             progress.show();
         }
 
@@ -319,16 +313,14 @@ public class User implements OnCompleteListener<AuthResult> {
 
         FirebaseUser user = auth.getCurrentUser();
 
-        if(user!=null)
-        {
-            Task<Void> task =  user.sendEmailVerification();
+        if (user != null) {
+            Task<Void> task = user.sendEmailVerification();
 
             task.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
-                    if(task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         ids_reference
                                 .child(User.this.username)
                                 .setValue(email)
@@ -338,15 +330,11 @@ public class User implements OnCompleteListener<AuthResult> {
                                         send_alert("Email verification link sent");
                                     }
                                 });
-                    }
-                    else {
+                    } else {
                         Exception e = task.getException();
-                        if(e!=null)
-                        {
+                        if (e != null) {
                             send_alert(e.getMessage());
-                        }
-                        else
-                        {
+                        } else {
                             send_alert("Something went wrong");
                         }
                     }
@@ -365,37 +353,6 @@ public class User implements OnCompleteListener<AuthResult> {
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         progress.dismiss();
-    }
-
-    public static String getUid()
-    {
-        return User.uid;
-    }
-
-    public static DatabaseReference getRepairReference()
-    {
-        if(User.uid!=null && selected_addiction!=null)
-        {
-            return database.getReference().child(User.uid).child(selected_addiction);
-        }
-        return null;
-    }
-
-    public static void setAddiction(Activity act,String addiction)
-    {
-        User.selected_addiction = addiction;
-        act.getSharedPreferences("login_data",Context.MODE_PRIVATE).edit().putString("addiction",addiction).apply();
-    }
-
-    public static DatabaseReference getMainReference()
-    {
-        if(User.uid!=null)
-        {
-            Log.e("userid",User.uid);
-            return database.getReference().child(User.uid);
-        }
-
-        return null;
     }
 
 }

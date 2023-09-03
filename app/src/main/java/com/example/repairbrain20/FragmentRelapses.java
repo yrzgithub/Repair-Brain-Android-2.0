@@ -25,8 +25,7 @@ public class FragmentRelapses extends Fragment {
     View view;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
@@ -50,24 +49,23 @@ public class FragmentRelapses extends Fragment {
 
         DatabaseReference reference = User.getRepairReference();
         reference.child("relapses")
-            .get()
-                    .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if(task.isSuccessful())
-                            {
-                                Map<String,Relapse> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Relapse>>() {
-                                    @NonNull
-                                    @Override
-                                    public String toString() {
-                                        return super.toString();
-                                    }
-                                });
-                                AdapterRelapses relapse_adapter = new AdapterRelapses(getActivity(),FragmentRelapses.this.view,map);
-                                list.setAdapter(relapse_adapter);
-                            }
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Map<String, Relapse> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Relapse>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
+                                }
+                            });
+                            AdapterRelapses relapse_adapter = new AdapterRelapses(getActivity(), FragmentRelapses.this.view, map);
+                            list.setAdapter(relapse_adapter);
                         }
-                    });
+                    }
+                });
 
         super.onViewCreated(view, savedInstanceState);
     }

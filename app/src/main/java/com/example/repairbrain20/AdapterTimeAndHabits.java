@@ -37,8 +37,7 @@ public class AdapterTimeAndHabits extends FragmentPagerAdapter {
         return title.get(position);
     }
 
-    public void add_tab(Fragment f,String name)
-    {
+    public void add_tab(Fragment f, String name) {
         fragments.add(f);
         title.add(name);
     }

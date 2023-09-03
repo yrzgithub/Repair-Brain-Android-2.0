@@ -44,9 +44,9 @@ import java.util.Calendar;
 
 public class ActLogin extends AppCompatActivity implements View.OnClickListener {
 
-    Button login_btn,google_btn;
-    TextView topic,forget_password_text,create_account;
-    EditText id_or_email_edit_txt,password_edit_txt;
+    Button login_btn, google_btn;
+    TextView topic, forget_password_text, create_account;
+    EditText id_or_email_edit_txt, password_edit_txt;
     ProgressDialog progress;
     SharedPreferences preference;
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -62,18 +62,17 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY,settings.getHour());
-        calendar.set(Calendar.MINUTE,settings.getMinute());
+        calendar.set(Calendar.HOUR_OF_DAY, settings.getHour());
+        calendar.set(Calendar.MINUTE, settings.getMinute());
 
-        AlarmManager manager =  (AlarmManager) getSystemService(ALARM_SERVICE);
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        Intent alarm_intent = new Intent(this,AlarmReceiver.class);
-        PendingIntent alarm_pending = PendingIntent.getBroadcast(this,100,alarm_intent,PendingIntent.FLAG_MUTABLE);
+        Intent alarm_intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent alarm_pending = PendingIntent.getBroadcast(this, 100, alarm_intent, PendingIntent.FLAG_MUTABLE);
 
-        manager.setInexactRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+        manager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
 
-        if(getSupportActionBar()!=null)
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
@@ -113,37 +112,32 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         login_btn.setOnClickListener(this);
         google_btn.setOnClickListener(this);
 
-        preference = getSharedPreferences("login_data",MODE_PRIVATE);
+        preference = getSharedPreferences("login_data", MODE_PRIVATE);
 
-        String username = preference.getString("username",null);
-        String email = preference.getString("email",null);
-        String password = preference.getString("password",null);
+        String username = preference.getString("username", null);
+        String email = preference.getString("email", null);
+        String password = preference.getString("password", null);
 
         User user;
 
-        if(username!=null)
-        {
+        if (username != null) {
             id_or_email_edit_txt.setText(username);
 
-            user = new User(this,username,password);
-            if(settings.isAuto_login()) user.login_with_username();
-        }
-
-        else if(email!=null)
-        {
+            user = new User(this, username, password);
+            if (settings.isAuto_login()) user.login_with_username();
+        } else if (email != null) {
             id_or_email_edit_txt.setText(email);
 
-            user = new User(this,email,password);
-            if(settings.isAuto_login()) user.login_with_email_and_password();
+            user = new User(this, email, password);
+            if (settings.isAuto_login()) user.login_with_email_and_password();
         }
 
-        if(password!=null) password_edit_txt.setText(password);
+        if (password != null) password_edit_txt.setText(password);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.sign_up:
                 Intent signup_intent = new Intent(ActLogin.this, ActCreateAccount.class);
                 startActivity(signup_intent);
@@ -155,7 +149,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
             case R.id.forget_password:
                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
-                View view_ = getLayoutInflater().inflate(R.layout.alert_dialog,null);
+                View view_ = getLayoutInflater().inflate(R.layout.alert_dialog, null);
 
                 EditText edit = view_.findViewById(R.id.effects_list);
                 edit.setHint("Enter your E-mail");
@@ -166,9 +160,8 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String email_ = edit.getText().toString();
-                                if(!email_.matches(User.email_regex))
-                                {
-                                    Toast.makeText(ActLogin.this,"Invalid email",Toast.LENGTH_LONG).show();
+                                if (!email_.matches(User.email_regex)) {
+                                    Toast.makeText(ActLogin.this, "Invalid email", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
@@ -179,28 +172,25 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                                 progress.show();
 
                                 auth.
-                                    sendPasswordResetEmail(email_)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
+                                        sendPasswordResetEmail(email_)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
 
-                                            progress.dismiss();
-
-                                            if(task.isSuccessful())
-                                            {
                                                 progress.dismiss();
-                                                Toast.makeText(ActLogin.this,"Reset Link Sent",Toast.LENGTH_LONG).show();
+
+                                                if (task.isSuccessful()) {
+                                                    progress.dismiss();
+                                                    Toast.makeText(ActLogin.this, "Reset Link Sent", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    String error = task.getException().getMessage();
+                                                    Toast.makeText(ActLogin.this, error, Toast.LENGTH_LONG).show();
+                                                }
                                             }
-                                            else
-                                            {
-                                                String error = task.getException().getMessage();
-                                                Toast.makeText(ActLogin.this,error,Toast.LENGTH_LONG).show();
-                                            }
-                                        }
-                                    });
+                                        });
                             }
                         })
-                        .setNegativeButton("cancel",null)
+                        .setNegativeButton("cancel", null)
                         .create()
                         .show();
 
@@ -214,25 +204,20 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                 String username_or_email = id_or_email_edit_txt.getText().toString();
                 String password = password_edit_txt.getText().toString();
 
-                if(!ActCreateAccount.isValidString(username_or_email))
-                {
-                    Toast.makeText(this,"Invalid Username",Toast.LENGTH_LONG).show();
+                if (!ActCreateAccount.isValidString(username_or_email)) {
+                    Toast.makeText(this, "Invalid Username", Toast.LENGTH_LONG).show();
                     break;
                 }
 
-                if(!ActCreateAccount.isValidString(password))
-                {
-                    Toast.makeText(this,"Invalid Password",Toast.LENGTH_LONG).show();
+                if (!ActCreateAccount.isValidString(password)) {
+                    Toast.makeText(this, "Invalid Password", Toast.LENGTH_LONG).show();
                     break;
                 }
 
-                User user = new User(this,username_or_email,password);
-                if(user.use_username())
-                {
+                User user = new User(this, username_or_email, password);
+                if (user.use_username()) {
                     user.login_with_username();
-                }
-                else
-                {
+                } else {
                     user.login_with_email_and_password();
                 }
                 break;
@@ -250,13 +235,13 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                         .requestEmail()
                         .build();
 
-                GoogleSignInClient client = GoogleSignIn.getClient(this,gso);
+                GoogleSignInClient client = GoogleSignIn.getClient(this, gso);
                 client.revokeAccess().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         progress.dismiss();
-                        Intent google_sign_in_intent =  client.getSignInIntent();
-                        startActivityForResult(google_sign_in_intent,100);
+                        Intent google_sign_in_intent = client.getSignInIntent();
+                        startActivityForResult(google_sign_in_intent, 100);
                     }
                 });
                 break;
@@ -265,8 +250,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode==100)
-        {
+        if (requestCode == 100) {
             progress = new ProgressDialog(this);
             progress.setCanceledOnTouchOutside(false);
             progress.setOnCancelListener(null);
@@ -277,39 +261,32 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
-            if(!task.isSuccessful())
-            {
+            if (!task.isSuccessful()) {
                 login_failed();
                 return;
             }
 
-            try
-            {
-                GoogleSignInAccount account =  task.getResult(ApiException.class);
-                String email =  account.getEmail();
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                String email = account.getEmail();
                 String idToken = account.getIdToken();
 
-                AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
+                AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
                 auth.signInWithCredential(credential)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 FirebaseUser user = auth.getCurrentUser();
                                 progress.dismiss();
-                                if(user!=null)
-                                {
+                                if (user != null) {
                                     User.uid = user.getUid();
                                     startActivity(new Intent(ActLogin.this, ActRepairsInsights.class));
-                                }
-                                else
-                                {
+                                } else {
                                     login_failed();
                                 }
                             }
                         });
-            }
-            catch (ApiException e)
-            {
+            } catch (ApiException e) {
                 login_failed();
                 return;
             }
@@ -317,10 +294,9 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void login_failed()
-    {
+    public void login_failed() {
         progress.dismiss();
-        Toast.makeText(this,"Login Failed",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
     }
 
     @Override

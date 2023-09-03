@@ -2,7 +2,8 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="1000">
 
-    <rotate android:fromDegrees="0"
-        android:toDegrees="0"/>
+    <rotate
+        android:fromDegrees="0"
+        android:toDegrees="0" />
 
 </set>

@@ -2,20 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/add"
+    <item
+        android:id="@+id/add"
         android:title="@string/add"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/delete"
         android:enabled="true"
-        android:title="@string/remove"/>
+        android:title="@string/remove" />
 
-    <item android:title="@string/reset"
-        android:id="@+id/reset"/>
+    <item
+        android:id="@+id/reset"
+        android:title="@string/reset" />
 
-    <item android:id="@+id/settings"
-        app:showAsAction="never"
-        android:title="@string/settings"/>
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
 
 </menu>

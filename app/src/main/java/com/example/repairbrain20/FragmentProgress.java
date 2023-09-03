@@ -29,8 +29,8 @@ import java.time.format.DateTimeFormatter;
 
 public class FragmentProgress extends Fragment {
 
-    TextView time_gone=null,lastly_relapse=null,next_step=null,pos_effect=null,neg_effect=null,hrs_left=null;
-    EditText neg_edit=null,pos_edit=null,next_edit=null;
+    TextView time_gone = null, lastly_relapse = null, next_step = null, pos_effect = null, neg_effect = null, hrs_left = null;
+    EditText neg_edit = null, pos_edit = null, next_edit = null;
     Button effects = null, next = null;
     ProgressBar progress;
     ImageView loading;
@@ -73,23 +73,20 @@ public class FragmentProgress extends Fragment {
 
         DatabaseReference reference = User.getRepairReference();
 
-        if(reference!=null)
-        {
+        if (reference != null) {
             reference.get()
                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                            if(!task.isSuccessful())
-                            {
-                                Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_SHORT).show();
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
                             DataSnapshot snapshot = task.getResult();
 
-                            if(snapshot!=null && snapshot.exists())
-                            {
+                            if (snapshot != null && snapshot.exists()) {
                                 ProgressData progress_data = snapshot.getValue(ProgressData.class);
 
                                 String positive_effect = progress_data.getLastly_noted_positive_effects();
@@ -98,19 +95,16 @@ public class FragmentProgress extends Fragment {
 
                                 ActRecovery.last_accuracy_percent = progress_data.getLast_accuracy_percent();
 
-                                pos_effect.setText(positive_effect!=null? positive_effect : "...");
-                                neg_effect.setText(negative_effect!=null? negative_effect : "...");
-                                next_step.setText(next_step_!=null?next_step_ : "...");
+                                pos_effect.setText(positive_effect != null ? positive_effect : "...");
+                                neg_effect.setText(negative_effect != null ? negative_effect : "...");
+                                next_step.setText(next_step_ != null ? next_step_ : "...");
 
                                 LocalDateTime lastly_relapsed_object;
 
-                                try
-                                {
+                                try {
                                     Time time = progress_data.getLastly_relapsed();
-                                    lastly_relapsed_object = LocalDateTime.of(time.getYear(),time.getMonth(),time.getDay(),time.getHour(),time.getMinute(),time.getSecond());
-                                }
-                                catch (Exception | Error e)
-                                {
+                                    lastly_relapsed_object = LocalDateTime.of(time.getYear(), time.getMonth(), time.getDay(), time.getHour(), time.getMinute(), time.getSecond());
+                                } catch (Exception | Error e) {
                                     time_gone.setText(R.string.not_found);
                                     lastly_relapse.setText(R.string.not_found);
                                     pos_effect.setText(R.string.not_found);
@@ -130,13 +124,13 @@ public class FragmentProgress extends Fragment {
                                 LocalDateTime now = LocalDateTime.now();
                                 LocalDateTime finalLastly_relapsed_object = lastly_relapsed_object;
 
-                                Duration duration = Duration.between(finalLastly_relapsed_object,now);
+                                Duration duration = Duration.between(finalLastly_relapsed_object, now);
 
                                 long hours = duration.toHours() % 24;
 
-                                int hrs = (int)hours;
+                                int hrs = (int) hours;
                                 progress.setProgress(hrs); // change
-                                hrs_left.setText(String.format("%02d",24-hrs));
+                                hrs_left.setText(String.format("%02d", 24 - hrs));
 
                                 Handler handler = new Handler();
                                 Runnable runnable = new Runnable() {
@@ -145,22 +139,22 @@ public class FragmentProgress extends Fragment {
                                     public void run() {
                                         LocalDateTime now = LocalDateTime.now();
 
-                                        Duration duration = Duration.between(finalLastly_relapsed_object,now);
+                                        Duration duration = Duration.between(finalLastly_relapsed_object, now);
 
                                         long days = duration.toDays();
                                         long hours = duration.toHours() % 24;
                                         long minutes = duration.toMinutes() % 60;
                                         long seconds = duration.getSeconds() % 60;
 
-                                        int hrs = (int)hours;
-                                        hrs_left.setText(String.format("%02d",24-hrs));
+                                        int hrs = (int) hours;
+                                        hrs_left.setText(String.format("%02d", 24 - hrs));
 
                                         String format = "%d days %d hrs %d mins %d secs";
-                                        String time = String.format(format,days,hours,minutes,seconds);
+                                        String time = String.format(format, days, hours, minutes, seconds);
 
                                         time_gone.setText(time);
 
-                                        handler.postDelayed(this,1000);
+                                        handler.postDelayed(this, 1000);
                                     }
                                 };
 

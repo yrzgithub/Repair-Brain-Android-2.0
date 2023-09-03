@@ -14,9 +14,8 @@ public class AdapterRepairsAndInsights extends FragmentPagerAdapter {
     List<Fragment> fragments = new ArrayList<>();
     List<String> titles = new ArrayList<>();
 
-    AdapterRepairsAndInsights(FragmentManager manager)
-    {
-        super(manager,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+    AdapterRepairsAndInsights(FragmentManager manager) {
+        super(manager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @NonNull
@@ -36,8 +35,7 @@ public class AdapterRepairsAndInsights extends FragmentPagerAdapter {
         return titles.get(position);
     }
 
-    public void add_tab(Fragment fragment,String title)
-    {
+    public void add_tab(Fragment fragment, String title) {
         fragments.add(fragment);
         titles.add(title);
     }

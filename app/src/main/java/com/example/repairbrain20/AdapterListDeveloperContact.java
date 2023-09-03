@@ -30,32 +30,27 @@ import java.util.Map;
 public class AdapterListDeveloperContact extends BaseAdapter {
 
     Activity activity;
-    Map<String,Contact> contact = new HashMap<>();
+    Map<String, Contact> contact = new HashMap<>();
     List<String> keys = new ArrayList<>();
     StorageReference storage = FirebaseStorage.getInstance().getReference().child("social/");
-    Map<String,Drawable> icons = new HashMap<>();
+    Map<String, Drawable> icons = new HashMap<>();
 
-    AdapterListDeveloperContact(Activity act, Map<String,Contact> map)
-    {
+    AdapterListDeveloperContact(Activity act, Map<String, Contact> map) {
         activity = act;
 
         ListView list = act.findViewById(R.id.list);
         ImageView loading = act.findViewById(R.id.loading);
 
-        if(map!=null)
-        {
+        if (map != null) {
             contact.putAll(map);
             keys.addAll(map.keySet());
         }
 
-        if(contact.size()==0)
-        {
+        if (contact.size() == 0) {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             Glide.with(activity).load(R.drawable.noresultfound).into(loading);
-        }
-        else
-        {
+        } else {
             list.setVisibility(View.VISIBLE);
             loading.setVisibility(View.GONE);
         }
@@ -78,7 +73,7 @@ public class AdapterListDeveloperContact extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = activity.getLayoutInflater().inflate(R.layout.custom_list_developer,null);
+        view = activity.getLayoutInflater().inflate(R.layout.custom_list_developer, null);
 
         ImageView image = view.findViewById(R.id.image);
         ImageView go = view.findViewById(R.id.go);
@@ -102,28 +97,22 @@ public class AdapterListDeveloperContact extends BaseAdapter {
             }
         });
 
-        if (icons.containsKey(key_name))
-        {
+        if (icons.containsKey(key_name)) {
             image.setImageDrawable(icons.get(key_name));
-        }
-        else
-        {
-            if(storage!=null)
-            {
-                storage.child(key_name.toLowerCase()+".png")
+        } else {
+            if (storage != null) {
+                storage.child(key_name.toLowerCase() + ".png")
                         .getDownloadUrl()
                         .addOnCompleteListener(new OnCompleteListener<Uri>() {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
-                                if(task.isSuccessful())
-                                {
-                                    if(!activity.isDestroyed())
-                                    {
+                                if (task.isSuccessful()) {
+                                    if (!activity.isDestroyed()) {
                                         Glide.with(activity).asDrawable().load(task.getResult())
                                                 .into(new SimpleTarget<Drawable>() {
                                                     @Override
                                                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                                        icons.put(key_name,resource);
+                                                        icons.put(key_name, resource);
                                                         image.setImageDrawable(resource);
                                                     }
                                                 });

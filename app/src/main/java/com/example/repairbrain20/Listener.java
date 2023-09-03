@@ -36,15 +36,14 @@ public class Listener {
 
     ListView list;
     DatabaseReference list_effects_reference;
-    Map<String,String> map;
+    Map<String, String> map;
     String type;
     Activity act;
     View view;
     ImageView loading;
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
 
-    Listener(Activity act,View view,String type)
-    {
+    Listener(Activity act, View view, String type) {
         this.act = act;
         this.view = view;
         this.loading = view.findViewById(R.id.no_results);
@@ -62,8 +61,7 @@ public class Listener {
 
         list_effects_reference = User.getRepairReference();
 
-        if(list_effects_reference!=null)
-        {
+        if (list_effects_reference != null) {
             list_effects_reference.child(type).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -75,8 +73,9 @@ public class Listener {
                         }
                     });
 
-                    if(AdapterPosNeg.remove) list.setAdapter(new AdapterPosNeg(act,view,map,type,true));
-                    else list.setAdapter(new AdapterPosNeg(act,view,map,type));
+                    if (AdapterPosNeg.remove)
+                        list.setAdapter(new AdapterPosNeg(act, view, map, type, true));
+                    else list.setAdapter(new AdapterPosNeg(act, view, map, type));
                 }
 
                 @Override
@@ -87,14 +86,12 @@ public class Listener {
         }
     }
 
-    public Map<String,String> getEffectsMap()
-    {
+    public Map<String, String> getEffectsMap() {
         return map;
     }
 
-    public void addEffect()
-    {
-        View view = View.inflate(act,R.layout.alert_dialog,null);
+    public void addEffect() {
+        View view = View.inflate(act, R.layout.alert_dialog, null);
         AutoCompleteTextView search = view.findViewById(R.id.effects_list);
         search.setThreshold(0);
 
@@ -107,10 +104,9 @@ public class Listener {
             }
         });
 
-        Log.e("common","common_" + type);
+        Log.e("common", "common_" + type);
 
-        if(common_reference!=null)
-        {
+        if (common_reference != null) {
             common_reference
                     .child("common_" + type)
                     .get()
@@ -118,21 +114,20 @@ public class Listener {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                                Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
-                                    @NonNull
-                                    @Override
-                                    public String toString() {
-                                        return super.toString();
-                                    }
-                                });
-
-                                if(map!=null)
-                                {
-                                    List<String> suggestions = new ArrayList<>(map.keySet());
-
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,suggestions);
-                                    search.setAdapter(adapter);
+                            Map<String, Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                @NonNull
+                                @Override
+                                public String toString() {
+                                    return super.toString();
                                 }
+                            });
+
+                            if (map != null) {
+                                List<String> suggestions = new ArrayList<>(map.keySet());
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(act, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, suggestions);
+                                search.setAdapter(adapter);
+                            }
                         }
                     });
         }
@@ -144,27 +139,25 @@ public class Listener {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String effect_new = search.getText().toString().trim();
 
-                        if(effect_new.trim().equals("")) {
-                            Toast.makeText(act.getApplicationContext(),"Invalid " + type.replace("_"," ").substring(0,type.length()-1),Toast.LENGTH_SHORT).show();
+                        if (effect_new.trim().equals("")) {
+                            Toast.makeText(act.getApplicationContext(), "Invalid " + type.replace("_", " ").substring(0, type.length() - 1), Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                         LocalDateTime date_time = LocalDateTime.now();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
 
-                        String date_added =  date_time.format(formatter);
+                        String date_added = date_time.format(formatter);
 
                         DatabaseReference reference = User.getRepairReference();
 
-                        if(!Data.isValidKey(effect_new))
-                        {
-                            Toast.makeText(act,"Invalid effect name",Toast.LENGTH_SHORT).show();
+                        if (!Data.isValidKey(effect_new)) {
+                            Toast.makeText(act, "Invalid effect name", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
-                        if(reference!=null)
-                        {
-                            Snackbar bar = Snackbar.make(list,"Adding",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                        if (reference != null) {
+                            Snackbar bar = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                             bar.show();
 
                             reference.child(type)
@@ -174,32 +167,30 @@ public class Listener {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             bar.dismiss();
-                                            reference.child("lastly_noted_"+type).setValue(effect_new);
+                                            reference.child("lastly_noted_" + type).setValue(effect_new);
 
-                                            Toast.makeText(act,"Successfully Added",Toast.LENGTH_LONG).show();
+                                            Toast.makeText(act, "Successfully Added", Toast.LENGTH_LONG).show();
                                         }
                                     });
                         }
                     }
                 })
-                .setNegativeButton("Cancel",null)
+                .setNegativeButton("Cancel", null)
                 .create()
                 .show();
     }
 
-    public void reset()
-    {
+    public void reset() {
         DatabaseReference reference = User.getRepairReference();
 
-        if(reference!=null)
-        {
-            Snackbar bar =  Snackbar.make(list,"Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
+        if (reference != null) {
+            Snackbar bar = Snackbar.make(list, "Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
             bar.show();
             reference.child(type).removeValue(new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                     bar.dismiss();
-                    Toast.makeText(act,"Successfully Resetted",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(act, "Successfully Resetted", Toast.LENGTH_SHORT).show();
                 }
             });
         }

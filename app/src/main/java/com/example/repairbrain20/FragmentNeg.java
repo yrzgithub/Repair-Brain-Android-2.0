@@ -37,7 +37,7 @@ public class FragmentNeg extends Fragment {
         listView = view.findViewById(R.id.list);
         this.view = view;
 
-        listener = new Listener(getActivity(),view,"negative_effects");
+        listener = new Listener(getActivity(), view, "negative_effects");
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -50,15 +50,14 @@ public class FragmentNeg extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_add_menu,menu);
+        inflater.inflate(R.menu.fragment_add_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent;
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.add:
                 listener.addEffect();
                 break;
@@ -67,35 +66,32 @@ public class FragmentNeg extends Fragment {
 
                 AdapterPosNeg.remove = false;
 
-                Map<String,String> map = listener.getEffectsMap();
+                Map<String, String> map = listener.getEffectsMap();
                 ArrayList<String> present;
-                if(map==null) present = new ArrayList<>();
+                if (map == null) present = new ArrayList<>();
                 else present = new ArrayList<>(map.keySet());
 
                 intent = new Intent(getActivity(), ActCommon.class);
-                intent.putExtra("common","common_negative_effects");
-                intent.putExtra("add",true);
-                intent.putExtra("present",present);
+                intent.putExtra("common", "common_negative_effects");
+                intent.putExtra("add", true);
+                intent.putExtra("present", present);
 
                 startActivity(intent);
                 break;
 
             case R.id.common:
                 intent = new Intent(getActivity(), ActCommon.class);
-                intent.putExtra("common","common_negative_effects");
-                intent.putExtra("add",false);
+                intent.putExtra("common", "common_negative_effects");
+                intent.putExtra("add", false);
                 startActivity(intent);
                 break;
 
             case R.id.remove:
-                Map<String,String> result = listener.getEffectsMap();
-                if(result==null || result.size()==0)
-                {
-                    Toast.makeText(getActivity(),"Symptoms list is empty",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    listView.setAdapter(new AdapterPosNeg(getActivity(),view,result,"negative_effects",true));
+                Map<String, String> result = listener.getEffectsMap();
+                if (result == null || result.size() == 0) {
+                    Toast.makeText(getActivity(), "Symptoms list is empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    listView.setAdapter(new AdapterPosNeg(getActivity(), view, result, "negative_effects", true));
                 }
                 break;
 

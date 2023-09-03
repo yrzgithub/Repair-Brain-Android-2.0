@@ -49,7 +49,7 @@ public class FragmentTriggers extends Fragment {
     ListView list;
     ImageView loading;
     View view;
-    Map<String,String> map;
+    Map<String, String> map;
 
     public FragmentTriggers() {
 
@@ -80,13 +80,12 @@ public class FragmentTriggers extends Fragment {
 
         DatabaseReference reference = User.getRepairReference();
 
-        if(reference!=null)
-        {
-            reference.child("triggers/"+User.selected_addiction)
+        if (reference != null) {
+            reference.child("triggers/" + User.selected_addiction)
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            map =  snapshot.getValue(new GenericTypeIndicator<Map<String, String>>() {
+                            map = snapshot.getValue(new GenericTypeIndicator<Map<String, String>>() {
                                 @NonNull
                                 @Override
                                 public String toString() {
@@ -94,14 +93,15 @@ public class FragmentTriggers extends Fragment {
                                 }
                             });
 
-                            if(map==null)
-                            {
+                            if (map == null) {
                                 map = new HashMap<>();
                                 AdapterTriggers.delete = false;
                             }
 
-                            if(AdapterTriggers.delete) list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map,true));
-                            else list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map));
+                            if (AdapterTriggers.delete)
+                                list.setAdapter(new AdapterTriggers(getActivity(), FragmentTriggers.this.view, map, true));
+                            else
+                                list.setAdapter(new AdapterTriggers(getActivity(), FragmentTriggers.this.view, map));
                         }
 
                         @Override
@@ -116,7 +116,7 @@ public class FragmentTriggers extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.update_database_menu,menu);
+        inflater.inflate(R.menu.update_database_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -126,10 +126,9 @@ public class FragmentTriggers extends Fragment {
         DatabaseReference reference;
         Intent intent;
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.add:
-                View view = getLayoutInflater().inflate(R.layout.alert_dialog,null);
+                View view = getLayoutInflater().inflate(R.layout.alert_dialog, null);
                 AutoCompleteTextView triggers_view = view.findViewById(id.effects_list);
 
                 triggers_view.setHint("Search or Enter");
@@ -150,7 +149,7 @@ public class FragmentTriggers extends Fragment {
                         .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                Map<String, Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                                     @NonNull
                                     @Override
                                     public String toString() {
@@ -158,10 +157,9 @@ public class FragmentTriggers extends Fragment {
                                     }
                                 });
 
-                                if(map!=null)
-                                {
+                                if (map != null) {
                                     List<String> list = new ArrayList<>(map.keySet());
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                                     triggers_view.setAdapter(adapter);
                                 }
                             }
@@ -169,11 +167,10 @@ public class FragmentTriggers extends Fragment {
 
                 reference = User.getRepairReference();
 
-                if(reference!=null)
-                {
+                if (reference != null) {
                     new AlertDialog.Builder(getActivity())
                             .setView(view)
-                            .setNegativeButton("Cancel",null)
+                            .setNegativeButton("Cancel", null)
                             .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -184,24 +181,23 @@ public class FragmentTriggers extends Fragment {
 
                                     String time_ = local_time.format(formatter);
 
-                                    if(!Data.isValidKey(trigger_name))
-                                    {
-                                        Toast.makeText(getActivity(),"Invalid trigger name",Toast.LENGTH_SHORT).show();
+                                    if (!Data.isValidKey(trigger_name)) {
+                                        Toast.makeText(getActivity(), "Invalid trigger name", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
 
-                                    Snackbar snack = Snackbar.make(FragmentTriggers.this.view,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                    Snackbar snack = Snackbar.make(FragmentTriggers.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     snack.show();
 
                                     reference
-                                            .child("triggers/"+User.selected_addiction)
+                                            .child("triggers/" + User.selected_addiction)
                                             .child(trigger_name)
                                             .setValue(time_)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     snack.dismiss();
-                                                    Toast.makeText(getActivity(),"Trigger added",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getActivity(), "Trigger added", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }
@@ -212,7 +208,7 @@ public class FragmentTriggers extends Fragment {
                 break;
 
             case id.remove:
-                list.setAdapter(new AdapterTriggers(getActivity(),FragmentTriggers.this.view,map,true));
+                list.setAdapter(new AdapterTriggers(getActivity(), FragmentTriggers.this.view, map, true));
                 break;
 
             case id.add_common:
@@ -221,31 +217,31 @@ public class FragmentTriggers extends Fragment {
 
                 ArrayList<String> present = new ArrayList<>(map.keySet());
 
-                intent = new Intent(getActivity(),ActCommon.class);
-                intent.putExtra("common","common_triggers/"+User.selected_addiction);
-                intent.putExtra("add",true);
-                intent.putExtra("present",(Serializable)present);
+                intent = new Intent(getActivity(), ActCommon.class);
+                intent.putExtra("common", "common_triggers/" + User.selected_addiction);
+                intent.putExtra("add", true);
+                intent.putExtra("present", (Serializable) present);
                 startActivity(intent);
                 break;
 
             case id.common:
-                intent = new Intent(getActivity(),ActCommon.class);
-                intent.putExtra("common","common_triggers/"+User.selected_addiction);
-                intent.putExtra("add",false);
-                intent.putExtra("present",(Serializable) null);
+                intent = new Intent(getActivity(), ActCommon.class);
+                intent.putExtra("common", "common_triggers/" + User.selected_addiction);
+                intent.putExtra("add", false);
+                intent.putExtra("present", (Serializable) null);
                 startActivity(intent);
                 break;
 
             case id.reset:
                 reference = User.getRepairReference();
-                Snackbar snack = Snackbar.make(FragmentTriggers.this.view,"Resetting",BaseTransientBottomBar.LENGTH_INDEFINITE);
+                Snackbar snack = Snackbar.make(FragmentTriggers.this.view, "Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
                 snack.show();
                 reference.child("triggers")
                         .removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 snack.dismiss();
-                                Toast.makeText(getActivity(),"Successfully Resetted",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Successfully Resetted", Toast.LENGTH_SHORT).show();
                             }
                         });
                 break;

@@ -17,18 +17,29 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
     Activity act;
     Snackbar snack;
 
-    CheckNetwork(Activity act,View view)
-    {
+    CheckNetwork(Activity act, View view) {
         this.act = act;
-        this.snack = Snackbar.make(view,"Network Not Available",Snackbar.LENGTH_INDEFINITE);
+        this.snack = Snackbar.make(view, "Network Not Available", Snackbar.LENGTH_INDEFINITE);
 
         ConnectivityManager cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
         Network active = cm.getActiveNetwork();
-        if(active==null)
-        {
+        if (active == null) {
             snack.show();
         }
     }
+
+    public static boolean isAvailable(Activity act, View view) {
+        ConnectivityManager cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
+        Network active = cm.getActiveNetwork();
+
+        if (active == null) {
+            Snackbar bar = Snackbar.make(view, "Network Not Available", BaseTransientBottomBar.LENGTH_INDEFINITE);
+            bar.show();
+        }
+
+        return active != null;
+    }
+
     @Override
     public void onAvailable(@NonNull Network network) {
         this.snack.dismiss();
@@ -66,20 +77,6 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
     @Override
     public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {
         super.onBlockedStatusChanged(network, blocked);
-    }
-
-    public static boolean isAvailable(Activity act,View view)
-    {
-        ConnectivityManager cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
-        Network active = cm.getActiveNetwork();
-
-        if(active==null)
-        {
-            Snackbar bar = Snackbar.make(view,"Network Not Available",BaseTransientBottomBar.LENGTH_INDEFINITE);
-            bar.show();
-        }
-
-        return active!=null;
     }
 
 }

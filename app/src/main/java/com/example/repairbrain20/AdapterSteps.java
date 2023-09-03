@@ -35,63 +35,54 @@ import java.util.Map;
 
 public class AdapterSteps extends BaseAdapter {
 
-    Map<String,Step> steps = new HashMap<>();
+    static boolean delete = false;
+    Map<String, Step> steps = new HashMap<>();
     Activity activity;
     ImageView no_results;
     ListView list;
     List<String> keys = new ArrayList<>();
-    static boolean delete = false;
     DatabaseReference delete_reference;
     Snackbar snack;
     StorageReference reference = FirebaseStorage.getInstance().getReference();
-    Map<String,Drawable> drawables = new HashMap<>();
+    Map<String, Drawable> drawables = new HashMap<>();
 
-    AdapterSteps(Activity act, View view, Map<String, Step> map)
-    {
+    AdapterSteps(Activity act, View view, Map<String, Step> map) {
         activity = act;
 
         list = view.findViewById(R.id.list);
         no_results = view.findViewById(R.id.no_results);
 
-        if(map!=null && map.size()>0)
-        {
+        if (map != null && map.size() > 0) {
             list.setVisibility(View.VISIBLE);
             no_results.setVisibility(View.GONE);
             steps.putAll(map);
             keys.addAll(map.keySet());
-        }
-        else
-        {
+        } else {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
             //no_results.setImageResource(R.drawable.noresultfound);
-            if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
+            if (act != null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             delete = false;
         }
     }
 
-    AdapterSteps(Activity act, View view, Map<String, Step> map, boolean delete)
-    {
-        this(act,view,map);
+    AdapterSteps(Activity act, View view, Map<String, Step> map, boolean delete) {
+        this(act, view, map);
         AdapterSteps.delete = delete;
 
-        try
-        {
-            snack = Snackbar.make(view,"Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
+        try {
+            snack = Snackbar.make(view, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
             snack.setAction("reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     act.recreate();
                 }
             });
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
-        if(delete && snack!=null && this.steps.size()>0)
-        {
+        if (delete && snack != null && this.steps.size() > 0) {
             snack.show();
         }
 
@@ -116,7 +107,7 @@ public class AdapterSteps extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        view = activity.getLayoutInflater().inflate(R.layout.custom_steps,null);
+        view = activity.getLayoutInflater().inflate(R.layout.custom_steps, null);
 
         TextView step = view.findViewById(R.id.step);
         TextView source = view.findViewById(R.id.source);
@@ -125,13 +116,10 @@ public class AdapterSteps extends BaseAdapter {
         ImageView delete = view.findViewById(R.id.delete);
         ImageView start = view.findViewById(R.id.image);
 
-        if(AdapterSteps.delete)
-        {
+        if (AdapterSteps.delete) {
             image.setVisibility(View.GONE);
             delete.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             image.setVisibility(View.VISIBLE);
             delete.setVisibility(View.GONE);
         }
@@ -143,60 +131,50 @@ public class AdapterSteps extends BaseAdapter {
         String source_link = step_.getLink().trim();
         String source_name = step_.getSource_name().trim();
 
-        if(source_name.equals(""))
-        {
+        if (source_name.equals("")) {
             source_name = "Not found";
         }
 
-        source_name = source_name.substring(0,1).toUpperCase() + source_name.substring(1);
+        source_name = source_name.substring(0, 1).toUpperCase() + source_name.substring(1);
 
         step.setText(key.trim());
         source.setText(source_name);
 
-        if(AdapterSteps.delete)
-        {
+        if (AdapterSteps.delete) {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    if(delete_reference!=null)
-                    {
-                        if(snack!=null) snack.show();
+                    if (delete_reference != null) {
+                        if (snack != null) snack.show();
                         delete_reference.child("next_steps").child(key).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                if(snack!=null) snack.dismiss();
+                                if (snack != null) snack.dismiss();
                             }
                         });
                     }
                 }
             });
-        }
-        else
-        {
-            StorageReference download_reference  = reference.child("icons/").child(source_name.toLowerCase()+".png");
+        } else {
+            StorageReference download_reference = reference.child("icons/").child(source_name.toLowerCase() + ".png");
 
-            if(drawables.containsKey(source_name))
-            {
+            if (drawables.containsKey(source_name)) {
                 start.setImageDrawable(drawables.get(source_name));
-            }
-            else
-            {
+            } else {
                 final String final_source_name = source_name;
 
-                try
-                {
+                try {
                     download_reference.getDownloadUrl()
                             .addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     if (task.isSuccessful()) {
-                                        if(!activity.isDestroyed())
-                                        {
+                                        if (!activity.isDestroyed()) {
                                             Glide.with(activity).asDrawable().load(task.getResult()).into(new SimpleTarget<Drawable>() {
                                                 @Override
                                                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                                    drawables.put(final_source_name,resource);
+                                                    drawables.put(final_source_name, resource);
                                                     start.setImageDrawable(resource);
                                                 }
                                             });
@@ -204,10 +182,8 @@ public class AdapterSteps extends BaseAdapter {
                                     }
                                 }
                             });
-                }
-                catch (Exception e)
-                {
-                    Log.e("image","image not found");
+                } catch (Exception e) {
+                    Log.e("image", "image not found");
                 }
             }
         }
@@ -217,28 +193,23 @@ public class AdapterSteps extends BaseAdapter {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(source_link_copy.equals(""))
-                {
-                    Toast.makeText(activity,"Source link not found",Toast.LENGTH_SHORT).show();
+                if (source_link_copy.equals("")) {
+                    Toast.makeText(activity, "Source link not found", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                try
-                {
+                try {
                     String link = source_link_copy;
 
-                    if(!link.startsWith("http"))
-                    {
+                    if (!link.startsWith("http")) {
                         link = "https://" + source_link_copy;
                     }
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(link));
                     activity.startActivity(intent);
-                }
-                catch (Exception | Error e)
-                {
-                    Toast.makeText(activity,"Invalid source link",Toast.LENGTH_SHORT).show();
+                } catch (Exception | Error e) {
+                    Toast.makeText(activity, "Invalid source link", Toast.LENGTH_SHORT).show();
                 }
             }
         });

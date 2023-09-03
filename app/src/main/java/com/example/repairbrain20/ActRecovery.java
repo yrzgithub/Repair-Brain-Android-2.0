@@ -43,7 +43,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
 
         DrawerLayout drawer = findViewById(R.id.drawer);
 
-        toggle = new ActionBarDrawerToggle(this,drawer,R.string.open,R.string.close);
+        toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
         toggle.syncState();
 
         drawer.addDrawerListener(toggle);
@@ -53,7 +53,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         pager = findViewById(R.id.habits_pager);
         TabLayout tabs = findViewById(R.id.tabs);
 
-        network_check =  new CheckNetwork(this,pager);
+        network_check = new CheckNetwork(this, pager);
         cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
 
         //cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
@@ -62,11 +62,11 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         FragmentTriggers triggers = new FragmentTriggers();
         FragmentPractices practices = new FragmentPractices();
 
-        AdapterTimeAndHabits adapter = new AdapterTimeAndHabits(getSupportFragmentManager(),FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        AdapterTimeAndHabits adapter = new AdapterTimeAndHabits(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
-        adapter.add_tab(progress,"Progress");
-        adapter.add_tab(triggers,"Triggers");
-        adapter.add_tab(practices,"Practices");
+        adapter.add_tab(progress, "Progress");
+        adapter.add_tab(triggers, "Triggers");
+        adapter.add_tab(practices, "Practices");
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
@@ -94,8 +94,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(toggle.onOptionsItemSelected(item))
-        {
+        if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -124,8 +123,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         Intent intent;
 
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.home:
                 intent = new Intent(this, ActHome.class);
                 startActivity(intent);
@@ -164,14 +162,11 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
                                 progress.dismiss();
 
-                                if(task.isSuccessful())
-                                {
+                                if (task.isSuccessful()) {
                                     Version version = task.getResult().getValue(Version.class);
-                                    try
-                                    {
+                                    try {
                                         float latest_version = Float.parseFloat(version.getName());
-                                        if(Data.CURRENT_VERSION<latest_version)
-                                        {
+                                        if (Data.CURRENT_VERSION < latest_version) {
                                             new AlertDialog.Builder(ActRecovery.this)
                                                     .setTitle(R.string.app_name)
                                                     .setIcon(R.drawable.icon_app)
@@ -182,17 +177,13 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                                                             open_github();
                                                         }
                                                     })
-                                                    .setNegativeButton("Cancel",null)
+                                                    .setNegativeButton("Cancel", null)
                                                     .show();
+                                        } else {
+                                            Toast.makeText(ActRecovery.this, "Already in Latest Version", Toast.LENGTH_SHORT).show();
                                         }
-                                        else
-                                        {
-                                            Toast.makeText(ActRecovery.this,"Already in Latest Version",Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Toast.makeText(ActRecovery.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+                                        Toast.makeText(ActRecovery.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -204,11 +195,11 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.contact_developer:
-                startActivity(new Intent(this,ActContactDeveloper.class));
+                startActivity(new Intent(this, ActContactDeveloper.class));
                 break;
 
             case R.id.logout:
-                SharedPreferences preferences = getSharedPreferences("login_data",MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences("login_data", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear().apply();
 
@@ -221,8 +212,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    public void open_github()
-    {
+    public void open_github() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://github.com/yrzgithub/Repair-Brain-Android-3.0"));
         startActivity(intent);

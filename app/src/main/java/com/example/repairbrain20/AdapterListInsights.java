@@ -35,67 +35,57 @@ import java.util.Map;
 
 public class AdapterListInsights extends BaseAdapter {
 
-    Map<String,Insight> insights = new HashMap<>();
+    static boolean remove = false;
+    Map<String, Insight> insights = new HashMap<>();
     Activity activity;
     View view;
     Snackbar snack;
     List<String> keys = new ArrayList<>();
     StorageReference reference = FirebaseStorage.getInstance().getReference();
     DatabaseReference delete_reference;
-    Map<String,Drawable> drawables = new HashMap<>();
-    static boolean remove = false;
+    Map<String, Drawable> drawables = new HashMap<>();
 
-    AdapterListInsights(Activity act,View view_, Map<String,Insight> map)
-    {
+    AdapterListInsights(Activity act, View view_, Map<String, Insight> map) {
         this.activity = act;
         this.view = view_;
 
         ListView list = view.findViewById(R.id.list);
         ImageView no_results = view.findViewById(R.id.no_results);
 
-        if(map!=null)
-        {
+        if (map != null) {
             this.insights.putAll(map);
             this.keys.addAll(map.keySet());
         }
 
-        if(map==null || insights.size()==0)
-        {
+        if (map == null || insights.size() == 0) {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
+            if (act != null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             remove = false;
-        }
-        else
-        {
+        } else {
             list.setVisibility(View.VISIBLE);
             no_results.setVisibility(View.GONE);
         }
     }
 
-    AdapterListInsights(Activity act,View view_, Map<String,Insight> map,boolean delete)
-    {
-        this(act,view_,map);
+    AdapterListInsights(Activity act, View view_, Map<String, Insight> map, boolean delete) {
+        this(act, view_, map);
 
         AdapterListInsights.remove = delete;
 
-        try
-        {
-            snack = Snackbar.make(view,"Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
+        try {
+            snack = Snackbar.make(view, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
             snack.setAction("reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     act.recreate();
                 }
             });
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
-        if(remove && snack!=null && this.insights.size()>0)
-        {
+        if (remove && snack != null && this.insights.size() > 0) {
             snack.show();
         }
 
@@ -120,7 +110,7 @@ public class AdapterListInsights extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        view = activity.getLayoutInflater().inflate(R.layout.custom_insights,null);
+        view = activity.getLayoutInflater().inflate(R.layout.custom_insights, null);
 
         ImageView start = view.findViewById(R.id.image);
         ImageView go = view.findViewById(R.id.go);
@@ -129,13 +119,10 @@ public class AdapterListInsights extends BaseAdapter {
         TextView source = view.findViewById(R.id.source);
         ImageView delete = view.findViewById(R.id.delete);
 
-        if(AdapterListInsights.remove)
-        {
+        if (AdapterListInsights.remove) {
             go.setVisibility(View.GONE);
             delete.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             go.setVisibility(View.VISIBLE);
             delete.setVisibility(View.GONE);
         }
@@ -147,59 +134,49 @@ public class AdapterListInsights extends BaseAdapter {
         String source_name = insight_.getSource();
         String link = insight_.getLink();
 
-        if(source_name.equals(""))
-        {
+        if (source_name.equals("")) {
             source_name = "Not found";
         }
 
-        source_name = source_name.substring(0,1).toUpperCase() + source_name.substring(1);
+        source_name = source_name.substring(0, 1).toUpperCase() + source_name.substring(1);
 
         insight.setText(key_insight.trim());
         source.setText(source_name.trim());
 
-        if(AdapterListInsights.remove)
-        {
+        if (AdapterListInsights.remove) {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(delete_reference!=null)
-                    {
-                        if(snack!=null) snack.show();
+                    if (delete_reference != null) {
+                        if (snack != null) snack.show();
                         delete_reference.child("insights").child(key_insight).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                if(snack!=null) snack.dismiss();
+                                if (snack != null) snack.dismiss();
                             }
                         });
                     }
                 }
             });
-        }
-        else
-        {
-            StorageReference download_reference  = reference.child("icons/").child(source_name.toLowerCase()+".png");
+        } else {
+            StorageReference download_reference = reference.child("icons/").child(source_name.toLowerCase() + ".png");
 
-            if(drawables.containsKey(source_name))
-            {
+            if (drawables.containsKey(source_name)) {
                 start.setImageDrawable(drawables.get(source_name));
-            }
-            else
-            {
+            } else {
                 final String final_source_name = source_name;
 
-                try
-                {
+                try {
                     download_reference.getDownloadUrl()
                             .addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     if (task.isSuccessful()) {
-                                        if(!activity.isDestroyed())
-                                        {
+                                        if (!activity.isDestroyed()) {
                                             Glide.with(activity).asDrawable().load(task.getResult()).into(new SimpleTarget<Drawable>() {
                                                 @Override
                                                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                                    drawables.put(final_source_name,resource);
+                                                    drawables.put(final_source_name, resource);
                                                     start.setImageDrawable(resource);
                                                 }
                                             });
@@ -207,10 +184,8 @@ public class AdapterListInsights extends BaseAdapter {
                                     }
                                 }
                             });
-                }
-                catch (Exception e)
-                {
-                    Log.e("image","image not found");
+                } catch (Exception e) {
+                    Log.e("image", "image not found");
                 }
             }
         }
@@ -220,28 +195,23 @@ public class AdapterListInsights extends BaseAdapter {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(source_link_copy.equals(""))
-                {
-                    Toast.makeText(activity,"Source link not found",Toast.LENGTH_SHORT).show();
+                if (source_link_copy.equals("")) {
+                    Toast.makeText(activity, "Source link not found", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                try
-                {
+                try {
                     String link = source_link_copy;
 
-                    if(!link.startsWith("http"))
-                    {
+                    if (!link.startsWith("http")) {
                         link = "https://" + source_link_copy;
                     }
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(link));
                     activity.startActivity(intent);
-                }
-                catch (Exception | Error e)
-                {
-                    Toast.makeText(activity,"Invalid source link",Toast.LENGTH_SHORT).show();
+                } catch (Exception | Error e) {
+                    Toast.makeText(activity, "Invalid source link", Toast.LENGTH_SHORT).show();
                 }
             }
         });

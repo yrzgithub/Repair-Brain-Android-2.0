@@ -2,24 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:enabled="true"
-        android:title="@string/add"
+    <item
         android:id="@+id/add"
-        app:showAsAction="ifRoom"/>
+        android:enabled="true"
+        android:title="@string/add"
+        app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/add_common"
-        app:showAsAction="never"
-        android:title="@string/add_common"/>
+    <item
+        android:id="@+id/add_common"
+        android:title="@string/add_common"
+        app:showAsAction="never" />
 
-    <item android:id="@+id/common"
-        android:title="@string/show_common"/>
+    <item
+        android:id="@+id/common"
+        android:title="@string/show_common" />
 
-    <item android:enabled="true"
-        android:title="@string/remove"
-        android:id="@+id/remove"/>
+    <item
+        android:id="@+id/remove"
+        android:enabled="true"
+        android:title="@string/remove" />
 
-    <item android:enabled="true"
-        android:title="@string/reset"
-        android:id="@+id/reset"/>
+    <item
+        android:id="@+id/reset"
+        android:enabled="true"
+        android:title="@string/reset" />
 
 </menu>

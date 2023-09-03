@@ -25,8 +25,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         AppSettings settings = new AppSettings(context);
 
-        if(settings.isShow_notification() && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
-        {
+        if (settings.isShow_notification() && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             createChannel();
 
             Intent open = new Intent(context, ActLogin.class);
@@ -46,9 +45,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
 
-    public void createChannel()
-    {
-        NotificationChannel channel = new NotificationChannel(ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+    public void createChannel() {
+        NotificationChannel channel = new NotificationChannel(ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
         NotificationManager manager = (NotificationManager) context.getSystemService(NotificationManager.class);
         manager.createNotificationChannel(channel);
     }

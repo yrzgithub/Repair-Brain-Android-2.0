@@ -2,30 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="20dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:padding="5dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:text="@string/app_name"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:text="@string/app_name"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -34,19 +34,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:hint="@string/enter_the_habit"
+        android:layout_marginRight="10dp"
         android:gravity="center"
-        />
+        android:hint="@string/enter_the_habit" />
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_gravity="center">
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp">
 
         <LinearLayout
             android:layout_row="0"
@@ -54,171 +53,163 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/all"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginStart="17dp"
                 android:id="@+id/all"
-                />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_row="0"
             android:layout_column="1"
-            android:orientation="horizontal"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/wed"
-                android:gravity="start"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:gravity="start"
+                android:text="@string/wed"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/wed"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_row="1"
-            android:layout_column="0">
+            android:layout_column="0"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/Sun"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:text="@string/Sun"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/sun"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                />
+                android:layout_weight="1" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_row="1"
             android:layout_column="1"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/thur"
-                android:textSize="20sp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
-                android:textColor="@color/black" />
+                android:text="@string/thur"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/thur"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_row="2"
-            android:layout_column="0">
+            android:layout_column="0"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/mon"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/mon"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_row="2"
             android:layout_column="1"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/fri"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/fri"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_row="3"
-            android:layout_column="0">
+            android:layout_column="0"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/tue"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/tue"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_marginStart="6dp"
-                />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_row="3"
             android:layout_column="1"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:text="@string/sat"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="11dp"
-                android:textSize="20sp"
-                android:textColor="@color/black" />
+                android:text="@string/sat"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <CheckBox
                 android:id="@+id/sat"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

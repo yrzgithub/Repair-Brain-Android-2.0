@@ -13,8 +13,7 @@ public class Data {
 
     static float CURRENT_VERSION = 2.0F;
 
-    public static boolean isValidKey(String key)
-    {
+    public static boolean isValidKey(String key) {
         return key.matches("^(?![\\[\\].$#])[^\\[\\].$#]*$");
     }
 
@@ -24,7 +23,7 @@ public class Data {
 class ProgressData {
 
     int last_accuracy_percent = 0;
-    String lastly_noted_positive_effects,lastly_noted_negative_effects,lastly_noted_next_steps,default_text;
+    String lastly_noted_positive_effects, lastly_noted_negative_effects, lastly_noted_next_steps, default_text;
     Time lastly_relapsed;
 
 
@@ -32,8 +31,7 @@ class ProgressData {
 
     }
 
-    ProgressData(String default_text)
-    {
+    ProgressData(String default_text) {
         this.default_text = default_text;
         lastly_noted_positive_effects = lastly_noted_negative_effects = lastly_noted_next_steps = "...";
     }
@@ -80,12 +78,10 @@ class ProgressData {
 }
 
 
-class Time
-{
-    int day,hour,minute,second,month,year;
+class Time {
+    int day, hour, minute, second, month, year;
 
-    Time()
-    {
+    Time() {
 
     }
 
@@ -98,8 +94,7 @@ class Time
         this.year = year;
     }
 
-    Time(LocalDateTime date_time)
-    {
+    Time(LocalDateTime date_time) {
         this.year = date_time.getYear();
         this.month = date_time.getMonthValue();
         this.day = date_time.getDayOfMonth();
@@ -108,9 +103,8 @@ class Time
         this.second = date_time.getSecond();
     }
 
-    public LocalDateTime localtime()
-    {
-        return LocalDateTime.of(year,month,day,hour,minute,second);
+    public LocalDateTime localtime() {
+        return LocalDateTime.of(year, month, day, hour, minute, second);
     }
 
     public int getDay() {
@@ -162,13 +156,11 @@ class Time
     }
 }
 
-class ReplaceHabits
-{
-    Map<String,Integer> days_data = new HashMap<>();
+class ReplaceHabits {
+    Map<String, Integer> days_data = new HashMap<>();
     List<String> show_on = new ArrayList<>();
 
-    ReplaceHabits()
-    {
+    ReplaceHabits() {
 
     }
 
@@ -179,8 +171,7 @@ class ReplaceHabits
 
     }
 
-    public ReplaceHabits(List<String> show_on)
-    {
+    public ReplaceHabits(List<String> show_on) {
         this.show_on = show_on;
     }
 
@@ -201,20 +192,18 @@ class ReplaceHabits
     }
 }
 
-class Common
-{
-    String link,source;
+class Common {
+    String link, source;
 
-    Common()
-    {
+    Common() {
 
     }
 
-    Common(String source,String link)
-    {
+    Common(String source, String link) {
         this.source = source;
         this.link = link;
     }
+
     public String getLink() {
         return link;
     }
@@ -232,24 +221,21 @@ class Common
     }
 }
 
-class Repairs
-{
+class Repairs {
     String date_added;
     Time lastly_relapsed;
     DaysDifference days_difference;
 
-    Repairs()
-    {
+    Repairs() {
 
     }
 
-    Repairs(LocalDateTime local_date_time)
-    {
+    Repairs(LocalDateTime local_date_time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
-        date_added =  local_date_time.format(formatter);
+        date_added = local_date_time.format(formatter);
         lastly_relapsed = new Time(local_date_time);
 
-        days_difference = new DaysDifference(new Time(local_date_time),1);
+        days_difference = new DaysDifference(new Time(local_date_time), 1);
     }
 
     public String getDate_added() {
@@ -277,17 +263,14 @@ class Repairs
     }
 }
 
-class Relapse
-{
-    String date,progress;
+class Relapse {
+    String date, progress;
 
-    Relapse()
-    {
+    Relapse() {
 
     }
 
-    Relapse(String date,String progress)
-    {
+    Relapse(String date, String progress) {
         this.date = date;
         this.progress = progress;
     }
@@ -309,17 +292,14 @@ class Relapse
     }
 }
 
-class Step
-{
-    String link,source_name;
+class Step {
+    String link, source_name;
 
-    Step()
-    {
+    Step() {
 
     }
 
-    Step(String source_name,String link)
-    {
+    Step(String source_name, String link) {
         this.link = link;
         this.source_name = source_name;
     }
@@ -341,17 +321,14 @@ class Step
     }
 }
 
-class Insight
-{
-    String source,link;
+class Insight {
+    String source, link;
 
-    Insight()
-    {
+    Insight() {
 
     }
 
-    Insight(String src,String lnk)
-    {
+    Insight(String src, String lnk) {
         this.source = src;
         this.link = lnk;
     }
@@ -373,12 +350,10 @@ class Insight
     }
 }
 
-class Contact
-{
-    String username,link;
+class Contact {
+    String username, link;
 
-    Contact()
-    {
+    Contact() {
 
     }
 
@@ -399,12 +374,10 @@ class Contact
     }
 }
 
-class Version
-{
-    String link,name;
+class Version {
+    String link, name;
 
-    Version()
-    {
+    Version() {
 
     }
 
@@ -425,37 +398,31 @@ class Version
     }
 }
 
-class DaysDifference
-{
+class DaysDifference {
     Time started_at;
     int count;
 
-    DaysDifference()
-    {
+    DaysDifference() {
 
     }
 
-    DaysDifference(Time started,int count)
-    {
+    DaysDifference(Time started, int count) {
         this.started_at = started;
         this.count = count;
     }
 
-    DaysDifference(int count)
-    {
+    DaysDifference(int count) {
         this.count = count + 1;
     }
 
-    DaysDifference(DaysDifference diff)
-    {
+    DaysDifference(DaysDifference diff) {
         this.started_at = diff.getStarted_at();
         this.count = diff.getCount() + 1;
     }
 
-    public long getDifference()
-    {
-        LocalDateTime started = LocalDateTime.of(started_at.getYear(),started_at.getMonth(),started_at.getDay(),started_at.getHour(),started_at.getMinute());
-        return Duration.between(LocalDateTime.now(),started).toDays();
+    public long getDifference() {
+        LocalDateTime started = LocalDateTime.of(started_at.getYear(), started_at.getMonth(), started_at.getDay(), started_at.getHour(), started_at.getMinute());
+        return Duration.between(LocalDateTime.now(), started).toDays();
     }
 
     public Time getStarted_at() {

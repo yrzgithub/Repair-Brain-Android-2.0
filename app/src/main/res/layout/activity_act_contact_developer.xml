@@ -14,23 +14,23 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="15dp"
         android:layout_weight="1"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
         android:allowUndo="true"
         android:background="@null"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
         android:importantForAutofill="no"
         android:inputType="text"
         android:textColor="@color/black"
-        android:visibility="gone"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/loading"
-        android:visibility="visible"
-        android:src="@drawable/loading_pink_list"
-        android:layout_marginBottom="95dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/none" />
+        android:layout_marginBottom="95dp"
+        android:contentDescription="@string/none"
+        android:src="@drawable/loading_pink_list"
+        android:visibility="visible" />
 
 </LinearLayout>

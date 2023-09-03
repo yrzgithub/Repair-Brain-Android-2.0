@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:id="@+id/main"
-    android:clickable="true"
-    android:background="@drawable/round_layout">
+    android:background="@drawable/round_layout"
+    android:clickable="true">
 
     <ImageView
         android:id="@+id/image"
@@ -33,8 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/image"
         android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/image"
         android:text="@string/date_added"
         android:textColor="@color/black" />
 
@@ -42,24 +42,24 @@
         android:id="@+id/date_added"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:maxLines="1"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/date_added_text"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+        android:singleLine="true"
         android:textColor="@color/black" />
 
     <ImageView
         android:id="@+id/delete"
-        android:visibility="gone"
         android:layout_width="28dp"
         android:layout_height="28dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="20dp"
+        android:gravity="center"
         android:src="@drawable/delete_icon"
-        android:layout_alignParentEnd="true"
-        android:gravity="center"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

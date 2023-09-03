@@ -72,8 +72,7 @@ public class FragmentRepairs extends Fragment {
 
         DatabaseReference reference = User.getMainReference();
 
-        if(reference==null)
-        {
+        if (reference == null) {
             Glide.with(getActivity()).load(R.drawable.noresultfound).into(no_results);
             return;
         }
@@ -82,7 +81,7 @@ public class FragmentRepairs extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        addictions =  snapshot.getValue(new GenericTypeIndicator<Map<String, Repairs>>() {
+                        addictions = snapshot.getValue(new GenericTypeIndicator<Map<String, Repairs>>() {
                             @NonNull
                             @Override
                             public String toString() {
@@ -90,13 +89,14 @@ public class FragmentRepairs extends Fragment {
                             }
                         });
 
-                        if (addictions!=null)
-                        {
+                        if (addictions != null) {
                             addictions.remove("insights");
                         }
 
-                        if(AdapterRepairsList.delete) list.setAdapter(new AdapterRepairsList(getActivity(),FragmentRepairs.this.view,addictions,true));
-                        else list.setAdapter(new AdapterRepairsList(getActivity(),FragmentRepairs.this.view,addictions));
+                        if (AdapterRepairsList.delete)
+                            list.setAdapter(new AdapterRepairsList(getActivity(), FragmentRepairs.this.view, addictions, true));
+                        else
+                            list.setAdapter(new AdapterRepairsList(getActivity(), FragmentRepairs.this.view, addictions));
                     }
 
                     @Override
@@ -192,7 +192,7 @@ public class FragmentRepairs extends Fragment {
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AdapterRepairsList(getActivity(),FragmentRepairs.this.view, addictions,true));
+                list.setAdapter(new AdapterRepairsList(getActivity(), FragmentRepairs.this.view, addictions, true));
                 break;
 
             case R.id.reset:
@@ -211,7 +211,7 @@ public class FragmentRepairs extends Fragment {
                 break;
 
             case R.id.settings:
-                startActivity(new Intent(getActivity(),ActSettings.class));
+                startActivity(new Intent(getActivity(), ActSettings.class));
                 break;
         }
 
@@ -220,7 +220,7 @@ public class FragmentRepairs extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.repair_menu,menu);
+        inflater.inflate(R.menu.repair_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

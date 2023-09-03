@@ -32,9 +32,9 @@ import java.util.Calendar;
 
 public class ActSettings extends AppCompatActivity {
 
-    RelativeLayout auto_login,notification,time_rel;
-    SwitchCompat auto_login_switch,notification_switch;
-    TextView delete,time;
+    RelativeLayout auto_login, notification, time_rel;
+    SwitchCompat auto_login_switch, notification_switch;
+    TextView delete, time;
     LinearLayout main;
 
     @Override
@@ -80,12 +80,11 @@ public class ActSettings extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b && ActivityCompat.checkSelfPermission(ActSettings.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
-                {
-                    Toast.makeText(ActSettings.this,"Allow Notifications",Toast.LENGTH_SHORT).show();
+                if (b && ActivityCompat.checkSelfPermission(ActSettings.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(ActSettings.this, "Allow Notifications", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    intent.setData(Uri.fromParts("package",getPackageName(),null));
+                    intent.setData(Uri.fromParts("package", getPackageName(), null));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }
@@ -97,21 +96,19 @@ public class ActSettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Snackbar snackbar = Snackbar.make(main,"Deleting Account", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                Snackbar snackbar = Snackbar.make(main, "Deleting Account", BaseTransientBottomBar.LENGTH_INDEFINITE);
                 snackbar.show();
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                if(user!=null)
-                {
+                if (user != null) {
                     user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful())
-                            {
+                            if (task.isSuccessful()) {
                                 snackbar.dismiss();
-                                Toast.makeText(ActSettings.this,"Account Deleted",Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(ActSettings.this,ActLogin.class));
+                                Toast.makeText(ActSettings.this, "Account Deleted", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(ActSettings.this, ActLogin.class));
                             }
                         }
                     });
@@ -135,25 +132,21 @@ public class ActSettings extends AppCompatActivity {
                         settings.setMinute(minute);
                         setTime(settings);
                     }
-                },hour,minute,false).show();
+                }, hour, minute, false).show();
             }
         });
     }
 
-    public void setTime(AppSettings settings)
-    {
+    public void setTime(AppSettings settings) {
         int hour = settings.getHour();
         int minute = settings.getMinute();
 
         String time;
 
-        if(hour>12)
-        {
-            time = String.format("%02d:%02d %s",hour-12,minute,"PM");
-        }
-        else
-        {
-            time = String.format("%02d:%02d %s",hour,minute,"AM");
+        if (hour > 12) {
+            time = String.format("%02d:%02d %s", hour - 12, minute, "PM");
+        } else {
+            time = String.format("%02d:%02d %s", hour, minute, "AM");
         }
         this.time.setText(time);
     }

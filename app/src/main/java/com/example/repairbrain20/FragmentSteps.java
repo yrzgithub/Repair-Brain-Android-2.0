@@ -45,8 +45,12 @@ public class FragmentSteps extends Fragment {
     ImageView no_results;
     View view;
     DatabaseReference reference;
-    Map<String,Step> map;
+    Map<String, Step> map;
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
+
+    public static boolean isValidLink(String link) {
+        return Patterns.WEB_URL.matcher(link).matches();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,8 +70,7 @@ public class FragmentSteps extends Fragment {
 
         reference = User.getRepairReference();
 
-        if(reference!=null)
-        {
+        if (reference != null) {
             reference.child("next_steps").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -79,13 +82,16 @@ public class FragmentSteps extends Fragment {
                         }
                     });
 
-                    if(AdapterSteps.delete) list.setAdapter(new AdapterSteps(getActivity(),FragmentSteps.this.view,map,true));
-                    else list.setAdapter(new AdapterSteps(getActivity(),FragmentSteps.this.view,map));
+                    if (AdapterSteps.delete)
+                        list.setAdapter(new AdapterSteps(getActivity(), FragmentSteps.this.view, map, true));
+                    else
+                        list.setAdapter(new AdapterSteps(getActivity(), FragmentSteps.this.view, map));
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                  if(getActivity()!=null)  Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_SHORT).show();
+                    if (getActivity() != null)
+                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -101,16 +107,15 @@ public class FragmentSteps extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_add_menu,menu);
+        inflater.inflate(R.menu.fragment_add_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent;
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.add:
-                View view_ = getLayoutInflater().inflate(R.layout.custom_adapter_steps,null);
+                View view_ = getLayoutInflater().inflate(R.layout.custom_adapter_steps, null);
 
                 AutoCompleteTextView step_name = view_.findViewById(R.id.name);
                 EditText link = view_.findViewById(R.id.link);
@@ -132,8 +137,7 @@ public class FragmentSteps extends Fragment {
                     }
                 });
 
-                if(common_reference!=null)
-                {
+                if (common_reference != null) {
                     common_reference
                             .child("common_next_steps")
                             .get()
@@ -141,9 +145,9 @@ public class FragmentSteps extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                                    if(!task.isSuccessful()) return;
+                                    if (!task.isSuccessful()) return;
 
-                                    Map<String,Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
+                                    Map<String, Common> map = task.getResult().getValue(new GenericTypeIndicator<Map<String, Common>>() {
                                         @NonNull
                                         @Override
                                         public String toString() {
@@ -151,8 +155,7 @@ public class FragmentSteps extends Fragment {
                                         }
                                     });
 
-                                    if(map!=null)
-                                    {
+                                    if (map != null) {
                                         ArrayList<String> list = new ArrayList<>(map.keySet());
 
                                         step_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -167,7 +170,7 @@ public class FragmentSteps extends Fragment {
                                             }
                                         });
 
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,list);
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                                         step_name.setAdapter(adapter);
                                     }
                                 }
@@ -179,8 +182,7 @@ public class FragmentSteps extends Fragment {
                             .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if(task.isSuccessful())
-                                    {
+                                    if (task.isSuccessful()) {
                                         List<String> keys = task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
                                             @NonNull
                                             @Override
@@ -189,9 +191,8 @@ public class FragmentSteps extends Fragment {
                                             }
                                         });
 
-                                        if(keys!=null)
-                                        {
-                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,keys);
+                                        if (keys != null) {
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, keys);
                                             source_name.setAdapter(adapter);
                                         }
                                     }
@@ -209,43 +210,38 @@ public class FragmentSteps extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                 String step = step_name.getText().toString().trim();
-                                String link_  = link.getText().toString().trim();
+                                String link_ = link.getText().toString().trim();
                                 String source_name_ = source_name.getText().toString().trim();
 
-                                if(step.equals(""))
-                                {
-                                    Toast.makeText(getActivity(),"Step cannot be empty",Toast.LENGTH_SHORT).show();
+                                if (step.equals("")) {
+                                    Toast.makeText(getActivity(), "Step cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if(!source_name_.equals("") && link_.equals(""))
-                                {
-                                    Toast.makeText(getActivity(),"Please paste the link",Toast.LENGTH_SHORT).show();
+                                if (!source_name_.equals("") && link_.equals("")) {
+                                    Toast.makeText(getActivity(), "Please paste the link", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if(!source_name_.equals("") && !isValidLink(link_))
-                                {
-                                    Toast.makeText(getActivity(),"Invalid source link",Toast.LENGTH_LONG).show();
+                                if (!source_name_.equals("") && !isValidLink(link_)) {
+                                    Toast.makeText(getActivity(), "Invalid source link", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
-                                if(!Data.isValidKey(step))
-                                {
-                                    Toast.makeText(getActivity(),"Invalid source name",Toast.LENGTH_LONG).show();
+                                if (!Data.isValidKey(step)) {
+                                    Toast.makeText(getActivity(), "Invalid source name", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
-                                Snackbar snack = Snackbar.make(FragmentSteps.this.view,"Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                Snackbar snack = Snackbar.make(FragmentSteps.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
 
-                                if(reference!=null)
-                                {
+                                if (reference != null) {
                                     snack.show();
 
                                     reference
                                             .child("next_steps")
                                             .child(step)
-                                            .setValue(new Step(source_name_,link_))
+                                            .setValue(new Step(source_name_, link_))
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
@@ -257,7 +253,7 @@ public class FragmentSteps extends Fragment {
                                 }
                             }
                         })
-                        .setNegativeButton("cancel",null)
+                        .setNegativeButton("cancel", null)
                         .create().show();
 
                 break;
@@ -267,56 +263,47 @@ public class FragmentSteps extends Fragment {
                 AdapterSteps.delete = false;
 
                 ArrayList<String> present;
-                if(map==null) present = new ArrayList<>();
+                if (map == null) present = new ArrayList<>();
                 else present = new ArrayList<>(map.keySet());
 
                 intent = new Intent(getActivity(), ActCommon.class);
-                intent.putExtra("common","common_next_steps");
-                intent.putExtra("add",true);
-                intent.putExtra("present",present);
+                intent.putExtra("common", "common_next_steps");
+                intent.putExtra("add", true);
+                intent.putExtra("present", present);
 
                 startActivity(intent);
                 break;
 
             case R.id.common:
                 intent = new Intent(getActivity(), ActCommon.class);
-                intent.putExtra("common","common_next_steps");
-                intent.putExtra("add",false);
+                intent.putExtra("common", "common_next_steps");
+                intent.putExtra("add", false);
                 startActivity(intent);
                 break;
 
             case R.id.remove:
 
-                if(map==null || map.size()==0)
-                {
-                    Toast.makeText(getActivity(),"Steps list is empty",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    list.setAdapter(new AdapterSteps(getActivity(),FragmentSteps.this.view,map,true));
+                if (map == null || map.size() == 0) {
+                    Toast.makeText(getActivity(), "Steps list is empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    list.setAdapter(new AdapterSteps(getActivity(), FragmentSteps.this.view, map, true));
                 }
                 break;
 
             case R.id.reset:
                 reference = User.getRepairReference();
-                if(reference!=null)
-                {
+                if (reference != null) {
                     reference.child("next_steps")
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                    Toast.makeText(getActivity(),"Successfully resetted",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), "Successfully resetted", Toast.LENGTH_LONG).show();
                                 }
                             });
                 }
                 break;
         }
         return true;
-    }
-
-    public static boolean isValidLink(String link)
-    {
-        return Patterns.WEB_URL.matcher(link).matches();
     }
 
 }

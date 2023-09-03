@@ -12,24 +12,24 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="8dp"
         android:allowUndo="true"
         android:background="@null"
-        android:visibility="gone"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
         android:importantForAutofill="no"
         android:inputType="text"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/no_results"
-        android:src="@drawable/loading_pink_list"
-        android:layout_gravity="center"
-        android:foregroundGravity="center"
-        android:layout_marginBottom="75dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/none" />
+        android:layout_gravity="center"
+        android:layout_marginBottom="75dp"
+        android:contentDescription="@string/none"
+        android:foregroundGravity="center"
+        android:src="@drawable/loading_pink_list" />
 
 </LinearLayout>

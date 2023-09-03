@@ -26,17 +26,16 @@ import java.util.List;
 import java.util.Map;
 
 public class AdapterTriggers extends BaseAdapter {
-    Activity act;
-    Map<String,String> triggers = new HashMap<>();
-    List<String> keys = new ArrayList<>();
     static boolean delete = false;
+    Activity act;
+    Map<String, String> triggers = new HashMap<>();
+    List<String> keys = new ArrayList<>();
     View view;
     ListView list;
     Snackbar bar;
     LinearLayout main;
 
-    AdapterTriggers(Activity activity,View view, Map<String,String> map)
-    {
+    AdapterTriggers(Activity activity, View view, Map<String, String> map) {
         this.act = activity;
         this.view = view;
         this.main = view.findViewById(R.id.main);
@@ -44,30 +43,25 @@ public class AdapterTriggers extends BaseAdapter {
         list = view.findViewById(R.id.list);
         ImageView loading = view.findViewById(R.id.loading);
 
-        try
-        {
-            bar = Snackbar.make(main,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
+        try {
+            bar = Snackbar.make(main, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
             bar.setAction("Reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     act.recreate();
                 }
             });
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
-        if(map.size()==0)
-        {
+        if (map.size() == 0) {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
-            if(activity!=null && !activity.isDestroyed()) Glide.with(loading).load(R.drawable.noresultfound).into(loading);
+            if (activity != null && !activity.isDestroyed())
+                Glide.with(loading).load(R.drawable.noresultfound).into(loading);
             delete = false;
-        }
-        else
-        {
+        } else {
             list.setVisibility(View.VISIBLE);
             loading.setVisibility(View.GONE);
             triggers.putAll(map);
@@ -75,13 +69,11 @@ public class AdapterTriggers extends BaseAdapter {
         }
     }
 
-    AdapterTriggers(Activity activity,View view,Map<String,String> trigger,boolean delete)
-    {
-        this(activity,view,trigger);
+    AdapterTriggers(Activity activity, View view, Map<String, String> trigger, boolean delete) {
+        this(activity, view, trigger);
         AdapterTriggers.delete = delete;
 
-        if(bar!=null && this.triggers.size()>0 && delete)
-        {
+        if (bar != null && this.triggers.size() > 0 && delete) {
             bar.show();
         }
     }
@@ -105,15 +97,14 @@ public class AdapterTriggers extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        view =  act.getLayoutInflater().inflate(R.layout.custom_triggers_list,null);
+        view = act.getLayoutInflater().inflate(R.layout.custom_triggers_list, null);
 
         RelativeLayout main = view.findViewById(R.id.main);
         TextView trigger_name = view.findViewById(R.id.trigger_name);
         TextView date_added = view.findViewById(R.id.date_added);
         ImageView delete = view.findViewById(R.id.delete);
 
-        if(AdapterTriggers.delete)
-        {
+        if (AdapterTriggers.delete) {
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,7 +113,7 @@ public class AdapterTriggers extends BaseAdapter {
 
                     DatabaseReference reference = User.getRepairReference();
                     reference
-                            .child("triggers/"+User.selected_addiction)
+                            .child("triggers/" + User.selected_addiction)
                             .child(key)
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override

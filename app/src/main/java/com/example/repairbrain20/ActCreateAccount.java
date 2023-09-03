@@ -21,14 +21,18 @@ import com.bumptech.glide.request.transition.Transition;
 
 public class ActCreateAccount extends AppCompatActivity {
 
-    EditText firstname_view,lastname_view,email_view,password_view,verify_password_view,username_view;
-    Button sign_up_button,login_with_google_button;
-    String first_name,last_name,email,password,verify_password,username;
-    ProgressDialog progress;
     static final String title = "Repair Brain";
+    EditText firstname_view, lastname_view, email_view, password_view, verify_password_view, username_view;
+    Button sign_up_button, login_with_google_button;
+    String first_name, last_name, email, password, verify_password, username;
+    ProgressDialog progress;
     LinearLayout main;
     CheckNetwork network_check;
     ConnectivityManager cm;
+
+    public static boolean isValidString(String string) {
+        return !string.equals("");
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -36,7 +40,7 @@ public class ActCreateAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        if(getSupportActionBar()!=null) getSupportActionBar().hide();
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
@@ -75,49 +79,28 @@ public class ActCreateAccount extends AppCompatActivity {
                 password = password_view.getText().toString().trim();
                 verify_password = verify_password_view.getText().toString().trim();
 
-                if(!isValidString(first_name))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Invalid First Name",Toast.LENGTH_LONG).show();
-                }
+                if (!isValidString(first_name)) {
+                    Toast.makeText(ActCreateAccount.this, "Invalid First Name", Toast.LENGTH_LONG).show();
+                } else if (!isValidString(last_name)) {
+                    Toast.makeText(ActCreateAccount.this, "Invalid Last Name", Toast.LENGTH_LONG).show();
+                } else if (!isValidString(username)) {
+                    Toast.makeText(ActCreateAccount.this, "Invalid Username", Toast.LENGTH_LONG).show();
+                } else if (!isValidString(email)) {
+                    Toast.makeText(ActCreateAccount.this, "Invalid E-Mail", Toast.LENGTH_LONG).show();
+                } else if (!isValidString(password)) {
+                    Toast.makeText(ActCreateAccount.this, "Invalid Password", Toast.LENGTH_LONG).show();
+                } else if (password.length() < 6) {
+                    Toast.makeText(ActCreateAccount.this, "Password is too short", Toast.LENGTH_LONG).show();
+                } else if (!isValidString(verify_password)) {
+                    Toast.makeText(ActCreateAccount.this, "Invalid verification password", Toast.LENGTH_LONG).show();
+                } else if (!password.equals(verify_password)) {
+                    Toast.makeText(ActCreateAccount.this, "Passwords doesn't match", Toast.LENGTH_LONG).show();
+                } else if (!email.matches(User.email_regex)) {
+                    Toast.makeText(ActCreateAccount.this, "Invalid Email", Toast.LENGTH_LONG).show();
+                } else {
+                    // User user = new User(CreateAccountAct.this,first_name,last_name,email,password);
 
-                else if(!isValidString(last_name))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Invalid Last Name",Toast.LENGTH_LONG).show();
-                }
-
-                else if(!isValidString(username))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Invalid Username",Toast.LENGTH_LONG).show();
-                }
-
-                else if(!isValidString(email))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Invalid E-Mail",Toast.LENGTH_LONG).show();
-                }
-                else if(!isValidString(password))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Invalid Password",Toast.LENGTH_LONG).show();
-                }
-                else if(password.length()<6)
-                {
-                    Toast.makeText(ActCreateAccount.this,"Password is too short",Toast.LENGTH_LONG).show();
-                }
-                else if(!isValidString(verify_password))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Invalid verification password",Toast.LENGTH_LONG).show();
-                }
-                else  if(!password.equals(verify_password))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Passwords doesn't match",Toast.LENGTH_LONG).show();
-                }
-                else if(!email.matches(User.email_regex))
-                {
-                    Toast.makeText(ActCreateAccount.this,"Invalid Email",Toast.LENGTH_LONG).show();
-                }
-                else {
-                   // User user = new User(CreateAccountAct.this,first_name,last_name,email,password);
-
-                    User user = new User(ActCreateAccount.this,first_name,last_name,username,password,email);
+                    User user = new User(ActCreateAccount.this, first_name, last_name, username, password, email);
                     user.create_user();
                 }
             }
@@ -141,11 +124,6 @@ public class ActCreateAccount extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-    }
-
-    public static boolean isValidString(String string)
-    {
-        return !string.equals("");
     }
 
     @Override

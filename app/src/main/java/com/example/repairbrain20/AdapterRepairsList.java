@@ -35,67 +35,58 @@ import java.util.Map;
 
 public class AdapterRepairsList extends BaseAdapter {
 
+    static boolean delete = false;
     Map<String, Repairs> addictions = new HashMap<>();
     List<String> keys = new ArrayList<>();
     Activity act;
-    static boolean delete = false;
     ListView list;
     ImageView no_results;
     Snackbar snack;
 
-    AdapterRepairsList(Activity act,View view, Map<String, Repairs> addictions)
-    {
+    AdapterRepairsList(Activity act, View view, Map<String, Repairs> addictions) {
         this.act = act;
 
         this.list = view.findViewById(R.id.list);
         no_results = view.findViewById(R.id.no_results);
 
-        if(addictions!=null && addictions.size()>0)
-        {
+        if (addictions != null && addictions.size() > 0) {
             list.setVisibility(View.VISIBLE);
             no_results.setVisibility(View.GONE);
             this.addictions.putAll(addictions);
             this.keys.addAll(addictions.keySet());
-        }
-        else
-        {
+        } else {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
+            if (act != null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             delete = false;
         }
 
     }
 
-    AdapterRepairsList(Activity act,View view,Map<String, Repairs> addictions, boolean delete)
-    {
-        this(act,view,addictions);
+    AdapterRepairsList(Activity act, View view, Map<String, Repairs> addictions, boolean delete) {
+        this(act, view, addictions);
         AdapterRepairsList.delete = delete;
 
-        try
-        {
-            snack = Snackbar.make(list,"Reload the list",BaseTransientBottomBar.LENGTH_INDEFINITE);
+        try {
+            snack = Snackbar.make(list, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
             snack.setAction("Reload", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     act.recreate();
                 }
             });
-        }
-        catch (Exception ignored)
-        {
+        } catch (Exception ignored) {
 
         }
 
-        if(AdapterRepairsList.delete && snack!=null && this.addictions.size()>0)
-        {
+        if (AdapterRepairsList.delete && snack != null && this.addictions.size() > 0) {
             snack.show();
         }
     }
 
     @Override
     public int getCount() {
-        return addictions!=null?addictions.size():0;
+        return addictions != null ? addictions.size() : 0;
     }
 
     @Override
@@ -112,7 +103,7 @@ public class AdapterRepairsList extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        view = act.getLayoutInflater().inflate(R.layout.custom_repair_list_view,null);
+        view = act.getLayoutInflater().inflate(R.layout.custom_repair_list_view, null);
         view.setBackgroundResource(R.drawable.round_layout);
 
         RelativeLayout main = view.findViewById(R.id.main);
@@ -139,8 +130,7 @@ public class AdapterRepairsList extends BaseAdapter {
             }
         });
 
-        if(delete)
-        {
+        if (delete) {
             delete_or_go.setImageResource(R.drawable.delete_icon);
             main.setEnabled(false);
         }
@@ -148,9 +138,8 @@ public class AdapterRepairsList extends BaseAdapter {
         delete_or_go.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                if(!delete)
-                {
-                    add_note(reference,key);
+                if (!delete) {
+                    add_note(reference, key);
                 }
                 return true;
             }
@@ -160,23 +149,17 @@ public class AdapterRepairsList extends BaseAdapter {
             @Override
             public void onClick(View view) {
 
-                if(delete)
-                {
-                    if(reference!=null)
-                    {
+                if (delete) {
+                    if (reference != null) {
                         reference.child(key).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                if(snack!=null) snack.dismiss();
+                                if (snack != null) snack.dismiss();
                             }
                         });
                     }
-                }
-
-                else
-                {
-                    if(reference!=null)
-                    {
+                } else {
+                    if (reference != null) {
                         reference
                                 .child(key)
                                 .child("note")
@@ -185,17 +168,13 @@ public class AdapterRepairsList extends BaseAdapter {
                                     @Override
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                                        if(task.isSuccessful())
-                                        {
+                                        if (task.isSuccessful()) {
                                             String link = task.getResult().getValue(String.class);
 
-                                            if(link==null)
-                                            {
-                                                Toast.makeText(act,"Note link not found",Toast.LENGTH_SHORT).show();
-                                                add_note(reference,key);
-                                            }
-                                            else
-                                            {
+                                            if (link == null) {
+                                                Toast.makeText(act, "Note link not found", Toast.LENGTH_SHORT).show();
+                                                add_note(reference, key);
+                                            } else {
                                                 browse(link);
                                             }
                                         }
@@ -213,28 +192,22 @@ public class AdapterRepairsList extends BaseAdapter {
         return view;
     }
 
-    public void browse(String link)
-    {
-        try
-        {
-            if(!link.startsWith("http"))
-            {
+    public void browse(String link) {
+        try {
+            if (!link.startsWith("http")) {
                 link = "https://" + link;
             }
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(link));
             act.startActivity(intent);
-        }
-        catch (Exception | Error e)
-        {
-            Toast.makeText(act,"Invalid note link",Toast.LENGTH_SHORT).show();
+        } catch (Exception | Error e) {
+            Toast.makeText(act, "Invalid note link", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void add_note(DatabaseReference reference,String key)
-    {
-        View view_ = act.getLayoutInflater().inflate(R.layout.alert_note,null);
+    public void add_note(DatabaseReference reference, String key) {
+        View view_ = act.getLayoutInflater().inflate(R.layout.alert_note, null);
         EditText link_ = view_.findViewById(R.id.effects_list);
 
         new AlertDialog.Builder(act)
@@ -244,9 +217,8 @@ public class AdapterRepairsList extends BaseAdapter {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String link = link_.getText().toString();
 
-                        if(!FragmentSteps.isValidLink(link))
-                        {
-                            Toast.makeText(act,"Invalid link",Toast.LENGTH_LONG).show();
+                        if (!FragmentSteps.isValidLink(link)) {
+                            Toast.makeText(act, "Invalid link", Toast.LENGTH_LONG).show();
                             return;
                         }
 

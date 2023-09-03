@@ -20,25 +20,21 @@ import java.util.Map;
 public class AdapterRelapses extends BaseAdapter {
 
     Activity activity;
-    Map<String,Relapse> relapses = new HashMap<>();
+    Map<String, Relapse> relapses = new HashMap<>();
     List<String> keys = new ArrayList<>();
 
-    AdapterRelapses(Activity act,View view, Map<String,Relapse> map)
-    {
+    AdapterRelapses(Activity act, View view, Map<String, Relapse> map) {
         this.activity = act;
 
         ImageView loading = view.findViewById(R.id.loading);
         ListView list = view.findViewById(R.id.list);
 
-        if(map!=null && map.size()>0)
-        {
+        if (map != null && map.size() > 0) {
             loading.setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
             relapses.putAll(map);
             keys.addAll(map.keySet());
-        }
-        else
-        {
+        } else {
             Glide.with(activity).load(R.drawable.noresultfound).into(loading);
         }
 
@@ -63,7 +59,7 @@ public class AdapterRelapses extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        view = LayoutInflater.from(activity).inflate(R.layout.custom_relapse_list,null);
+        view = LayoutInflater.from(activity).inflate(R.layout.custom_relapse_list, null);
 
         TextView relapse = view.findViewById(R.id.relapses);
         TextView time_gone = view.findViewById(R.id.time_gone);
