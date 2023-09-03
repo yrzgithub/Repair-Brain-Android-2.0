@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.core.utilities.Validation;
 import com.google.firebase.ktx.Firebase;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -243,17 +244,20 @@ class Repairs
 {
     String date_added;
     Time lastly_relapsed;
+    DaysDifference days_difference;
 
     Repairs()
     {
 
     }
 
-    Repairs(LocalDateTime local_date_time,boolean type)
+    Repairs(LocalDateTime local_date_time)
     {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy");
         date_added =  local_date_time.format(formatter);
         lastly_relapsed = new Time(local_date_time);
+
+        days_difference = new DaysDifference(new Time(local_date_time),1);
     }
 
     public String getDate_added() {
@@ -270,6 +274,14 @@ class Repairs
 
     public void setLastly_relapsed(Time lastly_relapsed) {
         this.lastly_relapsed = lastly_relapsed;
+    }
+
+    public DaysDifference getDays_difference() {
+        return days_difference;
+    }
+
+    public void setDays_difference(DaysDifference days_difference) {
+        this.days_difference = days_difference;
     }
 }
 
@@ -418,5 +430,55 @@ class Version
 
     public void setName(String name) {
         this.name = name;
+    }
+}
+
+class DaysDifference
+{
+    Time started_at;
+    int count;
+
+    DaysDifference()
+    {
+
+    }
+
+    DaysDifference(Time started,int count)
+    {
+        this.started_at = started;
+        this.count = count;
+    }
+
+    DaysDifference(int count)
+    {
+        this.count = count + 1;
+    }
+
+    DaysDifference(DaysDifference diff)
+    {
+        this.started_at = diff.getStarted_at();
+        this.count = diff.getCount() + 1;
+    }
+
+    public long getDifference()
+    {
+        LocalDateTime started = LocalDateTime.of(started_at.getYear(),started_at.getMonth(),started_at.getDay(),started_at.getHour(),started_at.getMinute());
+        return Duration.between(LocalDateTime.now(),started).toDays();
+    }
+
+    public Time getStarted_at() {
+        return started_at;
+    }
+
+    public void setStarted_at(Time started_at) {
+        this.started_at = started_at;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

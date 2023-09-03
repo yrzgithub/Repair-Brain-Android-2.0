@@ -89,31 +89,25 @@ public class ActHome extends AppCompatActivity {
 
                             reference.child("relapses").push().setValue(relapse);
 
-                            DatabaseReference count_reference = reference.child("relapsed_count");
+                            DatabaseReference count_reference = reference.child("days_difference");
                             count_reference
                                     .get()
                                     .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                            Integer count = 0;
 
                                             if(task.isSuccessful())
                                             {
-                                                count = task.getResult().getValue(Integer.class);
-                                                if(count==null)
-                                                {
-                                                    count = 1;
-                                                }
-                                                else
-                                                {
-                                                    count+=1;
-                                                }
+                                                DaysDifference difference =  task.getResult().getValue(DaysDifference.class);
 
-                                                count_reference.setValue(count);
+                                                long diff = difference.getDifference();
+                                                int count = difference.getCount();
+
+                                                count_reference.setValue(new DaysDifference(difference));
 
                                                 startActivity(new Intent(ActHome.this,ActJourney.class));
 
-                                                Toast.makeText(ActHome.this, count +" times relapsed",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(ActHome.this, count + " times relapsed in " + diff + " days",Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     });

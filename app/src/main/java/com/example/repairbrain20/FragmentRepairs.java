@@ -156,7 +156,7 @@ public class FragmentRepairs extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                Repairs addiction = new Repairs(LocalDateTime.now(),false);
+                                Repairs addiction = new Repairs(LocalDateTime.now());
                                 String addiction_ = addiction_edit.getText().toString().trim();
 
                                 if (!Data.isValidKey(addiction_)) {
