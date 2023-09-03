@@ -1,8 +1,13 @@
 package com.example.repairbrain20;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+
+import java.util.Calendar;
 
 public class AppSettings {
     boolean auto_login = false;
@@ -10,8 +15,11 @@ public class AppSettings {
     int hour, minute;
     SharedPreferences.Editor editor;
     SharedPreferences preferences;
+    Activity activity;
 
     AppSettings(Activity act) {
+        this.activity = act;
+
         preferences = act.getSharedPreferences("settings", Context.MODE_PRIVATE);
         editor = preferences.edit();
 
@@ -29,6 +37,21 @@ public class AppSettings {
         show_notification = preferences.getBoolean("show_notification", true);
         hour = preferences.getInt("hour", 7);
         minute = preferences.getInt("minute", 0);
+    }
+
+    public void schedule_alarm()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, getHour());
+        calendar.set(Calendar.MINUTE, getMinute());
+
+        AlarmManager manager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
+
+        Intent alarm_intent = new Intent(activity, AlarmReceiver.class);
+        PendingIntent alarm_pending = PendingIntent.getBroadcast(activity, 100, alarm_intent, PendingIntent.FLAG_MUTABLE);
+
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
     }
 
     public SharedPreferences getSharedPreference() {

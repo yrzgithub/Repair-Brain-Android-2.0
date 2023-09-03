@@ -13,18 +13,7 @@ public class BootCompleted extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             AppSettings settings = new AppSettings(context);
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, settings.getHour());
-            calendar.set(Calendar.MINUTE, settings.getMinute());
-
-            AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-            Intent alarm_intent = new Intent(context, AlarmReceiver.class);
-            PendingIntent alarm_pending = PendingIntent.getBroadcast(context, 100, alarm_intent, PendingIntent.FLAG_MUTABLE);
-
-            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
+            settings.schedule_alarm();
         }
     }
 }
