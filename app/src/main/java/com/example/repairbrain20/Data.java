@@ -1,20 +1,12 @@
 package com.example.repairbrain20;
 
-import android.util.Patterns;
-
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.utilities.Validation;
-import com.google.firebase.ktx.Firebase;
-
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 
 public class Data {

@@ -4,12 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.annotation.Nullable;
-
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.Set;
-
 public class AppSettings
 {
     boolean auto_login = false;
