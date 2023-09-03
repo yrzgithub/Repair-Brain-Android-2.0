@@ -147,7 +147,7 @@ public class AdapterRepairsList extends BaseAdapter {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(act, key +" Selected",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(act, key +" Selected",Toast.LENGTH_SHORT).show();
                 User.setAddiction(act, key);
                 act.startActivity(new Intent(act, ActHome.class));
             }
