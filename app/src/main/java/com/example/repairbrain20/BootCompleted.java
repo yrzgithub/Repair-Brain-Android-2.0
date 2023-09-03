@@ -16,8 +16,6 @@ public class BootCompleted extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals("android.intent.action.BOOT_COMPLETED"))
         {
-            Log.e("uruttu_boot","booted");
-
             AppSettings settings = new AppSettings(context);
 
             Calendar calendar = Calendar.getInstance();
@@ -30,7 +28,7 @@ public class BootCompleted extends BroadcastReceiver {
             Intent alarm_intent = new Intent(context, AlarmReceiver.class);
             PendingIntent alarm_pending = PendingIntent.getBroadcast(context, 100, alarm_intent, PendingIntent.FLAG_MUTABLE);
 
-            manager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
+            manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
         }
     }
 }

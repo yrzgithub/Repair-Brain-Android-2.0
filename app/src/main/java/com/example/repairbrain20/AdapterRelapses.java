@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +41,23 @@ public class AdapterRelapses extends BaseAdapter {
             Glide.with(activity).load(R.drawable.noresultfound).into(loading);
         }
 
+      /*  keys.sort(new Comparator<String>() {
+            @Override
+            public int compare(String first, String second) {
+                Relapse first_relapse =  relapses.get(first);
+                Relapse second_relapse = relapses.get(second);
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy");
+
+                String f =  first_relapse.getDate().substring(3);
+                String l = second_relapse.getDate().substring(3);
+
+                LocalDateTime start_date =  LocalDateTime.parse(f,formatter);
+                LocalDateTime end_date = LocalDateTime.parse(l,formatter);
+
+                return start_date.compareTo(end_date);
+            }
+        }); */
     }
 
     @Override
