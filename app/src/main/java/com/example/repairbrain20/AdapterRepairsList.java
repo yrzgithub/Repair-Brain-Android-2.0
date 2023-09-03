@@ -37,9 +37,14 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class AdapterRepairsList extends BaseAdapter {
@@ -73,6 +78,7 @@ public class AdapterRepairsList extends BaseAdapter {
             if(act!=null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             delete = false;
         }
+
     }
 
     AdapterRepairsList(Activity act,View view,Map<String, Repairs> addictions, boolean delete)
