@@ -1,10 +1,14 @@
-# Repair Brain Android 3.0
+# Repair Brain Android 2.0
 
-   Repair Brain 3.0 is an Android App developed to repair our brain.
+   Repair Brain 3.0 is an Android App developed to help us in upgrading ourselves in terms of Physical, Mental, Emotional and Spiritual Levels.
+
+# Defnitions 
+
+1. Repair
 
 # Uses
 
-    1. Kill an addictions, Routines or compulsions.
+    1. Replace an addictions, Routines or compulsions.
     2. Create an Habit
     3. Update yourself
     4. List queries about yourself and your mind known as "Repairs", change them.
