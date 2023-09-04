@@ -61,8 +61,9 @@ public class AppSettings {
         Calendar current = Calendar.getInstance();
         if(calendar.before(current))
         {
-            manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+           calendar.add(Calendar.DATE,1);
         }
+        manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
     }
 
     public SharedPreferences getSharedPreference() {
