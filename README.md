@@ -15,7 +15,7 @@
      Changes    - Positive changes while you're overcoming your Repair.
      Challenges - Side Effects you're facing in your Journey.
      Relapsed   - You failed once again.
-     Steps      - Steps which you can take to overcome your Repair.
+     Steps      - Steps which you can took to overcome your Repair.
 
 
 # Uses
