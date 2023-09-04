@@ -1,37 +1,86 @@
 # Repair Brain Android 2.0
 
-   Repair Brain 3.0 is an Android App developed to help us in upgrading ourselves in terms of Physical, Mental, Emotional and Spiritual Levels.
+        Repair Brain 2.0 is an Android App developed to help us in upgrading ourselves in terms of Physical, Mental, Emotional and Spiritual Levels.
+
 
 # Defnitions 
 
-1. Repair
+     Repairs    - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
+     Insights   - Accurate and Deep Understandings.
+     Repaired   - You followed what you want.
+     Impaired   - You relapsed in your Journey.
+     Progress   - Your Progress.
+     Triggers   - Cause of your relapse.
+     Practices  - Replace Habits.
+     Changes    - Positive changes while you're overcoming your Repair.
+     Challenges - Side Effects you're facing in your Journey.
+     Relapsed   - You failed once again.
+     Steps      - Steps which you can took to overcome your Repair.
+
 
 # Uses
 
-    1. Replace an addictions, Routines or compulsions.
-    2. Create an Habit
-    3. Update yourself
-    4. List queries about yourself and your mind known as "Repairs", change them.
-    5. Change your mindset.
-    6. Invoke an idea wihin and more.
+    * Replace addictions, Routines, Delusions or compulsions.
+    * Note your understandings and insights along with source and source link.
+    * Track your Progress.
+        -> Shows Time left to complete one day in your Journey.
+        -> Shows Time Gone without Relapse.
+        -> Shows Lastly noted Change, Challenge, Next Step and the day which you lastly Relapsed. 
+    * Note your Triggers.
+    * Add your Practices and Select the days which you want to follow.
+    * Note your Changes, Challenges and Steps.
+    * See your Relapses.
 
+    
 # Usage
 
-* Login to your account.
-* Select one of your Repairs.
-* Select wheather you repeated your unhealthy habit or uncomfortable routine or undesirable practice or anything similar to them.
-* Set effects, habits, triggers etc..
-* Now, You can see the details about it.
+    1.  Create an Account.
+    2.  Login with E-mail or Google.
+    3.  Select or enter Repairs.
+    4.  Click on the Repair.
+    5.  Select whether you Repaired or Impaired yourself.
+    6.  Add Insights in the Insights Tab.
+    7.  Similarly Add Changes,Challenges,Steps.
+    8.  Select or enter practices and check the days which you want to follow it.
+    9.  Select or enter your Trigger.
+    10. In Relapses Tab, See you Relapses Data.
 
-# Features
 
-* Track your progress
-* See your Healthy Time.
-* List your Positive and Negative effects.
-* Lists your triggers.
-* You should add them manually.
-* Lists the Positive, Negative effects and steps that you took to solve your problem.
-* Lists the habits which you added and tracks your progress.
-* Shows replacing accuracy which means wheather your improving or not.
-* Shows no.of hours left to add one day in your journey.
-* Lists the data of relapses.
+# Thanks To
+
+
+### Database,Authenication and Storage Provider
+    Firebase
+
+    
+### Authentication Supporter
+    Google 
+
+
+### Common Source Providers 
+    ChatGPT 
+
+
+### Version Control System
+    GitHub 
+    Git 
+
+
+### IDE Developers
+    Android Studio
+
+
+### OS Developers 
+    Fedora.org 
+    Android
+
+
+### Cloud Platform Provider
+    Google Colab
+
+### Distributers
+    Amazon App Store
+    F-Droid
+    Aptoide
+    Slideme
+    AppBrain
