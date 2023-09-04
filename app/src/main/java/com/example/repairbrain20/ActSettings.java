@@ -131,6 +131,8 @@ public class ActSettings extends AppCompatActivity {
                         settings.setHour(hour);
                         settings.setMinute(minute);
                         setTime(settings);
+
+                        settings.schedule_alarm();
                     }
                 }, hour, minute, false).show();
             }

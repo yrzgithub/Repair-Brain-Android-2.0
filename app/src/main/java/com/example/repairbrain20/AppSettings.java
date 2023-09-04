@@ -6,7 +6,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.security.Permission;
+import java.security.Permissions;
 import java.util.Calendar;
 
 public class AppSettings {
@@ -49,9 +56,13 @@ public class AppSettings {
         AlarmManager manager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
 
         Intent alarm_intent = new Intent(activity, AlarmReceiver.class);
-        PendingIntent alarm_pending = PendingIntent.getBroadcast(activity, 100, alarm_intent, PendingIntent.FLAG_MUTABLE);
+        PendingIntent alarm_pending = PendingIntent.getBroadcast(activity, 100, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
 
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
+        Calendar current = Calendar.getInstance();
+        if(calendar.before(current))
+        {
+            manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+        }
     }
 
     public SharedPreferences getSharedPreference() {
