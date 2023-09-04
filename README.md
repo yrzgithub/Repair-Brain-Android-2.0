@@ -5,17 +5,17 @@
 
 # Defnitions 
 
-    1.  Repairs    - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
-    2.  Insights   - Accurate and Deep Understandings.
-    3.  Repaired   - You followed what you want.
-    4.  Impaired   - You relapsed in your Journey.
-    5.  Progress   - Your Progress.
-    6.  Triggers   - Cause of your relapse.
-    7.  Practices  - Replace Habits.
-    8.  Changes    - Positive changes while you're overcoming your Repair.
-    9.  Challenges - Side Effects you're facing in your Journey.
-    10 .Relapsed   - You failed once again.
-    11. Steps      - Steps which you can take to overcome your Repair.
+     Repairs    - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
+     Insights   - Accurate and Deep Understandings.
+     Repaired   - You followed what you want.
+     Impaired   - You relapsed in your Journey.
+     Progress   - Your Progress.
+     Triggers   - Cause of your relapse.
+     Practices  - Replace Habits.
+     Changes    - Positive changes while you're overcoming your Repair.
+     Challenges - Side Effects you're facing in your Journey.
+     Relapsed   - You failed once again.
+     Steps      - Steps which you can take to overcome your Repair.
 
 
 # Uses
