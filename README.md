@@ -24,7 +24,7 @@
     Google Colab
 
 ### Distributers
-    Amazon app store
+    Amazon App Store
     F-Droid
     Aptoide
     Slideme
