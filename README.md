@@ -4,25 +4,28 @@
     Firebase
 
 ### Authentication Supporter
-   Google 
+    Google 
 
 ### Common Source Providers 
-   ChatGPT 
+    ChatGPT 
 
 ### Version Control System
-   GitHub 
-   Git 
+    GitHub 
+    Git 
 
 ### IDE Developers
-   Android Studio
+    Android Studio
 
 ### OS Developers 
-   Fedora.org 
-   Android
+    Fedora.org 
+    Android
 
 ### Cloud Platform Provider
-   Google Colab
+    Google Colab
 
 ### Distributers
-   Amazon App Store
-   Opera Store
+    Amazon app store
+    F-Droid
+    Aptoide
+    Slideme
+    AppBrain
