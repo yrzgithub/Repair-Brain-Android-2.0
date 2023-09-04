@@ -1,9 +1,8 @@
 # Thanks To
 
 ### Database,Authenication and Storage Provider
-[Firebase](https://firebase.google.com/)
-
-
+    Firebase
+    
 ### Authentication Supporter
     Google 
 
