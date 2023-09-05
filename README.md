@@ -1,11 +1,11 @@
 # Repair Brain Android 2.0
 
-        Repair Brain 2.0 is an Android App developed to help us in upgrading ourselves in terms of Physical, Mental, Emotional and Spiritual Levels.
+        Repair Brain 2.0 is an Android App developed to help people in upgrading themselves in terms of Physical, Mental, Emotional and Spiritual Levels.
 
 
 # Defnitions 
 
-     Repair   - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
+     Repair     - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
      Insights   - Accurate and Deep Understandings.
      Repaired   - You followed what you want.
      Impaired   - You relapsed in your Journey.
@@ -20,6 +20,7 @@
 
 # Uses
 
+    
     * Replace addictions, Routines, Delusions or compulsions.
     * Note your understandings and insights along with source and source link.
     * Track your Progress.
@@ -46,15 +47,16 @@
     10. In Relapses Tab, See you Relapses Data.
 
 
-# Thanks To
+# Special Thanks To
 
 
-### Database,Authenication and Storage Provider
+### Database, Authenication and Storage Provider
     Firebase
 
     
 ### Authentication Supporter
     Google 
+    G-Mail
 
 
 ### Common Source Providers 
@@ -74,7 +76,6 @@
     Fedora.org 
     Android
 
-
 ### Cloud Platform Provider
     Google Colab
 
@@ -84,3 +85,9 @@
     Aptoide
     Slideme
     AppBrain
+
+
+# Important Note
+
+    You must find your own way in order to repair your Brain.
+    It is just an Idea.You can use it or modify it. 
