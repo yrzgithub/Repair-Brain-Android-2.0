@@ -47,12 +47,13 @@
     9.  Select or enter your Trigger.
     10. In Relapses Tab, See you Relapses Data.
     11. Click on show common menu to see common repairs, steps, changes etc...
+    12. Long click on note icon or Go icon to add or change the source link.
 
+    
+# Important Note
 
-# Note 
-
-    * Long click on note icon or Go icon to add or change the source link.
-
+    You must find your own way in order to repair your Brain.
+    It is just an Idea which can be used or modified before use.
 
 
 # Special Thanks To
@@ -93,12 +94,6 @@
     Aptoide
     Slideme
     AppBrain
-
-
-# Important Note
-
-    You must find your own way in order to repair your Brain.
-    It is just an Idea which can be used or modified before use.
 
 
 # Developer Contact 
