@@ -30,7 +30,7 @@
     <string name="username_or_e_mail">E-mail</string>
     <string name="get_email_or_username">get email or username</string>
     <string name="password">Password</string>
-    <string name="login">login</string>
+    <string name="login">Login</string>
     <string name="cancel">Cancel</string>
     <string name="craete_account">Create Account</string>
     <string name="login_to_repair_brain">Login To Repair Brain</string>
