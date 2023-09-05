@@ -6,24 +6,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.security.Permission;
-import java.security.Permissions;
 import java.util.Calendar;
 
 public class AppSettings {
+    final int ALARM_REQUEST_CODE = 100;
     boolean auto_login = false;
     boolean show_notification = true;
     int hour, minute;
     SharedPreferences.Editor editor;
     SharedPreferences preferences;
     Activity activity;
-    final int ALARM_REQUEST_CODE = 100;
     AlarmManager manager;
     Intent alarm_intent;
     PendingIntent alarm_pending;
@@ -55,13 +48,12 @@ public class AppSettings {
         minute = preferences.getInt("minute", 0);
 
         alarm_intent = new Intent(context, AlarmReceiver.class);
-        alarm_pending = PendingIntent.getBroadcast(context,ALARM_REQUEST_CODE, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
+        alarm_pending = PendingIntent.getBroadcast(context, ALARM_REQUEST_CODE, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
 
         manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void schedule_alarm()
-    {
+    public void schedule_alarm() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, getHour());
@@ -70,18 +62,15 @@ public class AppSettings {
         cancel_alarm();
 
         Calendar current = Calendar.getInstance();
-        if(calendar.before(current))
-        {
-           calendar.add(Calendar.DATE,1);
+        if (calendar.before(current)) {
+            calendar.add(Calendar.DATE, 1);
         }
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
     }
 
-    public void cancel_alarm()
-    {
-        if(manager==null || alarm_pending ==null)
-        {
+    public void cancel_alarm() {
+        if (manager == null || alarm_pending == null) {
             return;
         }
 

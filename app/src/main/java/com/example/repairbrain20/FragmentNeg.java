@@ -1,7 +1,6 @@
 package com.example.repairbrain20;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

@@ -49,7 +49,7 @@ public class FragmentInsights extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        this.activity  = getActivity();
+        this.activity = getActivity();
         super.onAttach(context);
     }
 
