@@ -2,7 +2,6 @@ package com.example.repairbrain20;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +35,6 @@ public class ActCommon extends AppCompatActivity {
 
     ListView list;
     ImageView loading;
-    ConnectivityManager cm;
     CheckNetwork check;
     String type;
     boolean add;
@@ -54,7 +52,6 @@ public class ActCommon extends AppCompatActivity {
         list = findViewById(R.id.effects);
         loading = findViewById(R.id.loading);
 
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
         check = new CheckNetwork(this, main);
 
         Glide.with(loading)
@@ -204,13 +201,13 @@ public class ActCommon extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        cm.registerDefaultNetworkCallback(check);
+        check.register();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        cm.unregisterNetworkCallback(check);
+        check.unregister();
         super.onPause();
     }
 

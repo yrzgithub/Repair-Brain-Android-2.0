@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -34,7 +33,6 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
     static int last_accuracy_percent = 0;
     ViewPager pager;
     CheckNetwork network_check;
-    ConnectivityManager cm;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawer;
 
@@ -56,9 +54,6 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         TabLayout tabs = findViewById(R.id.tabs);
 
         network_check = new CheckNetwork(this, pager);
-        cm = (ConnectivityManager) getSystemService(ConnectivityManager.class);
-
-        //cm.registerDefaultNetworkCallback(new CheckNetwork(this,pager));
 
         FragmentProgress progress = new FragmentProgress();
         FragmentTriggers triggers = new FragmentTriggers();
@@ -105,19 +100,18 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onResume() {
-        cm.registerDefaultNetworkCallback(network_check);
+        network_check.register();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        cm.unregisterNetworkCallback(network_check);
+        network_check.unregister();
         super.onPause();
     }
 
     @Override
     protected void onStop() {
-        // User.getReference().child("last_accuracy_percent").setValue(HabitsAdapter.current_percent);
         super.onStop();
     }
 
@@ -221,5 +215,4 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
         intent.setData(Uri.parse("https://github.com/yrzgithub/Repair-Brain-Android-3.0"));
         startActivity(intent);
     }
-
 }

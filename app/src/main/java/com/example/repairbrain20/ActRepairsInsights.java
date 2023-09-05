@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ActRepairsInsights extends AppCompatActivity {
 
+    CheckNetwork network;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +19,8 @@ public class ActRepairsInsights extends AppCompatActivity {
 
         TabLayout tabs = findViewById(R.id.tabs);
         ViewPager pager = findViewById(R.id.pager);
+
+        network = new CheckNetwork(this,pager);
 
         FragmentRepairs repairs = new FragmentRepairs();
         FragmentInsights insights = new FragmentInsights();
@@ -27,6 +31,18 @@ public class ActRepairsInsights extends AppCompatActivity {
 
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
+    }
+
+    @Override
+    protected void onResume() {
+        network.register();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        network.unregister();
+        super.onPause();
     }
 
     @Override

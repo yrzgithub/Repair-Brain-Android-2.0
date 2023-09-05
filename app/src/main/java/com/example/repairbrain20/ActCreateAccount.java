@@ -3,7 +3,6 @@ package com.example.repairbrain20;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +26,6 @@ public class ActCreateAccount extends AppCompatActivity {
     String first_name, last_name, email, password, verify_password, username;
     ProgressDialog progress;
     LinearLayout main;
-    CheckNetwork network_check;
-    ConnectivityManager cm;
 
     public static boolean isValidString(String string) {
         return !string.equals("");
@@ -98,8 +95,6 @@ public class ActCreateAccount extends AppCompatActivity {
                 } else if (!email.matches(User.email_regex)) {
                     Toast.makeText(ActCreateAccount.this, "Invalid Email", Toast.LENGTH_LONG).show();
                 } else {
-                    // User user = new User(CreateAccountAct.this,first_name,last_name,email,password);
-
                     User user = new User(ActCreateAccount.this, first_name, last_name, username, password, email);
                     user.create_user();
                 }
@@ -126,8 +121,4 @@ public class ActCreateAccount extends AppCompatActivity {
         super.onPause();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

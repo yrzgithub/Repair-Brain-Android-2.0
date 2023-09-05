@@ -16,6 +16,7 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
 
     Activity act;
     Snackbar snack;
+    ConnectivityManager cm;
 
     CheckNetwork(Activity act, View view) {
         this.act = act;
@@ -26,6 +27,16 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
         if (active == null) {
             snack.show();
         }
+    }
+
+    public void register()
+    {
+        cm.registerDefaultNetworkCallback(this);
+    }
+
+    public void unregister()
+    {
+        cm.unregisterNetworkCallback(this);
     }
 
     public static boolean isAvailable(Activity act, View view) {
