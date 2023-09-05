@@ -99,8 +99,8 @@ public class FragmentSteps extends Fragment {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    if (FragmentSteps.this.activity != null)
-                        Toast.makeText(FragmentSteps.this.activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+                   /* if (FragmentSteps.this.activity != null)
+                        Toast.makeText(FragmentSteps.this.activity, "Something went wrong", Toast.LENGTH_SHORT).show(); */
                 }
             });
         }
