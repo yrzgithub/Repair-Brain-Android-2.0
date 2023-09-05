@@ -1,6 +1,6 @@
 # Repair Brain Android 2.0
 
-        Repair Brain 2.0 is an Android App developed to help us in upgrading ourselves in terms of Physical, Mental, Emotional and Spiritual Levels.
+    Repair Brain 2.0 is an Android App developed to help people in upgrading themselves in terms of Physical, Mental, Emotional and Spiritual Levels.
 
 
 # Defnitions 
@@ -10,17 +10,18 @@
      Repaired   - You followed what you want.
      Impaired   - You relapsed in your Journey.
      Progress   - Your Progress.
-     Triggers   - Cause of your relapse.
+     Triggers   - Causes of your relapse.
      Practices  - Replace Habits.
      Changes    - Positive changes while you're overcoming your Repair.
      Challenges - Side Effects you're facing in your Journey.
      Relapsed   - You failed once again.
-     Steps      - Steps which you can took to overcome your Repair.
+     Steps      - Steps which you took to overcome your Repair.
 
 
 # Uses
 
     * Replace addictions, Routines, Delusions or compulsions.
+    * Take notes about your repair.
     * Note your understandings and insights along with source and source link.
     * Track your Progress.
         -> Shows Time left to complete one day in your Journey.
@@ -29,7 +30,8 @@
     * Note your Triggers.
     * Add your Practices and Select the days which you want to follow.
     * Note your Changes, Challenges and Steps.
-    * See your Relapses.
+    * View Data of your Relapses.
+    * Identify common repairs,triggers,steps etc...
 
     
 # Usage
@@ -44,24 +46,38 @@
     8.  Select or enter practices and check the days which you want to follow it.
     9.  Select or enter your Trigger.
     10. In Relapses Tab, See you Relapses Data.
+    11. Click on show common menu to see common repairs, steps, changes etc...
+    12. Long click on note icon or Go icon to add or change the source link.
+
+    
+# Important Note
+
+    You must find your own way in order to repair your Brain.
+    It is just an Idea which can be used or modified before use.
 
 
-# Thanks To
+# Future Updates 
+
+    This will be availabe as a web Application next year.
 
 
-### Database,Authenication and Storage Provider
+# Special Thanks To
+
+
+### Database, Authenication and Storage Provider
     Firebase
 
     
-### Authentication Supporter
+### Authentication Supporters
     Google 
+    G-Mail
 
 
-### Common Source Providers 
+### Common Source Provider
     ChatGPT 
 
 
-### Version Control System
+### Version Control Systems
     GitHub 
     Git 
 
@@ -74,7 +90,6 @@
     Fedora.org 
     Android
 
-
 ### Cloud Platform Provider
     Google Colab
 
@@ -84,3 +99,20 @@
     Aptoide
     Slideme
     AppBrain
+
+
+# Developer Contact 
+
+[Instagram](https://www.instagram.com/alpha_yr/)
+
+[FaceBook](https://www.facebook.com/yrzfb)
+
+[WhatsApp](https://wa.me/+919047665729)
+
+[G Mail](mailto:seenusanjay20102002@gmail.com)
+
+[GitHub](https://github.com/yrzgithub)
+
+[YouTube](https://www.youtube.com/@yrzwisdom)
+
+[LinkedIn](https://www.linkedin.com/in/seenusanjay/)
