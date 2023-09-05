@@ -56,7 +56,7 @@
     It is just an Idea which can be used or modified before use.
 
 
-# Future Update 
+# Future Updates 
 
     This will be availabe as a web Application next year.
 
@@ -68,16 +68,16 @@
     Firebase
 
     
-### Authentication Supporter
+### Authentication Supporters
     Google 
     G-Mail
 
 
-### Common Source Providers 
+### Common Source Provider
     ChatGPT 
 
 
-### Version Control System
+### Version Control Systems
     GitHub 
     Git 
 
