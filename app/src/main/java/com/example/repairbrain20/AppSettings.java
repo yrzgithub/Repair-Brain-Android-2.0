@@ -66,7 +66,7 @@ public class AppSettings {
             calendar.add(Calendar.DATE, 1);
         }
 
-        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
     }
 
     public void cancel_alarm() {
