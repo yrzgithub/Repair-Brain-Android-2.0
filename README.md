@@ -5,23 +5,23 @@
 
 # Defnitions 
 
-     Repair     - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
+     Repairs    - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
      Insights   - Accurate and Deep Understandings.
      Repaired   - You followed what you want.
      Impaired   - You relapsed in your Journey.
      Progress   - Your Progress.
-     Triggers   - Cause of your relapse.
+     Triggers   - Causes of your relapse.
      Practices  - Replace Habits.
      Changes    - Positive changes while you're overcoming your Repair.
      Challenges - Side Effects you're facing in your Journey.
      Relapsed   - You failed once again.
-     Steps      - Steps which you can took to overcome your Repair.
+     Steps      - Steps which you took to overcome your Repair.
 
 
 # Uses
 
-
     * Replace addictions, Routines, Delusions or compulsions.
+    * Take notes about your repair.
     * Note your understandings and insights along with source and source link.
     * Track your Progress.
         -> Shows Time left to complete one day in your Journey.
@@ -30,7 +30,8 @@
     * Note your Triggers.
     * Add your Practices and Select the days which you want to follow.
     * Note your Changes, Challenges and Steps.
-    * See your Relapses.
+    * View Data of your Relapses.
+    * Identify common repairs,triggers,steps etc...
 
     
 # Usage
@@ -45,6 +46,13 @@
     8.  Select or enter practices and check the days which you want to follow it.
     9.  Select or enter your Trigger.
     10. In Relapses Tab, See you Relapses Data.
+    11. Click on show common menu to see common repairs, steps, changes etc...
+
+
+# Note 
+
+    * Long click on note icon or Go icon to add or change the source link.
+
 
 
 # Special Thanks To
