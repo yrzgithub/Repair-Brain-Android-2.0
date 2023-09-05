@@ -188,10 +188,11 @@ public class FragmentInsights extends Fragment {
                                     return;
                                 }
 
-                                Snackbar snack = Snackbar.make(FragmentInsights.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                                snack.show();
-
                                 if (reference != null) {
+
+                                    Snackbar snack = Snackbar.make(FragmentInsights.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                    snack.show();
+
                                     reference
                                             .child("insights")
                                             .child(name_)

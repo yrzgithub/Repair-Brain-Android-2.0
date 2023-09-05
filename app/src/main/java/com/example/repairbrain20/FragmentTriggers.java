@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -207,6 +208,12 @@ public class FragmentTriggers extends Fragment {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     snack.dismiss();
                                                     Toast.makeText(FragmentTriggers.this.activity, "Trigger added", Toast.LENGTH_SHORT).show();
+                                                }
+                                            })
+                                            .addOnCanceledListener(new OnCanceledListener() {
+                                                @Override
+                                                public void onCanceled() {
+                                                    //snack.dismiss();
                                                 }
                                             });
                                 }

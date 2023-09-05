@@ -242,9 +242,8 @@ public class FragmentSteps extends Fragment {
                                     return;
                                 }
 
-                                Snackbar snack = Snackbar.make(FragmentSteps.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
-
                                 if (reference != null) {
+                                    Snackbar snack = Snackbar.make(FragmentSteps.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     snack.show();
 
                                     reference

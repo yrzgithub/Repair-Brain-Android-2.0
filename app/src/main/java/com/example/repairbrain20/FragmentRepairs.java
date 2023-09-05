@@ -172,12 +172,13 @@ public class FragmentRepairs extends Fragment {
                                     return;
                                 }
 
-                                Snackbar snack = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                                snack.show();
-
                                 DatabaseReference main_reference = User.getMainReference();
 
                                 if (main_reference != null) {
+
+                                    Snackbar snack = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                    snack.show();
+
                                     main_reference
                                             .child(addiction_)
                                             .setValue(addiction)
@@ -206,9 +207,10 @@ public class FragmentRepairs extends Fragment {
 
             case R.id.reset:
                 reference = User.getMainReference();
-                Snackbar snack = Snackbar.make(list, "Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                snack.show();
                 if (reference != null) {
+                    Snackbar snack = Snackbar.make(list, "Resetting", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                    snack.show();
+
                     reference.removeValue(new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
