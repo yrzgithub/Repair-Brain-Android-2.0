@@ -202,7 +202,8 @@ public class FragmentRepairs extends Fragment {
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AdapterRepairsList(FragmentRepairs.this.activity, FragmentRepairs.this.view, addictions, true));
+                if(addictions==null || addictions.isEmpty()) Toast.makeText(activity,"Repairs List is Empty",Toast.LENGTH_SHORT).show();
+                else list.setAdapter(new AdapterRepairsList(FragmentRepairs.this.activity, FragmentRepairs.this.view, addictions, true));
                 break;
 
             case R.id.reset:
