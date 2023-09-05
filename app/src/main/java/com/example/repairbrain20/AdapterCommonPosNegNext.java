@@ -3,7 +3,9 @@ package com.example.repairbrain20;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,7 +47,9 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     List<String> present;
     Snackbar bar;
     ListView list;
+    Map<String, Drawable> icons = new HashMap<>();
     boolean next_steps = false;
+    StorageReference store = FirebaseStorage.getInstance().getReference().child("icons");
 
     AdapterCommonPosNegNext(Activity act, Map<String, Common> map) {
         this.act = act;
@@ -63,8 +72,6 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         this.add = add;
         this.type = type.replace("common_", "");
         this.present = present;
-
-        //Toast.makeText(act,type,Toast.LENGTH_SHORT).show();
 
         if (this.type.equals("next_steps")) {
             next_steps = true;
@@ -107,6 +114,8 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         TextView source = view.findViewById(R.id.source);
         ImageView go = view.findViewById(R.id.go);
 
+        ImageView image = view.findViewById(R.id.image);
+
         String key = keys.get(i);
 
         if (this.add) {
@@ -123,6 +132,47 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         Common common = map.get(key);
         String source_name = common.getSource();
         String link = common.getLink();
+
+        String file_name = source_name.toLowerCase() + ".png";
+
+        if(!act.isDestroyed())
+        {
+            if(icons.containsKey(source_name))
+            {
+                image.setImageDrawable(icons.get(source_name));
+            }
+            else
+            {
+                if(store!=null)
+                {
+                    store.child(file_name)
+                            .getDownloadUrl()
+                            .addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        Uri uri = task.getResult();
+                                        Glide.with(act)
+                                                .asDrawable()
+                                                .load(uri)
+                                                .into(new SimpleTarget<Drawable>() {
+                                                    @Override
+                                                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                                        icons.put(source_name,resource);
+                                                        image.setImageDrawable(resource);
+                                                    }
+                                                });
+                                    }
+                                    else
+                                    {
+                                        Log.e("glide_error",task.getException().getMessage());
+                                    }
+                                }
+                            });
+                }
+            }
+        }
 
         go.setOnClickListener(new View.OnClickListener() {
             @Override

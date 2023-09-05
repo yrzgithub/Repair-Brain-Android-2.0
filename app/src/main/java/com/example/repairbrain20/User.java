@@ -240,8 +240,6 @@ public class User implements OnCompleteListener<AuthResult> {
             return;
         }
 
-        Log.e("uruttu", this.email + " " + password);
-
         Task<AuthResult> result = auth.signInWithEmailAndPassword(this.email, password);
         show_progress("Logging In");
 
