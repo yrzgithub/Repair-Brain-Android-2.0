@@ -24,6 +24,9 @@ public class AppSettings {
     SharedPreferences preferences;
     Activity activity;
     final int ALARM_REQUEST_CODE = 100;
+    AlarmManager manager;
+    Intent alarm_intent;
+    PendingIntent alarm_pending;
 
     AppSettings(Activity act) {
         this.activity = act;
@@ -35,6 +38,11 @@ public class AppSettings {
         show_notification = preferences.getBoolean("show_notification", true);
         hour = preferences.getInt("hour", 7);
         minute = preferences.getInt("minute", 0);
+
+        alarm_intent = new Intent(activity, AlarmReceiver.class);
+        alarm_pending = PendingIntent.getBroadcast(activity, ALARM_REQUEST_CODE, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
+
+        manager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
     }
 
     AppSettings(Context context) {
@@ -45,6 +53,11 @@ public class AppSettings {
         show_notification = preferences.getBoolean("show_notification", true);
         hour = preferences.getInt("hour", 7);
         minute = preferences.getInt("minute", 0);
+
+        alarm_intent = new Intent(context, AlarmReceiver.class);
+        alarm_pending = PendingIntent.getBroadcast(context,ALARM_REQUEST_CODE, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
+
+        manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
     public void schedule_alarm()
@@ -54,17 +67,7 @@ public class AppSettings {
         calendar.set(Calendar.HOUR_OF_DAY, getHour());
         calendar.set(Calendar.MINUTE, getMinute());
 
-        AlarmManager manager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
-
-        Intent alarm_intent = new Intent(activity, AlarmReceiver.class);
-        PendingIntent alarm_pending = PendingIntent.getBroadcast(activity, ALARM_REQUEST_CODE, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
-
-        if(manager==null || alarm_pending ==null)
-        {
-            return;
-        }
-
-        manager.cancel(alarm_pending);
+        cancel_alarm();
 
         Calendar current = Calendar.getInstance();
         if(calendar.before(current))
@@ -73,6 +76,16 @@ public class AppSettings {
         }
 
         manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+    }
+
+    public void cancel_alarm()
+    {
+        if(manager==null || alarm_pending ==null)
+        {
+            return;
+        }
+
+        manager.cancel(alarm_pending);
     }
 
     public SharedPreferences getSharedPreference() {
