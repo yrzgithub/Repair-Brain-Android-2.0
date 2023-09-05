@@ -104,8 +104,7 @@ public class FragmentInsights extends Fragment {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            if (FragmentInsights.this.activity != null)
-                                Glide.with(FragmentInsights.this).load(R.drawable.noresultfound).into(no_results);
+
                         }
                     });
         }
