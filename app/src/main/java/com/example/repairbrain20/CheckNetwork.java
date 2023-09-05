@@ -22,8 +22,9 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
         this.act = act;
         this.snack = Snackbar.make(view, "Network Not Available", Snackbar.LENGTH_INDEFINITE);
 
-        ConnectivityManager cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
+        cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
         Network active = cm.getActiveNetwork();
+
         if (active == null) {
             snack.show();
         }

@@ -20,7 +20,7 @@ public class ActRepairsInsights extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         ViewPager pager = findViewById(R.id.pager);
 
-        network = new CheckNetwork(this,pager);
+        network = new CheckNetwork(this,tabs);
 
         FragmentRepairs repairs = new FragmentRepairs();
         FragmentInsights insights = new FragmentInsights();
