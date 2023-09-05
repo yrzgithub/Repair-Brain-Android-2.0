@@ -57,7 +57,8 @@ public class AdapterRepairsList extends BaseAdapter {
         } else {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            if (act != null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
+            if (act != null && !act.isDestroyed())
+                Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             delete = false;
         }
 

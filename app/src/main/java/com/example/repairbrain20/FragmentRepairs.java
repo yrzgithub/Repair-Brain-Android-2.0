@@ -81,7 +81,7 @@ public class FragmentRepairs extends Fragment {
 
         DatabaseReference reference = User.getMainReference();
 
-        if (reference == null) {
+        if (reference == null && !activity.isDestroyed()) {
             Glide.with(activity).load(R.drawable.noresultfound).into(no_results);
             return;
         }

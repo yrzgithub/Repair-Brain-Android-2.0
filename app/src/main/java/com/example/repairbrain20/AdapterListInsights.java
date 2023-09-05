@@ -60,7 +60,8 @@ public class AdapterListInsights extends BaseAdapter {
         if (map == null || insights.size() == 0) {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            if (act != null) Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
+            if (act != null && !act.isDestroyed())
+                Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
             remove = false;
         } else {
             list.setVisibility(View.VISIBLE);

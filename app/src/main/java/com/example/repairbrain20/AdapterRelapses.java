@@ -35,7 +35,8 @@ public class AdapterRelapses extends BaseAdapter {
             relapses.putAll(map);
             keys.addAll(map.keySet());
         } else {
-            Glide.with(activity).load(R.drawable.noresultfound).into(loading);
+            if (!activity.isDestroyed())
+                Glide.with(activity).load(R.drawable.noresultfound).into(loading);
         }
 
       /*  keys.sort(new Comparator<String>() {

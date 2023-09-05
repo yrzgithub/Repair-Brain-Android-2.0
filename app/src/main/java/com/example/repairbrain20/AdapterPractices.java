@@ -93,7 +93,7 @@ public class AdapterPractices extends BaseAdapter {
         } else {
             no_results.setVisibility(View.VISIBLE);
             habits_list.setVisibility(View.GONE);
-            Glide.with(act).load(R.drawable.noresultfound).into(no_results);
+            if (!act.isDestroyed()) Glide.with(act).load(R.drawable.noresultfound).into(no_results);
         }
 
         try {
