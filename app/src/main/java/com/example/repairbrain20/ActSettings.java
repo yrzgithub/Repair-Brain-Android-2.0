@@ -80,6 +80,11 @@ public class ActSettings extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!b)
+                {
+                    settings.cancel_alarm();
+                }
+
                 if (b && ActivityCompat.checkSelfPermission(ActSettings.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(ActSettings.this, "Allow Notifications", Toast.LENGTH_SHORT).show();
 
@@ -117,7 +122,6 @@ public class ActSettings extends AppCompatActivity {
         });
 
         time_rel.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
             @Override
             public void onClick(View view) {
 
