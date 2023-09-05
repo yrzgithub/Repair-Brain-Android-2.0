@@ -154,7 +154,7 @@ public class AdapterPosNeg extends BaseAdapter {
                         reference.child(effect).child(key).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
+                                if(snack!=null) snack.dismiss();
                             }
                         });
                     }

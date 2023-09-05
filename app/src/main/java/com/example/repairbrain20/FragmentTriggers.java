@@ -103,11 +103,6 @@ public class FragmentTriggers extends Fragment {
                                 }
                             });
 
-                            if (map == null) {
-                                map = new HashMap<>();
-                                AdapterTriggers.delete = false;
-                            }
-
                             if (AdapterTriggers.delete)
                                 list.setAdapter(new AdapterTriggers(FragmentTriggers.this.activity, FragmentTriggers.this.view, map, true));
                             else
@@ -126,7 +121,7 @@ public class FragmentTriggers extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.update_database_menu, menu);
+        inflater.inflate(R.menu.triggers_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -224,14 +219,23 @@ public class FragmentTriggers extends Fragment {
                 break;
 
             case id.remove:
-                list.setAdapter(new AdapterTriggers(FragmentTriggers.this.activity, FragmentTriggers.this.view, map, true));
+                if(map==null || map.isEmpty())
+                {
+                    Toast.makeText(activity,"Triggers list is Empty",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    list.setAdapter(new AdapterTriggers(FragmentTriggers.this.activity, FragmentTriggers.this.view, map, true));
+                }
                 break;
 
             case id.add_common:
-
                 AdapterTriggers.delete = false;
 
-                ArrayList<String> present = new ArrayList<>(map.keySet());
+                ArrayList<String> present;
+
+                if(map!=null)  present = new ArrayList<>(map.keySet());
+                else present = new ArrayList<>();
 
                 intent = new Intent(FragmentTriggers.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_triggers/" + User.selected_addiction);

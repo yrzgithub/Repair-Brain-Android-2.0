@@ -153,16 +153,19 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
                                     if(task.isSuccessful())
                                     {
                                         Uri uri = task.getResult();
-                                        Glide.with(act)
-                                                .asDrawable()
-                                                .load(uri)
-                                                .into(new SimpleTarget<Drawable>() {
-                                                    @Override
-                                                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                                        icons.put(source_name,resource);
-                                                        image.setImageDrawable(resource);
-                                                    }
-                                                });
+                                        if(!act.isDestroyed())
+                                        {
+                                            Glide.with(act)
+                                                    .asDrawable()
+                                                    .load(uri)
+                                                    .into(new SimpleTarget<Drawable>() {
+                                                        @Override
+                                                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                                            icons.put(source_name,resource);
+                                                            image.setImageDrawable(resource);
+                                                        }
+                                                    });
+                                        }
                                     }
                                     else
                                     {

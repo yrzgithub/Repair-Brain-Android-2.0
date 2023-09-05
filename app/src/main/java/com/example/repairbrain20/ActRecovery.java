@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,13 +36,14 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
     CheckNetwork network_check;
     ConnectivityManager cm;
     ActionBarDrawerToggle toggle;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recovery);
 
-        DrawerLayout drawer = findViewById(R.id.drawer);
+        drawer = findViewById(R.id.drawer);
 
         toggle = new ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close);
         toggle.syncState();
@@ -145,6 +147,8 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.update:
+                drawer.closeDrawer(Gravity.LEFT,true);
+
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
                 ProgressDialog progress = new ProgressDialog(this);

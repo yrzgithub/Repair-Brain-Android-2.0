@@ -14,7 +14,8 @@ public class Data {
     static float CURRENT_VERSION = 2.0F;
 
     public static boolean isValidKey(String key) {
-        return key.matches("^(?![\\[\\].$#])[^\\[\\].$#]*$");
+        key = key.trim();
+        return !key.equals("") && key.matches("^(?![\\[\\].$#])[^\\[\\].$#]*$");
     }
 
 }

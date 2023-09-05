@@ -155,6 +155,7 @@ public class AdapterPractices extends BaseAdapter {
                 up_or_down.setVisibility(View.VISIBLE);
                 percent.setVisibility(View.VISIBLE);
                 accuracy.setText("Replacing Accuracy :");
+                up_or_down.setImageResource(R.drawable.up);
             }
         }
     }
@@ -224,8 +225,9 @@ public class AdapterPractices extends BaseAdapter {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
+                                        snack.dismiss();
+
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(act, "Practice Removed", Toast.LENGTH_SHORT).show();
                                             ListView view = AdapterPractices.this.view.findViewById(R.id.list);
                                             AdapterPractices.this.habits.remove(key);
                                             AdapterPractices.habits_copy = AdapterPractices.this.habits;
