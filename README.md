@@ -99,3 +99,20 @@
 
     You must find your own way in order to repair your Brain.
     It is just an Idea which can be used or modified before use.
+
+
+# Developer Contact 
+
+[Instagram](https://www.instagram.com/alpha_yr/)
+
+[FaceBook](https://www.facebook.com/yrzfb)
+
+[WhatsApp](https://wa.me/+919047665729)
+
+[G Mail](mailto:seenusanjay20102002@gmail.com)
+
+[GitHub](https://github.com/yrzgithub)
+
+[YouTube](https://www.youtube.com/@yrzwisdom)
+
+[LinkedIn](https://www.linkedin.com/in/seenusanjay/)
