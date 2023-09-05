@@ -36,7 +36,7 @@
     
 # Usage
 
-    1.  Create an Account.
+    1.  Create an Account and Verify your E-mail.
     2.  Login with E-mail or Google.
     3.  Select or enter Repairs.
     4.  Click on the Repair.
