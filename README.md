@@ -1,6 +1,6 @@
 # Repair Brain Android 2.0
 
-        Repair Brain 2.0 is an Android App developed to help people in upgrading themselves in terms of Physical, Mental, Emotional and Spiritual Levels.
+    Repair Brain 2.0 is an Android App developed to help people in upgrading themselves in terms of Physical, Mental, Emotional and Spiritual Levels.
 
 
 # Defnitions 
@@ -20,7 +20,7 @@
 
 # Uses
 
-    
+
     * Replace addictions, Routines, Delusions or compulsions.
     * Note your understandings and insights along with source and source link.
     * Track your Progress.
