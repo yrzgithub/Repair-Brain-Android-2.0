@@ -34,7 +34,7 @@
 
     
 # Usage
-![Alt text](Screenshot_2023-09-05-11-08-19-22_236aa0447a179b9efd10d5bfcb795b6d-1.jpg)
+![Screenshot_2023-09-05-11-08-19-22_236aa0447a179b9efd10d5bfcb795b6d](https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/bbf9d220-7a4f-446b-b27e-c286e8361b5e)
 
     1.  Create an Account and Verify your E-mail.
 
