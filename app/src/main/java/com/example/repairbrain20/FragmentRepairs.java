@@ -1,5 +1,7 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +45,13 @@ public class FragmentRepairs extends Fragment {
     ImageView no_results;
     Map<String, Repairs> addictions;
     View view;
+    Activity activity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        FragmentRepairs.this.activity = getActivity();
+        super.onAttach(context);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +82,7 @@ public class FragmentRepairs extends Fragment {
         DatabaseReference reference = User.getMainReference();
 
         if (reference == null) {
-            Glide.with(getActivity()).load(R.drawable.noresultfound).into(no_results);
+            Glide.with(activity).load(R.drawable.noresultfound).into(no_results);
             return;
         }
 
@@ -94,9 +103,9 @@ public class FragmentRepairs extends Fragment {
                         }
 
                         if (AdapterRepairsList.delete)
-                            list.setAdapter(new AdapterRepairsList(getActivity(), FragmentRepairs.this.view, addictions, true));
+                            list.setAdapter(new AdapterRepairsList(FragmentRepairs.this.activity, FragmentRepairs.this.view, addictions, true));
                         else
-                            list.setAdapter(new AdapterRepairsList(getActivity(), FragmentRepairs.this.view, addictions));
+                            list.setAdapter(new AdapterRepairsList(FragmentRepairs.this.activity, FragmentRepairs.this.view, addictions));
                     }
 
                     @Override
@@ -112,7 +121,7 @@ public class FragmentRepairs extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.add:
-                View view = View.inflate(getActivity(), R.layout.alert_dialog, null);
+                View view = View.inflate(FragmentRepairs.this.activity, R.layout.alert_dialog, null);
 
                 AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
                 addiction_edit.setHint("Search or Enter");
@@ -142,13 +151,13 @@ public class FragmentRepairs extends Fragment {
                                 if (map != null) {
                                     List<String> list = new ArrayList<>(map.keySet());
 
-                                    ArrayAdapter<String> common_list = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
+                                    ArrayAdapter<String> common_list = new ArrayAdapter<>(FragmentRepairs.this.activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                                     addiction_edit.setAdapter(common_list);
                                 }
                             }
                         });
 
-                new AlertDialog.Builder(getActivity())
+                new AlertDialog.Builder(FragmentRepairs.this.activity)
                         .setView(view)
                         .setNegativeButton("cancel", null)
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -159,7 +168,7 @@ public class FragmentRepairs extends Fragment {
                                 String addiction_ = addiction_edit.getText().toString().trim();
 
                                 if (!Data.isValidKey(addiction_)) {
-                                    Toast.makeText(getActivity(), "Invalid Repair", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FragmentRepairs.this.activity, "Invalid Repair", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
@@ -175,7 +184,7 @@ public class FragmentRepairs extends Fragment {
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    User.setAddiction(getActivity(), addiction_);
+                                                    User.setAddiction(FragmentRepairs.this.activity, addiction_);
                                                     snack.dismiss();
                                                 }
                                             });
@@ -186,13 +195,13 @@ public class FragmentRepairs extends Fragment {
                 break;
 
             case R.id.common:
-                Intent intent = new Intent(getActivity(), ActCommon.class);
+                Intent intent = new Intent(FragmentRepairs.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_addictions");
                 startActivity(intent);
                 break;
 
             case R.id.remove:
-                list.setAdapter(new AdapterRepairsList(getActivity(), FragmentRepairs.this.view, addictions, true));
+                list.setAdapter(new AdapterRepairsList(FragmentRepairs.this.activity, FragmentRepairs.this.view, addictions, true));
                 break;
 
             case R.id.reset:
@@ -204,14 +213,14 @@ public class FragmentRepairs extends Fragment {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                             snack.dismiss();
-                            Toast.makeText(getActivity(), "Successfully resetted", Toast.LENGTH_LONG).show();
+                            Toast.makeText(FragmentRepairs.this.activity, "Successfully resetted", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
                 break;
 
             case R.id.settings:
-                startActivity(new Intent(getActivity(), ActSettings.class));
+                startActivity(new Intent(FragmentRepairs.this.activity, ActSettings.class));
                 break;
         }
 

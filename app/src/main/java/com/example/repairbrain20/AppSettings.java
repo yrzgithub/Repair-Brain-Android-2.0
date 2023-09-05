@@ -23,6 +23,7 @@ public class AppSettings {
     SharedPreferences.Editor editor;
     SharedPreferences preferences;
     Activity activity;
+    final int ALARM_REQUEST_CODE = 100;
 
     AppSettings(Activity act) {
         this.activity = act;
@@ -56,14 +57,22 @@ public class AppSettings {
         AlarmManager manager = (AlarmManager) activity.getSystemService(Context.ALARM_SERVICE);
 
         Intent alarm_intent = new Intent(activity, AlarmReceiver.class);
-        PendingIntent alarm_pending = PendingIntent.getBroadcast(activity, 100, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent alarm_pending = PendingIntent.getBroadcast(activity, ALARM_REQUEST_CODE, alarm_intent, PendingIntent.FLAG_IMMUTABLE);
+
+        if(manager==null || alarm_pending ==null)
+        {
+            return;
+        }
+
+        manager.cancel(alarm_pending);
 
         Calendar current = Calendar.getInstance();
         if(calendar.before(current))
         {
            calendar.add(Calendar.DATE,1);
         }
-        manager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
+
+        manager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,alarm_pending);
     }
 
     public SharedPreferences getSharedPreference() {
