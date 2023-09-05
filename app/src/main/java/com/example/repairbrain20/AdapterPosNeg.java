@@ -71,7 +71,6 @@ public class AdapterPosNeg extends BaseAdapter {
         }
 
         if (this.map.size() == 0 || map == null) {
-            remove = false;
             show_image_view(R.drawable.noresultfound);
         } else {
             keys.addAll(this.map.keySet());
@@ -82,7 +81,10 @@ public class AdapterPosNeg extends BaseAdapter {
 
     AdapterPosNeg(Activity act, View view, Map<String, String> map, String type, boolean delete) {
         this(act, view, map, type);
-        this.delete = remove = delete;
+
+        if (this.map.size() == 0 || map == null) this.delete = remove = false;
+        else this.delete = remove = delete;
+
 
         if (snack != null && this.map.size() > 0 && delete) {
             snack.show();

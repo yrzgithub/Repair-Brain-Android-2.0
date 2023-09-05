@@ -62,7 +62,7 @@ public class AdapterListInsights extends BaseAdapter {
             no_results.setVisibility(View.VISIBLE);
             if (act != null && !act.isDestroyed())
                 Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
-            remove = false;
+
         } else {
             list.setVisibility(View.VISIBLE);
             no_results.setVisibility(View.GONE);
@@ -72,7 +72,8 @@ public class AdapterListInsights extends BaseAdapter {
     AdapterListInsights(Activity act, View view_, Map<String, Insight> map, boolean delete) {
         this(act, view_, map);
 
-        AdapterListInsights.remove = delete;
+        if (map == null || insights.size() == 0) AdapterListInsights.remove = false;
+        else AdapterListInsights.remove = delete;
 
         try {
             snack = Snackbar.make(view, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);

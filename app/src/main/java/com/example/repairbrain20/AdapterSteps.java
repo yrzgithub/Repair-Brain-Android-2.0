@@ -60,16 +60,17 @@ public class AdapterSteps extends BaseAdapter {
         } else {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
-            //no_results.setImageResource(R.drawable.noresultfound);
+
             if (act != null && !act.isDestroyed())
                 Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
-            delete = false;
         }
     }
 
     AdapterSteps(Activity act, View view, Map<String, Step> map, boolean delete) {
         this(act, view, map);
-        AdapterSteps.delete = delete;
+
+        if (map != null && map.size() > 0) AdapterSteps.delete = delete;
+        else AdapterSteps.delete = false;
 
         try {
             snack = Snackbar.make(view, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);

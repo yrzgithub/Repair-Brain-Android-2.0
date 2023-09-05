@@ -133,7 +133,15 @@ public class AdapterPractices extends BaseAdapter {
     @SuppressLint("SetTextI18n")
     AdapterPractices(Activity act, View view, boolean delete) {
         this(act, view, habits_copy);
-        this.delete = delete;
+
+        if (this.habits.size() > 0)
+        {
+            this.delete = delete;
+        }
+        else
+        {
+            this.delete = false;
+        }
 
         if (delete) {
             percent.setText("0%");

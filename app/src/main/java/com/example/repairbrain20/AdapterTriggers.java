@@ -60,7 +60,7 @@ public class AdapterTriggers extends BaseAdapter {
             loading.setVisibility(View.VISIBLE);
             if (activity != null && !activity.isDestroyed())
                 Glide.with(loading).load(R.drawable.noresultfound).into(loading);
-            delete = false;
+
         } else {
             list.setVisibility(View.VISIBLE);
             loading.setVisibility(View.GONE);
@@ -71,7 +71,15 @@ public class AdapterTriggers extends BaseAdapter {
 
     AdapterTriggers(Activity activity, View view, Map<String, String> trigger, boolean delete) {
         this(activity, view, trigger);
-        AdapterTriggers.delete = delete;
+
+        if (this.triggers.size()>0)
+        {
+            AdapterTriggers.delete = delete;
+        }
+        else
+        {
+            AdapterTriggers.delete = false;
+        }
 
         if (bar != null && this.triggers.size() > 0 && delete) {
             bar.show();

@@ -59,14 +59,21 @@ public class AdapterRepairsList extends BaseAdapter {
             no_results.setVisibility(View.VISIBLE);
             if (act != null && !act.isDestroyed())
                 Glide.with(no_results).load(R.drawable.noresultfound).into(no_results);
-            delete = false;
         }
 
     }
 
     AdapterRepairsList(Activity act, View view, Map<String, Repairs> addictions, boolean delete) {
         this(act, view, addictions);
-        AdapterRepairsList.delete = delete;
+
+        if (addictions != null && addictions.size() > 0)
+        {
+            AdapterRepairsList.delete = delete;
+        }
+        else
+        {
+            AdapterRepairsList.delete = false;
+        }
 
         try {
             snack = Snackbar.make(list, "Reload the list", BaseTransientBottomBar.LENGTH_INDEFINITE);
@@ -125,7 +132,6 @@ public class AdapterRepairsList extends BaseAdapter {
         main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(act, key +" Selected",Toast.LENGTH_SHORT).show();
                 User.setAddiction(act, key);
                 act.startActivity(new Intent(act, ActHome.class));
             }
