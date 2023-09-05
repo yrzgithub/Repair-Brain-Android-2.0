@@ -31,12 +31,12 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
 
     public void register()
     {
-        cm.registerDefaultNetworkCallback(this);
+        if(cm!=null) cm.registerDefaultNetworkCallback(this);
     }
 
     public void unregister()
     {
-        cm.unregisterNetworkCallback(this);
+        if(cm!=null) cm.unregisterNetworkCallback(this);
     }
 
     public static boolean isAvailable(Activity act, View view) {

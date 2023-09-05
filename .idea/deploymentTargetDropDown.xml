@@ -7,11 +7,32 @@
         <deviceKey>
           <Key>
             <type value="SERIAL_NUMBER" />
-            <value value="DMCUA6RONRLNNJYX" />
+            <value value="8P55UOHA85G6IRGI" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2023-09-04T15:46:19.714492508Z" />
+    <timeTargetWasSelectedWithDropDown value="2023-09-05T12:15:05.384296441Z" />
+    <multipleDevicesSelectedInDropDown value="true" />
+    <runningDeviceTargetsSelectedWithDialog>
+      <Target>
+        <type value="RUNNING_DEVICE_TARGET" />
+        <deviceKey>
+          <Key>
+            <type value="SERIAL_NUMBER" />
+            <value value="8P55UOHA85G6IRGI" />
+          </Key>
+        </deviceKey>
+      </Target>
+      <Target>
+        <type value="RUNNING_DEVICE_TARGET" />
+        <deviceKey>
+          <Key>
+            <type value="SERIAL_NUMBER" />
+            <value value="DMCUA6RONRLNNJYX" />
+          </Key>
+        </deviceKey>
+      </Target>
+    </runningDeviceTargetsSelectedWithDialog>
   </component>
 </project>

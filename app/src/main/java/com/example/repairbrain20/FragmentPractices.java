@@ -254,7 +254,7 @@ public class FragmentPractices extends Fragment {
                             return;
                         }
 
-                        if (show_on.size() == 0) {
+                        if (show_on.isEmpty()) {
                             Toast.makeText(getContext(), "Days not selected", Toast.LENGTH_LONG).show();
                             return;
                         }
@@ -319,7 +319,7 @@ public class FragmentPractices extends Fragment {
 
             case R.id.remove:
                 Map<String, ReplaceHabits> habits_copy = AdapterPractices.habits_copy;
-                if (habits_copy == null || habits_copy.size() == 0) {
+                if (habits_copy == null || habits_copy.isEmpty()) {
                     Toast.makeText(FragmentPractices.this.activity, "Habit List is Empty", Toast.LENGTH_LONG).show();
                 } else {
                     AdapterPractices remove_adapter = new AdapterPractices(FragmentPractices.this.activity, FragmentPractices.this.view, true);

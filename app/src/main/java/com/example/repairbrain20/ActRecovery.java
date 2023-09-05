@@ -141,7 +141,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.update:
-                drawer.closeDrawer(Gravity.LEFT,true);
+                drawer.closeDrawer(Gravity.RIGHT,true);
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 

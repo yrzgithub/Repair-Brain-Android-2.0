@@ -105,7 +105,7 @@ public class FragmentPos extends Fragment {
 
             case R.id.remove:
                 Map<String, String> result = listener.getEffectsMap();
-                if (result == null || result.size() == 0) {
+                if (result == null || result.isEmpty()) {
                     Toast.makeText(FragmentPos.this.activity, "Effects list is empty", Toast.LENGTH_SHORT).show();
                 } else {
                     listView.setAdapter(new AdapterPosNeg(FragmentPos.this.activity, view, result, "positive_effects", true));

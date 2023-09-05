@@ -97,7 +97,7 @@ public class FragmentNeg extends Fragment {
 
             case R.id.remove:
                 Map<String, String> result = listener.getEffectsMap();
-                if (result == null || result.size() == 0) {
+                if (result == null || result.isEmpty()) {
                     Toast.makeText(FragmentNeg.this.activity, "Symptoms list is empty", Toast.LENGTH_SHORT).show();
                 } else {
                     listView.setAdapter(new AdapterPosNeg(FragmentNeg.this.activity, view, result, "negative_effects", true));

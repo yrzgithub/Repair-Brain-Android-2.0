@@ -212,7 +212,7 @@ public class FragmentInsights extends Fragment {
                 break;
 
             case R.id.delete:
-                if (insights == null || insights.size() == 0) {
+                if (insights == null || insights.isEmpty()) {
                     Toast.makeText(FragmentInsights.this.activity, "Insights list is empty", Toast.LENGTH_SHORT).show();
                 } else {
                     list.setAdapter(new AdapterListInsights(FragmentInsights.this.activity, FragmentInsights.this.view, insights, true));

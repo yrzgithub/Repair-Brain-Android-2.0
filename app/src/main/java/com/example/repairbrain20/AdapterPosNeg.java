@@ -70,7 +70,7 @@ public class AdapterPosNeg extends BaseAdapter {
             this.map.putAll(map);
         }
 
-        if (this.map.size() == 0 || map == null) {
+        if (this.map.isEmpty() || map == null) {
             show_image_view(R.drawable.noresultfound);
         } else {
             keys.addAll(this.map.keySet());
@@ -82,7 +82,7 @@ public class AdapterPosNeg extends BaseAdapter {
     AdapterPosNeg(Activity act, View view, Map<String, String> map, String type, boolean delete) {
         this(act, view, map, type);
 
-        if (this.map.size() == 0 || map == null) this.delete = remove = false;
+        if (this.map.isEmpty() || map == null) this.delete = remove = false;
         else this.delete = remove = delete;
 
 
@@ -90,7 +90,7 @@ public class AdapterPosNeg extends BaseAdapter {
             snack.show();
         }
 
-        if (this.map.size() == 0) {
+        if (this.map.isEmpty()) {
             remove = false;
         }
     }

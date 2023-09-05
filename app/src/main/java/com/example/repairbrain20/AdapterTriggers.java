@@ -46,7 +46,7 @@ public class AdapterTriggers extends BaseAdapter {
         list = view.findViewById(R.id.list);
         ImageView loading = view.findViewById(R.id.loading);
 
-        if (map==null || map.size() == 0) {
+        if (map==null || map.isEmpty()) {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             if (activity != null && !activity.isDestroyed())

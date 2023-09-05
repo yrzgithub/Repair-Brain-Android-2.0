@@ -291,7 +291,7 @@ public class FragmentSteps extends Fragment {
 
             case R.id.remove:
 
-                if (map == null || map.size() == 0) {
+                if (map == null || map.isEmpty()) {
                     Toast.makeText(FragmentSteps.this.activity, "Steps list is empty", Toast.LENGTH_SHORT).show();
                 } else {
                     list.setAdapter(new AdapterSteps(FragmentSteps.this.activity, FragmentSteps.this.view, map, true));

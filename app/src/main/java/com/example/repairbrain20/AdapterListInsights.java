@@ -57,7 +57,7 @@ public class AdapterListInsights extends BaseAdapter {
             this.keys.addAll(map.keySet());
         }
 
-        if (map == null || insights.size() == 0) {
+        if (map == null || insights.isEmpty()) {
             list.setVisibility(View.GONE);
             no_results.setVisibility(View.VISIBLE);
             if (act != null && !act.isDestroyed())
@@ -72,7 +72,7 @@ public class AdapterListInsights extends BaseAdapter {
     AdapterListInsights(Activity act, View view_, Map<String, Insight> map, boolean delete) {
         this(act, view_, map);
 
-        if (map == null || insights.size() == 0) AdapterListInsights.remove = false;
+        if (map == null || insights.isEmpty()) AdapterListInsights.remove = false;
         else AdapterListInsights.remove = delete;
 
         try {

@@ -46,7 +46,7 @@ public class AdapterListDeveloperContact extends BaseAdapter {
             keys.addAll(map.keySet());
         }
 
-        if (contact.size() == 0) {
+        if (contact.isEmpty()) {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             Glide.with(activity).load(R.drawable.noresultfound).into(loading);
