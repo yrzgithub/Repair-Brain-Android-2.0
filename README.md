@@ -36,12 +36,12 @@
     
 # Usage
 
-    1.  Create an Account.
+    1.  Create an Account and Verify your E-mail.
     2.  Login with E-mail or Google.
     3.  Select or enter Repairs.
     4.  Click on the Repair.
     5.  Select whether you Repaired or Impaired yourself.
-    6.  Add Insights in the Insights Tab.
+    6.  Add Insights in the Insights Tab along with source name and source link.
     7.  Similarly Add Changes,Challenges,Steps.
     8.  Select or enter practices and check the days which you want to follow it.
     9.  Select or enter your Trigger.
