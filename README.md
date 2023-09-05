@@ -98,4 +98,4 @@
 # Important Note
 
     You must find your own way in order to repair your Brain.
-    It is just an Idea which can be used or modified.
+    It is just an Idea which can be used or modified before use.
