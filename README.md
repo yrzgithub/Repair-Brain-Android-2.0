@@ -34,20 +34,52 @@
 
     
 # Usage
+![Alt text](Screenshot_2023-09-05-11-08-19-22_236aa0447a179b9efd10d5bfcb795b6d-1.jpg)
 
     1.  Create an Account and Verify your E-mail.
+
+![Alt text](Screenshot_2023-09-05-11-20-30-40_236aa0447a179b9efd10d5bfcb795b6d.jpg)
+
     2.  Login with E-mail or Google.
+
+![Alt text](Screenshot_2023-09-05-11-26-47-84_236aa0447a179b9efd10d5bfcb795b6d.jpg)
+
+
     3.  Select or enter Repairs.
     4.  Click on the Repair.
+
+![Alt text](Screenshot_2023-09-05-11-27-06-20_236aa0447a179b9efd10d5bfcb795b6d.jpg)
+
     5.  Select whether you Repaired or Impaired yourself.
+
+
+
     6.  Add Insights in the Insights Tab along with source name and source link.
+
+![Alt text](Screenshot_2023-09-05-11-35-44-29_236aa0447a179b9efd10d5bfcb795b6d.jpg)
+
     7.  Similarly Add Changes,Challenges,Steps.
+
+![Alt text](Screenshot_2023-09-05-11-32-10-67_236aa0447a179b9efd10d5bfcb795b6d.jpg) 
+
+![Alt text](Screenshot_2023-09-05-11-34-38-29_236aa0447a179b9efd10d5bfcb795b6d.jpg)
+
     8.  Select or enter practices and check the days which you want to follow it.
+
+![Alt text](Screenshot_2023-09-05-11-31-53-41_236aa0447a179b9efd10d5bfcb795b6d.jpg)
+
     9.  Select or enter your Trigger.
+
+![Alt text](Screenshot_2023-09-05-11-38-23-95_236aa0447a179b9efd10d5bfcb795b6d.jpg)
+
     10. In Relapses Tab, See you Relapses Data.
+
     11. Click on show common menu to see common repairs, steps, changes etc...
+
     12. Long click on note icon or Go icon to add or change the source link.
+
     13. Use Add Common menu to add multiple entries from common lists.
+
     14. Google Keep link be uses as Note link.
 
     
