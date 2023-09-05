@@ -48,6 +48,8 @@
     10. In Relapses Tab, See you Relapses Data.
     11. Click on show common menu to see common repairs, steps, changes etc...
     12. Long click on note icon or Go icon to add or change the source link.
+    13. Use Add Common menu to add multiple entries from common lists.
+    14. Google Keep link be uses as Note link.
 
     
 # Important Note
