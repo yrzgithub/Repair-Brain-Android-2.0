@@ -19,7 +19,7 @@ public class ActJourney extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         ViewPager pager = findViewById(R.id.view_pager);
 
-        check = new CheckNetwork(this,pager);
+        check = new CheckNetwork(this, pager);
 
         AdapterJourney adapter = new AdapterJourney(getSupportFragmentManager());
         adapter.add_tab(new FragmentRelapses(), "Relapses");

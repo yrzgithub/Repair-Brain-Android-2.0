@@ -135,41 +135,32 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
 
         String file_name = source_name.toLowerCase() + ".png";
 
-        if(!act.isDestroyed())
-        {
-            if(icons.containsKey(source_name))
-            {
+        if (!act.isDestroyed()) {
+            if (icons.containsKey(source_name)) {
                 image.setImageDrawable(icons.get(source_name));
-            }
-            else
-            {
-                if(store!=null)
-                {
+            } else {
+                if (store != null) {
                     store.child(file_name)
                             .getDownloadUrl()
                             .addOnCompleteListener(new OnCompleteListener<Uri>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
-                                    if(task.isSuccessful())
-                                    {
+                                    if (task.isSuccessful()) {
                                         Uri uri = task.getResult();
-                                        if(!act.isDestroyed())
-                                        {
+                                        if (!act.isDestroyed()) {
                                             Glide.with(act)
                                                     .asDrawable()
                                                     .load(uri)
                                                     .into(new SimpleTarget<Drawable>() {
                                                         @Override
                                                         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                                            icons.put(source_name,resource);
+                                                            icons.put(source_name, resource);
                                                             image.setImageDrawable(resource);
                                                         }
                                                     });
                                         }
-                                    }
-                                    else
-                                    {
-                                        Log.e("glide_error",task.getException().getMessage());
+                                    } else {
+                                        Log.e("glide_error", task.getException().getMessage());
                                     }
                                 }
                             });

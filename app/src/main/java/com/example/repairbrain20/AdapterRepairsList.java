@@ -66,12 +66,9 @@ public class AdapterRepairsList extends BaseAdapter {
     AdapterRepairsList(Activity act, View view, Map<String, Repairs> addictions, boolean delete) {
         this(act, view, addictions);
 
-        if (addictions != null && addictions.size() > 0)
-        {
+        if (addictions != null && addictions.size() > 0) {
             AdapterRepairsList.delete = delete;
-        }
-        else
-        {
+        } else {
             AdapterRepairsList.delete = false;
         }
 

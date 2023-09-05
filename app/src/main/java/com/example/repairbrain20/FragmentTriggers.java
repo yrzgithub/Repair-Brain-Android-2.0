@@ -43,7 +43,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -219,12 +218,9 @@ public class FragmentTriggers extends Fragment {
                 break;
 
             case id.remove:
-                if(map==null || map.isEmpty())
-                {
-                    Toast.makeText(activity,"Triggers list is Empty",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                if (map == null || map.isEmpty()) {
+                    Toast.makeText(activity, "Triggers list is Empty", Toast.LENGTH_SHORT).show();
+                } else {
                     list.setAdapter(new AdapterTriggers(FragmentTriggers.this.activity, FragmentTriggers.this.view, map, true));
                 }
                 break;
@@ -234,7 +230,7 @@ public class FragmentTriggers extends Fragment {
 
                 ArrayList<String> present;
 
-                if(map!=null)  present = new ArrayList<>(map.keySet());
+                if (map != null) present = new ArrayList<>(map.keySet());
                 else present = new ArrayList<>();
 
                 intent = new Intent(FragmentTriggers.this.activity, ActCommon.class);

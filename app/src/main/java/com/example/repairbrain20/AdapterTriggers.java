@@ -2,7 +2,6 @@ package com.example.repairbrain20;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class AdapterTriggers extends BaseAdapter {
@@ -46,7 +43,7 @@ public class AdapterTriggers extends BaseAdapter {
         list = view.findViewById(R.id.list);
         ImageView loading = view.findViewById(R.id.loading);
 
-        if (map==null || map.isEmpty()) {
+        if (map == null || map.isEmpty()) {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
             if (activity != null && !activity.isDestroyed())
@@ -63,12 +60,9 @@ public class AdapterTriggers extends BaseAdapter {
     AdapterTriggers(Activity activity, View view, Map<String, String> trigger, boolean delete) {
         this(activity, view, trigger);
 
-        if (triggers.size()>0)
-        {
+        if (triggers.size() > 0) {
             AdapterTriggers.delete = delete;
-        }
-        else
-        {
+        } else {
             AdapterTriggers.delete = false;
         }
 
@@ -131,7 +125,7 @@ public class AdapterTriggers extends BaseAdapter {
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                    if(bar!=null) bar.dismiss();
+                                    if (bar != null) bar.dismiss();
                                 }
                             });
                 }

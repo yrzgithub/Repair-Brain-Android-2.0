@@ -134,12 +134,9 @@ public class AdapterPractices extends BaseAdapter {
     AdapterPractices(Activity act, View view, boolean delete) {
         this(act, view, habits_copy);
 
-        if (this.habits.size() > 0)
-        {
+        if (this.habits.size() > 0) {
             this.delete = delete;
-        }
-        else
-        {
+        } else {
             this.delete = false;
         }
 

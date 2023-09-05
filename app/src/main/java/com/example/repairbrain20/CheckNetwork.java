@@ -30,16 +30,6 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
         }
     }
 
-    public void register()
-    {
-        if(cm!=null) cm.registerDefaultNetworkCallback(this);
-    }
-
-    public void unregister()
-    {
-        if(cm!=null) cm.unregisterNetworkCallback(this);
-    }
-
     public static boolean isAvailable(Activity act, View view) {
         ConnectivityManager cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
         Network active = cm.getActiveNetwork();
@@ -50,6 +40,14 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
         }
 
         return active != null;
+    }
+
+    public void register() {
+        if (cm != null) cm.registerDefaultNetworkCallback(this);
+    }
+
+    public void unregister() {
+        if (cm != null) cm.unregisterNetworkCallback(this);
     }
 
     @Override

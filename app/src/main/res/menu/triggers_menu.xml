@@ -12,8 +12,9 @@
         android:title="@string/show_common"
         app:showAsAction="never" />
 
-    <item android:id="@id/add_common"
-        android:title="@string/add_common"/>
+    <item
+        android:id="@id/add_common"
+        android:title="@string/add_common" />
 
     <item
         android:id="@+id/remove"
