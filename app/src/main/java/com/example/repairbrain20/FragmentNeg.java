@@ -1,5 +1,8 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
+import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +26,13 @@ public class FragmentNeg extends Fragment {
     ListView listView;
     Listener listener;
     View view;
+    Activity activity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        this.activity = getActivity();
+        super.onAttach(context);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +47,7 @@ public class FragmentNeg extends Fragment {
         listView = view.findViewById(R.id.list);
         this.view = view;
 
-        listener = new Listener(getActivity(), view, "negative_effects");
+        listener = new Listener(FragmentNeg.this.activity, view, "negative_effects");
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -71,7 +81,7 @@ public class FragmentNeg extends Fragment {
                 if (map == null) present = new ArrayList<>();
                 else present = new ArrayList<>(map.keySet());
 
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentNeg.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_negative_effects");
                 intent.putExtra("add", true);
                 intent.putExtra("present", present);
@@ -80,7 +90,7 @@ public class FragmentNeg extends Fragment {
                 break;
 
             case R.id.common:
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentNeg.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_negative_effects");
                 intent.putExtra("add", false);
                 startActivity(intent);
@@ -89,9 +99,9 @@ public class FragmentNeg extends Fragment {
             case R.id.remove:
                 Map<String, String> result = listener.getEffectsMap();
                 if (result == null || result.size() == 0) {
-                    Toast.makeText(getActivity(), "Symptoms list is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FragmentNeg.this.activity, "Symptoms list is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    listView.setAdapter(new AdapterPosNeg(getActivity(), view, result, "negative_effects", true));
+                    listView.setAdapter(new AdapterPosNeg(FragmentNeg.this.activity, view, result, "negative_effects", true));
                 }
                 break;
 

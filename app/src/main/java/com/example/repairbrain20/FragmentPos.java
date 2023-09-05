@@ -1,5 +1,7 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +28,13 @@ public class FragmentPos extends Fragment {
     ImageView img;
     Listener listener;
     View view;
+    Activity activity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        this.activity = getActivity();
+        super.onAttach(context);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,14 +46,14 @@ public class FragmentPos extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        //Toast.makeText(getActivity(),"created",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(FragmentPos.this.activity,"created",Toast.LENGTH_SHORT).show();
 
         this.img = view.findViewById(R.id.no_results);
         listView = view.findViewById(R.id.list);
 
         this.view = view;
 
-        listener = new Listener(getActivity(), view, "positive_effects");
+        listener = new Listener(FragmentPos.this.activity, view, "positive_effects");
 
         super.onViewCreated(view, savedInstanceState);
     }
@@ -78,7 +87,7 @@ public class FragmentPos extends Fragment {
                 if (map == null) present = new ArrayList<>();
                 else present = new ArrayList<>(map.keySet());
 
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentPos.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_positive_effects");
                 intent.putExtra("add", true);
                 intent.putExtra("present", present);
@@ -87,7 +96,7 @@ public class FragmentPos extends Fragment {
                 break;
 
             case R.id.common:
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentPos.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_positive_effects");
                 intent.putExtra("add", false);
                 intent.putExtra("map", (Serializable) null);
@@ -97,9 +106,9 @@ public class FragmentPos extends Fragment {
             case R.id.remove:
                 Map<String, String> result = listener.getEffectsMap();
                 if (result == null || result.size() == 0) {
-                    Toast.makeText(getActivity(), "Effects list is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FragmentPos.this.activity, "Effects list is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    listView.setAdapter(new AdapterPosNeg(getActivity(), view, result, "positive_effects", true));
+                    listView.setAdapter(new AdapterPosNeg(FragmentPos.this.activity, view, result, "positive_effects", true));
                 }
                 break;
 

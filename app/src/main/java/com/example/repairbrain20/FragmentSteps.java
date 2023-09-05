@@ -1,5 +1,7 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,9 +49,16 @@ public class FragmentSteps extends Fragment {
     DatabaseReference reference;
     Map<String, Step> map;
     DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
+    Activity activity;
 
     public static boolean isValidLink(String link) {
         return Patterns.WEB_URL.matcher(link).matches();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        this.activity = getActivity();
+        super.onAttach(context);
     }
 
     @Override
@@ -83,15 +92,15 @@ public class FragmentSteps extends Fragment {
                     });
 
                     if (AdapterSteps.delete)
-                        list.setAdapter(new AdapterSteps(getActivity(), FragmentSteps.this.view, map, true));
+                        list.setAdapter(new AdapterSteps(FragmentSteps.this.activity, FragmentSteps.this.view, map, true));
                     else
-                        list.setAdapter(new AdapterSteps(getActivity(), FragmentSteps.this.view, map));
+                        list.setAdapter(new AdapterSteps(FragmentSteps.this.activity, FragmentSteps.this.view, map));
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    if (getActivity() != null)
-                        Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    if (FragmentSteps.this.activity != null)
+                        Toast.makeText(FragmentSteps.this.activity, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -170,7 +179,7 @@ public class FragmentSteps extends Fragment {
                                             }
                                         });
 
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(FragmentSteps.this.activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                                         step_name.setAdapter(adapter);
                                     }
                                 }
@@ -192,7 +201,7 @@ public class FragmentSteps extends Fragment {
                                         });
 
                                         if (keys != null) {
-                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, keys);
+                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(FragmentSteps.this.activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, keys);
                                             source_name.setAdapter(adapter);
                                         }
                                     }
@@ -203,7 +212,7 @@ public class FragmentSteps extends Fragment {
 
                 DatabaseReference reference = User.getRepairReference();
 
-                new AlertDialog.Builder(getActivity())
+                new AlertDialog.Builder(FragmentSteps.this.activity)
                         .setView(view_)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
@@ -214,22 +223,22 @@ public class FragmentSteps extends Fragment {
                                 String source_name_ = source_name.getText().toString().trim();
 
                                 if (step.equals("")) {
-                                    Toast.makeText(getActivity(), "Step cannot be empty", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FragmentSteps.this.activity, "Step cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
                                 if (!source_name_.equals("") && link_.equals("")) {
-                                    Toast.makeText(getActivity(), "Please paste the link", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FragmentSteps.this.activity, "Please paste the link", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
                                 if (!source_name_.equals("") && !isValidLink(link_)) {
-                                    Toast.makeText(getActivity(), "Invalid source link", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FragmentSteps.this.activity, "Invalid source link", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
                                 if (!Data.isValidKey(step)) {
-                                    Toast.makeText(getActivity(), "Invalid source name", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FragmentSteps.this.activity, "Invalid source name", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
@@ -266,7 +275,7 @@ public class FragmentSteps extends Fragment {
                 if (map == null) present = new ArrayList<>();
                 else present = new ArrayList<>(map.keySet());
 
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentSteps.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_next_steps");
                 intent.putExtra("add", true);
                 intent.putExtra("present", present);
@@ -275,7 +284,7 @@ public class FragmentSteps extends Fragment {
                 break;
 
             case R.id.common:
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentSteps.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_next_steps");
                 intent.putExtra("add", false);
                 startActivity(intent);
@@ -284,9 +293,9 @@ public class FragmentSteps extends Fragment {
             case R.id.remove:
 
                 if (map == null || map.size() == 0) {
-                    Toast.makeText(getActivity(), "Steps list is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FragmentSteps.this.activity, "Steps list is empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    list.setAdapter(new AdapterSteps(getActivity(), FragmentSteps.this.view, map, true));
+                    list.setAdapter(new AdapterSteps(FragmentSteps.this.activity, FragmentSteps.this.view, map, true));
                 }
                 break;
 
@@ -297,7 +306,7 @@ public class FragmentSteps extends Fragment {
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                    Toast.makeText(getActivity(), "Successfully resetted", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FragmentSteps.this.activity, "Successfully resetted", Toast.LENGTH_LONG).show();
                                 }
                             });
                 }

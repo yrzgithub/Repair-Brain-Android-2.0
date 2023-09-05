@@ -1,5 +1,7 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,6 +44,13 @@ public class FragmentPractices extends Fragment {
 
     ListView list_view;
     View view;
+    Activity activity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        this.activity = getActivity();
+        super.onAttach(context);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +91,7 @@ public class FragmentPractices extends Fragment {
                                 }
                             });
 
-                            list_view.setAdapter(new AdapterPractices(getActivity(), FragmentPractices.this.view, habits));
+                            list_view.setAdapter(new AdapterPractices(FragmentPractices.this.activity, FragmentPractices.this.view, habits));
                         }
                     });
         }
@@ -91,7 +100,7 @@ public class FragmentPractices extends Fragment {
     public void addPractice() {
         List<String> show_on = new ArrayList<String>();
 
-        View view = getActivity().getLayoutInflater().inflate(R.layout.habits_add, null);
+        View view = FragmentPractices.this.activity.getLayoutInflater().inflate(R.layout.habits_add, null);
 
         AutoCompleteTextView practice_view = view.findViewById(R.id.habit);
         practice_view.setThreshold(0);
@@ -119,7 +128,7 @@ public class FragmentPractices extends Fragment {
 
                         if (map != null) {
                             List<String> list = new ArrayList<>(map.keySet());
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(FragmentPractices.this.activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                             practice_view.setAdapter(adapter);
                         }
                     }
@@ -226,7 +235,7 @@ public class FragmentPractices extends Fragment {
         fri.setOnCheckedChangeListener(checked_listener);
         sat.setOnCheckedChangeListener(checked_listener);
 
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(FragmentPractices.this.activity)
                 .setView(view)
                 .setIcon(R.drawable.icon_app)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
@@ -241,7 +250,7 @@ public class FragmentPractices extends Fragment {
                         }
 
                         if (!Data.isValidKey(habit_)) {
-                            Toast.makeText(getActivity(), "Invalid habit name", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FragmentPractices.this.activity, "Invalid habit name", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -265,7 +274,7 @@ public class FragmentPractices extends Fragment {
                             habits_map.put(habit_, habits);
                         }
 
-                        AdapterPractices adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view, habits_map);
+                        AdapterPractices adapter = new AdapterPractices(FragmentPractices.this.activity, FragmentPractices.this.view, habits_map);
 
                         DatabaseReference reference = User.getRepairReference();
 
@@ -279,7 +288,7 @@ public class FragmentPractices extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         connect.dismiss();
-                                        Toast.makeText(getActivity(), "Practice Added", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(FragmentPractices.this.activity, "Practice Added", Toast.LENGTH_SHORT).show();
                                         list_view.setAdapter(adapter);
                                     }
                                 });
@@ -311,9 +320,9 @@ public class FragmentPractices extends Fragment {
             case R.id.remove:
                 Map<String, ReplaceHabits> habits_copy = AdapterPractices.habits_copy;
                 if (habits_copy == null || habits_copy.size() == 0) {
-                    Toast.makeText(getActivity(), "Habit List is Empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(FragmentPractices.this.activity, "Habit List is Empty", Toast.LENGTH_LONG).show();
                 } else {
-                    AdapterPractices remove_adapter = new AdapterPractices(getActivity(), FragmentPractices.this.view, true);
+                    AdapterPractices remove_adapter = new AdapterPractices(FragmentPractices.this.activity, FragmentPractices.this.view, true);
                     list_view.setAdapter(remove_adapter);
                 }
                 break;
@@ -335,7 +344,7 @@ public class FragmentPractices extends Fragment {
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 reset.dismiss();
 
-                                list_view.setAdapter(new AdapterPractices(getActivity(), FragmentPractices.this.view, null));
+                                list_view.setAdapter(new AdapterPractices(FragmentPractices.this.activity, FragmentPractices.this.view, null));
                                 Toast.makeText(getContext(), "Successfully Resetted", Toast.LENGTH_SHORT).show();
                             }
                         });

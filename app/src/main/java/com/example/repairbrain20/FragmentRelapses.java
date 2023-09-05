@@ -1,5 +1,7 @@
 package com.example.repairbrain20;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,13 @@ import java.util.Map;
 public class FragmentRelapses extends Fragment {
 
     View view;
+    Activity activity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        this.activity = getActivity();
+        super.onAttach(context);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +70,7 @@ public class FragmentRelapses extends Fragment {
                                     return super.toString();
                                 }
                             });
-                            AdapterRelapses relapse_adapter = new AdapterRelapses(getActivity(), FragmentRelapses.this.view, map);
+                            AdapterRelapses relapse_adapter = new AdapterRelapses(FragmentRelapses.this.activity, FragmentRelapses.this.view, map);
                             list.setAdapter(relapse_adapter);
                         }
                     }

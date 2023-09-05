@@ -1,6 +1,8 @@
 package com.example.repairbrain20;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -35,6 +37,13 @@ public class FragmentProgress extends Fragment {
     ProgressBar progress;
     ImageView loading;
     //MediaPlayer player;
+    Activity activity;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        this.activity = getActivity();
+        super.onAttach(context);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +70,7 @@ public class FragmentProgress extends Fragment {
         TextView left_txt = view.findViewById(R.id.hrs_left);
 
         loading = view.findViewById(R.id.loading);
-        Glide.with(getActivity())
+        Glide.with(FragmentProgress.this.activity)
                 .load(R.drawable.loading_pink_list)
                 .into(loading);
 
@@ -80,7 +89,7 @@ public class FragmentProgress extends Fragment {
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
 
                             if (!task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FragmentProgress.this.activity, "Something went wrong", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 

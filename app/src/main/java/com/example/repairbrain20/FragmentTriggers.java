@@ -4,6 +4,8 @@ import static com.example.repairbrain20.R.drawable;
 import static com.example.repairbrain20.R.id;
 import static com.example.repairbrain20.R.layout;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,9 +52,16 @@ public class FragmentTriggers extends Fragment {
     ImageView loading;
     View view;
     Map<String, String> map;
+    Activity activity;
 
     public FragmentTriggers() {
 
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        this.activity = getActivity();
+        super.onAttach(context);
     }
 
     @Override
@@ -76,7 +85,7 @@ public class FragmentTriggers extends Fragment {
         list = view.findViewById(id.list);
         loading = view.findViewById(id.loading);
 
-        Glide.with(getActivity()).load(drawable.loading_pink_list).into(loading);
+        Glide.with(FragmentTriggers.this.activity).load(drawable.loading_pink_list).into(loading);
 
         DatabaseReference reference = User.getRepairReference();
 
@@ -99,9 +108,9 @@ public class FragmentTriggers extends Fragment {
                             }
 
                             if (AdapterTriggers.delete)
-                                list.setAdapter(new AdapterTriggers(getActivity(), FragmentTriggers.this.view, map, true));
+                                list.setAdapter(new AdapterTriggers(FragmentTriggers.this.activity, FragmentTriggers.this.view, map, true));
                             else
-                                list.setAdapter(new AdapterTriggers(getActivity(), FragmentTriggers.this.view, map));
+                                list.setAdapter(new AdapterTriggers(FragmentTriggers.this.activity, FragmentTriggers.this.view, map));
                         }
 
                         @Override
@@ -159,7 +168,7 @@ public class FragmentTriggers extends Fragment {
 
                                 if (map != null) {
                                     List<String> list = new ArrayList<>(map.keySet());
-                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(FragmentTriggers.this.activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, list);
                                     triggers_view.setAdapter(adapter);
                                 }
                             }
@@ -168,7 +177,7 @@ public class FragmentTriggers extends Fragment {
                 reference = User.getRepairReference();
 
                 if (reference != null) {
-                    new AlertDialog.Builder(getActivity())
+                    new AlertDialog.Builder(FragmentTriggers.this.activity)
                             .setView(view)
                             .setNegativeButton("Cancel", null)
                             .setPositiveButton("Add", new DialogInterface.OnClickListener() {
@@ -182,7 +191,7 @@ public class FragmentTriggers extends Fragment {
                                     String time_ = local_time.format(formatter);
 
                                     if (!Data.isValidKey(trigger_name)) {
-                                        Toast.makeText(getActivity(), "Invalid trigger name", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(FragmentTriggers.this.activity, "Invalid trigger name", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
 
@@ -197,7 +206,7 @@ public class FragmentTriggers extends Fragment {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     snack.dismiss();
-                                                    Toast.makeText(getActivity(), "Trigger added", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(FragmentTriggers.this.activity, "Trigger added", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                 }
@@ -208,7 +217,7 @@ public class FragmentTriggers extends Fragment {
                 break;
 
             case id.remove:
-                list.setAdapter(new AdapterTriggers(getActivity(), FragmentTriggers.this.view, map, true));
+                list.setAdapter(new AdapterTriggers(FragmentTriggers.this.activity, FragmentTriggers.this.view, map, true));
                 break;
 
             case id.add_common:
@@ -217,7 +226,7 @@ public class FragmentTriggers extends Fragment {
 
                 ArrayList<String> present = new ArrayList<>(map.keySet());
 
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentTriggers.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_triggers/" + User.selected_addiction);
                 intent.putExtra("add", true);
                 intent.putExtra("present", (Serializable) present);
@@ -225,7 +234,7 @@ public class FragmentTriggers extends Fragment {
                 break;
 
             case id.common:
-                intent = new Intent(getActivity(), ActCommon.class);
+                intent = new Intent(FragmentTriggers.this.activity, ActCommon.class);
                 intent.putExtra("common", "common_triggers/" + User.selected_addiction);
                 intent.putExtra("add", false);
                 intent.putExtra("present", (Serializable) null);
@@ -241,7 +250,7 @@ public class FragmentTriggers extends Fragment {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 snack.dismiss();
-                                Toast.makeText(getActivity(), "Successfully Resetted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FragmentTriggers.this.activity, "Successfully Resetted", Toast.LENGTH_SHORT).show();
                             }
                         });
                 break;
