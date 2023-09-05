@@ -52,7 +52,6 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     GoogleSignInOptions gso;
 
-    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

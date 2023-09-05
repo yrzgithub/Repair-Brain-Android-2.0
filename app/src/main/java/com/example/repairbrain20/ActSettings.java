@@ -77,7 +77,6 @@ public class ActSettings extends AppCompatActivity {
         });
 
         notification_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(!b)
