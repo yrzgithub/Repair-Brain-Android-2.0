@@ -5,7 +5,7 @@
 
 # Defnitions 
 
-     Repairs    - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
+     [Repair](https://www.google.com/search?q=repair)    - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
      Insights   - Accurate and Deep Understandings.
      Repaired   - You followed what you want.
      Impaired   - You relapsed in your Journey.
