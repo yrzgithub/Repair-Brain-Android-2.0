@@ -118,7 +118,7 @@ public class FragmentInsights extends Fragment {
         switch (item.getItemId()) {
             case R.id.add:
 
-                View view = FragmentInsights.this.activity.getLayoutInflater().inflate(R.layout.custom_adapter_steps, null);
+                View view = FragmentInsights.this.activity.getLayoutInflater().inflate(R.layout.custom_add_insights, null);
 
                 EditText name = view.findViewById(R.id.name);
                 AutoCompleteTextView source = view.findViewById(R.id.source_name);

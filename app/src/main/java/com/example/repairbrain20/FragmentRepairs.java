@@ -124,7 +124,6 @@ public class FragmentRepairs extends Fragment {
                 View view = View.inflate(FragmentRepairs.this.activity, R.layout.alert_dialog, null);
 
                 AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
-                addiction_edit.setHint("Search or Enter");
                 addiction_edit.setThreshold(0);
 
                 addiction_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {

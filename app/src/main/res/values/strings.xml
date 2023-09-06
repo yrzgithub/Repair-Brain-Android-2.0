@@ -115,5 +115,6 @@
     <string name="username_">Username :</string>
     <string name="challenge">Challenge</string>
     <string name="update">Update</string>
+    <string name="insight">Insight</string>
 
 </resources>
