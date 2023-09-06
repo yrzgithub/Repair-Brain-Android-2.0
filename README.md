@@ -19,7 +19,6 @@
 
 
 # Uses
-
     * Replace addictions, Routines, Delusions or compulsions.
     * Take notes about your repair.
     * Note your understandings and insights along with source and source link.
