@@ -28,7 +28,7 @@ public class ActCreateAccount extends AppCompatActivity {
     LinearLayout main;
 
     public static boolean isValidString(String string) {
-        return !string.equals("");
+        return !string.isEmpty();
     }
 
     @SuppressLint("MissingInflatedId")

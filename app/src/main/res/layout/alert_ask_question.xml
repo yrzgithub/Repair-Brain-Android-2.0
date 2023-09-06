@@ -31,11 +31,11 @@
 
     <EditText
         android:id="@+id/question"
-        android:hint="@string/what_is_the_question"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:completionThreshold="0" />
+        android:completionThreshold="0"
+        android:hint="@string/what_is_the_question" />
 
 </LinearLayout>

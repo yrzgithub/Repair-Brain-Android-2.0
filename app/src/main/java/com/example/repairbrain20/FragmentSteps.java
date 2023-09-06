@@ -222,17 +222,17 @@ public class FragmentSteps extends Fragment {
                                 String link_ = link.getText().toString().trim();
                                 String source_name_ = source_name.getText().toString().trim();
 
-                                if (step.equals("")) {
+                                if (step.isEmpty()) {
                                     Toast.makeText(FragmentSteps.this.activity, "Step cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if (!source_name_.equals("") && link_.equals("")) {
+                                if (!source_name_.isEmpty() && link_.isEmpty()) {
                                     Toast.makeText(FragmentSteps.this.activity, "Please paste the link", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if (!source_name_.equals("") && !isValidLink(link_)) {
+                                if (!source_name_.isEmpty() && !isValidLink(link_)) {
                                     Toast.makeText(FragmentSteps.this.activity, "Invalid source link", Toast.LENGTH_LONG).show();
                                     return;
                                 }

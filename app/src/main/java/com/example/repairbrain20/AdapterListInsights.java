@@ -136,7 +136,7 @@ public class AdapterListInsights extends BaseAdapter {
         String source_name = insight_.getSource();
         String link = insight_.getLink();
 
-        if (source_name.equals("")) {
+        if (source_name.isEmpty()) {
             source_name = "Not found";
         }
 
@@ -197,7 +197,7 @@ public class AdapterListInsights extends BaseAdapter {
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (source_link_copy.equals("")) {
+                if (source_link_copy.isEmpty()) {
                     Toast.makeText(activity, "Source link not found", Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,13 +22,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 public class ActHome extends AppCompatActivity {
 
@@ -133,16 +129,14 @@ public class ActHome extends AppCompatActivity {
         });
 
         DatabaseReference reference = User.getRepairReference();
-        if(reference!=null)
-        {
+        if (reference != null) {
             reference
                     .child("ask")
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String title = snapshot.getValue(String.class);
-                            if(title!=null)
-                            {
+                            if (title != null) {
                                 ask.setText(title);
                             }
                         }
@@ -164,8 +158,7 @@ public class ActHome extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.settings:
                 startActivity(new Intent(ActHome.this, ActSettings.class));
                 break;
@@ -173,11 +166,10 @@ public class ActHome extends AppCompatActivity {
             case R.id.change:
                 DatabaseReference reference = User.getRepairReference();
 
-                View view = getLayoutInflater().inflate(R.layout.alert_ask_question,null);
+                View view = getLayoutInflater().inflate(R.layout.alert_ask_question, null);
                 EditText question = view.findViewById(R.id.question);
 
-                if(reference!=null)
-                {
+                if (reference != null) {
                     new AlertDialog.Builder(this)
                             .setView(view)
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -186,15 +178,13 @@ public class ActHome extends AppCompatActivity {
 
                                     String ques = question.getText().toString().trim();
 
-                                    if(ques.isEmpty())
-                                    {
-                                        Toast.makeText(ActHome.this,"Invalid Question",Toast.LENGTH_SHORT).show();
+                                    if (ques.isEmpty()) {
+                                        Toast.makeText(ActHome.this, "Invalid Question", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
 
-                                    if(!ques.endsWith("?"))
-                                    {
-                                        ques+="?";
+                                    if (!ques.endsWith("?")) {
+                                        ques += "?";
                                     }
 
                                     reference

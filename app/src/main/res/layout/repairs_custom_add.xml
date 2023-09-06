@@ -33,9 +33,9 @@
         android:id="@+id/effects_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="@string/search_or_enter"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:completionThreshold="0" />
+        android:completionThreshold="0"
+        android:hint="@string/search_or_enter" />
 
 </LinearLayout>

@@ -168,17 +168,17 @@ public class FragmentInsights extends Fragment {
                                 String source_ = source.getText().toString();
                                 String link_ = link.getText().toString();
 
-                                if (name_.equals("")) {
+                                if (name_.isEmpty()) {
                                     Toast.makeText(FragmentInsights.this.activity, "Insight cannot be empty", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if (!source_.equals("") && link_.equals("")) {
+                                if (!source_.isEmpty() && link_.isEmpty()) {
                                     Toast.makeText(FragmentInsights.this.activity, "Please paste the link", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
 
-                                if (!link_.equals("") && !FragmentSteps.isValidLink(link_)) {
+                                if (!link_.isEmpty() && !FragmentSteps.isValidLink(link_)) {
                                     Toast.makeText(FragmentInsights.this.activity, "Invalid source link", Toast.LENGTH_LONG).show();
                                     return;
                                 }

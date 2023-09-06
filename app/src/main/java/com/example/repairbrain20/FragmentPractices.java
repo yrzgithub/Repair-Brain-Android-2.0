@@ -244,7 +244,7 @@ public class FragmentPractices extends Fragment {
 
                         String habit_ = practice_view.getText().toString().trim();
 
-                        if (habit_.equals("")) {
+                        if (habit_.isEmpty()) {
                             Toast.makeText(getContext(), "Practice cannot be empty", Toast.LENGTH_LONG).show();
                             return;
                         }

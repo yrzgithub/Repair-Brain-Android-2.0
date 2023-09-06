@@ -15,7 +15,7 @@ public class Data {
 
     public static boolean isValidKey(String key) {
         key = key.trim();
-        return !key.equals("") && key.matches("^(?![\\[\\].$#])[^\\[\\].$#]*$");
+        return !key.isEmpty() && key.matches("^(?![\\[\\].$#])[^\\[\\].$#]*$");
     }
 
 }

@@ -212,6 +212,6 @@ public class ActCommon extends AppCompatActivity {
     }
 
     public boolean isValid(String str) {
-        return !str.trim().equals("");
+        return !str.trim().isEmpty();
     }
 }
