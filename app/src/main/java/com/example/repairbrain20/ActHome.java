@@ -1,5 +1,6 @@
 package com.example.repairbrain20;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,29 +8,41 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class ActHome extends AppCompatActivity {
 
     ImageButton free_button = null, hand_cuffed_button = null;
+    TextView ask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ask = findViewById(R.id.ask);
 
         free_button = findViewById(R.id.free_image);
         hand_cuffed_button = findViewById(R.id.hand_cuffed_image);
@@ -119,6 +132,27 @@ public class ActHome extends AppCompatActivity {
             }
         });
 
+        DatabaseReference reference = User.getRepairReference();
+        if(reference!=null)
+        {
+            reference
+                    .child("ask")
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String title = snapshot.getValue(String.class);
+                            if(title!=null)
+                            {
+                                ask.setText(title);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
     }
 
     @Override
@@ -129,9 +163,56 @@ public class ActHome extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.settings) {
-            startActivity(new Intent(ActHome.this, ActSettings.class));
+
+        switch (item.getItemId())
+        {
+            case R.id.settings:
+                startActivity(new Intent(ActHome.this, ActSettings.class));
+                break;
+
+            case R.id.change:
+                DatabaseReference reference = User.getRepairReference();
+
+                View view = getLayoutInflater().inflate(R.layout.alert_ask_question,null);
+                EditText question = view.findViewById(R.id.question);
+
+                if(reference!=null)
+                {
+                    new AlertDialog.Builder(this)
+                            .setView(view)
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    String ques = question.getText().toString().trim();
+
+                                    if(ques.isEmpty())
+                                    {
+                                        Toast.makeText(ActHome.this,"Invalid Question",Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    if(!ques.endsWith("?"))
+                                    {
+                                        ques+="?";
+                                    }
+
+                                    reference
+                                            .child("ask")
+                                            .setValue(ques);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .show();
+                }
+                break;
         }
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
 }
