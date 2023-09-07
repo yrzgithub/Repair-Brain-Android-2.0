@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -127,13 +128,17 @@ public class AdapterPosNeg extends BaseAdapter {
             return view;
         }
 
-        view = LayoutInflater.from(activity.getApplicationContext()).inflate(R.layout.custom_list_effects, null, false);
+        view = activity.getLayoutInflater().inflate(R.layout.custom_list_effects, null, false);
 
         TextView text_widget = view.findViewById(R.id.effect);
         TextView date_widget = view.findViewById(R.id.date);
 
-        text_widget.setSelected(true);
-        date_widget.setSelected(true);
+        text_widget.post(new Runnable() {
+            @Override
+            public void run() {
+                text_widget.setSelected(true);
+            }
+        });
 
         ImageView icon = view.findViewById(R.id.image);
         ImageView delete = view.findViewById(R.id.delete);

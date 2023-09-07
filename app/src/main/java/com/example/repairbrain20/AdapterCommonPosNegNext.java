@@ -131,7 +131,13 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
             }
         }
 
-        effect.setSelected(true);
+        effect.post(new Runnable() {
+            @Override
+            public void run() {
+                effect.setSelected(true);
+            }
+        });
+
         effect.setText(key);
 
         Common common = map.get(key);

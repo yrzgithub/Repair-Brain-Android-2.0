@@ -108,20 +108,21 @@ public class AdapterRepairsList extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if(view!=null)
-        {
-            return view;
-        }
+        if(view!=null) return view;
 
         view = act.getLayoutInflater().inflate(R.layout.custom_repair_list_view, null);
-        view.setBackgroundResource(R.drawable.round_layout);
 
         RelativeLayout main = view.findViewById(R.id.main);
-
         TextView addiction_name_view = view.findViewById(R.id.addiction_name);
         TextView date_added_view = view.findViewById(R.id.date_added);
-
         ImageView delete_or_go = view.findViewById(R.id.delete_or_go);
+
+        addiction_name_view.post(new Runnable() {
+            @Override
+            public void run() {
+                addiction_name_view.setSelected(true);
+            }
+        });
 
         String key = keys.get(i);
 

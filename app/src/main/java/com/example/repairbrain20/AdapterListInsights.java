@@ -1,9 +1,11 @@
 package com.example.repairbrain20;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,13 +111,11 @@ public class AdapterListInsights extends BaseAdapter {
         return i;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if(view!=null)
-        {
-            return view;
-        }
+        if(view!=null) return view;
 
         view = activity.getLayoutInflater().inflate(R.layout.custom_insights, null);
 
@@ -123,17 +123,6 @@ public class AdapterListInsights extends BaseAdapter {
         ImageView go = view.findViewById(R.id.go);
 
         TextView insight = view.findViewById(R.id.insight);
-        insight.setSelected(true);
-
-        insight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!insight.isSelected())
-                {
-                    insight.setSelected(true);
-                }
-            }
-        });
 
         TextView source = view.findViewById(R.id.source);
         ImageView delete = view.findViewById(R.id.delete);
@@ -158,9 +147,6 @@ public class AdapterListInsights extends BaseAdapter {
         }
 
         source_name = source_name.substring(0, 1).toUpperCase() + source_name.substring(1);
-
-        insight.setText(key_insight.trim());
-        source.setText(source_name.trim());
 
         if (AdapterListInsights.remove) {
             delete.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +220,15 @@ public class AdapterListInsights extends BaseAdapter {
                 }
             }
         });
+
+        insight.post(new Runnable() {
+            @Override
+            public void run() {
+                insight.setSelected(true);
+            }
+        });
+        insight.setText(key_insight.trim());
+        source.setText(source_name.trim());
 
         return view;
     }

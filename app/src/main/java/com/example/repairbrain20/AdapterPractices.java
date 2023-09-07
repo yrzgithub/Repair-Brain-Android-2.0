@@ -181,7 +181,7 @@ public class AdapterPractices extends BaseAdapter {
             return view;
         }
 
-        view = act.getLayoutInflater().inflate(R.layout.custom_habits_list, null, false);
+        view = act.getLayoutInflater().inflate(R.layout.custom_habits_list, null);
 
         RelativeLayout main = view.findViewById(R.id.main);
 
@@ -191,6 +191,13 @@ public class AdapterPractices extends BaseAdapter {
         TextView show_on_ = view.findViewById(R.id.show_on_text);
         TextView text = view.findViewById(R.id.habit);
         TextView show = view.findViewById(R.id.show_on);
+
+        text.post(new Runnable() {
+            @Override
+            public void run() {
+                text.setSelected(true);
+            }
+        });
 
         String key = keys.get(i);
 
@@ -210,6 +217,7 @@ public class AdapterPractices extends BaseAdapter {
 
         if (this.delete) {
             check.setVisibility(View.GONE);
+            delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

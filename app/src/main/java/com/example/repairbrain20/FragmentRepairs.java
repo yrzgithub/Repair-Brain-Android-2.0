@@ -125,6 +125,7 @@ public class FragmentRepairs extends Fragment {
 
                 AutoCompleteTextView addiction_edit = view.findViewById(R.id.effects_list);
                 addiction_edit.setThreshold(0);
+                addiction_edit.setHint("Select or Enter");
 
                 addiction_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override

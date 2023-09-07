@@ -77,7 +77,6 @@ public class AdapterRelapses extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-
         if(view!=null)
         {
             return view;

@@ -116,6 +116,13 @@ public class AdapterTriggers extends BaseAdapter {
         TextView date_added = view.findViewById(R.id.date_added);
         ImageView delete = view.findViewById(R.id.delete);
 
+        trigger_name.post(new Runnable() {
+            @Override
+            public void run() {
+                trigger_name.setSelected(true);
+            }
+        });
+
         if (AdapterTriggers.delete) {
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {

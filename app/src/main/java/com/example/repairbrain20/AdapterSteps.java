@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -114,7 +115,7 @@ public class AdapterSteps extends BaseAdapter {
             return view;
         }
 
-        view = activity.getLayoutInflater().inflate(R.layout.custom_steps, null);
+        view = activity.getLayoutInflater().inflate(R.layout.custom_steps,null);
 
         TextView step = view.findViewById(R.id.step);
         TextView source = view.findViewById(R.id.source);
@@ -122,6 +123,13 @@ public class AdapterSteps extends BaseAdapter {
         ImageView image = view.findViewById(R.id.go);
         ImageView delete = view.findViewById(R.id.delete);
         ImageView start = view.findViewById(R.id.image);
+
+        step.post(new Runnable() {
+            @Override
+            public void run() {
+                step.setSelected(true);
+            }
+        });
 
         if (AdapterSteps.delete) {
             image.setVisibility(View.GONE);

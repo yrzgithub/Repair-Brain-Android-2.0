@@ -19,6 +19,7 @@
     <TextView
         android:id="@+id/addiction_name"
         android:layout_width="fill_parent"
+        android:layout_marginEnd="50dp"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -49,14 +50,18 @@
         android:id="@+id/date_added"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
+        android:layout_marginEnd="55dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/show_on_text"
+        android:textColor="@color/black"
+
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:maxLines="1"
         android:singleLine="true"
-        android:textColor="@color/black" />
+        android:scrollHorizontally="true"
+        />
 
     <ImageView
         android:id="@+id/delete_or_go"
