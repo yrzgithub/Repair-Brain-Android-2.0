@@ -24,15 +24,16 @@
         android:layout_marginEnd="30dp"
         android:layout_toStartOf="@+id/go"
         android:layout_toEndOf="@+id/image"
-        android:ellipsize="marquee"
         android:gravity="center_vertical"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:maxLines="1"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
         android:text="@string/name"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+
+        android:scrollHorizontally="true"
+        android:ellipsize="marquee"
+        android:maxLines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/source_txt"

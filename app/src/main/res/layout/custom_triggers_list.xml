@@ -26,7 +26,13 @@
         android:gravity="center_vertical"
         android:text="@string/trigger_name"
         android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+
+        android:scrollHorizontally="true"
+        android:ellipsize="marquee"
+        android:maxLines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/date_added_text"
