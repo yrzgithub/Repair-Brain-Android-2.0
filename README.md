@@ -20,7 +20,7 @@
 
 # Uses
     * Replace addictions, Routines, Delusions or compulsions.
-    * Create a new habit,activity or a practice.
+    * Create a new habit, activity or a practice.
     * Take notes about your repair.
     * Note your understandings and insights along with source and source link.
     * Track your Progress.
@@ -42,7 +42,7 @@
     4.  Click on the Repair.
     5.  Select whether you Repaired or Impaired yourself.
     6.  Add Insights in the Insights Tab along with source name and source link.
-    7.  Similarly Add Changes,Challenges,Steps.
+    7.  Similarly Add Changes, Challenges, Steps.
     8.  Select or enter practices and check the days which you want to follow it.
     9.  Select or enter your Trigger.
     10. In Relapses Tab, See you Relapses Data.
