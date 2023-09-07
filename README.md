@@ -20,6 +20,7 @@
 
 # Uses
     * Replace addictions, Routines, Delusions or compulsions.
+    * Create a new habit,activity or a practice.
     * Take notes about your repair.
     * Note your understandings and insights along with source and source link.
     * Track your Progress.
@@ -49,6 +50,7 @@
     12. Long click on note icon or Go icon to add or change the source link.
     13. Use Add Common menu to add multiple entries from common lists.
     14. Google Keep link be uses as Note link.
+    15. You can click on the "change question" menu to change the question.
 
     
 # Important Note
