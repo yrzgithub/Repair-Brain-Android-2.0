@@ -77,6 +77,12 @@ public class AdapterRelapses extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
+
+        if(view!=null)
+        {
+            return view;
+        }
+
         view = LayoutInflater.from(activity).inflate(R.layout.custom_relapse_list, null);
 
         TextView relapse = view.findViewById(R.id.relapses);

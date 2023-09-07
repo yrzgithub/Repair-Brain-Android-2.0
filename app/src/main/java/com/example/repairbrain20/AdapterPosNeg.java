@@ -121,6 +121,12 @@ public class AdapterPosNeg extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
+        if(view!=null)
+        {
+            return view;
+        }
+
         view = LayoutInflater.from(activity.getApplicationContext()).inflate(R.layout.custom_list_effects, null, false);
 
         TextView text_widget = view.findViewById(R.id.effect);

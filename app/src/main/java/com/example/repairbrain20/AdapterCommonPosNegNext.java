@@ -108,6 +108,11 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
+        if(view!=null)
+        {
+            return view;
+        }
+
         view = LayoutInflater.from(act).inflate(R.layout.common_effects_and_habits_list, null);
 
         TextView effect = view.findViewById(R.id.effect);

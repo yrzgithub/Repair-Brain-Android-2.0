@@ -73,13 +73,19 @@ public class AdapterListDeveloperContact extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = activity.getLayoutInflater().inflate(R.layout.custom_list_developer, null);
 
-        ImageView image = view.findViewById(R.id.image);
-        ImageView go = view.findViewById(R.id.go);
+        if(view!=null)
+        {
+            return view;
+        }
+
+        view = activity.getLayoutInflater().inflate(R.layout.custom_list_developer, null);
 
         TextView name = view.findViewById(R.id.name);
         TextView username = view.findViewById(R.id.username);
+
+        ImageView image = view.findViewById(R.id.image);
+        ImageView go = view.findViewById(R.id.go);
 
         String key_name = keys.get(i);
 

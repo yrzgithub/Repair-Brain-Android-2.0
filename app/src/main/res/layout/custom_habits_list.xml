@@ -27,6 +27,7 @@
         android:text="@string/habit"
         android:textColor="@color/black"
         android:textSize="20sp"
+        android:layout_marginEnd="55dp"
 
         android:scrollHorizontally="true"
         android:ellipsize="marquee"

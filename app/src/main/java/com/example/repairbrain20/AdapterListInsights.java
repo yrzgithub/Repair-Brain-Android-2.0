@@ -112,12 +112,29 @@ public class AdapterListInsights extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
+        if(view!=null)
+        {
+            return view;
+        }
+
         view = activity.getLayoutInflater().inflate(R.layout.custom_insights, null);
 
         ImageView start = view.findViewById(R.id.image);
         ImageView go = view.findViewById(R.id.go);
 
         TextView insight = view.findViewById(R.id.insight);
+        insight.setSelected(true);
+
+        insight.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!insight.isSelected())
+                {
+                    insight.setSelected(true);
+                }
+            }
+        });
+
         TextView source = view.findViewById(R.id.source);
         ImageView delete = view.findViewById(R.id.delete);
 

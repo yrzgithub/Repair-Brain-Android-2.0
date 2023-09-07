@@ -175,6 +175,12 @@ public class AdapterPractices extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
+        if(view!=null)
+        {
+            return view;
+        }
+
         view = act.getLayoutInflater().inflate(R.layout.custom_habits_list, null, false);
 
         RelativeLayout main = view.findViewById(R.id.main);
