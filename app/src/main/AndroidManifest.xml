@@ -23,7 +23,6 @@
             android:name=".AlarmReceiver"
             android:enabled="true"
             android:roundIcon="@drawable/icon_app" />
-
         <receiver
             android:name=".BootCompleted"
             android:enabled="true" />
@@ -31,23 +30,18 @@
         <activity
             android:name=".ActContactDeveloper"
             android:exported="false" />
-
         <activity
             android:name=".ActSettings"
             android:exported="false" />
-
         <activity
             android:name=".ActRepairsInsights"
             android:exported="false" />
-
         <activity
             android:name=".ActJourney"
             android:exported="false" />
-
         <activity
             android:name=".ActCommon"
             android:exported="false" />
-
         <activity
             android:name=".ActLogin"
             android:exported="true">
@@ -57,23 +51,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ActRecovery"
             android:exported="false" />
-
         <activity
             android:name=".ActCreateAccount"
             android:exported="false" />
-
         <activity
             android:name=".ActEvolution"
             android:exported="false" />
-
         <activity
             android:name=".ActHome"
             android:exported="true" />
-
     </application>
 
 </manifest>
