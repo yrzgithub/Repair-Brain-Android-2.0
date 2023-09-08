@@ -2,6 +2,7 @@ package com.example.repairbrain20;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -9,7 +10,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -25,8 +30,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -44,6 +52,7 @@ public class AdapterListInsights extends BaseAdapter {
     Snackbar snack;
     List<String> keys = new ArrayList<>();
     StorageReference reference = FirebaseStorage.getInstance().getReference();
+    DatabaseReference common_reference = FirebaseDatabase.getInstance().getReference();
     DatabaseReference delete_reference;
     Map<String, Drawable> drawables = new HashMap<>();
 
@@ -138,6 +147,108 @@ public class AdapterListInsights extends BaseAdapter {
         String key_insight = keys.get(i);
 
         Insight insight_ = insights.get(key_insight);
+
+        if(!remove)
+        {
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view_) {
+
+                    View view = activity.getLayoutInflater().inflate(R.layout.custom_edit_insights, null);
+
+                    AutoCompleteTextView source = view.findViewById(R.id.source_name);
+                    EditText link = view.findViewById(R.id.link);
+
+                    source.setThreshold(0);
+
+                    source.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View view, boolean b) {
+                            source.showDropDown();
+                        }
+                    });
+
+                    if (common_reference != null) {
+                        common_reference
+                                .child("common_steps_sources")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            List<String> keys = task.getResult().getValue(new GenericTypeIndicator<List<String>>() {
+                                                @NonNull
+                                                @Override
+                                                public String toString() {
+                                                    return super.toString();
+                                                }
+                                            });
+
+                                            if (keys != null) {
+                                                ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, keys);
+                                                source.setAdapter(adapter);
+                                            }
+                                        }
+                                    }
+                                });
+                    }
+
+                    new AlertDialog.Builder(activity)
+                            .setView(view)
+                            .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    String source_ = source.getText().toString();
+                                    String link_ = link.getText().toString();
+
+                                    if (key_insight.isEmpty()) {
+                                        Toast.makeText(activity, "Insight cannot be empty", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    if (!source_.isEmpty() && link_.isEmpty()) {
+                                        Toast.makeText(activity, "Please paste the link", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    if (!link_.isEmpty() && !FragmentSteps.isValidLink(link_)) {
+                                        Toast.makeText(activity, "Invalid source link", Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
+                                    if (!Data.isValidKey(key_insight)) {
+                                        Toast.makeText(activity, "Invalid Insight name", Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+
+                                    DatabaseReference reference = User.getMainReference();
+
+                                    if (reference != null) {
+
+                                        Snackbar snack = Snackbar.make(AdapterListInsights.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                        snack.show();
+
+                                        reference
+                                                .child("insights")
+                                                .child(key_insight)
+                                                .setValue(new Insight(source_, link_))
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        snack.dismiss();
+                                                    }
+                                                });
+                                    }
+                                }
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .create()
+                            .show();
+                    return true;
+                }
+            });
+        }
 
         String source_name = insight_.getSource();
         String link = insight_.getLink();
