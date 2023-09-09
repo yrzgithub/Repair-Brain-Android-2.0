@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -123,12 +121,11 @@ public class AdapterSteps extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if(view!=null)
-        {
+        if (view != null) {
             return view;
         }
 
-        view = activity.getLayoutInflater().inflate(R.layout.custom_steps,null);
+        view = activity.getLayoutInflater().inflate(R.layout.custom_steps, null);
 
         TextView step = view.findViewById(R.id.step);
         TextView source = view.findViewById(R.id.source);

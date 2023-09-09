@@ -176,8 +176,7 @@ public class AdapterPractices extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if(view!=null)
-        {
+        if (view != null) {
             return view;
         }
 

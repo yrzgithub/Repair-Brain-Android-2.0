@@ -23,16 +23,16 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/image"
+        android:ellipsize="marquee"
         android:gravity="center_vertical"
-        android:text="@string/trigger_name"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
 
         android:scrollHorizontally="true"
-        android:ellipsize="marquee"
-        android:maxLines="1"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:text="@string/trigger_name"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/date_added_text"
