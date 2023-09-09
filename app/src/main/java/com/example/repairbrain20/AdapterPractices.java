@@ -148,10 +148,10 @@ public class AdapterPractices extends BaseAdapter {
                 if (snack != null) snack.show();
             } else {
                 accuracy.setText("Replacing Accuracy :");
+                percent.setVisibility(View.VISIBLE);
                 percent.setText("0%");
                 up_or_down.setImageResource(R.drawable.up);
                 up_or_down.setVisibility(View.VISIBLE);
-                percent.setVisibility(View.VISIBLE);
             }
         }
     }

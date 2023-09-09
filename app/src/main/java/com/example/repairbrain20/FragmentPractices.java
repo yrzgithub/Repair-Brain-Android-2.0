@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,8 @@ public class FragmentPractices extends Fragment {
     ListView list_view;
     View view;
     Activity activity;
+    TextView percent;
+    ImageView up_or_down;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -69,6 +72,9 @@ public class FragmentPractices extends Fragment {
 
         this.view = view;
         list_view = view.findViewById(R.id.list);
+
+        percent = view.findViewById(R.id.percent);
+        this.up_or_down = view.findViewById(R.id.up_or_down);
 
         DatabaseReference reference = User.getRepairReference();
         ImageView no_results = view.findViewById(R.id.no_results);
@@ -346,6 +352,11 @@ public class FragmentPractices extends Fragment {
 
                                 list_view.setAdapter(new AdapterPractices(FragmentPractices.this.activity, FragmentPractices.this.view, null));
                                 Toast.makeText(getContext(), "Successfully Resetted", Toast.LENGTH_SHORT).show();
+
+                                percent.setText("0%");
+                                percent.setVisibility(View.VISIBLE);
+                                up_or_down.setImageResource(R.drawable.up);
+                                up_or_down.setVisibility(View.VISIBLE);
                             }
                         });
                 break;
