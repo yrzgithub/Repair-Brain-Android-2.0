@@ -60,6 +60,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         if (map != null) {
             this.map.putAll(map);
             keys.addAll(map.keySet());
+            Log.e("common_map",String.valueOf(keys.size()));
         } else {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
@@ -87,12 +88,12 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return keys != null ? keys.size() : 0;
+        return map != null ? map.size() : 0;
     }
 
     @Override
     public Object getItem(int i) {
-        return keys.get(i);
+        return map.get(i);
     }
 
     @Override
@@ -107,10 +108,6 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-
-        if (view != null) {
-            return view;
-        }
 
         view = LayoutInflater.from(act).inflate(R.layout.common_effects_and_habits_list, null);
 

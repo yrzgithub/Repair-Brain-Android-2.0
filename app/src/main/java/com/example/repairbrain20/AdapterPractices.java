@@ -141,18 +141,17 @@ public class AdapterPractices extends BaseAdapter {
         }
 
         if (delete) {
-            percent.setText("0%");
-
             if (keys.size() > 0) {
                 up_or_down.setVisibility(View.GONE);
                 percent.setVisibility(View.GONE);
                 accuracy.setText("Select Items To Remove");
                 if (snack != null) snack.show();
             } else {
+                accuracy.setText("Replacing Accuracy :");
+                percent.setText("0%");
+                up_or_down.setImageResource(R.drawable.up);
                 up_or_down.setVisibility(View.VISIBLE);
                 percent.setVisibility(View.VISIBLE);
-                accuracy.setText("Replacing Accuracy :");
-                up_or_down.setImageResource(R.drawable.up);
             }
         }
     }
@@ -175,10 +174,6 @@ public class AdapterPractices extends BaseAdapter {
     @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-
-        if (view != null) {
-            return view;
-        }
 
         view = act.getLayoutInflater().inflate(R.layout.custom_habits_list, null);
 

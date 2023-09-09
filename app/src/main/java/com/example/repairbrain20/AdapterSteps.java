@@ -121,10 +121,6 @@ public class AdapterSteps extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (view != null) {
-            return view;
-        }
-
         view = activity.getLayoutInflater().inflate(R.layout.custom_steps, null);
 
         TextView step = view.findViewById(R.id.step);

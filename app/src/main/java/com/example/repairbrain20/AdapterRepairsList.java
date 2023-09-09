@@ -108,8 +108,6 @@ public class AdapterRepairsList extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (view != null) return view;
-
         view = act.getLayoutInflater().inflate(R.layout.custom_repair_list_view, null);
 
         RelativeLayout main = view.findViewById(R.id.main);

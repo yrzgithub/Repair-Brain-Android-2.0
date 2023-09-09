@@ -259,7 +259,7 @@ public class FragmentPractices extends Fragment {
                             return;
                         }
 
-                        Snackbar connect = Snackbar.make(getView(), "Connecting", Snackbar.LENGTH_INDEFINITE);
+                        Snackbar connect = Snackbar.make(FragmentPractices.this.view, "Connecting", Snackbar.LENGTH_INDEFINITE);
                         connect.show();
 
                         ReplaceHabits habits = new ReplaceHabits(show_on);

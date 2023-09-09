@@ -54,7 +54,7 @@ public class FragmentRelapses extends Fragment {
         ListView list = view.findViewById(R.id.list);
         ImageView loading = view.findViewById(R.id.loading);
 
-        Glide.with(getView()).load(R.drawable.loading_pink_list).into(loading);
+        Glide.with(view).load(R.drawable.loading_pink_list).into(loading);
 
         DatabaseReference reference = User.getRepairReference();
         reference.child("relapses")

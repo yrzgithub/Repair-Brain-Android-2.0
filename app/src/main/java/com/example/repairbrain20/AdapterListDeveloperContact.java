@@ -76,10 +76,6 @@ public class AdapterListDeveloperContact extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (view != null) {
-            return view;
-        }
-
         view = activity.getLayoutInflater().inflate(R.layout.custom_list_developer, null);
 
         TextView name = view.findViewById(R.id.name);

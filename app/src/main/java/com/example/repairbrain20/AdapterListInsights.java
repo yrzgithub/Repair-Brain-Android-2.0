@@ -123,8 +123,6 @@ public class AdapterListInsights extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        if (view != null) return view;
-
         view = activity.getLayoutInflater().inflate(R.layout.custom_insights, null);
 
         ImageView start = view.findViewById(R.id.image);
