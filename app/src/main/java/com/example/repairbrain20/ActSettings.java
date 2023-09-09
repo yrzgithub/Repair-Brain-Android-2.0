@@ -1,9 +1,11 @@
 package com.example.repairbrain20;
 
+import android.Manifest;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -27,13 +29,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.Set;
 
 public class ActSettings extends AppCompatActivity {
 
     RelativeLayout auto_login, notification, time_rel;
-    SwitchCompat auto_login_switch, notification_switch, yes_or_no;
+    SwitchCompat auto_login_switch, notification_switch;
     TextView delete, time;
     LinearLayout main;
+    int NOTIFICATION_REQUEST = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +62,6 @@ public class ActSettings extends AppCompatActivity {
         auto_login_switch.setChecked(settings.isAuto_login());
         notification_switch.setChecked(settings.isShow_notification());
 
-        yes_or_no = findViewById(R.id.yes_or_no_switch);
-        yes_or_no.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                settings.setYes_or_no(b);
-            }
-        });
-
         setTime(settings);
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +84,18 @@ public class ActSettings extends AppCompatActivity {
                     settings.cancel_alarm();
                 }
 
-                if (b && ActivityCompat.checkSelfPermission(ActSettings.this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(ActSettings.this, "Allow Notifications", Toast.LENGTH_SHORT).show();
+                if (b && ActivityCompat.checkSelfPermission(ActSettings.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) {
+                        requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},NOTIFICATION_REQUEST);
+                    }
+                    else
+                    {
+                        Toast.makeText(ActSettings.this,"Allow notifications",Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    intent.setData(Uri.fromParts("package", getPackageName(), null));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse(getPackageName()));
+                        startActivity(intent);
+                    }
                 }
                 settings.setShow_notification(b);
             }
