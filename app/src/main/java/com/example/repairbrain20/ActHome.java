@@ -45,6 +45,12 @@ public class ActHome extends AppCompatActivity {
         hand_cuffed_button = findViewById(R.id.hand_cuffed_image);
 
         settings = new AppSettings(this);
+        boolean yes_or_now = settings.isYes_or_no();
+
+        if (yes_or_now) {
+            free_button.setImageResource(R.drawable.yes);
+            hand_cuffed_button.setImageResource(R.drawable.no);
+        }
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.image_button_anim);
 

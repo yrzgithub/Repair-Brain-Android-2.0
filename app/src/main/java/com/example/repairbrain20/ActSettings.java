@@ -58,6 +58,14 @@ public class ActSettings extends AppCompatActivity {
         auto_login_switch.setChecked(settings.isAuto_login());
         notification_switch.setChecked(settings.isShow_notification());
 
+        yes_or_no = findViewById(R.id.yes_or_no_switch);
+        yes_or_no.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                settings.setYes_or_no(b);
+            }
+        });
+
         setTime(settings);
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override

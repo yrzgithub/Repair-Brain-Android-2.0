@@ -20,6 +20,7 @@ public class AppSettings {
     AlarmManager manager;
     Intent alarm_intent;
     PendingIntent alarm_pending;
+    boolean yes_or_no = false;
 
     AppSettings(Activity act) {
         this.activity = act;
@@ -67,6 +68,15 @@ public class AppSettings {
         }
 
         manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
+    }
+
+    public boolean isYes_or_no() {
+        return yes_or_no;
+    }
+
+    public void setYes_or_no(boolean yes_or_no) {
+        this.yes_or_no = yes_or_no;
+        editor.putBoolean("yes_or_no", yes_or_no);
     }
 
     public void cancel_alarm() {
