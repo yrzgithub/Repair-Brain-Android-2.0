@@ -31,7 +31,7 @@ import java.util.Calendar;
 public class ActSettings extends AppCompatActivity {
 
     RelativeLayout auto_login, notification, time_rel;
-    SwitchCompat auto_login_switch, notification_switch;
+    SwitchCompat auto_login_switch, notification_switch,yes_or_no;
     TextView delete, time;
     LinearLayout main;
 
@@ -58,8 +58,15 @@ public class ActSettings extends AppCompatActivity {
         auto_login_switch.setChecked(settings.isAuto_login());
         notification_switch.setChecked(settings.isShow_notification());
 
-        setTime(settings);
+        yes_or_no = findViewById(R.id.yes_or_no_switch);
+        yes_or_no.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                settings.setYes_or_no(b);
+            }
+        });
 
+        setTime(settings);
         auto_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
