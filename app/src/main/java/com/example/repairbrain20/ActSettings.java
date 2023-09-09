@@ -130,7 +130,7 @@ public class ActSettings extends AppCompatActivity {
                                 }
                             }
                         })
-                        .setNegativeButton("Cancel",null)
+                        .setNegativeButton("Cancel", null)
                         .show();
             }
         });
