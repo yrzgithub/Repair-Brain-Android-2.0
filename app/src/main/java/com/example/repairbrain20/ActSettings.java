@@ -2,6 +2,7 @@ package com.example.repairbrain20;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
@@ -29,7 +31,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
-import java.util.Set;
 
 public class ActSettings extends AppCompatActivity {
 
@@ -85,12 +86,10 @@ public class ActSettings extends AppCompatActivity {
                 }
 
                 if (b && ActivityCompat.checkSelfPermission(ActSettings.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) {
-                        requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},NOTIFICATION_REQUEST);
-                    }
-                    else
-                    {
-                        Toast.makeText(ActSettings.this,"Allow notifications",Toast.LENGTH_SHORT).show();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_REQUEST);
+                    } else {
+                        Toast.makeText(ActSettings.this, "Allow notifications", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         intent.setData(Uri.parse(getPackageName()));
@@ -105,23 +104,34 @@ public class ActSettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Snackbar snackbar = Snackbar.make(main, "Deleting Account", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                snackbar.show();
+                new AlertDialog.Builder(ActSettings.this)
+                        .setIcon(R.drawable.icon_app)
+                        .setTitle(R.string.app_name)
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Snackbar snackbar = Snackbar.make(main, "Deleting Account", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                                snackbar.show();
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                if (user != null) {
-                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                snackbar.dismiss();
-                                Toast.makeText(ActSettings.this, "Account Deleted", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(ActSettings.this, ActLogin.class));
+                                if (user != null) {
+                                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                snackbar.dismiss();
+                                                Toast.makeText(ActSettings.this, "Account Deleted", Toast.LENGTH_LONG).show();
+                                                startActivity(new Intent(ActSettings.this, ActLogin.class));
+                                            }
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    });
-                }
+                        })
+                        .setNegativeButton("Cancel",null)
+                        .show();
             }
         });
 
