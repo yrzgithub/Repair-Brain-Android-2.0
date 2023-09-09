@@ -28,7 +28,7 @@ public class AppSettings {
         editor = preferences.edit();
 
         auto_login = preferences.getBoolean("auto_login", false);
-        show_notification = preferences.getBoolean("show_notification", true);
+        show_notification = preferences.getBoolean("show_notification", false);
         hour = preferences.getInt("hour", 7);
         minute = preferences.getInt("minute", 0);
 
