@@ -60,7 +60,7 @@ public class AdapterCommonPosNegNext extends BaseAdapter {
         if (map != null) {
             this.map.putAll(map);
             keys.addAll(map.keySet());
-            Log.e("common_map",String.valueOf(keys.size()));
+            Log.e("common_map", String.valueOf(keys.size()));
         } else {
             list.setVisibility(View.GONE);
             loading.setVisibility(View.VISIBLE);
