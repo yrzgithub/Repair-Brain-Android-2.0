@@ -36,6 +36,8 @@
     
 # Usage
 
+![ceate account](https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/a0416f54-8f48-48ef-9b2a-503c3d1e53a3)
+
     1.  Create an Account and Verify your E-mail.
     2.  Login with E-mail or Google.
     3.  Select or enter Repairs.
