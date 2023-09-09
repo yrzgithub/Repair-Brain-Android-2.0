@@ -40,7 +40,6 @@ public class User implements OnCompleteListener<AuthResult> {
     ProgressDialog progress;
     AlertDialog.Builder alert;
     DatabaseReference ids_reference = database.getReference().child("ids");
-    DatabaseReference user_reference;
     boolean use_username;
     SharedPreferences.Editor editor;
     SharedPreferences preference;
