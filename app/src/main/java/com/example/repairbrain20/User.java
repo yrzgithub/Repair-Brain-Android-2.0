@@ -108,7 +108,7 @@ public class User implements OnCompleteListener<AuthResult> {
 
     public static DatabaseReference getRepairReference() {
         if (User.uid != null && selected_addiction != null) {
-            return database.getReference().child(User.uid).child(selected_addiction);
+            return database.getReference().child(User.uid).child("repairs").child(selected_addiction);
         }
         return null;
     }

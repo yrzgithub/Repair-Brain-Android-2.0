@@ -98,10 +98,6 @@ public class FragmentRepairs extends Fragment {
                             }
                         });
 
-                        if (addictions != null) {
-                            addictions.remove("insights");
-                        }
-
                         if (AdapterRepairsList.delete)
                             list.setAdapter(new AdapterRepairsList(FragmentRepairs.this.activity, FragmentRepairs.this.view, addictions, true));
                         else
