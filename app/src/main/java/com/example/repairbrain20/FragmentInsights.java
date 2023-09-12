@@ -1,5 +1,8 @@
 package com.example.repairbrain20;
 
+import static com.example.repairbrain20.AdapterRepairsList.add_link;
+import static com.example.repairbrain20.AdapterRepairsList.browse;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -111,8 +114,6 @@ public class FragmentInsights extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        DatabaseReference reference = User.getMainReference();
 
         switch (item.getItemId()) {
             case R.id.add:
@@ -236,6 +237,26 @@ public class FragmentInsights extends Fragment {
                 startActivity(new Intent(FragmentInsights.this.activity, ActSettings.class));
                 break;
 
+            case R.id.playlist:
+                DatabaseReference playlist_reference = User.getPlaylistReference();
+                playlist_reference
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    String link = task.getResult().getValue(String.class);
+
+                                    if (link == null) {
+                                        Toast.makeText(activity, "Note link not found", Toast.LENGTH_SHORT).show();
+                                        add_link(activity,playlist_reference);
+                                    } else {
+                                        browse(activity,link);
+                                    }
+                                }
+                            }
+                        });
+                break;
         }
 
         return super.onOptionsItemSelected(item);

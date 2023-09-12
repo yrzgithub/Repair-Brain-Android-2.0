@@ -147,7 +147,7 @@ public class AdapterRepairsList extends BaseAdapter {
             @Override
             public boolean onLongClick(View view) {
                 if (!delete) {
-                    add_note(reference, key);
+                    add_link(act,reference.child(key).child("note"));
                 }
                 return true;
             }
@@ -181,9 +181,9 @@ public class AdapterRepairsList extends BaseAdapter {
 
                                             if (link == null) {
                                                 Toast.makeText(act, "Note link not found", Toast.LENGTH_SHORT).show();
-                                                add_note(reference, key);
+                                                add_link(act,reference.child(key).child("note"));
                                             } else {
-                                                browse(link);
+                                                browse(act,link);
                                             }
                                         }
                                     }
@@ -200,7 +200,7 @@ public class AdapterRepairsList extends BaseAdapter {
         return view;
     }
 
-    public void browse(String link) {
+    public static void browse(Activity act,String link) {
         try {
             if (!link.startsWith("http")) {
                 link = "https://" + link;
@@ -214,7 +214,7 @@ public class AdapterRepairsList extends BaseAdapter {
         }
     }
 
-    public void add_note(DatabaseReference reference, String key) {
+    public static void add_link(Activity act,DatabaseReference reference) {
         View view_ = act.getLayoutInflater().inflate(R.layout.alert_note, null);
         EditText link_ = view_.findViewById(R.id.effects_list);
 
@@ -230,8 +230,8 @@ public class AdapterRepairsList extends BaseAdapter {
                             return;
                         }
 
-                        reference.child(key).child("note").setValue(link);
-                        browse(link);
+                        reference.setValue(link);
+                        browse(act,link);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {

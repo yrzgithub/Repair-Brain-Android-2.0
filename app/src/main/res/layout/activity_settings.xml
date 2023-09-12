@@ -15,7 +15,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
         android:text="@string/login"
         android:textColor="#00DEFF"
         android:textSize="20sp"
@@ -25,7 +24,7 @@
         android:id="@+id/login_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp">
 
         <TextView
@@ -50,17 +49,31 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/del_acc"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/delete_acc"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
-        android:text="@string/delete_account"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp">
+
+        <TextView
+            android:id="@+id/del_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/delete_account"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/delete_icon"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -77,6 +90,49 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
+        android:text="@string/playlist"
+        android:textColor="#00DEFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/change_link"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:layout_gravity="start"
+        android:gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/set_link"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#FF00DD" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/notifications"
         android:textColor="#00DEFF"
         android:textSize="20sp"
@@ -86,7 +142,7 @@
         android:id="@+id/notification_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp">
 
         <TextView
@@ -114,7 +170,7 @@
         android:id="@+id/time_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp">
 
         <TextView

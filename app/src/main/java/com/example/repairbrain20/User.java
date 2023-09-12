@@ -134,6 +134,14 @@ public class User implements OnCompleteListener<AuthResult> {
         return null;
     }
 
+    public static DatabaseReference getPlaylistReference()
+    {
+        if (User.uid != null) {
+            return database.getReference().child(User.uid).child("playlist");
+        }
+        return null;
+    }
+
     public boolean use_username() {
         return use_username;
     }
