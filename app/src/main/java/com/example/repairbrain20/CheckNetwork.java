@@ -30,14 +30,9 @@ public class CheckNetwork extends ConnectivityManager.NetworkCallback {
         }
     }
 
-    public static boolean isAvailable(Activity act, View view) {
+    public static boolean isAvailable(Activity act) {
         ConnectivityManager cm = (ConnectivityManager) act.getSystemService(ConnectivityManager.class);
         Network active = cm.getActiveNetwork();
-
-        if (active == null) {
-            Snackbar bar = Snackbar.make(view, "Network Not Available", BaseTransientBottomBar.LENGTH_INDEFINITE);
-            bar.show();
-        }
 
         return active != null;
     }

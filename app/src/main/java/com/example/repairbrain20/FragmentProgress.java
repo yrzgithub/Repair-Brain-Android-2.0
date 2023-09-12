@@ -74,11 +74,30 @@ public class FragmentProgress extends Fragment {
                 .load(R.drawable.loading_pink_list)
                 .into(loading);
 
-        lastly_relapse.setSelected(true);
-        next_step.setSelected(true);
-        pos_effect.setSelected(true);
-        neg_effect.setSelected(true);
-
+        lastly_relapse.post(new Runnable() {
+            @Override
+            public void run() {
+                lastly_relapse.setSelected(true);
+            }
+        });
+        next_step.post(new Runnable() {
+            @Override
+            public void run() {
+                next_step.setSelected(true);
+            }
+        });
+        pos_effect.post(new Runnable() {
+            @Override
+            public void run() {
+                pos_effect.setSelected(true);
+            }
+        });
+        neg_effect.post(new Runnable() {
+            @Override
+            public void run() {
+                neg_effect.setSelected(true);
+            }
+        });
 
         DatabaseReference reference = User.getRepairReference();
 

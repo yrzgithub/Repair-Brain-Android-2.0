@@ -40,6 +40,12 @@ public class ActHome extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ask = findViewById(R.id.ask);
+        ask.post(new Runnable() {
+            @Override
+            public void run() {
+                ask.setSelected(true);
+            }
+        });
 
         free_button = findViewById(R.id.free_image);
         hand_cuffed_button = findViewById(R.id.hand_cuffed_image);

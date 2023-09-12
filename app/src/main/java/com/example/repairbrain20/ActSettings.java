@@ -129,6 +129,12 @@ public class ActSettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(!CheckNetwork.isAvailable(ActSettings.this))
+                {
+                    Toast.makeText(ActSettings.this,"Network not Available",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 new AlertDialog.Builder(ActSettings.this)
                         .setIcon(R.drawable.icon_app)
                         .setTitle(R.string.app_name)

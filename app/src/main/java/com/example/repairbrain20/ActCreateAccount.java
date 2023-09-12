@@ -54,7 +54,12 @@ public class ActCreateAccount extends AppCompatActivity {
                 });
 
         TextView title_view = findViewById(R.id.sign_in_to_repair_brain);
-        title_view.setSelected(true);
+        title_view.post(new Runnable() {
+            @Override
+            public void run() {
+                title_view.setSelected(true);
+            }
+        });
 
         firstname_view = findViewById(R.id.first_name);
         lastname_view = findViewById(R.id.last_name);

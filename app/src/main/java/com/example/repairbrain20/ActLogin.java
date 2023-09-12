@@ -55,7 +55,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         AppSettings settings = new AppSettings(this);
-        settings.schedule_alarm();
+        //settings.schedule_alarm();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
@@ -85,7 +85,12 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         login_btn = findViewById(R.id.login);
         google_btn = findViewById(R.id.login_with_google);
 
-        topic.setSelected(true);
+        topic.post(new Runnable() {
+            @Override
+            public void run() {
+                topic.setSelected(true);
+            }
+        });
 
         topic.setOnClickListener(this);
         forget_password_text.setOnClickListener(this);
