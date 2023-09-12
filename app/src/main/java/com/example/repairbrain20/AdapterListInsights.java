@@ -101,7 +101,7 @@ public class AdapterListInsights extends BaseAdapter {
             snack.show();
         }
 
-        delete_reference = User.getMainReference();
+        delete_reference = User.getInsightsReference();
     }
 
     @Override
@@ -218,7 +218,7 @@ public class AdapterListInsights extends BaseAdapter {
                                         return;
                                     }
 
-                                    DatabaseReference reference = User.getMainReference();
+                                    DatabaseReference reference = User.getInsightsReference();
 
                                     if (reference != null) {
 
@@ -226,7 +226,6 @@ public class AdapterListInsights extends BaseAdapter {
                                         snack.show();
 
                                         reference
-                                                .child("insights")
                                                 .child(key_insight)
                                                 .setValue(new Insight(source_, link_))
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -261,7 +260,7 @@ public class AdapterListInsights extends BaseAdapter {
                 public void onClick(View view) {
                     if (delete_reference != null) {
                         if (snack != null) snack.show();
-                        delete_reference.child("insights").child(key_insight).removeValue(new DatabaseReference.CompletionListener() {
+                        delete_reference.child(key_insight).removeValue(new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 if (snack != null) snack.dismiss();

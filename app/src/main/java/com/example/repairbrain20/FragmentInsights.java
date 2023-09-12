@@ -77,10 +77,9 @@ public class FragmentInsights extends Fragment {
 
         Glide.with(this).load(R.drawable.loading_pink_list).into(no_results);
 
-        DatabaseReference reference = User.getMainReference();
+        DatabaseReference reference = User.getInsightsReference();
         if (reference != null) {
             reference
-                    .child("insights")
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -188,13 +187,14 @@ public class FragmentInsights extends Fragment {
                                     return;
                                 }
 
-                                if (reference != null) {
+                                DatabaseReference insight_ref = User.getInsightsReference();
+
+                                if (insight_ref != null) {
 
                                     Snackbar snack = Snackbar.make(FragmentInsights.this.view, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);
                                     snack.show();
 
-                                    reference
-                                            .child("insights")
+                                    insight_ref
                                             .child(name_)
                                             .setValue(new Insight(source_, link_))
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -220,8 +220,9 @@ public class FragmentInsights extends Fragment {
                 break;
 
             case R.id.reset:
-                if (reference != null) {
-                    reference.child("insights")
+                DatabaseReference insights_ref = User.getInsightsReference();
+                if (insights_ref != null) {
+                    insights_ref
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {

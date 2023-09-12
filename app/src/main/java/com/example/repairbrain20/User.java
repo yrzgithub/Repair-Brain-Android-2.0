@@ -121,9 +121,16 @@ public class User implements OnCompleteListener<AuthResult> {
     public static DatabaseReference getMainReference() {
         if (User.uid != null) {
             Log.e("userid", User.uid);
-            return database.getReference().child(User.uid);
+            return database.getReference().child(User.uid).child("repairs");
         }
+        return null;
+    }
 
+    public static DatabaseReference getInsightsReference()
+    {
+        if (User.uid != null) {
+            return database.getReference().child(User.uid).child("insights");
+        }
         return null;
     }
 
