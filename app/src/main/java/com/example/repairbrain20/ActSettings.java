@@ -1,5 +1,8 @@
 package com.example.repairbrain20;
 
+import static com.example.repairbrain20.AdapterRepairsList.add_link;
+import static com.example.repairbrain20.AdapterRepairsList.browse;
+
 import android.Manifest;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,14 +33,18 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.Calendar;
 
 public class ActSettings extends AppCompatActivity {
 
-    RelativeLayout auto_login, notification, time_rel;
+    RelativeLayout time_rel;
     SwitchCompat auto_login_switch, notification_switch;
-    TextView delete, time;
+    ImageView change_link,set_link;
+    TextView time;
+    ImageView delete;
     LinearLayout main;
     int NOTIFICATION_REQUEST = 102;
 
@@ -49,8 +57,6 @@ public class ActSettings extends AppCompatActivity {
 
         main = findViewById(R.id.main);
 
-        auto_login = findViewById(R.id.login_rel);
-        notification = findViewById(R.id.notification_rel);
         time_rel = findViewById(R.id.time_rel);
 
         time = findViewById(R.id.notify_time_txt);
@@ -59,15 +65,34 @@ public class ActSettings extends AppCompatActivity {
         notification_switch = findViewById(R.id.notify_switch);
 
         delete = findViewById(R.id.del_acc);
+        change_link = findViewById(R.id.change_link);
+        set_link = findViewById(R.id.set_link);
 
         auto_login_switch.setChecked(settings.isAuto_login());
         notification_switch.setChecked(settings.isShow_notification());
 
         setTime(settings);
-        auto_login.setOnClickListener(new View.OnClickListener() {
+
+        change_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                auto_login_switch.setChecked(!auto_login_switch.isChecked());
+
+            }
+        });
+
+        set_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference playlist_reference = User.getPlaylistReference();
+                add_link(ActSettings.this,playlist_reference);
+            }
+        });
+
+        change_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseReference playlist_reference = User.getPlaylistReference();
+                add_link(ActSettings.this,playlist_reference);
             }
         });
 
