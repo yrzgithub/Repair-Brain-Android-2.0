@@ -42,6 +42,13 @@ public class ActEvolution extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        network_check = new CheckNetwork(this, pager);
+        network_check.register();
+        super.onRestart();
+    }
+
+    @Override
     protected void onResume() {
         network_check.register();
         super.onResume();

@@ -67,9 +67,9 @@
 
         <ImageView
             android:id="@+id/del_acc"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/delete_icon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/delete_account"
             android:layout_marginEnd="10dp"
             android:layout_alignParentEnd="true"/>
 
@@ -112,37 +112,10 @@
 
         <ImageView
             android:id="@+id/set_link"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/set_link"
-            android:layout_marginEnd="5dp"
-            android:layout_alignParentEnd="true"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:layout_gravity="start"
-            android:gravity="center"
-            android:text="@string/change_link"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/change_link"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/change_link"
             android:layout_marginEnd="5dp"
             android:layout_alignParentEnd="true"/>
 

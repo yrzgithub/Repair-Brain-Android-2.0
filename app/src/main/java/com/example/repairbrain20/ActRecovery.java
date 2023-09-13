@@ -111,6 +111,14 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
+    protected void onRestart() {
+        network_check = new CheckNetwork(this, pager);
+        network_check.register();
+        if(drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT,true);
+        super.onRestart();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
     }
@@ -141,7 +149,13 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.update:
-                if (drawer.isDrawerOpen(Gravity.RIGHT)) drawer.closeDrawer(Gravity.RIGHT, true);
+                if (drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT, true);
+
+                if(!CheckNetwork.isAvailable(this))
+                {
+                    Toast.makeText(this,"Network not available",Toast.LENGTH_SHORT).show();
+                    break;
+                }
 
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 

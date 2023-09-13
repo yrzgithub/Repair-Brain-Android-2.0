@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayout;
 public class ActJourney extends AppCompatActivity {
 
     CheckNetwork check;
+    ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +18,7 @@ public class ActJourney extends AppCompatActivity {
         setContentView(R.layout.activity_act_journey);
 
         TabLayout tabs = findViewById(R.id.tabs);
-        ViewPager pager = findViewById(R.id.view_pager);
+        pager = findViewById(R.id.view_pager);
 
         check = new CheckNetwork(this, pager);
 
@@ -28,6 +29,13 @@ public class ActJourney extends AppCompatActivity {
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
 
+    }
+
+    @Override
+    protected void onRestart() {
+        check = new CheckNetwork(this, pager);
+        check.register();
+        super.onRestart();
     }
 
     @Override

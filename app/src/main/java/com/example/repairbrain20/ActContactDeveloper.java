@@ -3,6 +3,7 @@ package com.example.repairbrain20;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class ActContactDeveloper extends AppCompatActivity {
 
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("contact");
+    CheckNetwork check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,10 @@ public class ActContactDeveloper extends AppCompatActivity {
 
         ListView list = findViewById(R.id.list);
         ImageView loading = findViewById(R.id.loading);
+
+        LinearLayout main = findViewById(R.id.main);
+
+        check = new CheckNetwork(this,main);
 
         Glide.with(this).load(R.drawable.loading_pink_list).into(loading);
 
@@ -56,5 +62,17 @@ public class ActContactDeveloper extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        check.register();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        check.unregister();
+        super.onPause();
     }
 }

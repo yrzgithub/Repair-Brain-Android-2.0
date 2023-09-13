@@ -55,7 +55,7 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         AppSettings settings = new AppSettings(this);
-        //settings.schedule_alarm();
+        settings.schedule_alarm();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();

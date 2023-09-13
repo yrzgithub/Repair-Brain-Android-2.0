@@ -43,10 +43,11 @@ public class ActSettings extends AppCompatActivity {
 
     RelativeLayout time_rel;
     SwitchCompat auto_login_switch, notification_switch;
-    ImageView change_link,set_link;
+    ImageView set_link;
     TextView time;
     ImageView delete;
     LinearLayout main;
+    CheckNetwork net;
     int NOTIFICATION_REQUEST = 102;
 
     @Override
@@ -58,6 +59,8 @@ public class ActSettings extends AppCompatActivity {
 
         main = findViewById(R.id.main);
 
+        net = new CheckNetwork(this,main);
+
         time_rel = findViewById(R.id.time_rel);
 
         time = findViewById(R.id.notify_time_txt);
@@ -66,7 +69,6 @@ public class ActSettings extends AppCompatActivity {
         notification_switch = findViewById(R.id.notify_switch);
 
         delete = findViewById(R.id.del_acc);
-        change_link = findViewById(R.id.change_link);
         set_link = findViewById(R.id.set_link);
 
         auto_login_switch.setChecked(settings.isAuto_login());
@@ -74,22 +76,7 @@ public class ActSettings extends AppCompatActivity {
 
         setTime(settings);
 
-        change_link.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         set_link.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatabaseReference playlist_reference = User.getPlaylistReference();
-                add_link(ActSettings.this,playlist_reference);
-            }
-        });
-
-        change_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseReference playlist_reference = User.getPlaylistReference();
@@ -204,5 +191,17 @@ public class ActSettings extends AppCompatActivity {
             time = String.format("%02d:%02d %s", hour, minute, "AM");
         }
         this.time.setText(time);
+    }
+
+    @Override
+    protected void onPause() {
+        net.unregister();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        net.register();
+        super.onResume();
     }
 }
