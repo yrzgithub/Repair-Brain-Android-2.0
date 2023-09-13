@@ -22,6 +22,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -114,7 +116,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
     protected void onRestart() {
         network_check = new CheckNetwork(this, pager);
         network_check.register();
-        if(drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT,true);
+        //if(drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT,true);
         super.onRestart();
     }
 
@@ -134,8 +136,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.recovery:
-                intent = new Intent(this, ActRecovery.class);
-                startActivity(intent);
+                if(drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT,true);
                 break;
 
             case R.id.effects:
@@ -225,8 +226,32 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
     }
 
     public void open_github() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("https://github.com/yrzgithub/Repair-Brain-Android-3.0"));
-        startActivity(intent);
+
+        if(CheckNetwork.isAvailable(this))
+        {
+            Toast.makeText(this,"Network not Available",Toast.LENGTH_SHORT).show();
+        }
+
+        Snackbar bar = Snackbar.make(pager,"Redirecting", BaseTransientBottomBar.LENGTH_INDEFINITE);
+        bar.show();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("about")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+
+                        bar.dismiss();
+
+                        if(task.isSuccessful())
+                        {
+                            String link = task.getResult().getValue(String.class);
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse(link));
+                            startActivity(intent);
+                        }
+                    }
+                });
     }
 }
