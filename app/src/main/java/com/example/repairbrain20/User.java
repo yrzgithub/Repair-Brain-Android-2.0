@@ -126,16 +126,14 @@ public class User implements OnCompleteListener<AuthResult> {
         return null;
     }
 
-    public static DatabaseReference getInsightsReference()
-    {
+    public static DatabaseReference getInsightsReference() {
         if (User.uid != null) {
             return database.getReference().child(User.uid).child("insights");
         }
         return null;
     }
 
-    public static DatabaseReference getPlaylistReference()
-    {
+    public static DatabaseReference getPlaylistReference() {
         if (User.uid != null) {
             return database.getReference().child(User.uid).child("playlist");
         }

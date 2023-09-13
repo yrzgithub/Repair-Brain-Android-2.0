@@ -249,9 +249,9 @@ public class FragmentInsights extends Fragment {
 
                                     if (link == null) {
                                         Toast.makeText(activity, "Note link not found", Toast.LENGTH_SHORT).show();
-                                        add_link(activity,playlist_reference);
+                                        add_link(activity, playlist_reference);
                                     } else {
-                                        browse(activity,link);
+                                        browse(activity, link);
                                     }
                                 }
                             }

@@ -34,7 +34,7 @@ public class ActContactDeveloper extends AppCompatActivity {
 
         LinearLayout main = findViewById(R.id.main);
 
-        check = new CheckNetwork(this,main);
+        check = new CheckNetwork(this, main);
 
         Glide.with(this).load(R.drawable.loading_pink_list).into(loading);
 

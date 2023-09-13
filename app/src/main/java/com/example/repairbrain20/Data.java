@@ -422,8 +422,8 @@ class DaysDifference {
     }
 
     public long getDifference() {
-        LocalDateTime started = LocalDateTime.of(started_at.getYear(), started_at.getMonth(), started_at.getDay(),0,0);
-        return Duration.between(started,LocalDateTime.now()).toDays();
+        LocalDateTime started = LocalDateTime.of(started_at.getYear(), started_at.getMonth(), started_at.getDay(), 0, 0);
+        return Duration.between(started, LocalDateTime.now()).toDays();
     }
 
     public Time getStarted_at() {

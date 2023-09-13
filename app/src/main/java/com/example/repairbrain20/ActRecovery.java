@@ -137,7 +137,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.recovery:
-                if(drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT,true);
+                if (drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT, true);
                 break;
 
             case R.id.effects:
@@ -153,9 +153,8 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
             case R.id.update:
                 if (drawer.isDrawerOpen(Gravity.LEFT)) drawer.closeDrawer(Gravity.LEFT, true);
 
-                if(!CheckNetwork.isAvailable(this))
-                {
-                    Toast.makeText(this,"Network not available",Toast.LENGTH_SHORT).show();
+                if (!CheckNetwork.isAvailable(this)) {
+                    Toast.makeText(this, "Network not available", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
@@ -228,12 +227,12 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
 
     public void open_github() {
 
-        if(!CheckNetwork.isAvailable(this))
-        {
-            Toast.makeText(this,"Network not Available",Toast.LENGTH_SHORT).show();
+        if (!CheckNetwork.isAvailable(this)) {
+            Toast.makeText(this, "Network not Available", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        Snackbar bar = Snackbar.make(pager,"Redirecting", BaseTransientBottomBar.LENGTH_INDEFINITE);
+        Snackbar bar = Snackbar.make(pager, "Redirecting", BaseTransientBottomBar.LENGTH_INDEFINITE);
         bar.show();
 
         FirebaseDatabase.getInstance().getReference()
@@ -245,16 +244,13 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
 
                         bar.dismiss();
 
-                        if(task.isSuccessful())
-                        {
+                        if (task.isSuccessful()) {
                             String link = task.getResult().getValue(String.class);
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setData(Uri.parse(link));
                             startActivity(intent);
-                        }
-                        else
-                        {
-                            Log.e("about_app",task.getException().getMessage());
+                        } else {
+                            Log.e("about_app", task.getException().getMessage());
                         }
                     }
                 });

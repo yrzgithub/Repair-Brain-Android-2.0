@@ -1,7 +1,6 @@
 package com.example.repairbrain20;
 
 import static com.example.repairbrain20.AdapterRepairsList.add_link;
-import static com.example.repairbrain20.AdapterRepairsList.browse;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
@@ -34,7 +33,6 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.Calendar;
@@ -59,7 +57,7 @@ public class ActSettings extends AppCompatActivity {
 
         main = findViewById(R.id.main);
 
-        net = new CheckNetwork(this,main);
+        net = new CheckNetwork(this, main);
 
         time_rel = findViewById(R.id.time_rel);
 
@@ -80,7 +78,7 @@ public class ActSettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DatabaseReference playlist_reference = User.getPlaylistReference();
-                add_link(ActSettings.this,playlist_reference);
+                add_link(ActSettings.this, playlist_reference);
             }
         });
 
@@ -117,9 +115,8 @@ public class ActSettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(!CheckNetwork.isAvailable(ActSettings.this))
-                {
-                    Toast.makeText(ActSettings.this,"Network not Available",Toast.LENGTH_SHORT).show();
+                if (!CheckNetwork.isAvailable(ActSettings.this)) {
+                    Toast.makeText(ActSettings.this, "Network not Available", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -143,7 +140,7 @@ public class ActSettings extends AppCompatActivity {
                                                 snackbar.dismiss();
                                                 Toast.makeText(ActSettings.this, "Account Deleted", Toast.LENGTH_LONG).show();
                                                 settings.setAuto_login(false);
-                                                SharedPreferences preferences = ActSettings.this.getSharedPreferences("login_data",MODE_PRIVATE);
+                                                SharedPreferences preferences = ActSettings.this.getSharedPreferences("login_data", MODE_PRIVATE);
                                                 preferences.edit().clear().apply();
                                                 startActivity(new Intent(ActSettings.this, ActLogin.class));
                                             }

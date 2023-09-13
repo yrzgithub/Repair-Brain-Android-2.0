@@ -9,7 +9,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 public class CheckNetwork extends ConnectivityManager.NetworkCallback {

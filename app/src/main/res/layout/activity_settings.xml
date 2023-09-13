@@ -41,16 +41,15 @@
             android:id="@+id/auto_login_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"
             android:contentDescription="@string/none"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/delete_acc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -69,9 +68,9 @@
             android:id="@+id/del_acc"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:src="@drawable/delete_account"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
-            android:layout_alignParentEnd="true"/>
+            android:src="@drawable/delete_account" />
 
     </RelativeLayout>
 
@@ -114,10 +113,10 @@
             android:id="@+id/set_link"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
-            android:src="@drawable/set_link"
             android:layout_marginEnd="5dp"
-            android:layout_alignParentEnd="true"/>
+            android:src="@drawable/set_link" />
 
     </RelativeLayout>
 
@@ -141,7 +140,6 @@
         android:textStyle="bold" />
 
     <RelativeLayout
-        android:id="@+id/notification_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

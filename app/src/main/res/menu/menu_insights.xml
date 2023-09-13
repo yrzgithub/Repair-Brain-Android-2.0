@@ -7,9 +7,10 @@
         android:title="@string/add"
         app:showAsAction="ifRoom" />
 
-    <item android:id="@+id/playlist"
+    <item
+        android:id="@+id/playlist"
         android:title="@string/playlist"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/delete"
