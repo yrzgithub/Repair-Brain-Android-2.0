@@ -67,8 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:accessibilityHeading="true"
-                android:accessibilityLiveRegion="polite"
-                android:accessibilityPaneTitle="Enter your username or email"
                 android:allowUndo="true"
                 android:autoSizeStepGranularity="2sp"
                 android:autoSizeTextType="uniform"

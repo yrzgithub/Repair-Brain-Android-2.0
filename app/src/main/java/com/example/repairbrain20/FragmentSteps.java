@@ -227,6 +227,11 @@ public class FragmentSteps extends Fragment {
                                     return;
                                 }
 
+                                if (!Data.isValidKey(step)) {
+                                    Toast.makeText(FragmentSteps.this.activity, "Invalid step name", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
                                 if (!source_name_.isEmpty() && link_.isEmpty()) {
                                     Toast.makeText(FragmentSteps.this.activity, "Please paste the link", Toast.LENGTH_SHORT).show();
                                     return;
@@ -234,11 +239,6 @@ public class FragmentSteps extends Fragment {
 
                                 if (!source_name_.isEmpty() && !isValidLink(link_)) {
                                     Toast.makeText(FragmentSteps.this.activity, "Invalid source link", Toast.LENGTH_LONG).show();
-                                    return;
-                                }
-
-                                if (!Data.isValidKey(step)) {
-                                    Toast.makeText(FragmentSteps.this.activity, "Invalid source name", Toast.LENGTH_LONG).show();
                                     return;
                                 }
 

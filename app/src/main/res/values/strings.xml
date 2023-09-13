@@ -15,7 +15,7 @@
     <string name="habit">Habit</string>
     <string name="not_found">...</string>
     <string name="steps">Steps</string>
-    <string name="username_or_e_mail">E-mail</string>
+    <string name="username_or_e_mail">Username or E-mail</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="craete_account">Create Account</string>

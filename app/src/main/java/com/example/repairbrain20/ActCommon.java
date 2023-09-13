@@ -175,6 +175,7 @@ public class ActCommon extends AppCompatActivity {
                                     bar.show();
 
                                     common_reference.child("suggestions/" + type)
+                                            .child(User.getUid())
                                             .child(name_)
                                             .setValue(common)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -200,7 +201,7 @@ public class ActCommon extends AppCompatActivity {
 
             case R.id.request:
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                reference.child("requests").child(User.selected_addiction).child(type).setValue(User.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                reference.child("requests").child(type).push().setValue(User.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(ActCommon.this, "Request submitted", Toast.LENGTH_SHORT).show();

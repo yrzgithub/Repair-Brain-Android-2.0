@@ -164,9 +164,9 @@ public class FragmentInsights extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                String name_ = name.getText().toString();
-                                String source_ = source.getText().toString();
-                                String link_ = link.getText().toString();
+                                String name_ = name.getText().toString().trim();
+                                String source_ = source.getText().toString().trim();
+                                String link_ = link.getText().toString().trim();
 
                                 if (name_.isEmpty()) {
                                     Toast.makeText(FragmentInsights.this.activity, "Insight cannot be empty", Toast.LENGTH_SHORT).show();

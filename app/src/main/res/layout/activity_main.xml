@@ -26,7 +26,12 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:scrollHorizontally="true" />
 
     <LinearLayout
         android:layout_width="match_parent"

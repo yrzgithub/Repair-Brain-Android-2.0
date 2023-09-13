@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -154,6 +155,9 @@ public class ActSettings extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 snackbar.dismiss();
                                                 Toast.makeText(ActSettings.this, "Account Deleted", Toast.LENGTH_LONG).show();
+                                                settings.setAuto_login(false);
+                                                SharedPreferences preferences = ActSettings.this.getSharedPreferences("login_data",MODE_PRIVATE);
+                                                preferences.edit().clear().apply();
                                                 startActivity(new Intent(ActSettings.this, ActLogin.class));
                                             }
                                         }

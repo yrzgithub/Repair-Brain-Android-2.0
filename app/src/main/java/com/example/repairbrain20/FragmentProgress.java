@@ -174,9 +174,6 @@ public class FragmentProgress extends Fragment {
                                         long minutes = duration.toMinutes() % 60;
                                         long seconds = duration.getSeconds() % 60;
 
-                                        int hrs = (int) hours;
-                                        hrs_left.setText(String.format("%02d", 24 - hrs));
-
                                         String format = "%d days %d hrs %d mins %d secs";
                                         String time = String.format(format, days, hours, minutes, seconds);
 

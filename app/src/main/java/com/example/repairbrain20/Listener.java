@@ -139,7 +139,7 @@ public class Listener {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String effect_new = search.getText().toString().trim();
 
-                        if (effect_new.trim().isEmpty()) {
+                        if (effect_new.trim().isEmpty() || !Data.isValidKey(effect_new)) {
                             Toast.makeText(act.getApplicationContext(), "Invalid " + type.replace("_", " ").substring(0, type.length() - 1), Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -150,11 +150,6 @@ public class Listener {
                         String date_added = date_time.format(formatter);
 
                         DatabaseReference reference = User.getRepairReference();
-
-                        if (!Data.isValidKey(effect_new)) {
-                            Toast.makeText(act, "Invalid effect name", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
 
                         if (reference != null) {
                             Snackbar bar = Snackbar.make(list, "Adding", BaseTransientBottomBar.LENGTH_INDEFINITE);

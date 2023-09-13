@@ -204,6 +204,12 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                     break;
                 }
 
+                if(!CheckNetwork.isAvailable(ActLogin.this))
+                {
+                    Toast.makeText(ActLogin.this,"Network not available",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 User user = new User(this, username_or_email, password);
                 if (user.use_username()) {
                     user.login_with_username();
