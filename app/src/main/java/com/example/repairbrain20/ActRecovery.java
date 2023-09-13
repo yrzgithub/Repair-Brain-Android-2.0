@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -227,7 +228,7 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
 
     public void open_github() {
 
-        if(CheckNetwork.isAvailable(this))
+        if(!CheckNetwork.isAvailable(this))
         {
             Toast.makeText(this,"Network not Available",Toast.LENGTH_SHORT).show();
         }
@@ -250,6 +251,10 @@ public class ActRecovery extends AppCompatActivity implements View.OnClickListen
                             Intent intent = new Intent(Intent.ACTION_VIEW);
                             intent.setData(Uri.parse(link));
                             startActivity(intent);
+                        }
+                        else
+                        {
+                            Log.e("about_app",task.getException().getMessage());
                         }
                     }
                 });
