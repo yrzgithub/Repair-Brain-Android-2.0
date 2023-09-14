@@ -57,7 +57,7 @@ https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/fc392c17-d
     18. Set repeat notification in the settings.
 
 
-# prerequisites
+# Prerequisites
 
     1. Android Version 10 or Above
     2. Progress bar may not appear fully in the progress tab for small size displays.
