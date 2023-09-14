@@ -35,7 +35,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     .setContentTitle(context.getResources().getString(R.string.app_name))
                     .setSmallIcon(R.drawable.icon_app)
                     .setAutoCancel(true)
-                    .setContentText("Are you free?")
+                    .setContentText("Repaired or Impaired?")
                     .setContentIntent(open_pending)
                     .setPriority(NotificationManager.IMPORTANCE_DEFAULT);
 
