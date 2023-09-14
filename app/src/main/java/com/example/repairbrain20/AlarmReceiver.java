@@ -50,5 +50,4 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager) context.getSystemService(NotificationManager.class);
         manager.createNotificationChannel(channel);
     }
-
 }

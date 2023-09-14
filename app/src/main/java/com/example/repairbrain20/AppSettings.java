@@ -6,8 +6,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AppSettings {
     final int ALARM_REQUEST_CODE = 100;
@@ -54,6 +57,7 @@ public class AppSettings {
     }
 
     public void schedule_alarm() {
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, getHour());
@@ -67,14 +71,18 @@ public class AppSettings {
         }
 
         manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
+
+        Log.e("sanjay_alarm","Alarm Scheduled");
     }
 
     public void cancel_alarm() {
         if (manager == null || alarm_pending == null) {
             return;
         }
-
+        setShow_notification(false);
         manager.cancel(alarm_pending);
+
+        Log.e("sanjay_alarm","Alarm cancelled");
     }
 
     public SharedPreferences getSharedPreference() {

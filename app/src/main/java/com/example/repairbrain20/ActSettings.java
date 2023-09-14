@@ -1,5 +1,6 @@
 package com.example.repairbrain20;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.example.repairbrain20.AdapterRepairsList.add_link;
 
 import android.Manifest;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -22,10 +24,12 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.PermissionChecker;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +39,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import java.security.Permission;
+import java.security.Permissions;
 import java.util.Calendar;
 
 public class ActSettings extends AppCompatActivity {
@@ -46,14 +52,15 @@ public class ActSettings extends AppCompatActivity {
     ImageView delete;
     LinearLayout main;
     CheckNetwork net;
-    int NOTIFICATION_REQUEST = 102;
+    AppSettings settings;
+    static int NOTIFICATION_REQUEST = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        AppSettings settings = new AppSettings(this);
+        settings = new AppSettings(this);
 
         main = findViewById(R.id.main);
 
@@ -92,22 +99,27 @@ public class ActSettings extends AppCompatActivity {
         notification_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!b) {
-                    settings.cancel_alarm();
-                }
 
-                if (b && ActivityCompat.checkSelfPermission(ActSettings.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (b && ActivityCompat.checkSelfPermission(ActSettings.this, Manifest.permission.POST_NOTIFICATIONS) != PERMISSION_GRANTED) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                    {
                         requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_REQUEST);
-                    } else {
+                    }
+                    else {
                         Toast.makeText(ActSettings.this, "Allow notifications", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        intent.setData(Uri.parse(getPackageName()));
-                        startActivity(intent);
                     }
                 }
-                settings.setShow_notification(b);
+                else if(b)
+                {
+                    settings.setShow_notification(true);
+                    settings.schedule_alarm();
+                }
+                else
+                {
+                    settings.setShow_notification(false);
+                    settings.cancel_alarm();
+                }
             }
         });
 
@@ -169,7 +181,11 @@ public class ActSettings extends AppCompatActivity {
                         settings.setMinute(minute);
                         setTime(settings);
 
-                        settings.schedule_alarm();
+                        Log.e("sanjay_alarm",String.valueOf(settings.isShow_notification()));
+
+                        if(settings.isShow_notification()) {
+                            settings.schedule_alarm();
+                        }
                     }
                 }, hour, minute, false).show();
             }
@@ -200,5 +216,24 @@ public class ActSettings extends AppCompatActivity {
     protected void onResume() {
         net.register();
         super.onResume();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if(requestCode==ActSettings.NOTIFICATION_REQUEST)
+        {
+            if(permissions.length<1) return;
+            String permission_name = permissions[0];
+            int result = grantResults[0];
+
+            if(permission_name.equals(Manifest.permission.POST_NOTIFICATIONS) && result==PackageManager.PERMISSION_GRANTED)
+            {
+                settings.setShow_notification(true);
+                notification_switch.setChecked(true);
+                settings.schedule_alarm();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
