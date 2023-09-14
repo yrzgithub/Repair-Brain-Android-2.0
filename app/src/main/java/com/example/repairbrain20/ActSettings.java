@@ -9,10 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -24,12 +22,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.PermissionChecker;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,12 +35,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
-import java.security.Permission;
-import java.security.Permissions;
 import java.util.Calendar;
 
 public class ActSettings extends AppCompatActivity {
 
+    static int NOTIFICATION_REQUEST = 102;
     RelativeLayout time_rel;
     SwitchCompat auto_login_switch, notification_switch;
     ImageView set_link;
@@ -53,7 +48,6 @@ public class ActSettings extends AppCompatActivity {
     LinearLayout main;
     CheckNetwork net;
     AppSettings settings;
-    static int NOTIFICATION_REQUEST = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,26 +94,26 @@ public class ActSettings extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-                if (b && ActivityCompat.checkSelfPermission(ActSettings.this, Manifest.permission.POST_NOTIFICATIONS) != PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(ActSettings.this, Manifest.permission.POST_NOTIFICATIONS) != PERMISSION_GRANTED) {
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_REQUEST);
-                    }
-                    else {
+                    } else {
                         Toast.makeText(ActSettings.this, "Allow notifications", Toast.LENGTH_SHORT).show();
                     }
+                    return;
                 }
-                else if(b)
-                {
-                    settings.setShow_notification(true);
+
+                settings.setShow_notification(b);
+
+                if (b) {
                     settings.schedule_alarm();
-                }
-                else
-                {
-                    settings.setShow_notification(false);
+                } else {
                     settings.cancel_alarm();
                 }
+
+                Log.e("sanjay_alarm", String.valueOf(settings.isShow_notification()));
+
             }
         });
 
@@ -181,9 +175,9 @@ public class ActSettings extends AppCompatActivity {
                         settings.setMinute(minute);
                         setTime(settings);
 
-                        Log.e("sanjay_alarm",String.valueOf(settings.isShow_notification()));
+                        Log.e("sanjay_alarm", String.valueOf(settings.isShow_notification()));
 
-                        if(settings.isShow_notification()) {
+                        if (settings.isShow_notification()) {
                             settings.schedule_alarm();
                         }
                     }
@@ -221,14 +215,12 @@ public class ActSettings extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if(requestCode==ActSettings.NOTIFICATION_REQUEST)
-        {
-            if(permissions.length<1) return;
+        if (requestCode == ActSettings.NOTIFICATION_REQUEST) {
+            if (permissions.length < 1) return;
             String permission_name = permissions[0];
             int result = grantResults[0];
 
-            if(permission_name.equals(Manifest.permission.POST_NOTIFICATIONS) && result==PackageManager.PERMISSION_GRANTED)
-            {
+            if (permission_name.equals(Manifest.permission.POST_NOTIFICATIONS) && result == PackageManager.PERMISSION_GRANTED) {
                 settings.setShow_notification(true);
                 notification_switch.setChecked(true);
                 settings.schedule_alarm();

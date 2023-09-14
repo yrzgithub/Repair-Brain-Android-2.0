@@ -7,10 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 public class AppSettings {
     final int ALARM_REQUEST_CODE = 100;
@@ -46,7 +44,7 @@ public class AppSettings {
         editor = preferences.edit();
 
         auto_login = preferences.getBoolean("auto_login", false);
-        show_notification = preferences.getBoolean("show_notification", true);
+        show_notification = preferences.getBoolean("show_notification", false);
         hour = preferences.getInt("hour", 7);
         minute = preferences.getInt("minute", 0);
 
@@ -72,17 +70,16 @@ public class AppSettings {
 
         manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarm_pending);
 
-        Log.e("sanjay_alarm","Alarm Scheduled");
+        Log.e("sanjay_alarm", "Alarm Scheduled");
     }
 
     public void cancel_alarm() {
         if (manager == null || alarm_pending == null) {
             return;
         }
-        setShow_notification(false);
         manager.cancel(alarm_pending);
 
-        Log.e("sanjay_alarm","Alarm cancelled");
+        Log.e("sanjay_alarm", "Alarm cancelled");
     }
 
     public SharedPreferences getSharedPreference() {
