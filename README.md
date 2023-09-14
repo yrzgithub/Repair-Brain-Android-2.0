@@ -32,7 +32,7 @@ https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/fc392c17-d
     * Add your Practices and Select the days which you want to follow.
     * Note your Changes, Challenges and Steps.
     * View Data of your Relapses.
-    * Identify common repairs,triggers,steps etc...
+    * Identify common repairs, triggers, steps etc...
 
     
 # Usage
