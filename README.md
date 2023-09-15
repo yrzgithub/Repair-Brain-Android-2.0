@@ -110,11 +110,7 @@ https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/fc392c17-d
 
 ### Distributers
     Amazon App Store
-    F-Droid
-    Aptoide
-    Slideme
-    AppBrain
-
+    APK Mirror
 
 # Developer Contact 
 
