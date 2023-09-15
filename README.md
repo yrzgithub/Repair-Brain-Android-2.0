@@ -3,6 +3,9 @@
     Repair Brain 2.0 is an Android App developed to help people in upgrading themselves in terms of Physical, Mental, Emotional and Spiritual Levels.
 
 
+https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/bcc338c8-2a6d-46be-9e42-d6b9266156c8
+
+
 # Defnitions 
 
      Repairs    - Addictions, Compulsions, Delusions or anything which you feel uncomfortable within yourself.
@@ -31,12 +34,10 @@
     * Add your Practices and Select the days which you want to follow.
     * Note your Changes, Challenges and Steps.
     * View Data of your Relapses.
-    * Identify common repairs,triggers,steps etc...
+    * Identify common repairs, triggers, steps etc...
 
     
 # Usage
-
-![ceate account](https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/a0416f54-8f48-48ef-9b2a-503c3d1e53a3)
 
     1.  Create an Account and Verify your E-mail.
     2.  Login with E-mail or Google.
@@ -53,6 +54,15 @@
     13. Use Add Common menu to add multiple entries from common lists.
     14. Google Keep link can be used as Note link.
     15. You can click on the "change question" menu to change the question.
+    16. Long click on the step or insight to change the source name and source link.
+    17. Suggest Changes,Challenges, Practices etc...
+    18. Set repeat notification in the settings.
+
+
+# Prerequisites
+
+    1. Android Version 10 or Above
+    2. Progress bar may not appear fully in the progress tab for small size displays.
 
     
 # Important Note
@@ -97,13 +107,12 @@
 ### Cloud Platform Provider
     Google Colab
 
+### Audio and Video Support
+    Canva
+
 ### Distributers
     Amazon App Store
-    F-Droid
-    Aptoide
-    Slideme
-    AppBrain
-
+    APK Mirror
 
 # Developer Contact 
 
