@@ -112,7 +112,6 @@ https://github.com/yrzgithub/Repair-Brain-Android-2.0/assets/85425005/4a199bbe-3
 
 ### Distributers
     Amazon App Store
-    APK Mirror
 
 # Developer Contact 
 
