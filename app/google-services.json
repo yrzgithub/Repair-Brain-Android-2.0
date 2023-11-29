@@ -8,43 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:935756194550:android:34359e1f7ee0f6d1d242d7",
-        "android_client_info": {
-          "package_name": "com.android.application"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "935756194550-290k4akr76civiutr8ktd8hj5na8nnth.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.android.application",
-            "certificate_hash": "da6909ea10470f71af756d3c30876f7313f564b6"
-          }
-        },
-        {
-          "client_id": "935756194550-qv5br5guqo3m7llf0rmd00iac4p960bh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyACXXCPQ502RZRdc8x7PD3fbwAmi-7jdbQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "935756194550-qv5br5guqo3m7llf0rmd00iac4p960bh.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:935756194550:android:2c6cca172f429815d242d7",
         "android_client_info": {
           "package_name": "com.example.repairbrain20"
@@ -52,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "935756194550-pc0ik6u26grt2a2i7thttr9boo0idmql.apps.googleusercontent.com",
+          "client_id": "935756194550-7pbhoajpnih9tonq3mesbstdop1a44n7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.repairbrain20",
-            "certificate_hash": "da6909ea10470f71af756d3c30876f7313f564b6"
+            "certificate_hash": "d7e7fa17d5445fe0d75665ba1593ef1f446a81f6"
           }
         },
         {

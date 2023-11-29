@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -268,6 +269,11 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             if (!task.isSuccessful()) {
+                Exception e = task.getException();
+                if(e!=null)
+                {
+                    Log.e("Login Error",e.toString());
+                }
                 login_failed();
                 return;
             }
@@ -288,11 +294,13 @@ public class ActLogin extends AppCompatActivity implements View.OnClickListener 
                                     User.uid = user.getUid();
                                     startActivity(new Intent(ActLogin.this, ActRepairsInsights.class));
                                 } else {
+                                    Log.e("Login Error","User is null");
                                     login_failed();
                                 }
                             }
                         });
             } catch (ApiException e) {
+                Log.e("Login Error",e.getMessage());
                 login_failed();
                 return;
             }
